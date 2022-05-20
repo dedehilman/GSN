@@ -1,0 +1,8 @@
+- clone from repository
+- cd master
+- composer install
+- cp .env.example .env
+- php artisan key:generate
+- setup database connection
+- php artisan migrate --seed
+- by default username & password administrator & administrator

@@ -1,0 +1,90 @@
+[
+    {
+      "key": "LDAP_AUTH",
+      "value": "false"
+    },
+    {
+      "key": "LDAP_AUTO_CREATE",
+      "value": "false"
+    },
+    {
+      "key": "LDAP_HOST",
+      "value": ""
+    },
+    {
+      "key": "LDAP_USERNAME",
+      "value": "null"
+    },
+    {
+      "key": "LDAP_PASSWORD",
+      "value": "null"
+    },
+    {
+      "key": "LDAP_PORT",
+      "value": "389"
+    },
+    {
+      "key": "LDAP_BASE_DN",
+      "value": ""
+    },
+    {
+      "key": "LDAP_TIMEOUT",
+      "value": ""
+    },
+    {
+      "key": "LDAP_SSL",
+      "value": "false"
+    },
+    {
+      "key": "LDAP_TLS",
+      "value": "false"
+    },
+    {
+      "key": "MAIL_DRIVER",
+      "value": "smtp"
+    },
+    {
+      "key": "MAIL_HOST",
+      "value": "smtp.mailtrap.io"
+    },
+    {
+      "key": "MAIL_PORT",
+      "value": ""
+    },
+    {
+      "key": "MAIL_USERNAME",
+      "value": "null"
+    },
+    {
+      "key": "MAIL_PASSWORD",
+      "value": "null"
+    },
+    {
+      "key": "MAIL_ENCRYPTION",
+      "value": "null"
+    },
+    {
+      "key": "MAIL_FROM_ADDRESS",
+      "value": ""
+    },
+    {
+      "key": "MAIL_FROM_NAME",
+      "value": ""
+    },
+    {
+      "key": "APP_NAME",
+      "value": "Master Laravel"
+    },
+    {
+      "key": "APP_VERSION",
+      "value": "1.0.0"
+    },
+    {
+      "key": "APP_LOGO",
+      "value": "http://localhost/master.laravel/public/img/AdminLTELogo.png"
+    },
+    {
+      "key": "APP_FAVICON",
+      "value": "http://localhost/master.laravel/public/img/AdminLTELogo.png"
+    }
+  ]

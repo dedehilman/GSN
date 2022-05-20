@@ -1,0 +1,262 @@
+[
+    {
+        "code": "M-100",
+        "title": "Home",
+        "class": "fas fa-home nav-icon",
+        "nav_header": 0,
+        "link": "home",
+        "sequence": 100,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-900",
+        "title": "System Setting",
+        "class": "",
+        "nav_header": 1,
+        "link": "#",
+        "sequence": 900,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-910",
+        "title": "User Management",
+        "class": "fas fa-users-cog nav-icon",
+        "nav_header": 0,
+        "link": "user*,role*",
+        "sequence": 910,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-911",
+        "title": "User",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "user.index,user*",
+        "sequence": 1,
+        "display": 1,
+        "parent_id": "M-910"
+    },
+    {
+        "code": "M-912",
+        "title": "Role",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "role.index,role*",
+        "sequence": 2,
+        "display": 1,
+        "parent_id": "M-910"
+    },
+    {
+        "code": "M-920",
+        "title": "Security",
+        "class": "fas fa-shield-alt nav-icon",
+        "nav_header": 0,
+        "link": "permission*,record-rule*",
+        "sequence": 920,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-921",
+        "title": "Permission",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "permission.index,permission*",
+        "sequence": 1,
+        "display": 1,
+        "parent_id": "M-920"
+    },
+    {
+        "code": "M-922",
+        "title": "Record Rule",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "record-rule.index,record-rule*",
+        "sequence": 2,
+        "display": 1,
+        "parent_id": "M-920"
+    },
+    {
+        "code": "M-930",
+        "title": "Menu",
+        "class": "fas fa-th-large nav-icon",
+        "nav_header": 0,
+        "link": "menu.index,menu*",
+        "sequence": 930,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-940",
+        "title": "Parameter",
+        "class": "fas fa-list-ol nav-icon",
+        "nav_header": 0,
+        "link": "parameter.index,parameter*",
+        "sequence": 940,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-950",
+        "title": "Workflow",
+        "class": "fas fa-sitemap nav-icon",
+        "nav_header": 0,
+        "link": "sequence*,rule*,route*,notification-template*",
+        "sequence": 950,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-951",
+        "title": "Sequence",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "sequence.index,sequence*",
+        "sequence": 1,
+        "display": 1,
+        "parent_id": "M-950"
+    },
+    {
+        "code": "M-952",
+        "title": "Rule",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "rule.index,rule*",
+        "sequence": 2,
+        "display": 1,
+        "parent_id": "M-950"
+    },
+    {
+        "code": "M-953",
+        "title": "Route",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "route.index,route*",
+        "sequence": 3,
+        "display": 1,
+        "parent_id": "M-950"
+    },
+    {
+        "code": "M-954",
+        "title": "Notification Template",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "notification-template.index,notification-template*",
+        "sequence": 4,
+        "display": 1,
+        "parent_id": "M-950"
+    },
+    {
+        "code": "M-960",
+        "title": "Mail History",
+        "class": "fas fa-envelope nav-icon",
+        "nav_header": 0,
+        "link": "mail-history.index,mail-history*",
+        "sequence": 960,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-990",
+        "title": "Job",
+        "class": "fas fa-hourglass-start nav-icon",
+        "nav_header": 0,
+        "link": "job.index,job*",
+        "sequence": 990,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-800",
+        "title": "Master Data",
+        "class": "",
+        "nav_header": 1,
+        "link": "#",
+        "sequence": 800,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-810",
+        "title": "Company",
+        "class": "fas fa-building nav-icon",
+        "nav_header": 0,
+        "link": "company-group*,company*",
+        "sequence": 810,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-811",
+        "title": "Company Group",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "company-group.index,company-group*",
+        "sequence": 1,
+        "display": 1,
+        "parent_id": "M-810"
+    },
+    {
+        "code": "M-812",
+        "title": "Company",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "company.index,company.*",
+        "sequence": 2,
+        "display": 1,
+        "parent_id": "M-810"
+    },
+    {
+        "code": "M-820",
+        "title": "Organization",
+        "class": "nav-icon fas fa-sitemap",
+        "nav_header": 0,
+        "link": "position*,department*,attribute*",
+        "sequence": 820,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-821",
+        "title": "Position",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "position.index,position*",
+        "sequence": 1,
+        "display": 1,
+        "parent_id": "M-820"
+    },
+    {
+        "code": "M-822",
+        "title": "Department",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "department.index,department.*",
+        "sequence": 2,
+        "display": 1,
+        "parent_id": "M-820"
+    },
+    {
+        "code": "M-823",
+        "title": "Attribute",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "attribute.index,attribute.*",
+        "sequence": 3,
+        "display": 1,
+        "parent_id": "M-820"
+    },
+    {
+        "code": "M-830",
+        "title": "Employee",
+        "class": "fas fa-user nav-icon",
+        "nav_header": 0,
+        "link": "employee.index,employee*",
+        "sequence": 830,
+        "display": 1,
+        "parent_id": null
+    }
+]
