@@ -73,7 +73,7 @@
     },
     {
       "key": "APP_NAME",
-      "value": "Master Laravel"
+      "value": "DIS"
     },
     {
       "key": "APP_VERSION",
@@ -81,10 +81,10 @@
     },
     {
       "key": "APP_LOGO",
-      "value": "http://localhost/master.laravel/public/img/AdminLTELogo.png"
+      "value": "http://localhost/dis.web/public/img/AdminLTELogo.png"
     },
     {
       "key": "APP_FAVICON",
-      "value": "http://localhost/master.laravel/public/img/AdminLTELogo.png"
+      "value": "http://localhost/dis.web/public/img/AdminLTELogo.png"
     }
   ]
