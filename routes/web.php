@@ -108,3 +108,23 @@ Route::resource('master/employee/{parentId}/position', App\Http\Controllers\Mast
 Route::post('/master/employee/{parentId}/position/datatable', [App\Http\Controllers\Master\EmployeePositionController::class, 'datatable'])->name('employee.position.datatable');
 Route::resource('master/employee/{parentId}/attribute', App\Http\Controllers\Master\EmployeeAttributeController::class, ['as' => 'employee']);
 Route::post('/master/employee/{parentId}/attribute/datatable', [App\Http\Controllers\Master\EmployeeAttributeController::class, 'datatable'])->name('employee.attribute.datatable');
+
+Route::post('/master/unit/datatable', [App\Http\Controllers\Master\UnitController::class, 'datatable'])->name('unit.datatable');
+Route::post('/master/unit/datatable/select', [App\Http\Controllers\Master\UnitController::class, 'datatableSelect'])->name('unit.datatable.select');
+Route::get('/master/unit/select', [App\Http\Controllers\Master\UnitController::class, 'select'])->name('unit.select');
+Route::resource('master/unit', App\Http\Controllers\Master\UnitController::class);
+
+Route::post('/master/medicine-rule/datatable', [App\Http\Controllers\Master\MedicineRuleController::class, 'datatable'])->name('medicine-rule.datatable');
+Route::post('/master/medicine-rule/datatable/select', [App\Http\Controllers\Master\MedicineRuleController::class, 'datatableSelect'])->name('medicine-rule.datatable.select');
+Route::get('/master/medicine-rule/select', [App\Http\Controllers\Master\MedicineRuleController::class, 'select'])->name('medicine-rule.select');
+Route::resource('master/medicine-rule', App\Http\Controllers\Master\MedicineRuleController::class);
+
+Route::post('/master/medicine-type/datatable', [App\Http\Controllers\Master\MedicineTypeController::class, 'datatable'])->name('medicine-type.datatable');
+Route::post('/master/medicine-type/datatable/select', [App\Http\Controllers\Master\MedicineTypeController::class, 'datatableSelect'])->name('medicine-type.datatable.select');
+Route::get('/master/medicine-type/select', [App\Http\Controllers\Master\MedicineTypeController::class, 'select'])->name('medicine-type.select');
+Route::resource('master/medicine-type', App\Http\Controllers\Master\MedicineTypeController::class);
+
+Route::post('/master/medicine/datatable', [App\Http\Controllers\Master\MedicineController::class, 'datatable'])->name('medicine.datatable');
+Route::post('/master/medicine/datatable/select', [App\Http\Controllers\Master\MedicineController::class, 'datatableSelect'])->name('medicine.datatable.select');
+Route::get('/master/medicine/select', [App\Http\Controllers\Master\MedicineController::class, 'select'])->name('medicine.select');
+Route::resource('master/medicine', App\Http\Controllers\Master\MedicineController::class);
