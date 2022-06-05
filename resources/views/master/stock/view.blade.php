@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Medicine"), 'subTitle' => Lang::get("View data medicine")])
+@extends('layout', ['title' => Lang::get("Stock"), 'subTitle' => Lang::get("View data stock")])
 
 @section('content')
     <div class="row">
@@ -16,24 +16,24 @@
                 </div>
                 <div class="card-body">       
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{__("Code")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->code}}</div>
+                        <label class="col-md-3 col-form-label">{{__("Period")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->period->code}} {{$data->period->name}}</div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{__("Name")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->name}}</div>
+                        <label class="col-md-3 col-form-label">{{__("Medicine")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->medicine->code}} {{$data->medicine->name}}</div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{__("Unit")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->unit->code}} {{$data->unit->name}}</div>
+                        <label class="col-md-3 col-form-label">{{__("Clinic")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->clinic->code}} {{$data->clinic->name}}</div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{__("Medicine Type")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->medicineType->code}} {{$data->medicineType->name}}</div>
+                        <label class="col-md-3 col-form-label">{{__("Quantity")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->qty}}</div>
                     </div>
                 </div>
                 <div class="card-footer text-right">
-                    <a href="{{route('medicine.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                    <a href="{{route('stock.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
                 </div>
             </div>
         </div>

@@ -8,8 +8,6 @@
                     <th>@if(($select ?? 'single') == 'multiple')<input type='checkbox' name="select-all"/>@endif</th>
                     <th>{{ __("Code") }}</th>
                     <th>{{ __("Name") }}</th>
-                    <th>{{ __("Unit") }}</th>
-                    <th>{{ __("Medicine Type") }}</th>
                 </tr>
             </thead>
         </table>
@@ -20,7 +18,7 @@
         $('#datatable-select').DataTable({
             ajax:
             {
-                url: "{{route('medicine.datatable.select')}}",
+                url: "{{route('period.datatable.select')}}",
                 type: 'POST',
                 data: function(data){
                     getDatatableSelectParameter(data);
@@ -51,12 +49,12 @@
                     name: 'name',
                     defaultContent: '',
                 }, {
-                    data: 'unit.name',
-                    name: 'unit_id',
+                    data: 'start_date',
+                    name: 'start_date',
                     defaultContent: '',
                 }, {
-                    data: 'medicine_type.name',
-                    name: 'medicine_type_id',
+                    data: 'end_date',
+                    name: 'end_date',
                     defaultContent: '',
                 }
             ],

@@ -12,12 +12,12 @@ class MedicineController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('medicine');
+        $this->setSelect('master.medicine.select');
         $this->setIndex('master.medicine.index');
         $this->setCreate('master.medicine.create');
         $this->setEdit('master.medicine.edit');
         $this->setView('master.medicine.view');
         $this->setModel('App\Models\Medicine');
-        // $this->setParentModel('App\Models\Employee');
     }
 
     public function validateOnStore(Request $request)

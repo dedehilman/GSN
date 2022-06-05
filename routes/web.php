@@ -128,3 +128,18 @@ Route::post('/master/medicine/datatable', [App\Http\Controllers\Master\MedicineC
 Route::post('/master/medicine/datatable/select', [App\Http\Controllers\Master\MedicineController::class, 'datatableSelect'])->name('medicine.datatable.select');
 Route::get('/master/medicine/select', [App\Http\Controllers\Master\MedicineController::class, 'select'])->name('medicine.select');
 Route::resource('master/medicine', App\Http\Controllers\Master\MedicineController::class);
+
+Route::post('/master/clinic/datatable', [App\Http\Controllers\Master\ClinicController::class, 'datatable'])->name('clinic.datatable');
+Route::post('/master/clinic/datatable/select', [App\Http\Controllers\Master\ClinicController::class, 'datatableSelect'])->name('clinic.datatable.select');
+Route::get('/master/clinic/select', [App\Http\Controllers\Master\ClinicController::class, 'select'])->name('clinic.select');
+Route::resource('master/clinic', App\Http\Controllers\Master\ClinicController::class);
+
+Route::post('/master/period/datatable', [App\Http\Controllers\Master\PeriodController::class, 'datatable'])->name('period.datatable');
+Route::post('/master/period/datatable/select', [App\Http\Controllers\Master\PeriodController::class, 'datatableSelect'])->name('period.datatable.select');
+Route::get('/master/period/select', [App\Http\Controllers\Master\PeriodController::class, 'select'])->name('period.select');
+Route::resource('master/period', App\Http\Controllers\Master\PeriodController::class);
+
+Route::post('/master/stock/datatable', [App\Http\Controllers\Master\StockController::class, 'datatable'])->name('stock.datatable');
+Route::post('/master/stock/datatable/select', [App\Http\Controllers\Master\StockController::class, 'datatableSelect'])->name('stock.datatable.select');
+Route::get('/master/stock/select', [App\Http\Controllers\Master\StockController::class, 'select'])->name('stock.select');
+Route::resource('master/stock', App\Http\Controllers\Master\StockController::class);

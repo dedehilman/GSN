@@ -1,9 +1,9 @@
-@extends('layout', ['title' => Lang::get("Unit"), 'subTitle' => Lang::get("Edit data unit")])
+@extends('layout', ['title' => Lang::get("Clinic"), 'subTitle' => Lang::get("Edit data clinic")])
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <form action="{{route('unit.update', $data->id)}}" method="POST">
+            <form action="{{route('clinic.update', $data->id)}}" method="POST">
                 @csrf
 
                 <div class="card">
@@ -30,9 +30,21 @@
                                 <input type="text" name="name" class="form-control required" value="{{$data->name}}">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Address")}}</label>
+                            <div class="col-md-9">
+                                <textarea type="text" name="address" class="form-control" rows="3">{{$data->address}}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Phone")}}</label>
+                            <div class="col-md-9">
+                                <input type="text" name="phone" class="form-control" value="{{$data->phone}}">
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer text-right">
-                        <a href="{{route('unit.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                        <a href="{{route('clinic.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
                         <button type="button" class="btn btn-primary" id="btn-update"><i class="fas fa fa-save"></i> {{__("Update")}}</button>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Medicine"), 'subTitle' => Lang::get("View data medicine")])
+@extends('layout', ['title' => Lang::get("Period"), 'subTitle' => Lang::get("View data period")])
 
 @section('content')
     <div class="row">
@@ -24,16 +24,16 @@
                         <div class="col-md-9 col-form-label">{{$data->name}}</div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{__("Unit")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->unit->code}} {{$data->unit->name}}</div>
+                        <label class="col-md-3 col-form-label">{{__("Start Date")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->start_date}}</div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{__("Medicine Type")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->medicineType->code}} {{$data->medicineType->name}}</div>
+                        <label class="col-md-3 col-form-label">{{__("End Date")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->end_date}}</div>
                     </div>
                 </div>
                 <div class="card-footer text-right">
-                    <a href="{{route('medicine.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                    <a href="{{route('period.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
                 </div>
             </div>
         </div>
