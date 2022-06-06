@@ -143,3 +143,13 @@ Route::post('/master/stock/datatable', [App\Http\Controllers\Master\StockControl
 Route::post('/master/stock/datatable/select', [App\Http\Controllers\Master\StockController::class, 'datatableSelect'])->name('stock.datatable.select');
 Route::get('/master/stock/select', [App\Http\Controllers\Master\StockController::class, 'select'])->name('stock.select');
 Route::resource('master/stock', App\Http\Controllers\Master\StockController::class);
+
+Route::post('/master/symptom/datatable', [App\Http\Controllers\Master\SymptomController::class, 'datatable'])->name('symptom.datatable');
+Route::post('/master/symptom/datatable/select', [App\Http\Controllers\Master\SymptomController::class, 'datatableSelect'])->name('symptom.datatable.select');
+Route::get('/master/symptom/select', [App\Http\Controllers\Master\SymptomController::class, 'select'])->name('symptom.select');
+Route::resource('master/symptom', App\Http\Controllers\Master\SymptomController::class);
+
+Route::post('/master/disease-group/datatable', [App\Http\Controllers\Master\DiseaseGroupController::class, 'datatable'])->name('disease-group.datatable');
+Route::post('/master/disease-group/datatable/select', [App\Http\Controllers\Master\DiseaseGroupController::class, 'datatableSelect'])->name('disease-group.datatable.select');
+Route::get('/master/disease-group/select', [App\Http\Controllers\Master\DiseaseGroupController::class, 'select'])->name('disease-group.select');
+Route::resource('master/disease-group', App\Http\Controllers\Master\DiseaseGroupController::class);

@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Medicine"), 'subTitle' => Lang::get("Manage data medicine")])
+@extends('layout', ['title' => Lang::get("Disease Group"), 'subTitle' => Lang::get("Manage data disease group")])
 
 @section('content')
     <div class="row">
@@ -18,8 +18,8 @@
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div>
-                                @can('medicine-create')                                
-                                <a href="{{route('medicine.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
+                                @can('disease-group-create')
+                                <a href="{{route('disease-group.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
                                 @endcan
                             </div>
                             <div class="btn-group nav view">
@@ -39,28 +39,6 @@
                                         <label class="col-md-2 col-form-label">{{__("Name")}}</label>
                                         <div class="col-md-4">
                                             <input type="text" name="name" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Unit")}}</label>
-                                        <div class="col-md-4">
-                                            <div class="input-group">
-                                                <input type="text" name="unit_name" id="unit_name" class="form-control required">
-                                                <input type="hidden" name="unit_id" id="unit_id">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Unit List')}}" data-url="{{route('unit.select')}}" data-handler="onSelectedUnit"><i class="fas fa-search"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <label class="col-md-2 col-form-label">{{__("Medicine Type")}}</label>
-                                        <div class="col-md-4">
-                                            <div class="input-group">
-                                                <input type="text" name="medicine_type_name" id="medicine_type_name" class="form-control required">
-                                                <input type="hidden" name="medicine_type_id" id="medicine_type_id">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Medicine Type List')}}" data-url="{{route('medicine-type.select')}}" data-handler="onSelectedMedicineType"><i class="fas fa-search"></i></span>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -91,8 +69,6 @@
                                 <th></th>
                                 <th>{{ __("Code") }}</th>
                                 <th>{{ __("Name") }}</th>
-                                <th>{{ __("Unit") }}</th>
-                                <th>{{ __("Medicine Type") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -108,7 +84,7 @@
             $('#datatable').DataTable({
                 ajax:
                 {
-                    url: "{{route('medicine.datatable')}}",
+                    url: "{{route('disease-group.datatable')}}",
                     type: 'POST',
                     data: function(data){
                         getDatatableParameter(data);
@@ -133,7 +109,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('medicine-delete') true @else false @endcan,
+                        visible: @can('disease-group-delete') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-danger'><i class='fas fa-trash'></i></div>";
@@ -144,7 +120,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('medicine-edit') true @else false @endcan,
+                        visible: @can('disease-group-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
@@ -159,45 +135,26 @@
                         data: 'name',
                         name: 'name',
                         defaultContent: '',
-                    },
-                    {
-                        data: 'unit.name',
-                        name: 'unit_id',
-                        defaultContent: '',
-                    },
-                    {
-                        data: 'medicine_type.name',
-                        name: 'medicine_type_id',
-                        defaultContent: '',
                     }
                 ],
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Medicine")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Disease Group")}}',
+                        exportOptions: { columns: [3,4] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Medicine")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Disease Group")}}',
+                        exportOptions: { columns: [3, 4] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Medicine")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Disease Group")}}',
+                        exportOptions: { columns: [3, 4] }
                     }
                 ],
             });
         });
-
-        function onSelectedUnit(data) {
-            $('#unit_id').val(data[0].id);
-            $('#unit_name').val(data[0].code + ' ' + data[0].name);
-        }
-        function onSelectedMedicineType(data) {
-            $('#medicine_type_id').val(data[0].id);
-            $('#medicine_type_name').val(data[0].code + ' ' + data[0].name);
-        }
     </script>
 @endsection
