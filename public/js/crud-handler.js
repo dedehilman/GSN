@@ -121,10 +121,12 @@ $(function() {
 function getDatatableParameter(data) {
     var obj = {};
     $('#formSearch input:not([type="checkbox"]):not([type="radio"])').each(function(){
-        obj[$(this).attr('name')] = $(this).val()
+        if($(this).attr('name')) {
+            obj[$(this).attr('name')] = $(this).val()
+        }
     })
     $('#formSearch input[type="checkbox"]').each(function(){
-        if($(this).prop("checked") == true){
+        if($(this).attr('name') && $(this).prop("checked") == true){
             var arr = [];
             if($(this).attr('name') in obj) {
                 arr = obj[$(this).attr('name')];
@@ -135,12 +137,14 @@ function getDatatableParameter(data) {
         }
     })
     $('#formSearch input[type="radio"]').each(function(){
-        if($(this).prop("checked") == true){
+        if($(this).attr('name') && $(this).prop("checked") == true){
             obj[$(this).attr('name')] = $(this).val();
         }
     })
     $('#formSearch select').each(function(){
-        obj[$(this).attr('name')] = $(this).val()
+        if($(this).attr('name')){
+            obj[$(this).attr('name')] = $(this).val()
+        }
     })
 
     data.parameters = obj;

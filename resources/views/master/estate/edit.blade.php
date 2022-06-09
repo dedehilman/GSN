@@ -1,9 +1,9 @@
-@extends('layout', ['title' => Lang::get("Company"), 'subTitle' => Lang::get("Edit data company")])
+@extends('layout', ['title' => Lang::get("Estate"), 'subTitle' => Lang::get("Edit data estate")])
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <form action="{{route('company.update', $data->id)}}" method="POST">
+            <form action="{{route('estate.update', $data->id)}}" method="POST">
                 @csrf
 
                 <div class="card">
@@ -31,20 +31,20 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label">{{__("Company Group")}}</label>
+                            <label class="col-md-3 col-form-label required">{{__("Company")}}</label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <input type="text" name="company_group_name" id="company_group_name" class="form-control" value="{{$data->companyGroup->code ?? ''}} {{$data->companyGroup->name ?? ''}}">
-                                    <input type="hidden" name="company_group_id" id="company_group_id" value="{{$data->companyGroup->id ?? ''}}">
+                                    <input type="text" name="company_name" id="company_name" class="form-control required" value="{{$data->company->code}} {{$data->company->name}}">
+                                    <input type="hidden" name="company_id" id="company_id" value="{{$data->company->id}}">
                                     <div class="input-group-append">
-                                        <span class="input-group-text show-modal-select" data-title="{{__('Company Group List')}}" data-url="{{route('company-group.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
+                                        <span class="input-group-text show-modal-select" data-title="{{__('Company List')}}" data-url="{{route('company.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer text-right">
-                        <a href="{{route('company.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                        <a href="{{route('estate.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
                         <button type="button" class="btn btn-primary" id="btn-update"><i class="fas fa fa-save"></i> {{__("Update")}}</button>
                     </div>
                 </div>
@@ -56,8 +56,8 @@
 @section('script')
     <script>
         function onSelected(data) {
-            $('#company_group_id').val(data[0].id);
-            $('#company_group_name').val(data[0].code + ' ' + data[0].name);
+            $('#company_id').val(data[0].id);
+            $('#company_name').val(data[0].code + ' ' + data[0].name);
         }
     </script>
 @endsection

@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Company"), 'subTitle' => Lang::get("View data company")])
+@extends('layout', ['title' => Lang::get("Afdelink"), 'subTitle' => Lang::get("View data afdelink")])
 
 @section('content')
     <div class="row">
@@ -24,12 +24,12 @@
                         <div class="col-md-9 col-form-label">{{$data->name}}</div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{__("Company Group")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->companyGroup->code ?? ''}} {{$data->companyGroup->name ?? ''}}</div>
+                        <label class="col-md-3 col-form-label">{{__("Estate")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->estate->code}} {{$data->estate->name}}</div>
                     </div>
                 </div>
                 <div class="card-footer text-right">
-                    <a href="{{route('company.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                    <a href="{{route('afdelink.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
                 </div>
             </div>
         </div>

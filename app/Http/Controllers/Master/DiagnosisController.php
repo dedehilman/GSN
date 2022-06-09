@@ -5,22 +5,21 @@ namespace App\Http\Controllers\Master;
 use App\Http\Controllers\AppCrudController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Clinic;
+use App\Models\Diagnosis;
 use Illuminate\Support\Facades\DB;
 use Lang;
 
-class ClinicController extends AppCrudController
+class DiagnosisController extends AppCrudController
 {
 
     public function __construct()
     {
-        $this->setDefaultMiddleware('clinic');
-        $this->setSelect('master.clinic.select');
-        $this->setIndex('master.clinic.index');
-        $this->setCreate('master.clinic.create');
-        $this->setEdit('master.clinic.edit');
-        $this->setView('master.clinic.view');
-        $this->setModel('App\Models\Clinic');
+        $this->setDefaultMiddleware('diagnosis');
+        $this->setIndex('master.diagnosis.index');
+        $this->setCreate('master.diagnosis.create');
+        $this->setEdit('master.diagnosis.edit');
+        $this->setView('master.diagnosis.view');
+        $this->setModel('App\Models\Diagnosis');
     }
 
     public function store(Request $request)
@@ -36,14 +35,14 @@ class ClinicController extends AppCrudController
             }
 
             DB::beginTransaction();
-            $data = new Clinic();
+            $data = new Diagnosis();
             $data->code = $request->code;
             $data->name = $request->name;
-            $data->address = $request->address;
-            $data->phone = $request->phone;
+            $data->handling = $request->handling;
+            $data->disease_id = $request->disease_id;
             $data->save();
 
-            $data->syncAfdelinks($request->afdelinks);
+            $data->syncSymptoms($request->symptoms);
             
             DB::commit();
             return response()->json([
@@ -85,11 +84,11 @@ class ClinicController extends AppCrudController
             DB::beginTransaction();
             $data->code = $request->code;
             $data->name = $request->name;
-            $data->address = $request->address;
-            $data->phone = $request->phone;
+            $data->handling = $request->handling;
+            $data->disease_id = $request->disease_id;
             $data->save();
 
-            $data->syncAfdelinks($request->afdelinks);
+            $data->syncSymptoms($request->symptoms);
 
             DB::commit();
             return response()->json([
@@ -110,8 +109,10 @@ class ClinicController extends AppCrudController
     public function validateOnStore(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'code' => 'required|max:255|unique:clinics',
+            'code' => 'required|max:255|unique:diagnoses',
             'name' => 'required|max:255',
+            'handling' => 'max:255',
+            'disease_id' => 'required',
         ]);
 
         if($validator->fails()){
@@ -122,8 +123,10 @@ class ClinicController extends AppCrudController
     public function validateOnUpdate(Request $request, int $id)
     {
         $validator = Validator::make($request->all(), [
-            'code' => 'required|max:255|unique:clinics,code,'.$id,
+            'code' => 'required|max:255|unique:diagnoses,code,'.$id,
             'name' => 'required|max:255',
+            'handling' => 'max:255',
+            'disease_id' => 'required',
         ]);
 
         if($validator->fails()){

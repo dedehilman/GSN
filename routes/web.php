@@ -153,3 +153,23 @@ Route::post('/master/disease-group/datatable', [App\Http\Controllers\Master\Dise
 Route::post('/master/disease-group/datatable/select', [App\Http\Controllers\Master\DiseaseGroupController::class, 'datatableSelect'])->name('disease-group.datatable.select');
 Route::get('/master/disease-group/select', [App\Http\Controllers\Master\DiseaseGroupController::class, 'select'])->name('disease-group.select');
 Route::resource('master/disease-group', App\Http\Controllers\Master\DiseaseGroupController::class);
+
+Route::post('/master/estate/datatable', [App\Http\Controllers\Master\EstateController::class, 'datatable'])->name('estate.datatable');
+Route::post('/master/estate/datatable/select', [App\Http\Controllers\Master\EstateController::class, 'datatableSelect'])->name('estate.datatable.select');
+Route::get('/master/estate/select', [App\Http\Controllers\Master\EstateController::class, 'select'])->name('estate.select');
+Route::resource('master/estate', App\Http\Controllers\Master\EstateController::class);
+
+Route::post('/master/afdelink/datatable', [App\Http\Controllers\Master\AfdelinkController::class, 'datatable'])->name('afdelink.datatable');
+Route::post('/master/afdelink/datatable/select', [App\Http\Controllers\Master\AfdelinkController::class, 'datatableSelect'])->name('afdelink.datatable.select');
+Route::get('/master/afdelink/select', [App\Http\Controllers\Master\AfdelinkController::class, 'select'])->name('afdelink.select');
+Route::resource('master/afdelink', App\Http\Controllers\Master\AfdelinkController::class);
+
+Route::post('/master/disease/datatable', [App\Http\Controllers\Master\DiseaseController::class, 'datatable'])->name('disease.datatable');
+Route::post('/master/disease/datatable/select', [App\Http\Controllers\Master\DiseaseController::class, 'datatableSelect'])->name('disease.datatable.select');
+Route::get('/master/disease/select', [App\Http\Controllers\Master\DiseaseController::class, 'select'])->name('disease.select');
+Route::resource('master/disease', App\Http\Controllers\Master\DiseaseController::class);
+
+Route::post('/master/diagnosis/datatable', [App\Http\Controllers\Master\DiagnosisController::class, 'datatable'])->name('diagnosis.datatable');
+Route::post('/master/diagnosis/datatable/select', [App\Http\Controllers\Master\DiagnosisController::class, 'datatableSelect'])->name('diagnosis.datatable.select');
+Route::get('/master/diagnosis/select', [App\Http\Controllers\Master\DiagnosisController::class, 'select'])->name('diagnosis.select');
+Route::resource('master/diagnosis', App\Http\Controllers\Master\DiagnosisController::class);

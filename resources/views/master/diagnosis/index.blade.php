@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Company"), 'subTitle' => Lang::get("Manage data company")])
+@extends('layout', ['title' => Lang::get("Diagnosis"), 'subTitle' => Lang::get("Manage data diagnosis")])
 
 @section('content')
     <div class="row">
@@ -18,8 +18,8 @@
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div>
-                                @can('company-create')                                
-                                <a href="{{route('company.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
+                                @can('diagnosis-create')
+                                <a href="{{route('diagnosis.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
                                 @endcan
                             </div>
                             <div class="btn-group nav view">
@@ -42,13 +42,13 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Company Group")}}</label>
+                                        <label class="col-md-2 col-form-label">{{__("Disease")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" id="company_group_name" class="form-control required">
-                                                <input type="hidden" name="company_group_id" id="company_group_id">
+                                                <input type="text" id="disease_name" class="form-control">
+                                                <input type="hidden" name="disease_id" id="disease_id">
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Company Group List')}}" data-url="{{route('company-group.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Disease List')}}" data-url="{{route('disease.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -81,7 +81,8 @@
                                 <th></th>
                                 <th>{{ __("Code") }}</th>
                                 <th>{{ __("Name") }}</th>
-                                <th>{{ __("Company Group") }}</th>
+                                <th>{{ __("Handling") }}</th>
+                                <th>{{ __("Disease") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -97,7 +98,7 @@
             $('#datatable').DataTable({
                 ajax:
                 {
-                    url: "{{route('company.datatable')}}",
+                    url: "{{route('diagnosis.datatable')}}",
                     type: 'POST',
                     data: function(data){
                         getDatatableParameter(data);
@@ -122,7 +123,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('company-delete') true @else false @endcan,
+                        visible: @can('diagnosis-delete') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-danger'><i class='fas fa-trash'></i></div>";
@@ -133,7 +134,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('company-edit') true @else false @endcan,
+                        visible: @can('diagnosis-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
@@ -150,34 +151,39 @@
                         defaultContent: '',
                     },
                     {
-                        data: 'company_group.name',
-                        name: 'company_group_id',
+                        data: 'handling',
+                        name: 'handling',
+                        defaultContent: '',
+                    },
+                    {
+                        data: 'disease.name',
+                        name: 'disease_id',
                         defaultContent: '',
                     }
                 ],
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Company")}}',
-                        exportOptions: { columns: [3,4,5] }
+                        title: '{{__("Diagnosis")}}',
+                        exportOptions: { columns: [3, 4, 5, 6] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Company")}}',
-                        exportOptions: { columns: [3,4,5] }
+                        title: '{{__("Diagnosis")}}',
+                        exportOptions: { columns: [3, 4, 5, 6] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Company")}}',
-                        exportOptions: { columns: [3,4,5] }
+                        title: '{{__("Diagnosis")}}',
+                        exportOptions: { columns: [3, 4, 5, 6] }
                     }
                 ],
             });
         });
 
         function onSelected(data) {
-            $('#company_group_id').val(data[0].id);
-            $('#company_group_name').val(data[0].code + ' ' + data[0].name);
+            $('#disease_id').val(data[0].id);
+            $('#disease_name').val(data[0].name);
         }
     </script>
 @endsection

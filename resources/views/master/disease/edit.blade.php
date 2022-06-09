@@ -1,9 +1,9 @@
-@extends('layout', ['title' => Lang::get("Company"), 'subTitle' => Lang::get("Edit data company")])
+@extends('layout', ['title' => Lang::get("Disease"), 'subTitle' => Lang::get("Edit data disease")])
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <form action="{{route('company.update', $data->id)}}" method="POST">
+            <form action="{{route('disease.update', $data->id)}}" method="POST">
                 @csrf
 
                 <div class="card">
@@ -31,20 +31,20 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label">{{__("Company Group")}}</label>
+                            <label class="col-md-3 col-form-label required">{{__("Disease Group")}}</label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <input type="text" name="company_group_name" id="company_group_name" class="form-control" value="{{$data->companyGroup->code ?? ''}} {{$data->companyGroup->name ?? ''}}">
-                                    <input type="hidden" name="company_group_id" id="company_group_id" value="{{$data->companyGroup->id ?? ''}}">
+                                    <input type="text" name="disease_group_name" id="disease_group_name" class="form-control required" value="{{$data->diseaseGroup->name}}">
+                                    <input type="hidden" name="disease_group_id" id="disease_group_id" value="{{$data->diseaseGroup->id}}">
                                     <div class="input-group-append">
-                                        <span class="input-group-text show-modal-select" data-title="{{__('Company Group List')}}" data-url="{{route('company-group.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
+                                        <span class="input-group-text show-modal-select" data-title="{{__('Disease Group List')}}" data-url="{{route('disease-group.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer text-right">
-                        <a href="{{route('company.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                        <a href="{{route('disease.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
                         <button type="button" class="btn btn-primary" id="btn-update"><i class="fas fa fa-save"></i> {{__("Update")}}</button>
                     </div>
                 </div>
@@ -56,8 +56,8 @@
 @section('script')
     <script>
         function onSelected(data) {
-            $('#company_group_id').val(data[0].id);
-            $('#company_group_name').val(data[0].code + ' ' + data[0].name);
+            $('#disease_group_id').val(data[0].id);
+            $('#disease_group_name').val(data[0].name);
         }
     </script>
 @endsection

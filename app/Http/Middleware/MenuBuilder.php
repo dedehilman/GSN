@@ -13,7 +13,8 @@ class MenuBuilder
     
     public function handle($request, Closure $next)
     {
-        if(getCurrentUser() && !Session::has('menu')) {       
+        if(getCurrentUser()) {
+        // if(getCurrentUser() && !Session::has('menu')) {       
             session()->put('menu', $this->buildMenu());
         }
         return $next($request);
