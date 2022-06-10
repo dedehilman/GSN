@@ -139,11 +139,6 @@ Route::post('/master/period/datatable/select', [App\Http\Controllers\Master\Peri
 Route::get('/master/period/select', [App\Http\Controllers\Master\PeriodController::class, 'select'])->name('period.select');
 Route::resource('master/period', App\Http\Controllers\Master\PeriodController::class);
 
-Route::post('/master/stock/datatable', [App\Http\Controllers\Master\StockController::class, 'datatable'])->name('stock.datatable');
-Route::post('/master/stock/datatable/select', [App\Http\Controllers\Master\StockController::class, 'datatableSelect'])->name('stock.datatable.select');
-Route::get('/master/stock/select', [App\Http\Controllers\Master\StockController::class, 'select'])->name('stock.select');
-Route::resource('master/stock', App\Http\Controllers\Master\StockController::class);
-
 Route::post('/master/symptom/datatable', [App\Http\Controllers\Master\SymptomController::class, 'datatable'])->name('symptom.datatable');
 Route::post('/master/symptom/datatable/select', [App\Http\Controllers\Master\SymptomController::class, 'datatableSelect'])->name('symptom.datatable.select');
 Route::get('/master/symptom/select', [App\Http\Controllers\Master\SymptomController::class, 'select'])->name('symptom.select');
@@ -170,6 +165,10 @@ Route::get('/master/disease/select', [App\Http\Controllers\Master\DiseaseControl
 Route::resource('master/disease', App\Http\Controllers\Master\DiseaseController::class);
 
 Route::post('/master/diagnosis/datatable', [App\Http\Controllers\Master\DiagnosisController::class, 'datatable'])->name('diagnosis.datatable');
-Route::post('/master/diagnosis/datatable/select', [App\Http\Controllers\Master\DiagnosisController::class, 'datatableSelect'])->name('diagnosis.datatable.select');
-Route::get('/master/diagnosis/select', [App\Http\Controllers\Master\DiagnosisController::class, 'select'])->name('diagnosis.select');
 Route::resource('master/diagnosis', App\Http\Controllers\Master\DiagnosisController::class);
+
+Route::post('/inventory/stock-opname/datatable', [App\Http\Controllers\Inventory\StockOpnameController::class, 'datatable'])->name('stock-opname.datatable');
+Route::resource('inventory/stock-opname', App\Http\Controllers\Inventory\StockOpnameController::class);
+
+Route::post('/inventory/stock-transaction/datatable', [App\Http\Controllers\Inventory\StockTransactionController::class, 'datatable'])->name('stock-transaction.datatable');
+Route::resource('inventory/stock-transaction', App\Http\Controllers\Inventory\StockTransactionController::class);

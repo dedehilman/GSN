@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Stock"), 'subTitle' => Lang::get("Manage data stock")])
+@extends('layout', ['title' => Lang::get("Stock Opname"), 'subTitle' => Lang::get("Manage data stock opname")])
 
 @section('content')
     <div class="row">
@@ -18,8 +18,8 @@
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div>
-                                @can('stock-create')                                
-                                <a href="{{route('stock.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
+                                @can('stock-opname-create')                                
+                                <a href="{{route('stock-opname.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
                                 @endcan
                             </div>
                             <div class="btn-group nav view">
@@ -35,7 +35,7 @@
                                         <label class="col-md-2 col-form-label">{{__("Period")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" name="period_name" id="period_name" class="form-control required">
+                                                <input type="text" id="period_name" class="form-control required">
                                                 <input type="hidden" name="period_id" id="period_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Period List')}}" data-url="{{route('period.select')}}" data-handler="onSelectedPeriod"><i class="fas fa-search"></i></span>
@@ -45,7 +45,7 @@
                                         <label class="col-md-2 col-form-label">{{__("Medicine")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" name="medicine_name" id="medicine_name" class="form-control required">
+                                                <input type="text" id="medicine_name" class="form-control required">
                                                 <input type="hidden" name="medicine_id" id="medicine_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Medicine List')}}" data-url="{{route('medicine.select')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
@@ -57,7 +57,7 @@
                                         <label class="col-md-2 col-form-label">{{__("Clinic")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" name="clinic_name" id="clinic_name" class="form-control required">
+                                                <input type="text" id="clinic_name" class="form-control required">
                                                 <input type="hidden" name="clinic_id" id="clinic_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
@@ -110,7 +110,7 @@
             $('#datatable').DataTable({
                 ajax:
                 {
-                    url: "{{route('stock.datatable')}}",
+                    url: "{{route('stock-opname.datatable')}}",
                     type: 'POST',
                     data: function(data){
                         getDatatableParameter(data);
@@ -135,7 +135,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('stock-delete') true @else false @endcan,
+                        visible: @can('stock-opname-delete') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-danger'><i class='fas fa-trash'></i></div>";
@@ -146,7 +146,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('stock-edit') true @else false @endcan,
+                        visible: @can('stock-opname-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
@@ -176,17 +176,17 @@
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Stock")}}',
+                        title: '{{__("Stock Opname")}}',
                         exportOptions: { columns: [3,4,5,6] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Stock")}}',
+                        title: '{{__("Stock Opname")}}',
                         exportOptions: { columns: [3,4,5,6] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Stock")}}',
+                        title: '{{__("Stock Opname")}}',
                         exportOptions: { columns: [3,4,5,6] }
                     }
                 ],

@@ -8,6 +8,8 @@
                     <th>@if(($select ?? 'single') == 'multiple')<input type='checkbox' name="select-all"/>@endif</th>
                     <th>{{ __("Code") }}</th>
                     <th>{{ __("Name") }}</th>
+                    <th>{{ __("Start Date") }}</th>
+                    <th>{{ __("End Date") }}</th>
                 </tr>
             </thead>
         </table>

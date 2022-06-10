@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Traits\BlameableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BlameableTrait;
 
-class Stock extends Model
+class StockOpname extends Model
 {
     use HasFactory, BlameableTrait;
 
