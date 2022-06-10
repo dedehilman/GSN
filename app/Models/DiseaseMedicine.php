@@ -11,4 +11,12 @@ class DiseaseMedicine extends Model
     use HasFactory, BlameableTrait;
 
     protected $fillable = ['disease_id', 'medicine_id', 'medicine_rule_id', 'qty'];
+
+    public function medicine() {
+        return $this->belongsTo(Medicine::class);
+    }
+
+    public function medicineRule() {
+        return $this->belongsTo(MedicineRule::class);
+    }
 }

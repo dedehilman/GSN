@@ -20,4 +20,9 @@ class Disease extends Model
     {
         return $query->with(['diseaseGroup']);
     }
+
+    public function medicines()
+    {
+        return $this->hasMany(DiseaseMedicine::class);
+    }
 }
