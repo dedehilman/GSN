@@ -178,7 +178,6 @@ Route::post('/master/disease-medicine/datatable', [App\Http\Controllers\Master\D
 Route::post('/master/disease-medicine/datatable/select', [App\Http\Controllers\Master\DiseaseMedicineController::class, 'datatableSelect'])->name('disease-medicine.datatable.select');
 Route::get('/master/disease-medicine/select', [App\Http\Controllers\Master\DiseaseMedicineController::class, 'select'])->name('disease-medicine.select');
 Route::resource('master/disease-medicine', App\Http\Controllers\Master\DiseaseMedicineController::class);
-Route::resource('master/diagnosis', App\Http\Controllers\Master\DiagnosisController::class);
 
 Route::post('/inventory/stock-opname/datatable', [App\Http\Controllers\Inventory\StockOpnameController::class, 'datatable'])->name('stock-opname.datatable');
 Route::resource('inventory/stock-opname', App\Http\Controllers\Inventory\StockOpnameController::class);
