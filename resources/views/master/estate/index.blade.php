@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Diagnosis"), 'subTitle' => Lang::get("Manage data diagnosis")])
+@extends('layout', ['title' => Lang::get("Estate"), 'subTitle' => Lang::get("Manage data estate")])
 
 @section('content')
     <div class="row">
@@ -18,8 +18,8 @@
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div>
-                                @can('diagnosis-create')
-                                <a href="{{route('diagnosis.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
+                                @can('estate-create')
+                                <a href="{{route('estate.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
                                 @endcan
                             </div>
                             <div class="btn-group nav view">
@@ -42,13 +42,13 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Disease")}}</label>
+                                        <label class="col-md-2 col-form-label">{{__("Company")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" id="disease_name" class="form-control">
-                                                <input type="hidden" name="disease_id" id="disease_id">
+                                                <input type="text" id="company_name" class="form-control required">
+                                                <input type="hidden" name="company_id" id="company_id">
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Disease List')}}" data-url="{{route('disease.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Company List')}}" data-url="{{route('company.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -81,8 +81,7 @@
                                 <th></th>
                                 <th>{{ __("Code") }}</th>
                                 <th>{{ __("Name") }}</th>
-                                <th>{{ __("Handling") }}</th>
-                                <th>{{ __("Disease") }}</th>
+                                <th>{{ __("Company") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -98,7 +97,7 @@
             $('#datatable').DataTable({
                 ajax:
                 {
-                    url: "{{route('diagnosis.datatable')}}",
+                    url: "{{route('estate.datatable')}}",
                     type: 'POST',
                     data: function(data){
                         getDatatableParameter(data);
@@ -123,7 +122,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('diagnosis-delete') true @else false @endcan,
+                        visible: @can('estate-delete') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-danger'><i class='fas fa-trash'></i></div>";
@@ -134,7 +133,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('diagnosis-edit') true @else false @endcan,
+                        visible: @can('estate-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
@@ -151,39 +150,34 @@
                         defaultContent: '',
                     },
                     {
-                        data: 'handling',
-                        name: 'handling',
-                        defaultContent: '',
-                    },
-                    {
-                        data: 'disease.name',
-                        name: 'disease_id',
+                        data: 'company.name',
+                        name: 'company_id',
                         defaultContent: '',
                     }
                 ],
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Diagnosis")}}',
-                        exportOptions: { columns: [3, 4, 5, 6] }
+                        title: '{{__("Estate")}}',
+                        exportOptions: { columns: [3, 4, 5] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Diagnosis")}}',
-                        exportOptions: { columns: [3, 4, 5, 6] }
+                        title: '{{__("Estate")}}',
+                        exportOptions: { columns: [3, 4, 5] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Diagnosis")}}',
-                        exportOptions: { columns: [3, 4, 5, 6] }
+                        title: '{{__("Estate")}}',
+                        exportOptions: { columns: [3, 4, 5] }
                     }
                 ],
             });
         });
 
         function onSelected(data) {
-            $('#disease_id').val(data[0].id);
-            $('#disease_name').val(data[0].name);
+            $('#company_id').val(data[0].id);
+            $('#company_name').val(data[0].code + ' ' + data[0].name);
         }
     </script>
 @endsection

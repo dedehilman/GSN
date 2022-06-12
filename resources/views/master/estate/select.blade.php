@@ -8,8 +8,7 @@
                     <th>@if(($select ?? 'single') == 'multiple')<input type='checkbox' name="select-all"/>@endif</th>
                     <th>{{ __("Code") }}</th>
                     <th>{{ __("Name") }}</th>
-                    <th>{{ __("Start Date") }}</th>
-                    <th>{{ __("End Date") }}</th>
+                    <th>{{ __("Company") }}</th>
                 </tr>
             </thead>
         </table>
@@ -20,7 +19,7 @@
         $('#datatable-select').DataTable({
             ajax:
             {
-                url: "{{route('period.datatable.select')}}",
+                url: "{{route('estate.datatable.select')}}",
                 type: 'POST',
                 data: function(data){
                     getDatatableSelectParameter(data);
@@ -51,12 +50,8 @@
                     name: 'name',
                     defaultContent: '',
                 }, {
-                    data: 'start_date',
-                    name: 'start_date',
-                    defaultContent: '',
-                }, {
-                    data: 'end_date',
-                    name: 'end_date',
+                    data: 'company.name',
+                    name: 'company_id',
                     defaultContent: '',
                 }
             ],

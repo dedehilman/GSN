@@ -6,10 +6,9 @@
             <thead>
                 <tr>
                     <th>@if(($select ?? 'single') == 'multiple')<input type='checkbox' name="select-all"/>@endif</th>
-                    <th>{{ __("Period") }}</th>
-                    <th>{{ __("Medicine") }}</th>
-                    <th>{{ __("Clinic") }}</th>
-                    <th>{{ __("Quantity") }}</th>
+                    <th>{{ __("Code") }}</th>
+                    <th>{{ __("Name") }}</th>
+                    <th>{{ __("Estate") }}</th>
                 </tr>
             </thead>
         </table>
@@ -20,7 +19,7 @@
         $('#datatable-select').DataTable({
             ajax:
             {
-                url: "{{route('stock.datatable.select')}}",
+                url: "{{route('afdelink.datatable.select')}}",
                 type: 'POST',
                 data: function(data){
                     getDatatableSelectParameter(data);
@@ -43,23 +42,37 @@
                         return '';
                     }
                 }, {
-                    data: 'period.name',
-                    name: 'period_id',
+                    data: 'code',
+                    name: 'code',
                     defaultContent: '',
                 }, {
-                    data: 'medicine.name',
-                    name: 'medicine_id',
+                    data: 'name',
+                    name: 'name',
                     defaultContent: '',
                 }, {
-                    data: 'clinic.name',
-                    name: 'clinic_id',
-                    defaultContent: '',
-                }, {
-                    data: 'qty',
-                    name: 'qty',
+                    data: 'estate.name',
+                    name: 'estate_id',
                     defaultContent: '',
                 }
             ],
+            rowCallback: function(row, data) {
+                if(Array.isArray(selectedIds) && selectedIds.includes(data.id)) {
+                    $(row).addClass('selected');
+                }
+            }
+        });
+
+        $('#datatable-select').DataTable().on('select', function ( e, dt, type, indexes ) {
+            var data = $('#datatable-select').DataTable().rows(indexes).data();
+            if(Array.isArray(selectedIds) && !selectedIds.includes(data[0].id)) {
+                selectedIds.push(data[0].id);
+            }
+        }).on('deselect', function ( e, dt, type, indexes ) {
+            var data = $('#datatable-select').DataTable().rows(indexes).data();
+            if(Array.isArray(selectedIds) && selectedIds.includes(data[0].id)) {
+                var index = selectedIds.indexOf(data[0].id);
+                selectedIds.splice(index, 1);
+            }
         });
     });
 </script>

@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Stock"), 'subTitle' => Lang::get("Manage data stock")])
+@extends('layout', ['title' => Lang::get("Afdelink"), 'subTitle' => Lang::get("Manage data afdelink")])
 
 @section('content')
     <div class="row">
@@ -18,8 +18,8 @@
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div>
-                                @can('stock-create')                                
-                                <a href="{{route('stock.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
+                                @can('afdelink-create')
+                                <a href="{{route('afdelink.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
                                 @endcan
                             </div>
                             <div class="btn-group nav view">
@@ -32,35 +32,23 @@
                             <div id="collapseOne" class="panel-collapse collapse in" style="padding:10px 0px 0px 0px;">
                                 <form id="formSearch">
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Period")}}</label>
+                                        <label class="col-md-2 col-form-label">{{__("Code")}}</label>
                                         <div class="col-md-4">
-                                            <div class="input-group">
-                                                <input type="text" name="period_name" id="period_name" class="form-control required">
-                                                <input type="hidden" name="period_id" id="period_id">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Period List')}}" data-url="{{route('period.select')}}" data-handler="onSelectedPeriod"><i class="fas fa-search"></i></span>
-                                                </div>
-                                            </div>
+                                            <input type="text" name="code" class="form-control">
                                         </div>
-                                        <label class="col-md-2 col-form-label">{{__("Medicine")}}</label>
+                                        <label class="col-md-2 col-form-label">{{__("Name")}}</label>
                                         <div class="col-md-4">
-                                            <div class="input-group">
-                                                <input type="text" name="medicine_name" id="medicine_name" class="form-control required">
-                                                <input type="hidden" name="medicine_id" id="medicine_id">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Medicine List')}}" data-url="{{route('medicine.select')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
-                                                </div>
-                                            </div>
+                                            <input type="text" name="name" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Clinic")}}</label>
+                                        <label class="col-md-2 col-form-label">{{__("Estate")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" name="clinic_name" id="clinic_name" class="form-control required">
-                                                <input type="hidden" name="clinic_id" id="clinic_id">
+                                                <input type="text" id="estate_name" class="form-control required">
+                                                <input type="hidden" name="estate_id" id="estate_id">
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Estate List')}}" data-url="{{route('estate.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -91,10 +79,9 @@
                                 <th><input type='checkbox' name="select-all"/></th>
                                 <th></th>
                                 <th></th>
-                                <th>{{ __("Period") }}</th>
-                                <th>{{ __("Medicine") }}</th>
-                                <th>{{ __("Clinic") }}</th>
-                                <th>{{ __("Quantity") }}</th>
+                                <th>{{ __("Code") }}</th>
+                                <th>{{ __("Name") }}</th>
+                                <th>{{ __("Estate") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -110,7 +97,7 @@
             $('#datatable').DataTable({
                 ajax:
                 {
-                    url: "{{route('stock.datatable')}}",
+                    url: "{{route('afdelink.datatable')}}",
                     type: 'POST',
                     data: function(data){
                         getDatatableParameter(data);
@@ -135,7 +122,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('stock-delete') true @else false @endcan,
+                        visible: @can('afdelink-delete') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-danger'><i class='fas fa-trash'></i></div>";
@@ -146,64 +133,51 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('stock-edit') true @else false @endcan,
+                        visible: @can('afdelink-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
                         }
                     },
                     {
-                        data: 'period.name',
-                        name: 'period_id',
+                        data: 'code',
+                        name: 'code',
                         defaultContent: '',
                     },
                     {
-                        data: 'medicine.name',
-                        name: 'medicine_id',
+                        data: 'name',
+                        name: 'name',
                         defaultContent: '',
                     },
                     {
-                        data: 'clinic.name',
-                        name: 'clinic_id',
-                        defaultContent: '',
-                    },
-                    {
-                        data: 'qty',
-                        name: 'qty',
+                        data: 'estate.name',
+                        name: 'estate_id',
                         defaultContent: '',
                     }
                 ],
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Stock")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Afdelink")}}',
+                        exportOptions: { columns: [3, 4, 5] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Stock")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Afdelink")}}',
+                        exportOptions: { columns: [3, 4, 5] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Stock")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Afdelink")}}',
+                        exportOptions: { columns: [3, 4, 5] }
                     }
                 ],
             });
         });
 
-        function onSelectedPeriod(data) {
-            $('#period_id').val(data[0].id);
-            $('#period_name').val(data[0].code + ' ' + data[0].name);
-        }
-        function onSelectedMedicine(data) {
-            $('#medicine_id').val(data[0].id);
-            $('#medicine_name').val(data[0].code + ' ' + data[0].name);
-        }
-        function onSelectedClinic(data) {
-            $('#clinic_id').val(data[0].id);
-            $('#clinic_name').val(data[0].code + ' ' + data[0].name);
+        function onSelected(data) {
+            $('#estate_id').val(data[0].id);
+            $('#estate_name').val(data[0].code + ' ' + data[0].name);
         }
     </script>
 @endsection

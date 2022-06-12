@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Master;
 use App\Http\Controllers\AppCrudController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Clinic;
+use Illuminate\Support\Facades\DB;
+use Lang;
 
 class ClinicController extends AppCrudController
 {
@@ -18,6 +21,90 @@ class ClinicController extends AppCrudController
         $this->setEdit('master.clinic.edit');
         $this->setView('master.clinic.view');
         $this->setModel('App\Models\Clinic');
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            $validateOnStore = $this->validateOnStore($request);
+            if($validateOnStore) {
+                return response()->json([
+                    'status' => '400',
+                    'data' => '',
+                    'message'=> $validateOnStore
+                ]);
+            }
+
+            DB::beginTransaction();
+            $data = new Clinic();
+            $data->code = $request->code;
+            $data->name = $request->name;
+            $data->address = $request->address;
+            $data->phone = $request->phone;
+            $data->save();
+
+            $data->syncAfdelinks($request->afdelinks);
+            
+            DB::commit();
+            return response()->json([
+                'status' => '200',
+                'data' => '',
+                'message'=> Lang::get("Data has been stored")
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json([
+                'status' => '500',
+                'data' => '',
+                'message'=> $th->getMessage()
+            ]);
+        }        
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $data = $this->model::find($id);
+            if(!$data) {
+                return response()->json([
+                    'status' => '400',
+                    'data' => '',
+                    'message'=> Lang::get("Data not found")
+                ]);
+            }
+
+            $validateOnUpdate = $this->validateOnUpdate($request, $id);
+            if($validateOnUpdate) {
+                return response()->json([
+                    'status' => '400',
+                    'data' => '',
+                    'message'=> $validateOnUpdate
+                ]);
+            }
+
+            DB::beginTransaction();
+            $data->code = $request->code;
+            $data->name = $request->name;
+            $data->address = $request->address;
+            $data->phone = $request->phone;
+            $data->save();
+
+            $data->syncAfdelinks($request->afdelinks);
+
+            DB::commit();
+            return response()->json([
+                'status' => '200',
+                'data' => '',
+                'message'=> Lang::get("Data has been updated")
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json([
+                'status' => '500',
+                'data' => '',
+                'message'=> $th->getMessage()
+            ]);
+        }     
     }
 
     public function validateOnStore(Request $request)

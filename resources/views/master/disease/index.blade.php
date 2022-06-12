@@ -42,7 +42,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("disease Group")}}</label>
+                                        <label class="col-md-2 col-form-label">{{__("Disease Group")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
                                                 <input type="text" name="disease_group_name" id="disease_group_name" class="form-control required">

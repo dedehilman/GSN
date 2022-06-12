@@ -1,9 +1,9 @@
-@extends('layout', ['title' => Lang::get("Stock"), 'subTitle' => Lang::get("Edit data stock")])
+@extends('layout', ['title' => Lang::get("Stock Opname"), 'subTitle' => Lang::get("Edit data stock opname")])
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <form action="{{route('stock.update', $data->id)}}" method="POST">
+            <form action="{{route('stock-opname.update', $data->id)}}" method="POST">
                 @csrf
 
                 <div class="card">
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div class="card-footer text-right">
-                        <a href="{{route('stock.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                        <a href="{{route('stock-opname.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
                         <button type="button" class="btn btn-primary" id="btn-update"><i class="fas fa fa-save"></i> {{__("Update")}}</button>
                     </div>
                 </div>

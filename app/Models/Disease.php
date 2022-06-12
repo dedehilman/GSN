@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Traits\BlameableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BlameableTrait;
 
 class Disease extends Model
 {
@@ -19,5 +19,10 @@ class Disease extends Model
     public function scopeWithAll($query) 
     {
         return $query->with(['diseaseGroup']);
+    }
+
+    public function medicines()
+    {
+        return $this->hasMany(DiseaseMedicine::class);
     }
 }

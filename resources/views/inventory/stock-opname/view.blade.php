@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Stock"), 'subTitle' => Lang::get("View data stock")])
+@extends('layout', ['title' => Lang::get("Stock Opname"), 'subTitle' => Lang::get("View data stock opname")])
 
 @section('content')
     <div class="row">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-right">
-                    <a href="{{route('stock.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                    <a href="{{route('stock-opname.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
                 </div>
             </div>
         </div>
