@@ -149,6 +149,8 @@ Route::post('/master/disease-group/datatable/select', [App\Http\Controllers\Mast
 Route::get('/master/disease-group/select', [App\Http\Controllers\Master\DiseaseGroupController::class, 'select'])->name('disease-group.select');
 Route::resource('master/disease-group', App\Http\Controllers\Master\DiseaseGroupController::class);
 
+<<<<<<< HEAD
+=======
 Route::post('/master/estate/datatable', [App\Http\Controllers\Master\EstateController::class, 'datatable'])->name('estate.datatable');
 Route::post('/master/estate/datatable/select', [App\Http\Controllers\Master\EstateController::class, 'datatableSelect'])->name('estate.datatable.select');
 Route::get('/master/estate/select', [App\Http\Controllers\Master\EstateController::class, 'select'])->name('estate.select');
@@ -159,12 +161,28 @@ Route::post('/master/afdelink/datatable/select', [App\Http\Controllers\Master\Af
 Route::get('/master/afdelink/select', [App\Http\Controllers\Master\AfdelinkController::class, 'select'])->name('afdelink.select');
 Route::resource('master/afdelink', App\Http\Controllers\Master\AfdelinkController::class);
 
+>>>>>>> master
 Route::post('/master/disease/datatable', [App\Http\Controllers\Master\DiseaseController::class, 'datatable'])->name('disease.datatable');
 Route::post('/master/disease/datatable/select', [App\Http\Controllers\Master\DiseaseController::class, 'datatableSelect'])->name('disease.datatable.select');
 Route::get('/master/disease/select', [App\Http\Controllers\Master\DiseaseController::class, 'select'])->name('disease.select');
 Route::resource('master/disease', App\Http\Controllers\Master\DiseaseController::class);
 
 Route::post('/master/diagnosis/datatable', [App\Http\Controllers\Master\DiagnosisController::class, 'datatable'])->name('diagnosis.datatable');
+<<<<<<< HEAD
+Route::post('/master/diagnosis/datatable/select', [App\Http\Controllers\Master\DiagnosisController::class, 'datatableSelect'])->name('diagnosis.datatable.select');
+Route::get('/master/diagnosis/select', [App\Http\Controllers\Master\DiagnosisController::class, 'select'])->name('diagnosis.select');
+Route::resource('master/diagnosis', App\Http\Controllers\Master\DiagnosisController::class);
+
+Route::post('/master/diagnosis-symptom/datatable', [App\Http\Controllers\Master\DiagnosisSymptomController::class, 'datatable'])->name('diagnosis-symptom.datatable');
+Route::post('/master/diagnosis-symptom/datatable/select', [App\Http\Controllers\Master\DiagnosisSymptomController::class, 'datatableSelect'])->name('diagnosis-symptom.datatable.select');
+Route::get('/master/diagnosis-symptom/select', [App\Http\Controllers\Master\DiagnosisSymptomController::class, 'select'])->name('diagnosis-symptom.select');
+Route::resource('master/diagnosis-symptom', App\Http\Controllers\Master\DiagnosisSymptomController::class);
+
+Route::post('/master/disease-medicine/datatable', [App\Http\Controllers\Master\DiseaseMedicineController::class, 'datatable'])->name('disease-medicine.datatable');
+Route::post('/master/disease-medicine/datatable/select', [App\Http\Controllers\Master\DiseaseMedicineController::class, 'datatableSelect'])->name('disease-medicine.datatable.select');
+Route::get('/master/disease-medicine/select', [App\Http\Controllers\Master\DiseaseMedicineController::class, 'select'])->name('disease-medicine.select');
+Route::resource('master/disease-medicine', App\Http\Controllers\Master\DiseaseMedicineController::class);
+=======
 Route::resource('master/diagnosis', App\Http\Controllers\Master\DiagnosisController::class);
 
 Route::post('/inventory/stock-opname/datatable', [App\Http\Controllers\Inventory\StockOpnameController::class, 'datatable'])->name('stock-opname.datatable');
@@ -172,3 +190,4 @@ Route::resource('inventory/stock-opname', App\Http\Controllers\Inventory\StockOp
 
 Route::post('/inventory/stock-transaction/datatable', [App\Http\Controllers\Inventory\StockTransactionController::class, 'datatable'])->name('stock-transaction.datatable');
 Route::resource('inventory/stock-transaction', App\Http\Controllers\Inventory\StockTransactionController::class);
+>>>>>>> master

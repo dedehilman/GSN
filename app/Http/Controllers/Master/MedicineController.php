@@ -37,7 +37,7 @@ class MedicineController extends AppCrudController
     public function validateOnUpdate(Request $request, int $id)
     {
         $validator = Validator::make($request->all(), [
-            'code' => 'required|max:255|unique:medicine_rules,code,'.$id,
+            'code' => 'required|max:255|unique:medicines,code,'.$id,
             'name' => 'required|max:255',
             'medicine_type_id' => 'required',
             'unit_id' => 'required',
