@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Disease"), 'subTitle' => Lang::get("Manage data disease")])
+@extends('layout', ['title' => Lang::get("Diagnosis Symptom"), 'subTitle' => Lang::get("Manage data diagnosis symptom")])
 
 @section('content')
     <div class="row">
@@ -18,8 +18,8 @@
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div>
-                                @can('disease-create')                                
-                                <a href="{{route('disease.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
+                                @can('diagnosis-symptom-create')                                
+                                <a href="{{route('diagnosis-symptom.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
                                 @endcan
                             </div>
                             <div class="btn-group nav view">
@@ -32,23 +32,23 @@
                             <div id="collapseOne" class="panel-collapse collapse in" style="padding:10px 0px 0px 0px;">
                                 <form id="formSearch">
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Code")}}</label>
-                                        <div class="col-md-4">
-                                            <input type="text" name="code" class="form-control">
-                                        </div>
-                                        <label class="col-md-2 col-form-label">{{__("Name")}}</label>
-                                        <div class="col-md-4">
-                                            <input type="text" name="name" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Disease Group")}}</label>
+                                        <label class="col-md-2 col-form-label">{{__("Diagnosis")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" name="disease_group_name" id="disease_group_name" class="form-control required">
-                                                <input type="hidden" name="disease_group_id" id="disease_group_id">
+                                                <input type="text" name="diagnosis_name" id="diagnosis_name" class="form-control required">
+                                                <input type="hidden" name="diagnosis_id" id="diagnosis_id">
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Disease Group List')}}" data-url="{{route('disease-group.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Diagnosis List')}}" data-url="{{route('diagnosis.select')}}" data-handler="onSelectedDiagnosis"><i class="fas fa-search"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label class="col-md-2 col-form-label">{{__("Symptom")}}</label>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <input type="text" name="symptom_name" id="symptom_name" class="form-control required">
+                                                <input type="hidden" name="symptom_id" id="symptom_id">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Symptom List')}}" data-url="{{route('symptom.select')}}" data-handler="onSelectedSymptom"><i class="fas fa-search"></i></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -79,9 +79,8 @@
                                 <th><input type='checkbox' name="select-all"/></th>
                                 <th></th>
                                 <th></th>
-                                <th>{{ __("Code") }}</th>
-                                <th>{{ __("Name") }}</th>
-                                <th>{{ __("Disease Group") }}</th>
+                                <th>{{ __("Diagnosis") }}</th>
+                                <th>{{ __("Symptom") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -97,7 +96,7 @@
             $('#datatable').DataTable({
                 ajax:
                 {
-                    url: "{{route('disease.datatable')}}",
+                    url: "{{route('diagnosis-symptom.datatable')}}",
                     type: 'POST',
                     data: function(data){
                         getDatatableParameter(data);
@@ -122,7 +121,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('disease-delete') true @else false @endcan,
+                        visible: @can('diagnosis-symptom-delete') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-danger'><i class='fas fa-trash'></i></div>";
@@ -133,51 +132,50 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('disease-edit') true @else false @endcan,
+                        visible: @can('diagnosis-symptom-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
                         }
                     },
                     {
-                        data: 'code',
-                        name: 'code',
+                        data: 'diagnosis.name',
+                        name: 'diagnosis_id',
                         defaultContent: '',
                     },
                     {
-                        data: 'name',
-                        name: 'name',
-                        defaultContent: '',
-                    },
-                    {
-                        data: 'disease_group.name',
-                        name: 'disease_group_id',
+                        data: 'symptom.name',
+                        name: 'symptom_id',
                         defaultContent: '',
                     }
                 ],
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Disease")}}',
-                        exportOptions: { columns: [3,4,5] }
+                        title: '{{__("Diagnosis Symptom")}}',
+                        exportOptions: { columns: [3,4] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Disease")}}',
-                        exportOptions: { columns: [3,4,5] }
+                        title: '{{__("Diagnosis Symptom")}}',
+                        exportOptions: { columns: [3,4] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Disease")}}',
-                        exportOptions: { columns: [3,4,5] }
+                        title: '{{__("Diagnosis Symptom")}}',
+                        exportOptions: { columns: [3,4] }
                     }
                 ],
             });
         });
 
-        function onSelected(data) {
-            $('#disease_group_id').val(data[0].id);
-            $('#disease_group_name').val(data[0].code + ' ' + data[0].name);
+        function onSelectedDiagnosis(data) {
+            $('#diagnosis_id').val(data[0].id);
+            $('#diagnosis_name').val(data[0].code + ' ' + data[0].name);
+        }
+        function onSelectedSymptom(data) {
+            $('#symptom_id').val(data[0].id);
+            $('#symptom_name').val(data[0].code + ' ' + data[0].name);
         }
     </script>
 @endsection

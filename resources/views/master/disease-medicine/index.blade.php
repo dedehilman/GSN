@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Disease"), 'subTitle' => Lang::get("Manage data disease")])
+@extends('layout', ['title' => Lang::get("Disease Medicine"), 'subTitle' => Lang::get("Manage data disease medicine")])
 
 @section('content')
     <div class="row">
@@ -18,8 +18,8 @@
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div>
-                                @can('disease-create')                                
-                                <a href="{{route('disease.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
+                                @can('disease-medicine-create')                                
+                                <a href="{{route('disease-medicine.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
                                 @endcan
                             </div>
                             <div class="btn-group nav view">
@@ -32,23 +32,35 @@
                             <div id="collapseOne" class="panel-collapse collapse in" style="padding:10px 0px 0px 0px;">
                                 <form id="formSearch">
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Code")}}</label>
+                                        <label class="col-md-2 col-form-label">{{__("Disease")}}</label>
                                         <div class="col-md-4">
-                                            <input type="text" name="code" class="form-control">
+                                            <div class="input-group">
+                                                <input type="text" name="disease_name" id="disease_name" class="form-control required">
+                                                <input type="hidden" name="disease_id" id="disease_id">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Disease List')}}" data-url="{{route('disease.select')}}" data-handler="onSelectedDisease"><i class="fas fa-search"></i></span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <label class="col-md-2 col-form-label">{{__("Name")}}</label>
+                                        <label class="col-md-2 col-form-label">{{__("Medicine")}}</label>
                                         <div class="col-md-4">
-                                            <input type="text" name="name" class="form-control">
+                                            <div class="input-group">
+                                                <input type="text" name="medicine_name" id="medicine_name" class="form-control required">
+                                                <input type="hidden" name="medicine_id" id="medicine_id">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Medicine List')}}" data-url="{{route('medicine.select')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Disease Group")}}</label>
+                                        <label class="col-md-2 col-form-label">{{__("Medicine Rule")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" name="disease_group_name" id="disease_group_name" class="form-control required">
-                                                <input type="hidden" name="disease_group_id" id="disease_group_id">
+                                                <input type="text" name="medicine_rule_name" id="medicine_rule_name" class="form-control required">
+                                                <input type="hidden" name="medicine_rule_id" id="medicine_rule_id">
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Disease Group List')}}" data-url="{{route('disease-group.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Medicine Rule List')}}" data-url="{{route('medicine-rule.select')}}" data-handler="onSelectedMedicineRule"><i class="fas fa-search"></i></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -79,9 +91,10 @@
                                 <th><input type='checkbox' name="select-all"/></th>
                                 <th></th>
                                 <th></th>
-                                <th>{{ __("Code") }}</th>
-                                <th>{{ __("Name") }}</th>
-                                <th>{{ __("Disease Group") }}</th>
+                                <th>{{ __("Disease") }}</th>
+                                <th>{{ __("Medicine") }}</th>
+                                <th>{{ __("Medicine Rule") }}</th>
+                                <th>{{ __("Quantity") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -97,7 +110,7 @@
             $('#datatable').DataTable({
                 ajax:
                 {
-                    url: "{{route('disease.datatable')}}",
+                    url: "{{route('disease-medicine.datatable')}}",
                     type: 'POST',
                     data: function(data){
                         getDatatableParameter(data);
@@ -122,7 +135,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('disease-delete') true @else false @endcan,
+                        visible: @can('disease-medicine-delete') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-danger'><i class='fas fa-trash'></i></div>";
@@ -133,51 +146,64 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('disease-edit') true @else false @endcan,
+                        visible: @can('disease-medicine-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
                         }
                     },
                     {
-                        data: 'code',
-                        name: 'code',
+                        data: 'disease.name',
+                        name: 'disease_id',
                         defaultContent: '',
                     },
                     {
-                        data: 'name',
-                        name: 'name',
+                        data: 'medicine.name',
+                        name: 'medicine_id',
                         defaultContent: '',
                     },
                     {
-                        data: 'disease_group.name',
-                        name: 'disease_group_id',
+                        data: 'medicine_rule.name',
+                        name: 'medicine_rule_id',
+                        defaultContent: '',
+                    },
+                    {
+                        data: 'qty',
+                        name: 'qty',
                         defaultContent: '',
                     }
                 ],
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Disease")}}',
-                        exportOptions: { columns: [3,4,5] }
+                        title: '{{__("Disease Medicine")}}',
+                        exportOptions: { columns: [3,4,5,6] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Disease")}}',
-                        exportOptions: { columns: [3,4,5] }
+                        title: '{{__("Disease Medicine")}}',
+                        exportOptions: { columns: [3,4,5,6] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Disease")}}',
-                        exportOptions: { columns: [3,4,5] }
+                        title: '{{__("Disease Medicine")}}',
+                        exportOptions: { columns: [3,4,5,6] }
                     }
                 ],
             });
         });
 
-        function onSelected(data) {
-            $('#disease_group_id').val(data[0].id);
-            $('#disease_group_name').val(data[0].code + ' ' + data[0].name);
+        function onSelectedDisease(data) {
+            $('#disease_id').val(data[0].id);
+            $('#disease_name').val(data[0].code + ' ' + data[0].name);
+        }
+        function onSelectedMedicine(data) {
+            $('#medicine_id').val(data[0].id);
+            $('#medicine_name').val(data[0].code + ' ' + data[0].name);
+        }
+        function onSelectedMedicine_rule(data) {
+            $('#medicine_rule_id').val(data[0].id);
+            $('#medicine_rule_name').val(data[0].code + ' ' + data[0].name);
         }
     </script>
 @endsection
