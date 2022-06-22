@@ -60,8 +60,8 @@
                             <div class="col-md-4">
                                 <input type="text" name="reference" class="form-control">
                             </div>
-                            <label class="col-md-2 col-form-label required">{{__("New Clinic")}}</label>
-                            <div class="col-md-4">
+                            <label class="col-md-2 col-form-label required new-clinic d-none">{{__("New Clinic")}}</label>
+                            <div class="col-md-4 new-clinic d-none">
                                 <div class="input-group">
                                     <input type="text" name="new_clinic_name" id="new_clinic_name" class="form-control required">
                                     <input type="hidden" name="new_clinic_id" id="new_clinic_id">
@@ -175,6 +175,14 @@
             $(document).on('click', '.medicine', function(){
                 seqId = $(this).closest('tr').find('input:first').attr('id').replace('transaction_detail_id', '');
             });
+
+            $("select[name='transaction_type']").on('change', function(){
+                if($(this).val() == 'Transfer In' || $(this).val() == 'Transfer Out') {
+                    $(".new-clinic").removeClass("d-none");
+                } else {
+                    $(".new-clinic").addClass("d-none");
+                }
+            })
         })
 
         function removeRow(element)

@@ -21,6 +21,11 @@ abstract class AppUploaderController extends Controller
     protected $model;
     protected $column = array();
 
+    public function setDefaultMiddleware($permission) {
+        $this->middleware('auth');
+        $this->middleware('permission:'.$permission.'-upload', ['only' => ['index','show','uploader', 'uploadProcess', 'validateProcess', 'commitProcess']]);
+    }
+
     public function setUploader($uploader) {
         $this->uploader = $uploader;
     }

@@ -172,3 +172,9 @@ Route::resource('inventory/stock-opname', App\Http\Controllers\Inventory\StockOp
 
 Route::post('/inventory/stock-transaction/datatable', [App\Http\Controllers\Inventory\StockTransactionController::class, 'datatable'])->name('stock-transaction.datatable');
 Route::resource('inventory/stock-transaction', App\Http\Controllers\Inventory\StockTransactionController::class);
+
+Route::group(['prefix' => 'report', 'as' => 'report.'], function () {
+    Route::post('stock/datatable', [App\Http\Controllers\Report\StockReportController::class, 'datatable'])->name('stock.datatable');
+    Route::get('stock/download/{id}', [App\Http\Controllers\Report\StockReportController::class, 'download'])->name('stock.download');
+    Route::resource('stock', App\Http\Controllers\Report\StockReportController::class);
+});

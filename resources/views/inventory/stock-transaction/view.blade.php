@@ -16,22 +16,22 @@
                 </div>
                 <div class="card-body">       
                     <div class="form-group row">
-                        <label class="col-md-2 col-form-label required">{{__("Transaction No")}}</label>
+                        <label class="col-md-2 col-form-label">{{__("Transaction No")}}</label>
                         <div class="col-md-4 col-form-label">{{$data->transaction_no}}</div>
-                        <label class="col-md-2 col-form-label required">{{__("Transaction Type")}}</label>
+                        <label class="col-md-2 col-form-label">{{__("Transaction Type")}}</label>
                         <div class="col-md-4 col-form-label">{{$data->transaction_type}}</div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-2 col-form-label required">{{__("Transaction Date")}}</label>
+                        <label class="col-md-2 col-form-label">{{__("Transaction Date")}}</label>
                         <div class="col-md-4 col-form-label">{{$data->transaction_date}}</div>
-                        <label class="col-md-2 col-form-label required">{{__("Clinic")}}</label>
+                        <label class="col-md-2 col-form-label">{{__("Clinic")}}</label>
                         <div class="col-md-4 col-form-label">{{$data->clinic->code}} {{$data->clinic->name}}</div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-2 col-form-label">{{__("Reference")}}</label>
                         <div class="col-md-4 col-form-label">{{$data->reference}}</div>
-                        <label class="col-md-2 col-form-label required">{{__("New Clinic")}}</label>
-                        <div class="col-md-4 col-form-label">{{$data->clinic->code ?? ''}} {{$data->clinic->name ?? ''}}</div>
+                        <label class="col-md-2 col-form-label @if($data->transaction_type != 'Transfer In' && $data->transaction_type != 'Transfer Out') d-none @endif">{{__("New Clinic")}}</label>
+                        <div class="col-md-4 col-form-label @if($data->transaction_type != 'Transfer In' && $data->transaction_type != 'Transfer Out') d-none @endif">{{$data->clinic->code ?? ''}} {{$data->clinic->name ?? ''}}</div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-2 col-form-label">{{__("Remark")}}</label>
