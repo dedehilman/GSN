@@ -31,13 +31,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label required">{{__("Estate")}}</label>
+                            <label class="col-md-3 col-form-label required">{{__("Business Area")}}</label>
                             <div class="col-md-9">
                                 <div class="input-group">
                                     <input type="text" name="estate_name" id="estate_name" class="form-control required">
                                     <input type="hidden" name="estate_id" id="estate_id">
                                     <div class="input-group-append">
-                                        <span class="input-group-text show-modal-select" data-title="{{__('Estate List')}}" data-url="{{route('estate.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
+                                        <span class="input-group-text show-modal-select" data-title="{{__('Business Area List')}}" data-url="{{route('estate.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
                                     </div>
                                 </div>
                             </div>

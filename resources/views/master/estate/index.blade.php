@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Estate"), 'subTitle' => Lang::get("Manage data estate")])
+@extends('layout', ['title' => Lang::get("Business Area"), 'subTitle' => Lang::get("Manage data business area")])
 
 @section('content')
     <div class="row">
@@ -158,17 +158,17 @@
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Estate")}}',
+                        title: '{{__("Business Area")}}',
                         exportOptions: { columns: [3, 4, 5] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Estate")}}',
+                        title: '{{__("Business Area")}}',
                         exportOptions: { columns: [3, 4, 5] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Estate")}}',
+                        title: '{{__("Business Area")}}',
                         exportOptions: { columns: [3, 4, 5] }
                     }
                 ],

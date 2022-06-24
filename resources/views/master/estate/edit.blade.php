@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Estate"), 'subTitle' => Lang::get("Edit data estate")])
+@extends('layout', ['title' => Lang::get("Business Area"), 'subTitle' => Lang::get("Edit data business area")])
 
 @section('content')
     <div class="row">

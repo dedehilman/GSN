@@ -8,7 +8,7 @@
                     <th>@if(($select ?? 'single') == 'multiple')<input type='checkbox' name="select-all"/>@endif</th>
                     <th>{{ __("Code") }}</th>
                     <th>{{ __("Name") }}</th>
-                    <th>{{ __("Estate") }}</th>
+                    <th>{{ __("Business Area") }}</th>
                 </tr>
             </thead>
         </table>
