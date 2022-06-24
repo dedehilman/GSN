@@ -71,6 +71,7 @@
                                 <th>{{ __("Name") }}</th>
                                 <th>{{ __("Address") }}</th>
                                 <th>{{ __("Phone") }}</th>
+                                <th>{{ __("Business Area") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -147,23 +148,28 @@
                         data: 'phone',
                         name: 'phone',
                         defaultContent: '',
+                    },
+                    {
+                        data: 'estate.name',
+                        name: 'estate_id',
+                        defaultContent: '',
                     }
                 ],
                 buttons: [
                     {
                         extend: 'excel',
                         title: '{{__("Clinic")}}',
-                        exportOptions: { columns: [3, 4, 5, 6] }
+                        exportOptions: { columns: [3, 4, 5, 6, 7] }
                     },
                     {
                         extend: 'csv',
                         title: '{{__("Clinic")}}',
-                        exportOptions: { columns: [3, 4, 5, 6] }
+                        exportOptions: { columns: [3, 4, 5, 6, 7] }
                     },
                     {
                         extend: 'pdf',
                         title: '{{__("Clinic")}}',
-                        exportOptions: { columns: [3, 4, 5, 6] }
+                        exportOptions: { columns: [3, 4, 5, 6, 7] }
                     }
                 ],
             });

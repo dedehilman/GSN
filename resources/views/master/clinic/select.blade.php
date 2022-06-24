@@ -10,6 +10,7 @@
                     <th>{{ __("Name") }}</th>
                     <th>{{ __("Address") }}</th>
                     <th>{{ __("Phone") }}</th>
+                    <th>{{ __("Business Area") }}</th>
                 </tr>
             </thead>
         </table>
@@ -57,6 +58,10 @@
                 }, {
                     data: 'phone',
                     name: 'phone',
+                    defaultContent: '',
+                }, {
+                    data: 'estate.name',
+                    name: 'estate_id',
                     defaultContent: '',
                 }
             ],

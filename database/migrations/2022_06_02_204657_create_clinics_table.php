@@ -19,12 +19,14 @@ class CreateClinicsTable extends Migration
             $table->string('name');
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
+            $table->unsignedBigInteger('estate_id');
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
 
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('estate_id')->references('id')->on('estates')->onDelete('cascade');
         });
     }
 

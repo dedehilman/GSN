@@ -10,16 +10,15 @@ class Clinic extends Model
 {
     use HasFactory, BlameableTrait;
 
-    protected $fillable = ['code', 'name', 'address', 'phone'];
+    protected $fillable = ['code', 'name', 'address', 'phone', 'estate_id'];
 
-    public function afdelinks()
-    {
-        return $this->belongsToMany(Afdelink::class, ClinicAfdelink::class);
+    public function estate() {
+        return $this->belongsTo(Estate::class);
     }
 
-    public function syncAfdelinks($afdelinks)
+    public function scopeWithAll($query) 
     {
-        $this->afdelinks()->detach();   
-        $this->afdelinks()->attach($afdelinks);
+        return $query->with(['estate']);
     }
+    
 }

@@ -31,34 +31,9 @@
                         <label class="col-md-3 col-form-label">{{__("Phone")}}</label>
                         <div class="col-md-9 col-form-label">{{$data->phone}}</div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="pill" href="#tab1" role="tab" aria-selected="true">{{ __("Afdelink") }}</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content" style="padding-top: 10px">
-                                <div class="tab-pane fade show active" id="tab1" role="tabpanel">
-                                    <table class="table table-striped table-bordered" id="table_clinic_afdelink">
-                                        <thead>
-                                            <tr>
-                                                <th>{{ __("Code") }}</th>
-                                                <th>{{ __("Name") }}</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($data->afdelinks as $index => $afdelink)
-                                                <tr>
-                                                    <td>{{$afdelink->code}}</td>
-                                                    <td>{{$afdelink->name}}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Business Area")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->estate->code ?? ''}} {{$data->estate->name ?? ''}}</div>
                     </div>
                 </div>
                 <div class="card-footer text-right">
@@ -67,23 +42,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('script')
-<script>
-
-    $.extend(true, $.fn.dataTable.defaults, {
-        serverSide: false,
-        searching: true,
-        order: [[0, "asc"]],
-    });
-    
-    $('document').ready(function(){
-
-        $('#table_clinic_afdelink').DataTable({ 
-        });
-
-    });
-
-    </script>
 @endsection
