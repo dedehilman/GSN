@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Medicine"), 'subTitle' => Lang::get("Edit data medicine")])
+@extends('layout', ['title' => Lang::get("Product"), 'subTitle' => Lang::get("Edit data product")])
 
 @section('content')
     <div class="row">
@@ -43,13 +43,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label">{{__("Medicine Type")}}</label>
+                            <label class="col-md-3 col-form-label">{{__("Product Type")}}</label>
                             <div class="col-md-9">
                                 <div class="input-group">
                                     <input type="text" name="medicine_type_name" id="medicine_type_name" class="form-control" value="{{$data->medicineType->code}} {{$data->medicineType->name}}">
                                     <input type="hidden" name="medicine_type_id" id="medicine_type_id" value="{{$data->medicineType->id}}">
                                     <div class="input-group-append">
-                                        <span class="input-group-text show-modal-select" data-title="{{__('Medicine Type List')}}" data-url="{{route('medicine-type.select')}}" data-handler="onSelectedMedicineType"><i class="fas fa-search"></i></span>
+                                        <span class="input-group-text show-modal-select" data-title="{{__('Product Type List')}}" data-url="{{route('medicine-type.select')}}" data-handler="onSelectedProductType"><i class="fas fa-search"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
             $('#unit_id').val(data[0].id);
             $('#unit_name').val(data[0].code + ' ' + data[0].name);
         }
-        function onSelectedMedicineType(data) {
+        function onSelectedProductType(data) {
             $('#medicine_type_id').val(data[0].id);
             $('#medicine_type_name').val(data[0].code + ' ' + data[0].name);
         }

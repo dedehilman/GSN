@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Medicine Type"), 'subTitle' => Lang::get("Manage data medicine type")])
+@extends('layout', ['title' => Lang::get("Product Type"), 'subTitle' => Lang::get("Manage data product type")])
 
 @section('content')
     <div class="row">
@@ -140,17 +140,17 @@
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("MedicineType")}}',
+                        title: '{{__("Product Type")}}',
                         exportOptions: { columns: [3,4] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("MedicineType")}}',
+                        title: '{{__("Product Type")}}',
                         exportOptions: { columns: [3, 4] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("MedicineType")}}',
+                        title: '{{__("Product Type")}}',
                         exportOptions: { columns: [3, 4] }
                     }
                 ],

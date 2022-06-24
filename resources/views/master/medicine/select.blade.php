@@ -9,7 +9,7 @@
                     <th>{{ __("Code") }}</th>
                     <th>{{ __("Name") }}</th>
                     <th>{{ __("Unit") }}</th>
-                    <th>{{ __("Medicine Type") }}</th>
+                    <th>{{ __("Product Type") }}</th>
                 </tr>
             </thead>
         </table>

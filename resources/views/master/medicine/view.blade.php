@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Medicine"), 'subTitle' => Lang::get("View data medicine")])
+@extends('layout', ['title' => Lang::get("Product"), 'subTitle' => Lang::get("View data product")])
 
 @section('content')
     <div class="row">
@@ -28,7 +28,7 @@
                         <div class="col-md-9 col-form-label">{{$data->unit->code}} {{$data->unit->name}}</div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{__("Medicine Type")}}</label>
+                        <label class="col-md-3 col-form-label">{{__("Product Type")}}</label>
                         <div class="col-md-9 col-form-label">{{$data->medicineType->code}} {{$data->medicineType->name}}</div>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Medicine Type"), 'subTitle' => Lang::get("Create data medicine type")])
+@extends('layout', ['title' => Lang::get("Product Type"), 'subTitle' => Lang::get("Create data product type")])
 
 @section('content')
     <div class="row">
