@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Employee Attribute"), 'subTitle' => Lang::get("Manage data employee attribute")])
+@extends('layout', ['title' => Lang::get("Relationship"), 'subTitle' => Lang::get("Manage data relationship")])
 
 @section('content')
     <div class="row">
@@ -18,8 +18,8 @@
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div>
-                                @can('employee-attribute-create')
-                                <a href="{{route('employee.attribute.create', ['parentId'=>$data->id])}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>                                                
+                                @can('relationship-create')
+                                <a href="{{route('relationship.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
                                 @endcan
                             </div>
                             <div class="btn-group nav view">
@@ -32,35 +32,13 @@
                             <div id="collapseOne" class="panel-collapse collapse in" style="padding:10px 0px 0px 0px;">
                                 <form id="formSearch">
                                     <div class="form-group row">
-                                        <label class="col-2 col-form-label">{{__("Effective Date")}}</label>
-                                        <div class="col-4">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                                </div>
-                                                <input type="text" name="effective_date" class="form-control date">
-                                            </div>
+                                        <label class="col-md-2 col-form-label">{{__("Code")}}</label>
+                                        <div class="col-md-4">
+                                            <input type="text" name="code" class="form-control">
                                         </div>
-                                        <label class="col-2 col-form-label">{{__("Expiry Date")}}</label>
-                                        <div class="col-4">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                                </div>
-                                                <input type="text" name="expiry_date" class="form-control date">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-2 col-form-label">{{__("Attribute")}}</label>
-                                        <div class="col-4">
-                                            <div class="input-group">
-                                                <input type="text" name="attribute_name" id="attribute_name" class="form-control">
-                                                <input type="hidden" name="attribute_id" id="attribute_id">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Attribute List')}}" data-url="{{route('attribute.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
-                                                </div>
-                                            </div>
+                                        <label class="col-md-2 col-form-label">{{__("Name")}}</label>
+                                        <div class="col-md-4">
+                                            <input type="text" name="name" class="form-control">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -89,10 +67,8 @@
                                 <th><input type='checkbox' name="select-all"/></th>
                                 <th></th>
                                 <th></th>
-                                <th>{{ __("Effective Date") }}</th>
-                                <th>{{ __("Expiry Date") }}</th>
-                                <th>{{ __("Attribute") }}</th>
-                                <th>{{ __("Default") }}</th>
+                                <th>{{ __("Code") }}</th>
+                                <th>{{ __("Name") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -108,7 +84,7 @@
             $('#datatable').DataTable({
                 ajax:
                 {
-                    url: "{{route('employee.attribute.datatable', ['parentId'=>$data->id])}}",
+                    url: "{{route('relationship.datatable')}}",
                     type: 'POST',
                     data: function(data){
                         getDatatableParameter(data);
@@ -133,7 +109,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('employee-attribute-delete') true @else false @endcan,
+                        visible: @can('relationship-delete') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-danger'><i class='fas fa-trash'></i></div>";
@@ -144,65 +120,41 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('employee-attribute-edit') true @else false @endcan,
+                        visible: @can('relationship-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
                         }
                     },
                     {
-                        data: 'effective_date',
-                        name: 'effective_date',
+                        data: 'code',
+                        name: 'code',
                         defaultContent: '',
                     },
                     {
-                        data: 'expiry_date',
-                        name: 'expiry_date',
+                        data: 'name',
+                        name: 'name',
                         defaultContent: '',
-                    },
-                    {
-                        data: 'attribute.name',
-                        name: 'attribute_id',
-                        defaultContent: '',
-                    },
-                    {
-                        data: 'is_default',
-                        name: 'is_default',
-                        defaultContent: '',
-                        className: 'text-center',
-                        render: function(data, type, row)
-                        {
-                            if(data == 1) {
-                                return '<span class="badge badge-primary">{{ __('Yes') }}</span>';
-                            }
-
-                            return '<span class="badge badge-danger">{{ __('No') }}</span>';
-                        }
                     }
                 ],
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Employee Attribute")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Relationship")}}',
+                        exportOptions: { columns: [3,4] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Employee Attribute")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Relationship")}}',
+                        exportOptions: { columns: [3,4] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Employee Attribute")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Relationship")}}',
+                        exportOptions: { columns: [3,4] }
                     }
                 ],
             });
         });
-
-        function onSelected(data) {
-            $('#attribute_id').val(data[0].id);
-            $('#attribute_name').val(data[0].name);
-        }
     </script>
 @endsection

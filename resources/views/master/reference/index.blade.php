@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Employee Company"), 'subTitle' => Lang::get("Manage data employee company")])
+@extends('layout', ['title' => Lang::get("Reference"), 'subTitle' => Lang::get("Manage data reference")])
 
 @section('content')
     <div class="row">
@@ -18,8 +18,8 @@
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div>
-                                @can('employee-company-create')
-                                <a href="{{route('employee.company.create', ['parentId'=>$data->id])}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>                                                
+                                @can('reference-create')                                
+                                <a href="{{route('reference.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
                                 @endcan
                             </div>
                             <div class="btn-group nav view">
@@ -32,33 +32,23 @@
                             <div id="collapseOne" class="panel-collapse collapse in" style="padding:10px 0px 0px 0px;">
                                 <form id="formSearch">
                                     <div class="form-group row">
-                                        <label class="col-2 col-form-label">{{__("Effective Date")}}</label>
-                                        <div class="col-4">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                                </div>
-                                                <input type="text" name="effective_date" class="form-control date">
-                                            </div>
+                                        <label class="col-md-2 col-form-label">{{__("Code")}}</label>
+                                        <div class="col-md-4">
+                                            <input type="text" name="code" class="form-control">
                                         </div>
-                                        <label class="col-2 col-form-label">{{__("Expiry Date")}}</label>
-                                        <div class="col-4">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                                </div>
-                                                <input type="text" name="expiry_date" class="form-control date">
-                                            </div>
+                                        <label class="col-md-2 col-form-label">{{__("Name")}}</label>
+                                        <div class="col-md-4">
+                                            <input type="text" name="name" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-2 col-form-label">{{__("Company")}}</label>
-                                        <div class="col-4">
+                                        <label class="col-md-2 col-form-label">{{__("Reference Type")}}</label>
+                                        <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" name="company_name" id="company_name" class="form-control">
-                                                <input type="hidden" name="company_id" id="company_id">
+                                                <input type="text" name="reference_type_name" id="reference_type_name" class="form-control required">
+                                                <input type="hidden" name="reference_type_id" id="reference_type_id">
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Company List')}}" data-url="{{route('company.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Reference Type List')}}" data-url="{{route('reference-type.select')}}" data-handler="onSelectedReferenceType"><i class="fas fa-search"></i></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -89,10 +79,9 @@
                                 <th><input type='checkbox' name="select-all"/></th>
                                 <th></th>
                                 <th></th>
-                                <th>{{ __("Effective Date") }}</th>
-                                <th>{{ __("Expiry Date") }}</th>
-                                <th>{{ __("Company") }}</th>
-                                <th>{{ __("Default") }}</th>
+                                <th>{{ __("Code") }}</th>
+                                <th>{{ __("Name") }}</th>
+                                <th>{{ __("Reference Type") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -108,7 +97,7 @@
             $('#datatable').DataTable({
                 ajax:
                 {
-                    url: "{{route('employee.company.datatable', ['parentId'=>$data->id])}}",
+                    url: "{{route('reference.datatable')}}",
                     type: 'POST',
                     data: function(data){
                         getDatatableParameter(data);
@@ -133,7 +122,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('employee-company-delete') true @else false @endcan,
+                        visible: @can('reference-delete') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-danger'><i class='fas fa-trash'></i></div>";
@@ -144,65 +133,51 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('employee-company-edit') true @else false @endcan,
+                        visible: @can('reference-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
                         }
                     },
                     {
-                        data: 'effective_date',
-                        name: 'effective_date',
+                        data: 'code',
+                        name: 'code',
                         defaultContent: '',
                     },
                     {
-                        data: 'expiry_date',
-                        name: 'expiry_date',
+                        data: 'name',
+                        name: 'name',
                         defaultContent: '',
                     },
                     {
-                        data: 'company.name',
-                        name: 'company_id',
+                        data: 'reference_type.name',
+                        name: 'reference_type_id',
                         defaultContent: '',
-                    },
-                    {
-                        data: 'is_default',
-                        name: 'is_default',
-                        defaultContent: '',
-                        className: 'text-center',
-                        render: function(data, type, row)
-                        {
-                            if(data == 1) {
-                                return '<span class="badge badge-primary">{{ __('Yes') }}</span>';
-                            }
-
-                            return '<span class="badge badge-danger">{{ __('No') }}</span>';
-                        }
                     }
                 ],
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Employee Company")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Reference")}}',
+                        exportOptions: { columns: [3,4,5] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Employee Company")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Reference")}}',
+                        exportOptions: { columns: [3,4,5] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Employee Company")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Reference")}}',
+                        exportOptions: { columns: [3,4,5] }
                     }
                 ],
             });
         });
 
-        function onSelected(data) {
-            $('#company_id').val(data[0].id);
-            $('#company_name').val(data[0].name);
+        function onSelectedReferenceType(data) {
+            $('#reference_type_id').val(data[0].id);
+            $('#reference_type_name').val(data[0].code + ' ' + data[0].name);
         }
     </script>
 @endsection

@@ -106,7 +106,7 @@
         "nav_header": 0,
         "link": "sequence*,rule*,route*,notification-template*",
         "sequence": 950,
-        "display": 1,
+        "display": 0,
         "parent_id": null
     },
     {
@@ -116,7 +116,7 @@
         "nav_header": 0,
         "link": "sequence.index,sequence*",
         "sequence": 1,
-        "display": 1,
+        "display": 0,
         "parent_id": "M-950"
     },
     {
@@ -126,7 +126,7 @@
         "nav_header": 0,
         "link": "rule.index,rule*",
         "sequence": 2,
-        "display": 1,
+        "display": 0,
         "parent_id": "M-950"
     },
     {
@@ -136,7 +136,7 @@
         "nav_header": 0,
         "link": "route.index,route*",
         "sequence": 3,
-        "display": 1,
+        "display": 0,
         "parent_id": "M-950"
     },
     {
@@ -146,7 +146,7 @@
         "nav_header": 0,
         "link": "notification-template.index,notification-template*",
         "sequence": 4,
-        "display": 1,
+        "display": 0,
         "parent_id": "M-950"
     },
     {
@@ -184,7 +184,7 @@
         "title": "Company",
         "class": "fas fa-building nav-icon",
         "nav_header": 0,
-        "link": "company-group*,company*",
+        "link": "company-group*,company*,estate*,afdelink*",
         "sequence": 810,
         "display": 1,
         "parent_id": null
@@ -206,6 +206,26 @@
         "nav_header": 0,
         "link": "company.index,company.*",
         "sequence": 2,
+        "display": 1,
+        "parent_id": "M-810"
+    },
+    {
+        "code": "M-813",
+        "title": "Business Area",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "estate.index,estate.*",
+        "sequence": 3,
+        "display": 1,
+        "parent_id": "M-810"
+    },
+    {
+        "code": "M-814",
+        "title": "Afdelink",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "afdelink.index,afdelink.*",
+        "sequence": 4,
         "display": 1,
         "parent_id": "M-810"
     },
@@ -254,8 +274,318 @@
         "title": "Employee",
         "class": "fas fa-user nav-icon",
         "nav_header": 0,
-        "link": "employee.index,employee*",
+        "link": "employee*,relationship*",
         "sequence": 830,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-831",
+        "title": "Employee",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "employee.index,employee*",
+        "sequence": 1,
+        "display": 1,
+        "parent_id": "M-830"
+    },
+    {
+        "code": "M-832",
+        "title": "Relationship",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "relationship.index,relationship*",
+        "sequence": 2,
+        "display": 1,
+        "parent_id": "M-830"
+    },
+    {
+        "code": "M-840",
+        "title": "Clinic",
+        "class": "fas fa-hospital nav-icon",
+        "nav_header": 0,
+        "link": "clinic.index,clinic*",
+        "sequence": 840,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-850",
+        "title": "Product",
+        "class": "fas fa-archive nav-icon",
+        "nav_header": 0,
+        "link": "unit.*,medicine-type.*,medicine.*,medicine-rule.*",
+        "sequence": 850,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-851",
+        "title": "Unit",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "unit.index,unit.*",
+        "sequence": 1,
+        "display": 1,
+        "parent_id": "M-850"
+    },
+    {
+        "code": "M-852",
+        "title": "Product Type",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "medicine-type.index,medicine-type.*",
+        "sequence": 2,
+        "display": 1,
+        "parent_id": "M-850"
+    },
+    {
+        "code": "M-853",
+        "title": "Product",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "medicine.index,medicine.*",
+        "sequence": 3,
+        "display": 1,
+        "parent_id": "M-850"
+    },
+    {
+        "code": "M-854",
+        "title": "Medicine Rule",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "medicine-rule.index,medicine-rule.*",
+        "sequence": 4,
+        "display": 1,
+        "parent_id": "M-850"
+    },
+    {
+        "code": "M-860",
+        "title": "Disease",
+        "class": "fas fa-medkit nav-icon",
+        "nav_header": 0,
+        "link": "disease-group.*,disease.*",
+        "sequence": 860,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-861",
+        "title": "Disease Group",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "disease-group.index,disease-group.*",
+        "sequence": 1,
+        "display": 1,
+        "parent_id": "M-860"
+    },
+    {
+        "code": "M-862",
+        "title": "Disease",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "disease.index,disease.*",
+        "sequence": 2,
+        "display": 1,
+        "parent_id": "M-860"
+    },
+    {
+        "code": "M-870",
+        "title": "Diagnosis",
+        "class": "fas fa-stethoscope nav-icon",
+        "nav_header": 0,
+        "link": "symptom.*,diagnosis.*",
+        "sequence": 870,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-871",
+        "title": "Symptom",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "symptom.index,symptom.*",
+        "sequence": 1,
+        "display": 1,
+        "parent_id": "M-870"
+    },
+    {
+        "code": "M-872",
+        "title": "Diagnosis",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "diagnosis.index,diagnosis.*",
+        "sequence": 2,
+        "display": 1,
+        "parent_id": "M-870"
+    },
+    {
+        "code": "M-880",
+        "title": "Reference",
+        "class": "far fa-handshake nav-icon",
+        "nav_header": 0,
+        "link": "reference.*,reference-type.*",
+        "sequence": 880,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-881",
+        "title": "Reference Type",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "reference-type.index,reference-type.*",
+        "sequence": 1,
+        "display": 1,
+        "parent_id": "M-880"
+    },
+    {
+        "code": "M-882",
+        "title": "Reference",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "reference.index,reference.*",
+        "sequence": 2,
+        "display": 1,
+        "parent_id": "M-880"
+    },
+    {
+        "code": "M-200",
+        "title": "Transaction",
+        "class": "",
+        "nav_header": 1,
+        "link": "#",
+        "sequence": 200,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-210",
+        "title": "Register",
+        "class": "fas fa-clipboard-check nav-icon",
+        "nav_header": 0,
+        "link": "#",
+        "sequence": 210,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-211",
+        "title": "Rawat Jalan",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "#",
+        "sequence": 1,
+        "display": 1,
+        "parent_id": "M-210"
+    },
+    {
+        "code": "M-212",
+        "title": "KB",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "#",
+        "sequence": 2,
+        "display": 1,
+        "parent_id": "M-210"
+    },
+    {
+        "code": "M-213",
+        "title": "Test Kehamilan",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "#",
+        "sequence": 3,
+        "display": 1,
+        "parent_id": "M-210"
+    },
+    {
+        "code": "M-220",
+        "title": "Surat",
+        "class": "fas fa-envelope nav-icon",
+        "nav_header": 0,
+        "link": "#",
+        "sequence": 220,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-221",
+        "title": "Keterangan Sakit",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "#",
+        "sequence": 1,
+        "display": 1,
+        "parent_id": "M-220"
+    },
+    {
+        "code": "M-222",
+        "title": "Rujukan RS",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "#",
+        "sequence": 2,
+        "display": 1,
+        "parent_id": "M-220"
+    },
+    {
+        "code": "M-230",
+        "title": "Kecelakaan Kerja",
+        "class": "fas fa-wheelchair nav-icon",
+        "nav_header": 0,
+        "link": "#",
+        "sequence": 230,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-240",
+        "title": "Inventory",
+        "class": "fas fa-archive nav-icon",
+        "nav_header": 0,
+        "link": "stock-opname.*,stock-transaction.*,period*",
+        "sequence": 240,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-241",
+        "title": "Period",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "period.index,period.*",
+        "sequence": 1,
+        "display": 1,
+        "parent_id": "M-240"
+    },
+    {
+        "code": "M-242",
+        "title": "Stock Opname",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "stock-opname.index,stock-opname.*",
+        "sequence": 2,
+        "display": 1,
+        "parent_id": "M-240"
+    },
+    {
+        "code": "M-243",
+        "title": "Transaction",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "stock-transaction.index,stock-transaction.*",
+        "sequence": 3,
+        "display": 1,
+        "parent_id": "M-240"
+    },
+    {
+        "code": "M-300",
+        "title": "Report",
+        "class": "",
+        "nav_header": 1,
+        "link": "#",
+        "sequence": 300,
         "display": 1,
         "parent_id": null
     }

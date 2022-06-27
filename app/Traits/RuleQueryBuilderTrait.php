@@ -10,6 +10,14 @@ trait RuleQueryBuilderTrait
 
     public function queryBuilder($table, $query)
     {
+        if(!$table) {
+            $table = array();
+            array_push($table, $query->from);
+            for ($i=0; $i < count($query->joins); $i++) { 
+                array_push($table, $query->joins[$i]->table);
+            }
+        }
+
         $user = getCurrentUser();
         $recordRule = DB::table('record_rules')
                         ->join('role_record_rules', 'role_record_rules.record_rule_id', 'record_rules.id')

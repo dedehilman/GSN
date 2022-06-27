@@ -100,14 +100,10 @@ Route::post('/master/employee/datatable', [App\Http\Controllers\Master\EmployeeC
 Route::post('/master/employee/datatable/select', [App\Http\Controllers\Master\EmployeeController::class, 'datatableSelect'])->name('employee.datatable.select');
 Route::get('/master/employee/select', [App\Http\Controllers\Master\EmployeeController::class, 'select'])->name('employee.select');
 Route::resource('master/employee', App\Http\Controllers\Master\EmployeeController::class);
-Route::resource('master/employee/{parentId}/company', App\Http\Controllers\Master\EmployeeCompanyController::class, ['as' => 'employee']);
-Route::post('/master/employee/{parentId}/company/datatable', [App\Http\Controllers\Master\EmployeeCompanyController::class, 'datatable'])->name('employee.company.datatable');
-Route::resource('master/employee/{parentId}/department', App\Http\Controllers\Master\EmployeeDepartmentController::class, ['as' => 'employee']);
-Route::post('/master/employee/{parentId}/department/datatable', [App\Http\Controllers\Master\EmployeeDepartmentController::class, 'datatable'])->name('employee.department.datatable');
-Route::resource('master/employee/{parentId}/position', App\Http\Controllers\Master\EmployeePositionController::class, ['as' => 'employee']);
-Route::post('/master/employee/{parentId}/position/datatable', [App\Http\Controllers\Master\EmployeePositionController::class, 'datatable'])->name('employee.position.datatable');
-Route::resource('master/employee/{parentId}/attribute', App\Http\Controllers\Master\EmployeeAttributeController::class, ['as' => 'employee']);
-Route::post('/master/employee/{parentId}/attribute/datatable', [App\Http\Controllers\Master\EmployeeAttributeController::class, 'datatable'])->name('employee.attribute.datatable');
+Route::post('/master/relationship/datatable', [App\Http\Controllers\Master\RelationshipController::class, 'datatable'])->name('relationship.datatable');
+Route::post('/master/relationship/datatable/select', [App\Http\Controllers\Master\RelationshipController::class, 'datatableSelect'])->name('relationship.datatable.select');
+Route::get('/master/relationship/select', [App\Http\Controllers\Master\RelationshipController::class, 'select'])->name('relationship.select');
+Route::resource('master/relationship', App\Http\Controllers\Master\RelationshipController::class);
 
 Route::post('/master/unit/datatable', [App\Http\Controllers\Master\UnitController::class, 'datatable'])->name('unit.datatable');
 Route::post('/master/unit/datatable/select', [App\Http\Controllers\Master\UnitController::class, 'datatableSelect'])->name('unit.datatable.select');
@@ -178,6 +174,16 @@ Route::post('/master/disease-medicine/datatable', [App\Http\Controllers\Master\D
 Route::post('/master/disease-medicine/datatable/select', [App\Http\Controllers\Master\DiseaseMedicineController::class, 'datatableSelect'])->name('disease-medicine.datatable.select');
 Route::get('/master/disease-medicine/select', [App\Http\Controllers\Master\DiseaseMedicineController::class, 'select'])->name('disease-medicine.select');
 Route::resource('master/disease-medicine', App\Http\Controllers\Master\DiseaseMedicineController::class);
+
+Route::post('/master/reference-type/datatable', [App\Http\Controllers\Master\ReferenceTypeController::class, 'datatable'])->name('reference-type.datatable');
+Route::post('/master/reference-type/datatable/select', [App\Http\Controllers\Master\ReferenceTypeController::class, 'datatableSelect'])->name('reference-type.datatable.select');
+Route::get('/master/reference-type/select', [App\Http\Controllers\Master\ReferenceTypeController::class, 'select'])->name('reference-type.select');
+Route::resource('master/reference-type', App\Http\Controllers\Master\ReferenceTypeController::class);
+
+Route::post('/master/reference/datatable', [App\Http\Controllers\Master\ReferenceController::class, 'datatable'])->name('reference.datatable');
+Route::post('/master/reference/datatable/select', [App\Http\Controllers\Master\ReferenceController::class, 'datatableSelect'])->name('reference.datatable.select');
+Route::get('/master/reference/select', [App\Http\Controllers\Master\ReferenceController::class, 'select'])->name('reference.select');
+Route::resource('master/reference', App\Http\Controllers\Master\ReferenceController::class);
 
 Route::post('/inventory/stock-opname/datatable', [App\Http\Controllers\Inventory\StockOpnameController::class, 'datatable'])->name('stock-opname.datatable');
 Route::resource('inventory/stock-opname', App\Http\Controllers\Inventory\StockOpnameController::class);

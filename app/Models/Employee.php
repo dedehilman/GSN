@@ -11,10 +11,10 @@ class Employee extends Model
 {
     use HasFactory, BlameableTrait;
 
-    protected $fillable = ['code', 'name', 'user_id'];
+    protected $fillable = ['code', 'name'];
 
     public function companies() {
-        return $this->hasMany(EmployeeCompany::class);
+        return $this->hasMany(EmployeeCompany::class)->orderBy('effective_date', 'ASC');
     }
 
     public function company() {
@@ -25,7 +25,8 @@ class Employee extends Model
                 $query->whereNull('expiry_date');
                 $query->orWhereRaw('? <= expiry_date', Carbon::now()->format('Y-m-d'));
             });
-        })->orderBy('is_default', 'ASC');
+        })->orderBy('is_default', 'ASC')
+        ->orderBy('effective_date', 'ASC');
     }
 
     public function currentCompanies() {
@@ -36,11 +37,12 @@ class Employee extends Model
                 $query->whereNull('expiry_date');
                 $query->orWhereRaw('? <= expiry_date', Carbon::now()->format('Y-m-d'));
             });
-        })->orderBy('is_default', 'ASC');
+        })->orderBy('is_default', 'ASC')
+        ->orderBy('effective_date', 'ASC');
     }
 
     public function positions() {
-        return $this->hasMany(EmployeePosition::class);
+        return $this->hasMany(EmployeePosition::class)->orderBy('effective_date', 'ASC');
     }
 
     public function position() {
@@ -51,7 +53,8 @@ class Employee extends Model
                 $query->whereNull('expiry_date');
                 $query->orWhereRaw('? <= expiry_date', Carbon::now()->format('Y-m-d'));
             });
-        })->orderBy('is_default', 'ASC');
+        })->orderBy('is_default', 'ASC')
+        ->orderBy('effective_date', 'ASC');
     }
 
     public function currentPositions() {
@@ -62,11 +65,12 @@ class Employee extends Model
                 $query->whereNull('expiry_date');
                 $query->orWhereRaw('? <= expiry_date', Carbon::now()->format('Y-m-d'));
             });
-        })->orderBy('is_default', 'ASC');
+        })->orderBy('is_default', 'ASC')
+        ->orderBy('effective_date', 'ASC');
     }
 
     public function departments() {
-        return $this->hasMany(EmployeeDepartment::class);
+        return $this->hasMany(EmployeeDepartment::class)->orderBy('effective_date', 'ASC');
     }
 
     public function department() {
@@ -77,7 +81,8 @@ class Employee extends Model
                 $query->whereNull('expiry_date');
                 $query->orWhereRaw('? <= expiry_date', Carbon::now()->format('Y-m-d'));
             });
-        })->orderBy('is_default', 'ASC');
+        })->orderBy('is_default', 'ASC')
+        ->orderBy('effective_date', 'ASC');
     }
 
     public function currentDepartments() {
@@ -88,15 +93,72 @@ class Employee extends Model
                 $query->whereNull('expiry_date');
                 $query->orWhereRaw('? <= expiry_date', Carbon::now()->format('Y-m-d'));
             });
-        })->orderBy('is_default', 'ASC');
+        })->orderBy('is_default', 'ASC')
+        ->orderBy('effective_date', 'ASC');
     }
 
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function attributes() {
+        return $this->hasMany(EmployeeAttribute::class)->orderBy('effective_date', 'ASC');
+    }
+
+    public function attribute() {
+        return $this->hasOne(EmployeeAttribute::class)->where(function($query)
+        {
+            $query->whereRaw('? >= effective_date', Carbon::now()->format('Y-m-d'));
+            $query->where(function($query) {
+                $query->whereNull('expiry_date');
+                $query->orWhereRaw('? <= expiry_date', Carbon::now()->format('Y-m-d'));
+            });
+        })->orderBy('is_default', 'ASC')
+        ->orderBy('effective_date', 'ASC');
+    }
+
+    public function currentAttributes() {
+        return $this->hasMany(EmployeeAttribute::class)->where(function($query)
+        {
+            $query->whereRaw('? >= effective_date', Carbon::now()->format('Y-m-d'));
+            $query->where(function($query) {
+                $query->whereNull('expiry_date');
+                $query->orWhereRaw('? <= expiry_date', Carbon::now()->format('Y-m-d'));
+            });
+        })->orderBy('is_default', 'ASC')
+        ->orderBy('effective_date', 'ASC');
+    }
+
+    public function afdelinks() {
+        return $this->hasMany(EmployeeAfdelink::class)->orderBy('effective_date', 'ASC');
+    }
+
+    public function afdelink() {
+        return $this->hasOne(EmployeeAfdelink::class)->where(function($query)
+        {
+            $query->whereRaw('? >= effective_date', Carbon::now()->format('Y-m-d'));
+            $query->where(function($query) {
+                $query->whereNull('expiry_date');
+                $query->orWhereRaw('? <= expiry_date', Carbon::now()->format('Y-m-d'));
+            });
+        })->orderBy('is_default', 'ASC')
+        ->orderBy('effective_date', 'ASC');
+    }
+
+    public function currentAfdelinks() {
+        return $this->hasMany(EmployeeAfdelink::class)->where(function($query)
+        {
+            $query->whereRaw('? >= effective_date', Carbon::now()->format('Y-m-d'));
+            $query->where(function($query) {
+                $query->whereNull('expiry_date');
+                $query->orWhereRaw('? <= expiry_date', Carbon::now()->format('Y-m-d'));
+            });
+        })->orderBy('is_default', 'ASC')
+        ->orderBy('effective_date', 'ASC');
+    }
+
+    public function relationships() {
+        return $this->hasMany(EmployeeRelationship::class);
     }
 
     public function scopeWithAll($query) 
     {
-        return $query->with(['user', 'department', 'department.department', 'position', 'position.position', 'company', 'company.company']);
+        return $query->with(['department', 'department.department', 'position', 'position.position', 'company', 'company.company', 'attribute', 'attribute.attribute', 'afdelink', 'afdelink.afdelink']);
     }
 }

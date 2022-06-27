@@ -81,10 +81,10 @@
     },
     {
       "key": "APP_LOGO",
-      "value": "http://localhost/dis.web/public/img/AdminLTELogo.png"
+      "value": "http://localhost/dis/public/img/logo.png"
     },
     {
       "key": "APP_FAVICON",
-      "value": "http://localhost/dis.web/public/img/AdminLTELogo.png"
+      "value": "http://localhost/dis/public/img/logo.png"
     }
   ]

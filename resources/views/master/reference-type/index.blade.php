@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Employee Department"), 'subTitle' => Lang::get("Manage data employee department")])
+@extends('layout', ['title' => Lang::get("Reference Type"), 'subTitle' => Lang::get("Manage data reference type")])
 
 @section('content')
     <div class="row">
@@ -18,8 +18,8 @@
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div>
-                                @can('employee-department-create')                                    
-                                <a href="{{route('employee.department.create', ['parentId'=>$data->id])}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>                                                
+                                @can('reference-type-create')
+                                <a href="{{route('reference-type.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
                                 @endcan
                             </div>
                             <div class="btn-group nav view">
@@ -32,35 +32,13 @@
                             <div id="collapseOne" class="panel-collapse collapse in" style="padding:10px 0px 0px 0px;">
                                 <form id="formSearch">
                                     <div class="form-group row">
-                                        <label class="col-2 col-form-label">{{__("Effective Date")}}</label>
-                                        <div class="col-4">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                                </div>
-                                                <input type="text" name="effective_date" class="form-control date">
-                                            </div>
+                                        <label class="col-md-2 col-form-label">{{__("Code")}}</label>
+                                        <div class="col-md-4">
+                                            <input type="text" name="code" class="form-control">
                                         </div>
-                                        <label class="col-2 col-form-label">{{__("Expiry Date")}}</label>
-                                        <div class="col-4">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                                </div>
-                                                <input type="text" name="expiry_date" class="form-control date">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-2 col-form-label">{{__("Department")}}</label>
-                                        <div class="col-4">
-                                            <div class="input-group">
-                                                <input type="text" name="department_name" id="department_name" class="form-control">
-                                                <input type="hidden" name="department_id" id="department_id">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Department List')}}" data-url="{{route('department.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
-                                                </div>
-                                            </div>
+                                        <label class="col-md-2 col-form-label">{{__("Name")}}</label>
+                                        <div class="col-md-4">
+                                            <input type="text" name="name" class="form-control">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -89,10 +67,8 @@
                                 <th><input type='checkbox' name="select-all"/></th>
                                 <th></th>
                                 <th></th>
-                                <th>{{ __("Effective Date") }}</th>
-                                <th>{{ __("Expiry Date") }}</th>
-                                <th>{{ __("Department") }}</th>
-                                <th>{{ __("Default") }}</th>
+                                <th>{{ __("Code") }}</th>
+                                <th>{{ __("Name") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -108,7 +84,7 @@
             $('#datatable').DataTable({
                 ajax:
                 {
-                    url: "{{route('employee.department.datatable', ['parentId'=>$data->id])}}",
+                    url: "{{route('reference-type.datatable')}}",
                     type: 'POST',
                     data: function(data){
                         getDatatableParameter(data);
@@ -133,7 +109,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('employee-department-delete') true @else false @endcan,
+                        visible: @can('reference-type-delete') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-danger'><i class='fas fa-trash'></i></div>";
@@ -144,65 +120,41 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('employee-department-edit') true @else false @endcan,
+                        visible: @can('reference-type-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
                         }
                     },
                     {
-                        data: 'effective_date',
-                        name: 'effective_date',
+                        data: 'code',
+                        name: 'code',
                         defaultContent: '',
                     },
                     {
-                        data: 'expiry_date',
-                        name: 'expiry_date',
+                        data: 'name',
+                        name: 'name',
                         defaultContent: '',
-                    },
-                    {
-                        data: 'department.name',
-                        name: 'department_id',
-                        defaultContent: '',
-                    },
-                    {
-                        data: 'is_default',
-                        name: 'is_default',
-                        defaultContent: '',
-                        className: 'text-center',
-                        render: function(data, type, row)
-                        {
-                            if(data == 1) {
-                                return '<span class="badge badge-primary">{{ __('Yes') }}</span>';
-                            }
-
-                            return '<span class="badge badge-danger">{{ __('No') }}</span>';
-                        }
                     }
                 ],
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Employee Department")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Reference Type")}}',
+                        exportOptions: { columns: [3,4] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Employee Department")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Reference Type")}}',
+                        exportOptions: { columns: [3, 4] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Employee Department")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Reference Type")}}',
+                        exportOptions: { columns: [3, 4] }
                     }
                 ],
             });
         });
-
-        function onSelected(data) {
-            $('#department_id').val(data[0].id);
-            $('#department_name').val(data[0].name);
-        }
     </script>
 @endsection

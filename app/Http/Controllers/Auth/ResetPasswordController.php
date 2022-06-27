@@ -10,8 +10,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use LdapRecord\Connection;
-use LdapRecord\Models\ActiveDirectory\User;
+use LdapRecord\Models\ActiveDirectory\User as UserLDAP;
 use LdapRecord\Container;
+use App\Models\User;
 
 class ResetPasswordController extends Controller
 {
@@ -74,7 +75,7 @@ class ResetPasswordController extends Controller
         $user;
         $passwordReset = DB::table('password_resets')->where('token', $request->token)->first();
         if($passwordReset) {
-            $user = DB::table('users')->where('email', $passwordReset->email)->first();
+            $user = User::where('email', $passwordReset->email)->first();
             if(!$user) {
                 return redirect()->back()->withInput($request->input())->with([
                     'messsage' => 'Token not valid'
@@ -107,7 +108,7 @@ class ResetPasswordController extends Controller
                     if ($connection->auth()->attempt(getParameter("LDAP_CHANGEPWD_USERNAME"), getParameter("LDAP_CHANGEPWD_PASSWORD"), $stayBound = true))
                     {
                         Container::addConnection($connection);
-                        $userLdap = User::where("samaccountname", $user->username)->first();
+                        $userLdap = UserLDAP::where("samaccountname", $user->username)->first();
                         if($userLdap) {
                             $userLdap->unicodepwd = $request->password;
                             $userLdap->save();    
