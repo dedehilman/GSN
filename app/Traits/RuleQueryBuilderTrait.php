@@ -44,41 +44,21 @@ trait RuleQueryBuilderTrait
 
             if(!$isFound) continue;
 
-            $curPositions = "";
-            $currDepartments = "";
-            $currCompanies = "";
-            $currSites = "";
-            if(getCurrentUser()->employee) {
-                $curPositions = implode(",", getCurrentUser()->employee->currentPositions->pluck('position_id')->toArray() ?? []);
-                $currDepartments = implode(",", getCurrentUser()->employee->currentDepartments->pluck('department_id')->toArray() ?? []);
-                $currCompanies = implode(",", getCurrentUser()->employee->currentCompanies->pluck('company_id')->toArray() ?? []);
-                $currSites = implode(",", getCurrentUser()->employee->currentSites->pluck('site_id')->toArray() ?? []);    
+            $curClinics = "";
+            if(getCurrentUser()->userDetail) {
+                $curClinics = implode(",", getCurrentUser()->userDetail->currentClinics->pluck('clinic_id')->toArray() ?? []);
             }
 
             $rule = str_replace(
                 [
                     '@currUser',
-                    '@currEmployee',
-                    '@currPositions',
-                    '@currDepartments',
-                    '@currCompanies',
-                    '@currSites',
-                    '@currPosition',
-                    '@currDepartment',
-                    '@currCompany',
-                    '@currSite',
+                    '@currMedicalStaff',
+                    '@currClinics',
                 ], 
                 [
                     getCurrentUser()->id ?? '', 
-                    getCurrentUser()->employee->id ?? '', 
-                    $curPositions,
-                    $currDepartments,
-                    $currCompanies,
-                    $currSites,
-                    getCurrentUser()->employee->position->position_id ?? '', 
-                    getCurrentUser()->employee->department->department_id ?? '', 
-                    getCurrentUser()->employee->company->company_id ?? '',
-                    getCurrentUser()->employee->site->site_id ?? '',
+                    getCurrentUser()->userDetail->id ?? '', 
+                    $curClinics,
                 ], 
                 $rule
             );

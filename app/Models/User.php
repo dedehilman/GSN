@@ -60,11 +60,11 @@ class User extends Authenticatable
 
     public function scopeWithAll($query) 
     {
-        return $query->with(['roles']);
+        return $query->with(['roles', 'userDetail']);
     }
 
-    public function employee()
+    public function userDetail()
     {
-        return $this->hasOne(Employee::class);
+        return $this->belongsTo(MedicalStaff::class, 'user_detail_id');
     }
 }

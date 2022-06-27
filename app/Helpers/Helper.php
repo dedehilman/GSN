@@ -287,3 +287,30 @@ function getUplNo()
 {
     return Carbon::now()->isoFormat("YYYYMMDDkkmmss");
 }
+
+function isMultipleClinic()
+{
+    $ids = array();
+    $medicalStaff = getCurrentUser()->userDetail;
+    foreach ($medicalStaff->currentClinics ?? [] as $clinic) {
+        if(!in_array($clinic->clinic_id, $ids)) {
+            array_push($ids, $clinic->clinic_id);
+        }
+    }
+
+    if(count($ids) > 1) {
+        return true;
+    }
+
+    return false;
+}
+
+function getDefaultClinic()
+{
+    $medicalStaff = getCurrentUser()->userDetail;
+    foreach ($medicalStaff->currentClinics ?? [] as $clinic) {
+        return $clinic->clinic;
+    }
+
+    return null;
+}

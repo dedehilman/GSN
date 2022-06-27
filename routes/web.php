@@ -185,6 +185,11 @@ Route::post('/master/reference/datatable/select', [App\Http\Controllers\Master\R
 Route::get('/master/reference/select', [App\Http\Controllers\Master\ReferenceController::class, 'select'])->name('reference.select');
 Route::resource('master/reference', App\Http\Controllers\Master\ReferenceController::class);
 
+Route::post('/master/medical-staff/datatable', [App\Http\Controllers\Master\MedicalStaffController::class, 'datatable'])->name('medical-staff.datatable');
+Route::post('/master/medical-staff/datatable/select', [App\Http\Controllers\Master\MedicalStaffController::class, 'datatableSelect'])->name('medical-staff.datatable.select');
+Route::get('/master/medical-staff/select', [App\Http\Controllers\Master\MedicalStaffController::class, 'select'])->name('medical-staff.select');
+Route::resource('master/medical-staff', App\Http\Controllers\Master\MedicalStaffController::class);
+
 Route::post('/inventory/stock-opname/datatable', [App\Http\Controllers\Inventory\StockOpnameController::class, 'datatable'])->name('stock-opname.datatable');
 Route::resource('inventory/stock-opname', App\Http\Controllers\Inventory\StockOpnameController::class);
 

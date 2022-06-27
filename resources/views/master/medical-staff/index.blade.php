@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Stock Opname"), 'subTitle' => Lang::get("Manage data stock opname")])
+@extends('layout', ['title' => Lang::get("Medical Staff"), 'subTitle' => Lang::get("Manage data medical staff")])
 
 @section('content')
     <div class="row">
@@ -18,8 +18,8 @@
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div>
-                                @can('stock-opname-create')                                
-                                <a href="{{route('stock-opname.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
+                                @can('medical-staff-create')
+                                <a href="{{route('medical-staff.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
                                 @endcan
                             </div>
                             <div class="btn-group nav view">
@@ -32,33 +32,13 @@
                             <div id="collapseOne" class="panel-collapse collapse in" style="padding:10px 0px 0px 0px;">
                                 <form id="formSearch">
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Period")}}</label>
+                                        <label class="col-md-2 col-form-label">{{__("Code")}}</label>
                                         <div class="col-md-4">
-                                            <div class="input-group">
-                                                <input type="text" id="period_name" class="form-control required">
-                                                <input type="hidden" name="period_id" id="period_id">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Period List')}}" data-url="{{route('period.select')}}" data-handler="onSelectedPeriod"><i class="fas fa-search"></i></span>
-                                                </div>
-                                            </div>
+                                            <input type="text" name="code" class="form-control">
                                         </div>
-                                        <label class="col-md-2 col-form-label">{{__("Medicine")}}</label>
+                                        <label class="col-md-2 col-form-label">{{__("Name")}}</label>
                                         <div class="col-md-4">
-                                            <div class="input-group">
-                                                <input type="text" id="medicine_name" class="form-control required">
-                                                <input type="hidden" name="medicine_id" id="medicine_id">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Medicine List')}}" data-url="{{route('medicine.select')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Clinic")}}</label>
-                                        <div class="col-md-4">
-                                            <div class="input-group">
-                                                @include('partials.clinic-picker')
-                                            </div>
+                                            <input type="text" name="name" class="form-control">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -87,10 +67,8 @@
                                 <th><input type='checkbox' name="select-all"/></th>
                                 <th></th>
                                 <th></th>
-                                <th>{{ __("Period") }}</th>
-                                <th>{{ __("Medicine") }}</th>
-                                <th>{{ __("Clinic") }}</th>
-                                <th>{{ __("Quantity") }}</th>
+                                <th>{{ __("Code") }}</th>
+                                <th>{{ __("Name") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -106,7 +84,7 @@
             $('#datatable').DataTable({
                 ajax:
                 {
-                    url: "{{route('stock-opname.datatable')}}",
+                    url: "{{route('medical-staff.datatable')}}",
                     type: 'POST',
                     data: function(data){
                         getDatatableParameter(data);
@@ -131,7 +109,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('stock-opname-delete') true @else false @endcan,
+                        visible: @can('medical-staff-delete') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-danger'><i class='fas fa-trash'></i></div>";
@@ -142,60 +120,41 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('stock-opname-edit') true @else false @endcan,
+                        visible: @can('medical-staff-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
                         }
                     },
                     {
-                        data: 'period.name',
-                        name: 'period_id',
+                        data: 'code',
+                        name: 'code',
                         defaultContent: '',
                     },
                     {
-                        data: 'medicine.name',
-                        name: 'medicine_id',
-                        defaultContent: '',
-                    },
-                    {
-                        data: 'clinic.name',
-                        name: 'clinic_id',
-                        defaultContent: '',
-                    },
-                    {
-                        data: 'qty',
-                        name: 'qty',
+                        data: 'name',
+                        name: 'name',
                         defaultContent: '',
                     }
                 ],
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Stock Opname")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Medical Staff")}}',
+                        exportOptions: { columns: [3,4] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Stock Opname")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Medical Staff")}}',
+                        exportOptions: { columns: [3, 4] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Stock Opname")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        title: '{{__("Medical Staff")}}',
+                        exportOptions: { columns: [3, 4] }
                     }
                 ],
             });
         });
-
-        function onSelectedPeriod(data) {
-            $('#period_id').val(data[0].id);
-            $('#period_name').val(data[0].code + ' ' + data[0].name);
-        }
-        function onSelectedMedicine(data) {
-            $('#medicine_id').val(data[0].id);
-            $('#medicine_name').val(data[0].code + ' ' + data[0].name);
-        }
     </script>
 @endsection

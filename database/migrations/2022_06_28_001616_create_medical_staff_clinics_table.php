@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateMedicalStaffClinicsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,20 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('medical_staff_clinics', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('username')->unique();
-            $table->string('email');
-            $table->bigInteger('user_detail_id')->nullable();
-            $table->tinyInteger('enabled')->default(1);
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->unsignedBigInteger('clinic_id');
+            $table->unsignedBigInteger('medical_staff_id');
+            $table->date('effective_date');
+            $table->date('expiry_date')->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
 
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('cascade');
+            $table->foreign('medical_staff_id')->references('id')->on('medical_staff')->onDelete('cascade');
         });
     }
 
@@ -39,6 +37,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('medical_staff_clinics');
     }
 }
