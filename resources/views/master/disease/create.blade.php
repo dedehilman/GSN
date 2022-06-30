@@ -34,7 +34,7 @@
                             <label class="col-md-3 col-form-label required">{{__("Disease Group")}}</label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <input type="text" name="disease_group_name" id="disease_group_name" class="form-control required">
+                                    <input type="text" name="disease_group_name" id="disease_group_name" class="form-control required" readonly>
                                     <input type="hidden" name="disease_group_id" id="disease_group_id">
                                     <div class="input-group-append">
                                         <span class="input-group-text show-modal-select" data-title="{{__('Disease Group List')}}" data-url="{{route('disease-group.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
@@ -57,7 +57,7 @@
                                                     <th width="10px" class="text-center">
                                                         <span class='btn btn-primary btn-sm' id="btn-add-medicine" style="cursor: pointer"><i class='fas fa-plus-circle'></i></span>
                                                     </th>
-                                                    <th>{{ __('Medicine') }}</th>
+                                                    <th>{{ __('Product') }}</th>
                                                     <th>{{ __('Rule') }}</th>
                                                     <th>{{ __('Qty') }}</th>
                                                 </tr>
@@ -88,16 +88,16 @@
                 </td>
                 <td>
                     <div class="input-group">
-                        <input type="text" name="medicine_name[]" class="form-control ">
+                        <input type="text" name="medicine_name[]" class="form-control" readonly>
                         <input type="hidden" name="medicine_id[]">
                         <div class="input-group-append">
-                            <span class="input-group-text show-modal-select medicine" data-title="{{__('Medicine List')}}" data-url="{{route('medicine.select')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
+                            <span class="input-group-text show-modal-select medicine" data-title="{{__('Product List')}}" data-url="{{route('medicine.select')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
                         </div>
                     </div>
                 </td>
                 <td>
                     <div class="input-group">
-                        <input type="text" name="medicine_rule_name[]" class="form-control ">
+                        <input type="text" name="medicine_rule_name[]" class="form-control" readonly>
                         <input type="hidden" name="medicine_rule_id[]">
                         <div class="input-group-append">
                             <span class="input-group-text show-modal-select medicine-rule" data-title="{{__('Medicine Rule List')}}" data-url="{{route('medicine-rule.select')}}" data-handler="onSelectedMedicineRule"><i class="fas fa-search"></i></span>
@@ -105,7 +105,7 @@
                     </div>
                 </td>
                 <td>
-                    <input type="text" class="form-control " name="qty[]">
+                    <input type="number" class="form-control " name="qty[]">
                 </td>
             </tr>
         </tbody>

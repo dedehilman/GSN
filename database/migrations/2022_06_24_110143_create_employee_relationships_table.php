@@ -17,8 +17,14 @@ class CreateEmployeeRelationshipsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('relationship_id');
             $table->unsignedBigInteger('employee_id');
-            $table->string('identity_number')->nullable();
-            $table->string('name')->nullable();
+            $table->string('identity_number');
+            $table->string('name');
+            $table->string('birth_place')->nullable();
+            $table->date('birth_date')->nullable();
+            $table->enum('gender', ["Male", "Female"])->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->string('address')->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

@@ -12,8 +12,7 @@ class JobController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('job');
-        $this->setIndex('system.job.index');
-        $this->setView('system.job.view');
+        $this->setDefaultView('system.job');
         $this->setModel('App\Models\Job');
     }
 }

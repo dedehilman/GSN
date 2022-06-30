@@ -9,6 +9,7 @@ use App\Models\StockTransaction;
 use App\Models\StockTransactionDetail;
 use Illuminate\Support\Facades\DB;
 use Lang;
+use Carbon\Carbon;
 
 class StockTransactionController extends AppCrudController
 {
@@ -16,17 +17,17 @@ class StockTransactionController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('stock-transaction');
+        $this->setDefaultView('inventory.stock-transaction');
         $this->setSelect('inventory.stock-transaction.select');
-        $this->setIndex('inventory.stock-transaction.index');
-        $this->setCreate('inventory.stock-transaction.create');
-        $this->setEdit('inventory.stock-transaction.edit');
-        $this->setView('inventory.stock-transaction.view');
         $this->setModel('App\Models\StockTransaction');
     }
 
     public function store(Request $request)
     {
         try {
+            $count = StockTransaction::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->count();
+            $request['transaction_no'] = 'INV-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+
             $validateOnStore = $this->validateOnStore($request);
             if($validateOnStore) {
                 return response()->json([
@@ -41,10 +42,10 @@ class StockTransactionController extends AppCrudController
             $data->transaction_no = $request->transaction_no;
             $data->transaction_date = $request->transaction_date;
             $data->transaction_type = $request->transaction_type;
-            $data->reference = $request->reference;
             $data->remark = $request->remark;
             $data->clinic_id = $request->clinic_id;
             $data->new_clinic_id = $request->new_clinic_id;
+            $data->reference_id = $request->reference_id;
             $data->save();
 
             if($request->transaction_detail_id)
@@ -111,10 +112,10 @@ class StockTransactionController extends AppCrudController
             $data->transaction_no = $request->transaction_no;
             $data->transaction_date = $request->transaction_date;
             $data->transaction_type = $request->transaction_type;
-            $data->reference = $request->reference;
             $data->remark = $request->remark;
             $data->clinic_id = $request->clinic_id;
             $data->new_clinic_id = $request->new_clinic_id;
+            $data->reference_id = $request->reference_id;
             $data->save();
 
             if($request->transaction_detail_id)

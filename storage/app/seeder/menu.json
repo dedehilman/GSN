@@ -236,7 +236,7 @@
         "nav_header": 0,
         "link": "position*,department*,attribute*",
         "sequence": 820,
-        "display": 1,
+        "display": 0,
         "parent_id": null
     },
     {
@@ -246,7 +246,7 @@
         "nav_header": 0,
         "link": "position.index,position*",
         "sequence": 1,
-        "display": 1,
+        "display": 0,
         "parent_id": "M-820"
     },
     {
@@ -256,7 +256,7 @@
         "nav_header": 0,
         "link": "department.index,department.*",
         "sequence": 2,
-        "display": 1,
+        "display": 0,
         "parent_id": "M-820"
     },
     {
@@ -266,7 +266,7 @@
         "nav_header": 0,
         "link": "attribute.index,attribute.*",
         "sequence": 3,
-        "display": 1,
+        "display": 0,
         "parent_id": "M-820"
     },
     {
@@ -454,7 +454,7 @@
         "title": "Registration",
         "class": "fas fa-clipboard-check nav-icon",
         "nav_header": 0,
-        "link": "#",
+        "link": "registration*",
         "sequence": 210,
         "display": 1,
         "parent_id": null
@@ -464,7 +464,7 @@
         "title": "Rawat Jalan",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
-        "link": "#",
+        "link": "registration.outpatient.index,registration.outpatient.*",
         "sequence": 1,
         "display": 1,
         "parent_id": "M-210"
@@ -474,7 +474,7 @@
         "title": "KB",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
-        "link": "#",
+        "link": "registration.kb.index,registration.kb.*",
         "sequence": 2,
         "display": 1,
         "parent_id": "M-210"
@@ -484,7 +484,7 @@
         "title": "Test Kehamilan",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
-        "link": "#",
+        "link": "registration.pregnancy-test.index,registration.pregnancy-test.*",
         "sequence": 3,
         "display": 1,
         "parent_id": "M-210"
@@ -494,7 +494,7 @@
         "title": "Kecelakaan Kerja",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
-        "link": "#",
+        "link": "registration.work-accident.index,registration.work-accident.*",
         "sequence": 4,
         "display": 1,
         "parent_id": "M-210"

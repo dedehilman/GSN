@@ -12,11 +12,8 @@ class AttributeController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('attribute');
+        $this->setDefaultView('master.attribute');
         $this->setSelect('master.attribute.select');
-        $this->setIndex('master.attribute.index');
-        $this->setCreate('master.attribute.create');
-        $this->setEdit('master.attribute.edit');
-        $this->setView('master.attribute.view');
         $this->setModel('App\Models\Attribute');
     }
 

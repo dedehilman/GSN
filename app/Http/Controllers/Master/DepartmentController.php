@@ -14,11 +14,8 @@ class DepartmentController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('department');
+        $this->setDefaultView('master.department');
         $this->setSelect('master.department.select');
-        $this->setIndex('master.department.index');
-        $this->setCreate('master.department.create');
-        $this->setEdit('master.department.edit');
-        $this->setView('master.department.view');
         $this->setModel('App\Models\Department');
     }
 

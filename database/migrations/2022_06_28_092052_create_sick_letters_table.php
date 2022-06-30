@@ -17,11 +17,14 @@ class CreateSickLettersTable extends Migration
             $table->id();
             $table->string('transaction_no')->unique();
             $table->date('transaction_date');
-            $table->integer('num_of_days');
-            $table->string('remark')->nullable();
             $table->unsignedBigInteger('clinic_id');
             $table->unsignedBigInteger('medical_staff_id');
             $table->unsignedBigInteger('patient_id');
+            $table->tinyInteger('for_relationship')->default(0);
+            $table->unsignedBigInteger('patient_relationship_id')->nullable();
+            $table->integer('num_of_days');
+            $table->unsignedBigInteger('diagnosis_id')->nullable();
+            $table->string('remark')->nullable();
             $table->bigInteger('model_reference_id')->nullable();
             $table->string('model_reference_type')->nullable();
             $table->timestamps();
@@ -33,6 +36,8 @@ class CreateSickLettersTable extends Migration
             $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('cascade');
             $table->foreign('medical_staff_id')->references('id')->on('medical_staff')->onDelete('cascade');
             $table->foreign('patient_id')->references('id')->on('employees')->onDelete('cascade');
+            $table->foreign('patient_relationship_id')->references('id')->on('employee_relationships')->onDelete('cascade');
+            $table->foreign('diagnosis_id')->references('id')->on('diagnoses')->onDelete('cascade');
         });
     }
 

@@ -12,11 +12,8 @@ class PositionController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('position');
+        $this->setDefaultView('master.position');
         $this->setSelect('master.position.select');
-        $this->setIndex('master.position.index');
-        $this->setCreate('master.position.create');
-        $this->setEdit('master.position.edit');
-        $this->setView('master.position.view');
         $this->setModel('App\Models\Position');
     }
 

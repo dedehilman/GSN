@@ -16,11 +16,8 @@ class DiseaseController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('disease');
+        $this->setDefaultView('master.disease');
         $this->setSelect('master.disease.select');
-        $this->setIndex('master.disease.index');
-        $this->setCreate('master.disease.create');
-        $this->setEdit('master.disease.edit');
-        $this->setView('master.disease.view');
         $this->setModel('App\Models\Disease');
     }
 

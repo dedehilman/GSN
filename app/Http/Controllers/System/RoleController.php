@@ -15,10 +15,7 @@ class RoleController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('role');
-        $this->setIndex('system.role.index');
-        $this->setCreate('system.role.create');
-        $this->setEdit('system.role.edit');
-        $this->setView('system.role.view');
+        $this->setDefaultView('system.role');
         $this->setModel('App\Models\Role');
     }
 

@@ -21,12 +21,8 @@ class EmployeeController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('employee');
-        $this->middleware('auth');
+        $this->setDefaultView('master.employee');
         $this->setSelect('master.employee.select');
-        $this->setIndex('master.employee.index');
-        $this->setCreate('master.employee.create');
-        $this->setEdit('master.employee.edit');
-        $this->setView('master.employee.view');
         $this->setModel('App\Models\Employee');
     }
 
@@ -52,8 +48,8 @@ class EmployeeController extends AppCrudController
             $data->identity_number = $request->identity_number;
             $data->phone = $request->phone;
             $data->email = $request->email;
-            $data->blood_type = $request->blood_type;
             $data->address = $request->address;
+            $data->afdelink_id = $request->afdelink_id;
             $data->save();
 
             if($request->employee_company_id)
@@ -245,8 +241,8 @@ class EmployeeController extends AppCrudController
             $data->identity_number = $request->identity_number;
             $data->phone = $request->phone;
             $data->email = $request->email;
-            $data->blood_type = $request->blood_type;
             $data->address = $request->address;
+            $data->afdelink_id = $request->afdelink_id;
             $data->save();
 
             if($request->employee_company_id)
@@ -413,6 +409,7 @@ class EmployeeController extends AppCrudController
         $validator = Validator::make($request->all(), [
             'code' => 'required|max:255|unique:employees',
             'name' => 'required|max:255',
+            'afdelink_id' => 'required',
         ]);
 
         if($validator->fails()){
@@ -425,6 +422,7 @@ class EmployeeController extends AppCrudController
         $validator = Validator::make($request->all(), [
             'code' => 'required|max:255|unique:employees,code,'.$id,
             'name' => 'required|max:255',
+            'afdelink_id' => 'required',
         ]);
 
         if($validator->fails()){

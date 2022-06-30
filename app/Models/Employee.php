@@ -20,8 +20,8 @@ class Employee extends Model
         'identity_number',
         'phone',
         'email',
-        'blood_type',
-        'address'
+        'address',
+        'afdelink_id'
     ];
 
     public function companies() {
@@ -141,15 +141,7 @@ class Employee extends Model
     }
 
     public function afdelink() {
-        return $this->hasOne(EmployeeAfdelink::class)->where(function($query)
-        {
-            $query->whereRaw('? >= effective_date', Carbon::now()->format('Y-m-d'));
-            $query->where(function($query) {
-                $query->whereNull('expiry_date');
-                $query->orWhereRaw('? <= expiry_date', Carbon::now()->format('Y-m-d'));
-            });
-        })->orderBy('is_default', 'ASC')
-        ->orderBy('effective_date', 'ASC');
+        return $this->belongsTo(Afdelink::class);
     }
 
     public function currentAfdelinks() {
@@ -170,6 +162,6 @@ class Employee extends Model
 
     public function scopeWithAll($query) 
     {
-        return $query->with(['department', 'department.department', 'position', 'position.position', 'company', 'company.company', 'attribute', 'attribute.attribute', 'afdelink', 'afdelink.afdelink']);
+        return $query->with(['afdelink']);
     }
 }

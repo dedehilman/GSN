@@ -45,7 +45,7 @@
                                         <label class="col-md-2 col-form-label">{{__("Unit")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" name="unit_name" id="unit_name" class="form-control required">
+                                                <input type="text" name="unit_name" id="unit_name" class="form-control" readonly>
                                                 <input type="hidden" name="unit_id" id="unit_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Unit List')}}" data-url="{{route('unit.select')}}" data-handler="onSelectedUnit"><i class="fas fa-search"></i></span>
@@ -55,7 +55,7 @@
                                         <label class="col-md-2 col-form-label">{{__("Product Type")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" name="medicine_type_name" id="medicine_type_name" class="form-control required">
+                                                <input type="text" name="medicine_type_name" id="medicine_type_name" class="form-control" readonly>
                                                 <input type="hidden" name="medicine_type_id" id="medicine_type_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Product Type List')}}" data-url="{{route('medicine-type.select')}}" data-handler="onSelectedProductType"><i class="fas fa-search"></i></span>

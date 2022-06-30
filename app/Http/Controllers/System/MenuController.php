@@ -12,11 +12,8 @@ class MenuController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('menu');
+        $this->setDefaultView('system.menu');
         $this->setSelect('system.menu.select');
-        $this->setIndex('system.menu.index');
-        $this->setCreate('system.menu.create');
-        $this->setEdit('system.menu.edit');
-        $this->setView('system.menu.view');
         $this->setModel('App\Models\Menu');
     }
 

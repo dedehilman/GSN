@@ -41,6 +41,18 @@
                                             <input type="text" name="name" class="form-control">
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label">{{__("Afdelink")}}</label>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <input type="text" name="afdelink_name" id="afdelink_name" class="form-control required" readonly>
+                                                <input type="hidden" name="afdelink_id" id="afdelink_id">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Afdelink List')}}" data-url="{{route('afdelink.select')}}" data-handler="onSelectedAfdelink"><i class="fas fa-search"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-sm-12 text-right">
                                             <button type="button" class="btn btn-sm btn-default" id="btn-clear" style="width: 100px;"><i class="fas fa-trash"></i> {{__('Clear')}}</button>
@@ -156,5 +168,10 @@
                 ],
             });
         });
+
+        function onSelectedAfdelink(data) {
+            $('#afdelink_id').val(data[0].id);
+            $('#afdelink_name').val(data[0].name);
+        }
     </script>
 @endsection

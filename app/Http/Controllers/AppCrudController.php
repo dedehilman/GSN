@@ -22,6 +22,8 @@ class AppCrudController extends Controller
     protected $column = array();
     protected $columnSelect = array();
     protected $filePath = '';
+    protected $extraParameter = array();
+    protected $extraParameterSelect = array();
 
     public function setDefaultMiddleware($permission) {
         $this->middleware('auth');
@@ -29,6 +31,13 @@ class AppCrudController extends Controller
         $this->middleware('permission:'.$permission.'-create', ['only' => ['create','store']]);
         $this->middleware('permission:'.$permission.'-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:'.$permission.'-delete', ['only' => ['destroy']]);
+    }
+
+    public function setDefaultView($view) {
+        $this->setIndex($view.'.index');
+        $this->setCreate($view.'.create');
+        $this->setEdit($view.'.edit');
+        $this->setView($view.'.view');
     }
 
     public function setIndex($index) {
@@ -321,7 +330,11 @@ class AppCrudController extends Controller
             if($request->parentId) {
                 $query = $query->where(rtrim($this->getParentTableName(), "s")."_id", $request->parentId);
             }
-            $query = $this->queryBuilder([$this->getTableName()], $query);
+            if(!$request->queryBuilder || $request->queryBuilder == '1') {
+                $query = $this->queryBuilder([$this->getTableName()], $query);
+            }
+            $this->setExtraParameter($request);
+            $query = $this->filterExtraParameter($query);
             $totalData = $query->count();
             $query = $this->filterDatatable($request, $query);
             $totalFiltered = $query->count();
@@ -381,7 +394,11 @@ class AppCrudController extends Controller
             if($request->parentId) {
                 $query = $query->where(rtrim($this->getParentTableName(), "s")."_id", $request->parentId);
             }
-            $query = $this->queryBuilder([$this->getTableName()], $query);
+            if(!$request->queryBuilder || $request->queryBuilder == '1') {
+                $query = $this->queryBuilder([$this->getTableName()], $query);
+            }
+            $this->setExtraParameterSelect($request);
+            $query = $this->filterExtraParameterSelect($query);
             $totalData = $query->count();
             $query = $this->filterDatatableSelect($request, $query);
             $totalFiltered = $query->count();
@@ -561,5 +578,93 @@ class AppCrudController extends Controller
             'name'          => $name,
             'original_name' => $file->getClientOriginalName(),
         ]);
+    }
+
+    public function addExtraParameter($column, $value) {
+        $this->extraParameter[$column] = $value;
+    }
+
+    public function addExtraParameterSelect($column, $value) {
+        $this->extraParameterSelect[$column] = $value;
+    }
+
+    public function setExtraParameter($request) {
+        foreach($request->extraParameters ?? [] as $key => $value) {
+            $this->addExtraParameter($key, $value);
+        }
+    }
+
+    public function setExtraParameterSelect($request) {
+        foreach($request->extraParameters ?? [] as $key => $value) {
+            $this->addExtraParameterSelect($key, $value);
+        }
+    }
+
+    public function filterExtraParameter($query) {
+        foreach($this->extraParameter ?? [] as $key => $value) {
+            if($value) {
+                if(Str::endsWith($key, '.like')) {
+                    $query->where(Str::replace('.like', '', $key),'LIKE',"%{$value}%");
+                }
+                else if(Str::endsWith($key, '.gt')) {
+                    $query->where(Str::replace('.gt', '', $key),'>',$value);
+                }
+                else if(Str::endsWith($key, '.gte')) {
+                    $query->where(Str::replace('.gte', '', $key),'>=',$value);
+                }
+                else if(Str::endsWith($key, '.lt')) {
+                    $query->where(Str::replace('.lt', '', $key),'<',$value);
+                }
+                else if(Str::endsWith($key, '.lte')) {
+                    $query->where(Str::replace('.lte', '', $key),'<=',$value);
+                }
+                else if(Str::endsWith($key, '.eq')) {
+                    $query->where(Str::replace('.eq', '', $key),'=',$value);
+                }
+                else if(Str::endsWith($key, '.neq')) {
+                    $query->where(Str::replace('.neq', '', $key),'<>',$value);
+                }
+                else if(Str::startsWith($value, '%') || Str::endsWith($value, '%')) {
+                    $query->where($key,'LIKE',"$value");
+                } else {
+                    $query->where($key,$value);
+                }
+            }
+        }
+        return $query;
+    }
+
+    public function filterExtraParameterSelect($query) {
+        foreach($this->extraParameterSelect ?? [] as $key => $value) {
+            if($value) {
+                if(Str::endsWith($key, '.like')) {
+                    $query->where(Str::replace('.like', '', $key),'LIKE',"%{$value}%");
+                }
+                else if(Str::endsWith($key, '.gt')) {
+                    $query->where(Str::replace('.gt', '', $key),'>',$value);
+                }
+                else if(Str::endsWith($key, '.gte')) {
+                    $query->where(Str::replace('.gte', '', $key),'>=',$value);
+                }
+                else if(Str::endsWith($key, '.lt')) {
+                    $query->where(Str::replace('.lt', '', $key),'<',$value);
+                }
+                else if(Str::endsWith($key, '.lte')) {
+                    $query->where(Str::replace('.lte', '', $key),'<=',$value);
+                }
+                else if(Str::endsWith($key, '.eq')) {
+                    $query->where(Str::replace('.eq', '', $key),'=',$value);
+                }
+                else if(Str::endsWith($key, '.neq')) {
+                    $query->where(Str::replace('.neq', '', $key),'<>',$value);
+                }
+                else if(Str::startsWith($value, '%') || Str::endsWith($value, '%')) {
+                    $query->where($key,'LIKE',"$value");
+                } else {
+                    $query->where($key,$value);
+                }
+            }
+        }
+        return $query;
     }
 }

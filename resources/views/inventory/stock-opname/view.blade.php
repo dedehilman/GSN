@@ -20,7 +20,7 @@
                         <div class="col-md-9 col-form-label">{{$data->period->name}}</div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{__("Medicine")}}</label>
+                        <label class="col-md-3 col-form-label">{{__("Product")}}</label>
                         <div class="col-md-9 col-form-label">{{$data->medicine->name}}</div>
                     </div>
                     <div class="form-group row">

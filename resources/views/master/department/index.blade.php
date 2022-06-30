@@ -48,7 +48,7 @@
                                         <label class="col-2 col-form-label">{{__("Parent")}}</label>
                                         <div class="col-4">
                                             <div class="input-group">
-                                                <input type="text" name="parent_name" id="parent_name" class="form-control">
+                                                <input type="text" name="parent_name" id="parent_name" class="form-control" readonly>
                                                 <input type="hidden" name="parent_id" id="parent_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Department List')}}" data-url="{{route('department.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>

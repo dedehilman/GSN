@@ -11,11 +11,8 @@ class MedicineTypeController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('medicine-type');
+        $this->setDefaultView('master.medicine-type');
         $this->setSelect('master.medicine-type.select');
-        $this->setIndex('master.medicine-type.index');
-        $this->setCreate('master.medicine-type.create');
-        $this->setEdit('master.medicine-type.edit');
-        $this->setView('master.medicine-type.view');
         $this->setModel('App\Models\MedicineType');
     }
 

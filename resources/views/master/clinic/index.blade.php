@@ -41,6 +41,18 @@
                                             <input type="text" name="name" class="form-control">
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label">{{__("Business Area")}}</label>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <input type="text" id="estate_name" class="form-control" readonly>
+                                                <input type="hidden" name="estate_id" id="estate_id">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Business Area List')}}" data-url="{{route('estate.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-sm-12 text-right">
                                             <button type="button" class="btn btn-sm btn-default" id="btn-clear" style="width: 100px;"><i class="fas fa-trash"></i> {{__('Clear')}}</button>
@@ -180,5 +192,10 @@
                 ],
             });
         });
+
+        function onSelected(data) {
+            $('#estate_id').val(data[0].id);
+            $('#estate_name').val(data[0].name);
+        }
     </script>
 @endsection

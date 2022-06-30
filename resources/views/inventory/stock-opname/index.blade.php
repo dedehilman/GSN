@@ -35,20 +35,20 @@
                                         <label class="col-md-2 col-form-label">{{__("Period")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" id="period_name" class="form-control required">
+                                                <input type="text" id="period_name" class="form-control" readonly>
                                                 <input type="hidden" name="period_id" id="period_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Period List')}}" data-url="{{route('period.select')}}" data-handler="onSelectedPeriod"><i class="fas fa-search"></i></span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <label class="col-md-2 col-form-label">{{__("Medicine")}}</label>
+                                        <label class="col-md-2 col-form-label">{{__("Product")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" id="medicine_name" class="form-control required">
+                                                <input type="text" id="medicine_name" class="form-control" readonly>
                                                 <input type="hidden" name="medicine_id" id="medicine_id">
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Medicine List')}}" data-url="{{route('medicine.select')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Product List')}}" data-url="{{route('medicine.select')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -57,7 +57,7 @@
                                         <label class="col-md-2 col-form-label">{{__("Clinic")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" id="clinic_name" class="form-control">
+                                                <input type="text" id="clinic_name" class="form-control" readonly>
                                                 <input type="hidden" name="clinic_id" id="clinic_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
@@ -92,7 +92,7 @@
                                 <th></th>
                                 <th></th>
                                 <th>{{ __("Period") }}</th>
-                                <th>{{ __("Medicine") }}</th>
+                                <th>{{ __("Product") }}</th>
                                 <th>{{ __("Clinic") }}</th>
                                 <th>{{ __("Quantity") }}</th>
                             </tr>

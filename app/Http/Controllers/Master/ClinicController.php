@@ -15,11 +15,8 @@ class ClinicController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('clinic');
+        $this->setDefaultView('master.clinic');
         $this->setSelect('master.clinic.select');
-        $this->setIndex('master.clinic.index');
-        $this->setCreate('master.clinic.create');
-        $this->setEdit('master.clinic.edit');
-        $this->setView('master.clinic.view');
         $this->setModel('App\Models\Clinic');
     }
 

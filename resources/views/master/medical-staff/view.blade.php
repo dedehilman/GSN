@@ -52,16 +52,12 @@
                                         <thead>
                                             <tr>
                                                 <th>{{ __('Clinic') }}</th>
-                                                <th>{{ __('Effective Date') }}</th>
-                                                <th>{{ __('Expiry Date') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($data->clinics as $clinic)
                                                 <tr>
-                                                    <td>{{$clinic->clinic->name}}</td>
-                                                    <td>{{$clinic->effective_date}}</td>
-                                                    <td>{{$clinic->expiry_date}}</td>
+                                                    <td>{{$clinic->name}}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

@@ -12,11 +12,8 @@ class PermissionController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('permission');
+        $this->setDefaultView('system.permission');
         $this->setSelect('system.permission.select');
-        $this->setIndex('system.permission.index');
-        $this->setCreate('system.permission.create');
-        $this->setEdit('system.permission.edit');
-        $this->setView('system.permission.view');
         $this->setModel('App\Models\Permission');
     }
 

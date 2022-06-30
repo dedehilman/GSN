@@ -34,7 +34,7 @@
                             <label class="col-md-3 col-form-label">{{__("Company Group")}}</label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <input type="text" name="company_group_name" id="company_group_name" class="form-control">
+                                    <input type="text" name="company_group_name" id="company_group_name" class="form-control" readonly>
                                     <input type="hidden" name="company_group_id" id="company_group_id">
                                     <div class="input-group-append">
                                         <span class="input-group-text show-modal-select" data-title="{{__('Company Group List')}}" data-url="{{route('company-group.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>

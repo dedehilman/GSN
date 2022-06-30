@@ -12,11 +12,8 @@ class EstateController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('estate');
+        $this->setDefaultView('master.estate');
         $this->setSelect('master.estate.select');
-        $this->setIndex('master.estate.index');
-        $this->setCreate('master.estate.create');
-        $this->setEdit('master.estate.edit');
-        $this->setView('master.estate.view');
         $this->setModel('App\Models\Estate');
     }
 

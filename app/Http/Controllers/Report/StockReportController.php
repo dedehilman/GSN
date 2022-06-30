@@ -12,9 +12,7 @@ class StockReportController extends AppReportController
     public function __construct()
     {
         $this->setDefaultMiddleware('stock');
-        $this->setIndex('report.stock.index');
-        $this->setCreate('report.stock.create');
-        $this->setView('report.stock.view');
+        $this->setDefaultView('report.stock');
         $this->setModel('App\Models\StockReport');
     }
 

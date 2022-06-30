@@ -12,11 +12,8 @@ class RecordRuleController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('record-rule');
+        $this->setDefaultView('system.record-rule');
         $this->setSelect('system.record-rule.select');
-        $this->setIndex('system.record-rule.index');
-        $this->setCreate('system.record-rule.create');
-        $this->setEdit('system.record-rule.edit');
-        $this->setView('system.record-rule.view');
         $this->setModel('App\Models\RecordRule');
     }
 

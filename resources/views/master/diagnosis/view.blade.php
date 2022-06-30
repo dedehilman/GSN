@@ -40,17 +40,15 @@
                             </ul>
                             <div class="tab-content" style="padding-top: 10px">
                                 <div class="tab-pane fade show active" id="tab1" role="tabpanel">
-                                    <table class="table table-striped table-bordered" id="table_diagnosis_symptom">
+                                    <table class="table table-striped table-bordered" id="table-symptom">
                                         <thead>
                                             <tr>
-                                                <th>{{ __("Code") }}</th>
-                                                <th>{{ __("Name") }}</th>
+                                                <th>{{ __("Symptom") }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($data->symptoms as $index => $symptom)
+                                            @foreach($data->symptoms as $idx => $symptom)
                                                 <tr>
-                                                    <td>{{$symptom->code}}</td>
                                                     <td>{{$symptom->name}}</td>
                                                 </tr>
                                             @endforeach
@@ -67,23 +65,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('script')
-<script>
-
-    $.extend(true, $.fn.dataTable.defaults, {
-        serverSide: false,
-        searching: true,
-        order: [[0, "asc"]],
-    });
-    
-    $('document').ready(function(){
-
-        $('#table_diagnosis_symptom').DataTable({ 
-        });
-
-    });
-
-    </script>
 @endsection

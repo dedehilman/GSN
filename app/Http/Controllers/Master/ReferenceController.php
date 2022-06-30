@@ -12,11 +12,8 @@ class ReferenceController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('reference');
+        $this->setDefaultView('master.reference');
         $this->setSelect('master.reference.select');
-        $this->setIndex('master.reference.index');
-        $this->setCreate('master.reference.create');
-        $this->setEdit('master.reference.edit');
-        $this->setView('master.reference.view');
         $this->setModel('App\Models\Reference');
     }
 

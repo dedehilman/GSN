@@ -77,8 +77,6 @@
                                                         <span class='btn btn-primary btn-sm btn-add' data-type="clinic" style="cursor: pointer"><i class='fas fa-plus-circle'></i></span>
                                                     </th>
                                                     <th>{{ __('Clinic') }}</th>
-                                                    <th>{{ __('Effective Date') }}</th>
-                                                    <th>{{ __('Expiry Date') }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -87,31 +85,14 @@
                                                         <td style="vertical-align: middle; text-align: center;">
                                                             <span class='btn btn-danger btn-sm' onclick="removeRow(this)" style="cursor: pointer"><i class='fas fa-trash-alt'></i></span>
                                                             <input type="hidden" class="form-control" value="{{$idx}}">
-                                                            <input type="hidden" class="form-control" name="medical_staff_clinic_id[]" value="{{$clinic->id}}" id="medical-staff_clinic_id{{$idx}}">
                                                         </td>
                                                         <td>
                                                             <div class="input-group">
-                                                                <input type="text" name="clinic_name[]" class="form-control" value="{{$clinic->clinic->name}}" id="clinic_name{{$idx}}">
-                                                                <input type="hidden" name="clinic_id[]" value="{{$clinic->clinic->id}}" id="clinic_id{{$idx}}">
+                                                                <input type="text" name="clinic_name[]" class="form-control" value="{{$clinic->name}}" id="clinic_name{{$idx}}" readonly>
+                                                                <input type="hidden" name="clinics[]" value="{{$clinic->id}}" id="clinic_id{{$idx}}">
                                                                 <div class="input-group-append">
                                                                     <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic" data-id="clinic"><i class="fas fa-search"></i></span>
                                                                 </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                                                </div>
-                                                                <input type="text" name="effective_date[]" class="form-control date" value="{{$clinic->effective_date}}" id="effective_date{{$idx}}">
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                                                </div>
-                                                                <input type="text" name="expiry_date[]" class="form-control date" value="{{$clinic->expiry_date}}" id="expiry_date{{$idx}}">
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -138,31 +119,14 @@
                 <td style="vertical-align: middle; text-align: center;">
                     <span class='btn btn-danger btn-sm' onclick="removeRow(this)" style="cursor: pointer"><i class='fas fa-trash-alt'></i></span>
                     <input type="hidden" class="form-control">
-                    <input type="hidden" class="form-control" name="medical_staff_clinic_id[]">
                 </td>
                 <td>
                     <div class="input-group">
-                        <input type="text" name="clinic_name[]" class="form-control">
-                        <input type="hidden" name="clinic_id[]">
+                        <input type="text" name="clinic_name[]" class="form-control" readonly>
+                        <input type="hidden" name="clinics[]">
                         <div class="input-group-append">
                             <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic" data-id="clinic"><i class="fas fa-search"></i></span>
                         </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                        </div>
-                        <input type="text" name="effective_date[]" class="form-control date">
-                    </div>
-                </td>
-                <td>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                        </div>
-                        <input type="text" name="expiry_date[]" class="form-control date">
                     </div>
                 </td>
             </tr>
@@ -179,13 +143,10 @@
                 var textInput = clonedRow.find('input');
                 
                 var i = 0;
-                for(var i=1; $('#medical_staff_clinic_id'+i).length;i++){}
+                for(var i=1; $('#clinic_id'+i).length;i++){}
 
-                textInput.eq(1).attr('id', 'medical-staff_clinic_id' + i);
-                textInput.eq(2).attr('id', 'clinic_name' + i);
-                textInput.eq(3).attr('id', 'clinic_id' + i);
-                textInput.eq(4).attr('id', 'effective_date' + i);
-                textInput.eq(5).attr('id', 'expiry_date' + i);
+                textInput.eq(1).attr('id', 'clinic_name' + i);
+                textInput.eq(2).attr('id', 'clinic_id' + i);
                 textInput.val('');
                 textInput.eq(0).val(i);
 

@@ -12,11 +12,8 @@ class RelationshipController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('relationship');
+        $this->setDefaultView('master.relationship');
         $this->setSelect('master.relationship.select');
-        $this->setIndex('master.relationship.index');
-        $this->setCreate('master.relationship.create');
-        $this->setEdit('master.relationship.edit');
-        $this->setView('master.relationship.view');
         $this->setModel('App\Models\Relationship');
     }
 

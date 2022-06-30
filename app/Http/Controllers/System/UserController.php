@@ -17,11 +17,8 @@ class UserController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('user');
+        $this->setDefaultView('system.user');
         $this->setSelect('system.user.select');
-        $this->setIndex('system.user.index');
-        $this->setCreate('system.user.create');
-        $this->setEdit('system.user.edit');
-        $this->setView('system.user.view');
         $this->setModel('App\Models\User');
     }
 

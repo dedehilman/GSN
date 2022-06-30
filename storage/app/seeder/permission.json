@@ -160,5 +160,21 @@
     {"name": "reference-letter-list"},
     {"name": "reference-letter-create"},
     {"name": "reference-letter-edit"},
-    {"name": "reference-letter-delete"}
+    {"name": "reference-letter-delete"},
+    {"name": "registration-outpatient-list"},
+    {"name": "registration-outpatient-create"},
+    {"name": "registration-outpatient-edit"},
+    {"name": "registration-outpatient-delete"},
+    {"name": "registration-kb-list"},
+    {"name": "registration-kb-create"},
+    {"name": "registration-kb-edit"},
+    {"name": "registration-kb-delete"},
+    {"name": "registration-pregnancy-test-list"},
+    {"name": "registration-pregnancy-test-create"},
+    {"name": "registration-pregnancy-test-edit"},
+    {"name": "registration-pregnancy-test-delete"},
+    {"name": "registration-work-accident-list"},
+    {"name": "registration-work-accident-create"},
+    {"name": "registration-work-accident-edit"},
+    {"name": "registration-work-accident-delete"}
 ]

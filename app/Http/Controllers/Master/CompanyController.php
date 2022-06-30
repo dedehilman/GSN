@@ -16,11 +16,8 @@ class CompanyController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('company');
+        $this->setDefaultView('master.company');
         $this->setSelect('master.company.select');
-        $this->setIndex('master.company.index');
-        $this->setCreate('master.company.create');
-        $this->setEdit('master.company.edit');
-        $this->setView('master.company.view');
         $this->setModel('App\Models\Company');
     }
 

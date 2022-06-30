@@ -23,14 +23,15 @@ class CreateEmployeesTable extends Migration
             $table->string('identity_number')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
-            $table->string('blood_type')->nullable();
             $table->string('address')->nullable();
+            $table->unsignedBigInteger('afdelink_id');
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
 
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('afdelink_id')->references('id')->on('afdelinks')->onDelete('cascade');
         });
     }
 

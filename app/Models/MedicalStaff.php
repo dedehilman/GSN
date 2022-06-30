@@ -20,34 +20,14 @@ class MedicalStaff extends Model
         'address'
     ];
 
-    public function clinics() {
-        return $this->hasMany(MedicalStaffClinic::class)->orderBy('effective_date', 'ASC');
-    }
-
-    public function clinic() {
-        return $this->hasOne(MedicalStaffClinic::class)->where(function($query)
-        {
-            $query->whereRaw('? >= effective_date', Carbon::now()->format('Y-m-d'));
-            $query->where(function($query) {
-                $query->whereNull('expiry_date');
-                $query->orWhereRaw('? <= expiry_date', Carbon::now()->format('Y-m-d'));
-            });
-        })->orderBy('effective_date', 'ASC');
-    }
-
-    public function currentClinics() {
-        return $this->hasMany(MedicalStaffClinic::class)->where(function($query)
-        {
-            $query->whereRaw('? >= effective_date', Carbon::now()->format('Y-m-d'));
-            $query->where(function($query) {
-                $query->whereNull('expiry_date');
-                $query->orWhereRaw('? <= expiry_date', Carbon::now()->format('Y-m-d'));
-            });
-        })->orderBy('effective_date', 'ASC');
-    }
-
-    public function scopeWithAll($query) 
+    public function clinics()
     {
-        return $query->with(['clinic', 'clinic.clinic']);
+        return $this->belongsToMany(Clinic::class, MedicalStaffClinic::class);
+    }
+
+    public function syncClinics($clinics)
+    {
+        $this->clinics()->detach();   
+        $this->clinics()->attach($clinics);
     }
 }

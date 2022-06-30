@@ -165,16 +165,6 @@ Route::post('/master/diagnosis/datatable/select', [App\Http\Controllers\Master\D
 Route::get('/master/diagnosis/select', [App\Http\Controllers\Master\DiagnosisController::class, 'select'])->name('diagnosis.select');
 Route::resource('master/diagnosis', App\Http\Controllers\Master\DiagnosisController::class);
 
-Route::post('/master/diagnosis-symptom/datatable', [App\Http\Controllers\Master\DiagnosisSymptomController::class, 'datatable'])->name('diagnosis-symptom.datatable');
-Route::post('/master/diagnosis-symptom/datatable/select', [App\Http\Controllers\Master\DiagnosisSymptomController::class, 'datatableSelect'])->name('diagnosis-symptom.datatable.select');
-Route::get('/master/diagnosis-symptom/select', [App\Http\Controllers\Master\DiagnosisSymptomController::class, 'select'])->name('diagnosis-symptom.select');
-Route::resource('master/diagnosis-symptom', App\Http\Controllers\Master\DiagnosisSymptomController::class);
-
-Route::post('/master/disease-medicine/datatable', [App\Http\Controllers\Master\DiseaseMedicineController::class, 'datatable'])->name('disease-medicine.datatable');
-Route::post('/master/disease-medicine/datatable/select', [App\Http\Controllers\Master\DiseaseMedicineController::class, 'datatableSelect'])->name('disease-medicine.datatable.select');
-Route::get('/master/disease-medicine/select', [App\Http\Controllers\Master\DiseaseMedicineController::class, 'select'])->name('disease-medicine.select');
-Route::resource('master/disease-medicine', App\Http\Controllers\Master\DiseaseMedicineController::class);
-
 Route::post('/master/reference/datatable', [App\Http\Controllers\Master\ReferenceController::class, 'datatable'])->name('reference.datatable');
 Route::post('/master/reference/datatable/select', [App\Http\Controllers\Master\ReferenceController::class, 'datatableSelect'])->name('reference.datatable.select');
 Route::get('/master/reference/select', [App\Http\Controllers\Master\ReferenceController::class, 'select'])->name('reference.select');
@@ -205,3 +195,8 @@ Route::resource('letter/sick-letter', App\Http\Controllers\Letter\SickLetterCont
 Route::post('/letter/reference-letter/datatable', [App\Http\Controllers\Letter\ReferenceLetterController::class, 'datatable'])->name('reference-letter.datatable');
 Route::get('letter/reference-letter/download/{id}', [App\Http\Controllers\Letter\ReferenceLetterController::class, 'download'])->name('reference-letter.download');
 Route::resource('letter/reference-letter', App\Http\Controllers\Letter\ReferenceLetterController::class);
+
+Route::group(['prefix' => 'registration', 'as' => 'registration.'], function () {
+    Route::post('outpatient/datatable', [App\Http\Controllers\Registration\OutpatientController::class, 'datatable'])->name('outpatient.datatable');
+    Route::resource('outpatient', App\Http\Controllers\Registration\OutpatientController::class);
+});

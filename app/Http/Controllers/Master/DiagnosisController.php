@@ -15,10 +15,7 @@ class DiagnosisController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('diagnosis');
-        $this->setIndex('master.diagnosis.index');
-        $this->setCreate('master.diagnosis.create');
-        $this->setEdit('master.diagnosis.edit');
-        $this->setView('master.diagnosis.view');
+        $this->setDefaultView('master.diagnosis');
         $this->setModel('App\Models\Diagnosis');
     }
 

@@ -12,10 +12,7 @@ class StockOpnameController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('stock-opname');
-        $this->setIndex('inventory.stock-opname.index');
-        $this->setCreate('inventory.stock-opname.create');
-        $this->setEdit('inventory.stock-opname.edit');
-        $this->setView('inventory.stock-opname.view');
+        $this->setDefaultView('inventory.stock-opname');
         $this->setModel('App\Models\StockOpname');
     }
 

@@ -39,7 +39,7 @@
                                     <table class="table table-bordered" id="table-disease-medicine">
                                         <thead>
                                             <tr>
-                                                <th>{{ __('Medicine') }}</th>
+                                                <th>{{ __('Product') }}</th>
                                                 <th>{{ __('Rule') }}</th>
                                                 <th>{{ __('Qty') }}</th>
                                             </tr>

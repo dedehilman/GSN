@@ -6,6 +6,9 @@ use App\Http\Controllers\AppCrudController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use PDF;
+use App\Models\ReferenceLetter;
+use Lang;
+use Carbon\Carbon;
 
 class ReferenceLetterController extends AppCrudController
 {
@@ -18,6 +21,35 @@ class ReferenceLetterController extends AppCrudController
         $this->setEdit('letter.reference-letter.edit');
         $this->setView('letter.reference-letter.view');
         $this->setModel('App\Models\ReferenceLetter');
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            $count = ReferenceLetter::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->count();
+            $request['transaction_no'] = 'RL-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+
+            $validateOnStore = $this->validateOnStore($request);
+            if($validateOnStore) {
+                return response()->json([
+                    'status' => '400',
+                    'data' => '',
+                    'message'=> $validateOnStore
+                ]);
+            }
+            $this->model::create($request->all());
+            return response()->json([
+                'status' => '200',
+                'data' => '',
+                'message'=> Lang::get("Data has been stored")
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => '500',
+                'data' => '',
+                'message'=> $th->getMessage()
+            ]);
+        }        
     }
 
     public function validateOnStore(Request $request)

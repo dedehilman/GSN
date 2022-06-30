@@ -12,11 +12,8 @@ class DiseaseGroupController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('disease-group');
+        $this->setDefaultView('master.disease-group');
         $this->setSelect('master.disease-group.select');
-        $this->setIndex('master.disease-group.index');
-        $this->setCreate('master.disease-group.create');
-        $this->setEdit('master.disease-group.edit');
-        $this->setView('master.disease-group.view');
         $this->setModel('App\Models\DiseaseGroup');
     }
 

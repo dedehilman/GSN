@@ -44,37 +44,37 @@
                         <div class="col-md-9 col-form-label">{{$data->email}}</div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{__("Blood Type")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->blood_type}}</div>
-                    </div>
-                    <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{__("Address")}}</label>
                         <div class="col-md-9 col-form-label">{!!nl2br($data->address)!!}</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Afdelink")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->afdelink->name ?? ''}}</div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="pill" href="#tab1" role="tab" aria-selected="true">{{ __("Company") }}</a>
+                                <li class="nav-item d-none">
+                                    <a class="nav-link" data-toggle="pill" href="#tab1" role="tab" aria-selected="true">{{ __("Company") }}</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item d-none">
                                     <a class="nav-link" data-toggle="pill" href="#tab2" role="tab" aria-selected="true">{{ __("Department") }}</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item d-none">
                                     <a class="nav-link" data-toggle="pill" href="#tab3" role="tab" aria-selected="true">{{ __("Position") }}</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item d-none">
                                     <a class="nav-link" data-toggle="pill" href="#tab4" role="tab" aria-selected="true">{{ __("Attribute") }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="pill" href="#tab5" role="tab" aria-selected="true">{{ __("Relationship") }}</a>
+                                    <a class="nav-link active" data-toggle="pill" href="#tab5" role="tab" aria-selected="true">{{ __("Relationship") }}</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item d-none">
                                     <a class="nav-link" data-toggle="pill" href="#tab6" role="tab" aria-selected="true">{{ __("Afdelink") }}</a>
                                 </li>
                             </ul>
                             <div class="tab-content" style="padding-top: 10px">
-                                <div class="tab-pane fade show active" id="tab1" role="tabpanel">
+                                <div class="tab-pane fade" id="tab1" role="tabpanel">
                                     <table class="table table-bordered" id="table-company">
                                         <thead>
                                             <tr>
@@ -186,7 +186,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="tab-pane fade" id="tab5" role="tabpanel">
+                                <div class="tab-pane fade show active" id="tab5" role="tabpanel">
                                     <table class="table table-bordered" id="table-relationship">
                                         <thead>
                                             <tr>

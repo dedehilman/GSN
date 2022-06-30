@@ -47,7 +47,7 @@
                     </div>
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{__("Business Area")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->estate->code ?? ''}} {{$data->estate->name ?? ''}}</div>
+                        <div class="col-md-9 col-form-label">{{$data->estate->name ?? ''}}</div>
                     </div>
                 </div>
                 <div class="card-footer text-right">

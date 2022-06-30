@@ -11,11 +11,8 @@ class MedicineRuleController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('medicine-rule');
+        $this->setDefaultView('master.medicine-rule');
         $this->setSelect('master.medicine-rule.select');
-        $this->setIndex('master.medicine-rule.index');
-        $this->setCreate('master.medicine-rule.create');
-        $this->setEdit('master.medicine-rule.edit');
-        $this->setView('master.medicine-rule.view');
         $this->setModel('App\Models\MedicineRule');
     }
 

@@ -12,11 +12,8 @@ class UnitController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('unit');
+        $this->setDefaultView('master.unit');
         $this->setSelect('master.unit.select');
-        $this->setIndex('master.unit.index');
-        $this->setCreate('master.unit.create');
-        $this->setEdit('master.unit.edit');
-        $this->setView('master.unit.view');
         $this->setModel('App\Models\Unit');
     }
 

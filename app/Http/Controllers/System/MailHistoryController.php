@@ -10,8 +10,7 @@ class MailHistoryController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('mail-history');
-        $this->setIndex('system.mail-history.index');
-        $this->setView('system.mail-history.view');
+        $this->setDefaultView('system.mail-history');
         $this->setModel('App\Models\MailHistory');
     }
 }

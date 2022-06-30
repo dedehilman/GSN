@@ -12,11 +12,8 @@ class SymptomController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('symptom');
+        $this->setDefaultView('master.symptom');
         $this->setSelect('master.symptom.select');
-        $this->setIndex('master.symptom.index');
-        $this->setCreate('master.symptom.create');
-        $this->setEdit('master.symptom.edit');
-        $this->setView('master.symptom.view');
         $this->setModel('App\Models\Symptom');
     }
 

@@ -12,11 +12,8 @@ class PeriodController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('period');
+        $this->setDefaultView('master.period');
         $this->setSelect('master.period.select');
-        $this->setIndex('master.period.index');
-        $this->setCreate('master.period.create');
-        $this->setEdit('master.period.edit');
-        $this->setView('master.period.view');
         $this->setModel('App\Models\Period');
     }
 

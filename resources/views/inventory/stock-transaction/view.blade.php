@@ -51,7 +51,7 @@
                                     <table class="table table-bordered" id="table-transaction-detail">
                                         <thead>
                                             <tr>
-                                                <th>{{ __('Medicine') }}</th>
+                                                <th>{{ __('Product') }}</th>
                                                 <th>{{ __('Qty') }}</th>
                                                 <th>{{ __('Remark') }}</th>
                                             </tr>

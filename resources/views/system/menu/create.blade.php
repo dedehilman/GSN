@@ -78,7 +78,7 @@
                             <label class="col-md-3 col-form-label required">{{__("Parent")}}</label>
                             <div class="col-md-9">
                                 <div class="input-group mb-3">
-                                    <input type="text" name="parent_id" id="parent_id" class="form-control">
+                                    <input type="text" name="parent_id" id="parent_id" class="form-control" readonly>
                                     <div class="input-group-append">
                                         <span class="input-group-text show-modal-select" data-title="{{__('Menu List')}}" data-url="{{route('menu.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
                                     </div>

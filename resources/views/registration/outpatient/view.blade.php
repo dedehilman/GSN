@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Diagnosis Symptom"), 'subTitle' => Lang::get("View data diagnosis symptom")])
+@extends('layout', ['title' => Lang::get("Afdelink"), 'subTitle' => Lang::get("View data afdelink")])
 
 @section('content')
     <div class="row">
@@ -16,16 +16,20 @@
                 </div>
                 <div class="card-body">       
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{__("Diagnosis")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->diagnosis->code}} {{$data->diagnosis->name}}</div>
+                        <label class="col-md-3 col-form-label">{{__("Code")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->code}}</div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{__("Symptom")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->symptom->code}} {{$data->symptom->name}}</div>
+                        <label class="col-md-3 col-form-label">{{__("Name")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->name}}</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Business Area")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->estate->code}} {{$data->estate->name}}</div>
                     </div>
                 </div>
                 <div class="card-footer text-right">
-                    <a href="{{route('diagnosis-symptom.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                    <a href="{{route('afdelink.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
                 </div>
             </div>
         </div>

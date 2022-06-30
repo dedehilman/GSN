@@ -40,7 +40,7 @@
                             <label class="col-md-3 col-form-label required">{{__("Disease")}}</label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <input type="text" name="disease_name" id="disease_name" class="form-control required" value="{{$data->disease->name}}">
+                                    <input type="text" name="disease_name" id="disease_name" class="form-control required" value="{{$data->disease->name}}" readonly>
                                     <input type="hidden" name="disease_id" id="disease_id" value="{{$data->disease->id}}">
                                     <div class="input-group-append">
                                         <span class="input-group-text show-modal-select" data-title="{{__('Disease List')}}" data-url="{{route('disease.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>
@@ -57,22 +57,31 @@
                                 </ul>
                                 <div class="tab-content" style="padding-top: 10px">
                                     <div class="tab-pane fade show active" id="tab1" role="tabpanel">
-                                        <table class="table table-striped table-bordered" id="table_diagnosis_symptom">
+                                        <table class="table table-bordered" id="table-symptom">
                                             <thead>
                                                 <tr>
                                                     <th width="10px" class="text-center">
-                                                        <span class='btn btn-primary btn-sm show-modal-select' style="cursor: pointer" data-title="{{__('Symptom List')}}" data-url="{{route('symptom.select', 'select=multiple')}}" data-handler="onSelectedSymptom"><i class='fas fa-plus-circle'></i></span>
+                                                        <span class='btn btn-primary btn-sm btn-add' style="cursor: pointer"><i class='fas fa-plus-circle'></i></span>
                                                     </th>
-                                                    <th>{{ __("Code") }}</th>
-                                                    <th>{{ __("Name") }}</th>
+                                                    <th>{{ __("Symptom") }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($data->symptoms as $index => $symptom)
+                                                @foreach($data->symptoms as $idx => $symptom)
                                                     <tr>
-                                                        <td>{{$symptom->id}}</td>
-                                                        <td>{{$symptom->code}}</td>
-                                                        <td>{{$symptom->name}}</td>
+                                                        <td style="vertical-align: middle; text-align: center;">
+                                                            <span class='btn btn-danger btn-sm' onclick="removeRow(this)" style="cursor: pointer"><i class='fas fa-trash-alt'></i></span>
+                                                            <input type="hidden" class="form-control" value="{{$idx}}">
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group">
+                                                                <input type="text" name="symptom_name[]" class="form-control" value="{{$symptom->name}}" id="symptom_name{{$idx}}" readonly>
+                                                                <input type="hidden" name="symptoms[]" value="{{$symptom->id}}" id="symptom_id{{$idx}}">
+                                                                <div class="input-group-append">
+                                                                    <span class="input-group-text show-modal-select" data-title="{{__('Symptom List')}}" data-url="{{route('symptom.select')}}" data-handler="onSelectedSymptom" data-id="clinic"><i class="fas fa-search"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -81,81 +90,67 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="myFormDetail"></div>
                     </div>
                     <div class="card-footer text-right">
                         <a href="{{route('diagnosis.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
-                        <button type="button" class="btn btn-primary" id="btn-update-custom"><i class="fas fa fa-save"></i> {{__("Update")}}</button>
+                        <button type="button" class="btn btn-primary" id="btn-update"><i class="fas fa fa-save"></i> {{__("Update")}}</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+
+    <table class="d-none" id="table-symptom-tmp">
+        <tbody>
+            <tr>
+                <td style="vertical-align: middle; text-align: center;">
+                    <span class='btn btn-danger btn-sm' onclick="removeRow(this)" style="cursor: pointer"><i class='fas fa-trash-alt'></i></span>
+                    <input type="hidden" class="form-control">
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input type="text" name="symptom_name[]" class="form-control" readonly>
+                        <input type="hidden" name="symptoms[]">
+                        <div class="input-group-append">
+                            <span class="input-group-text show-modal-select" data-title="{{__('Symptom List')}}" data-url="{{route('symptom.select')}}" data-handler="onSelectedSymptom" data-id="symptom"><i class="fas fa-search"></i></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 @endsection
 
 @section('script')
     <script>
-
-        var table_diagnosis_symptom;
-
         $('document').ready(function(){
+            $('.btn-add').on('click', function(){
+                var clonedRow = $('#table-symptom-tmp tbody tr:last').clone();
+                $('#table-symptom tbody').append(clonedRow);
+                var textInput = clonedRow.find('input');
+                
+                var i = 0;
+                for(var i=1; $('#symptom_id'+i).length;i++){}
 
-            $('#btn-update-custom').on('click', function(){
-                getRowData();
-                ajaxPut($(this));
+                textInput.eq(1).attr('id', 'symptom_name' + i);
+                textInput.eq(2).attr('id', 'symptom_id' + i);
+                textInput.val('');
+                textInput.eq(0).val(i);
             });
 
-            table_diagnosis_symptom = $('#table_diagnosis_symptom').DataTable({
-                serverSide: false,
-                searching: true,
-                order: [[1, "asc"]],
-                columns: [
-                    {
-                        data: 'id',
-                        defaultContent: '',
-                        orderable: false,
-                        render: function(data, type, row)
-                        {
-                            return '<span class="btn btn-danger btn-sm" data-id="symptom" onclick="removeRow(this)" style="cursor: pointer"><i class="fas fa-trash-alt"></i></span>';
-                        }
-                    }, {
-                        data: 'code',
-                        defaultContent: '',
-                    }, {
-                        data: 'name',
-                        defaultContent: '',
-                    }
-                ],
+            $(document).on('click', '.show-modal-select', function(){
+                seqId = $(this).closest('tr').find('input:first').val();
             });
         });
 
         function removeRow(element)
         {
-            var node = $(element).closest('li').length ? $(element).closest('li') : $(element).closest('tr');
-            var type = $(element).data('id');
-            if(type == 'symptom') {
-                table_diagnosis_symptom.row(node).remove().draw(false);
-            }
-        }
-
-        function getRowData()
-        {
-            $("#myFormDetail").empty();
-            var data = table_diagnosis_symptom.rows().data();
-            for(var i=0; i<data.length; i++)
-            {
-                $('#myFormDetail').append('<input type="hidden" name="symptoms[]" value="'+data[i].id+'">');
-            }
+            $(element).closest('tr').remove();
         }
 
         function onSelectedSymptom(data) {
-            for (var i = 0; i < data.length; i++) {                
-                table_diagnosis_symptom.row.add({
-                    'id': data[i].id,
-                    'code': data[i].code,
-                    'name': data[i].name,
-                }).draw(false);
-            }
+            $('#symptom_id'+seqId).val(data[0].id);
+            $('#symptom_name'+seqId).val(data[0].name);
         }
 
         function onSelected(data) {

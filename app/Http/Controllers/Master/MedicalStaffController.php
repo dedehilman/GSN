@@ -16,12 +16,8 @@ class MedicalStaffController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('medical-staff');
-        $this->middleware('auth');
+        $this->setDefaultView('master.medical-staff');
         $this->setSelect('master.medical-staff.select');
-        $this->setIndex('master.medical-staff.index');
-        $this->setCreate('master.medical-staff.create');
-        $this->setEdit('master.medical-staff.edit');
-        $this->setView('master.medical-staff.view');
         $this->setModel('App\Models\MedicalStaff');
     }
 
@@ -47,28 +43,7 @@ class MedicalStaffController extends AppCrudController
             $data->address = $request->address;
             $data->save();
 
-            if($request->medical_staff_clinic_id)
-            {
-                $ids = array_filter($request->medical_staff_clinic_id); 
-                MedicalStaffClinic::where('medical_staff_id', $data->id)->whereNotIn('id', $ids)->delete();
-
-                for($i=0; $i<count($request->medical_staff_clinic_id); $i++)
-                {
-                    $detail = MedicalStaffClinic::where('medical_staff_id', $data->id)->where('id', $request->medical_staff_clinic_id[$i])->first();
-                    if(!$detail)
-                    {
-                        $detail = new MedicalStaffClinic();
-                    }
-
-                    $detail->medical_staff_id = $data->id;
-                    $detail->clinic_id = $request->clinic_id[$i];
-                    $detail->effective_date = $request->effective_date[$i];
-                    $detail->expiry_date = $request->expiry_date[$i];
-                    $detail->save();
-                }    
-            } else {
-                MedicalStaffClinic::where('medical_staff_id', $data->id)->delete();
-            }
+            $data->syncClinics($request->clinics);
 
             DB::commit();
             return response()->json([
@@ -116,29 +91,8 @@ class MedicalStaffController extends AppCrudController
             $data->address = $request->address;
             $data->save();
 
-            if($request->medical_staff_clinic_id)
-            {
-                $ids = array_filter($request->medical_staff_clinic_id); 
-                MedicalStaffClinic::where('medical_staff_id', $data->id)->whereNotIn('id', $ids)->delete();
-
-                for($i=0; $i<count($request->medical_staff_clinic_id); $i++)
-                {
-                    $detail = MedicalStaffClinic::where('medical_staff_id', $data->id)->where('id', $request->medical_staff_clinic_id[$i])->first();
-                    if(!$detail)
-                    {
-                        $detail = new MedicalStaffClinic();
-                    }
-
-                    $detail->medical_staff_id = $data->id;
-                    $detail->clinic_id = $request->clinic_id[$i];
-                    $detail->effective_date = $request->effective_date[$i];
-                    $detail->expiry_date = $request->expiry_date[$i];
-                    $detail->save();
-                }    
-            } else {
-                MedicalStaffClinic::where('medical_staff_id', $data->id)->delete();
-            }
-
+            $data->syncClinics($request->clinics);
+            
             DB::commit();
             return response()->json([
                 'status' => '200',

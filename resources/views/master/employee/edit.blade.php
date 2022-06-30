@@ -80,41 +80,47 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label">{{__("Blood Type")}}</label>
-                            <div class="col-md-9">
-                                <input type="text" name="blood_type" class="form-control" value="{{$data->blood_type}}">
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label class="col-md-3 col-form-label">{{__("Address")}}</label>
                             <div class="col-md-9">
                                 <textarea name="address" rows="4" class="form-control">{{$data->address}}</textarea>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label required">{{__("Afdelink")}}</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="text" name="afdelink_name" id="afdelink_name" class="form-control required" readonly value="{{$data->afdelink->name ?? ''}}">
+                                    <input type="hidden" name="afdelink_id" id="afdelink_id" value="{{$data->afdelink->id ?? ''}}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text show-modal-select" data-title="{{__('Afdelink List')}}" data-url="{{route('afdelink.select')}}" data-handler="onSelectedAfdelink"><i class="fas fa-search"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="pill" href="#tab1" role="tab" aria-selected="true">{{ __("Company") }}</a>
+                                    <li class="nav-item d-none">
+                                        <a class="nav-link" data-toggle="pill" href="#tab1" role="tab" aria-selected="true">{{ __("Company") }}</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item d-none">
                                         <a class="nav-link" data-toggle="pill" href="#tab2" role="tab" aria-selected="true">{{ __("Department") }}</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item d-none">
                                         <a class="nav-link" data-toggle="pill" href="#tab3" role="tab" aria-selected="true">{{ __("Position") }}</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item d-none">
                                         <a class="nav-link" data-toggle="pill" href="#tab4" role="tab" aria-selected="true">{{ __("Attribute") }}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-toggle="pill" href="#tab5" role="tab" aria-selected="true">{{ __("Relationship") }}</a>
+                                        <a class="nav-link active" data-toggle="pill" href="#tab5" role="tab" aria-selected="true">{{ __("Relationship") }}</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item d-none">
                                         <a class="nav-link" data-toggle="pill" href="#tab6" role="tab" aria-selected="true">{{ __("Afdelink") }}</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content" style="padding-top: 10px">
-                                    <div class="tab-pane fade show active" id="tab1" role="tabpanel">
+                                    <div class="tab-pane fade" id="tab1" role="tabpanel">
                                         <table class="table table-bordered" id="table-company">
                                             <thead>
                                                 <tr>
@@ -137,7 +143,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="input-group">
-                                                                <input type="text" name="company_name[]" class="form-control" value="{{$company->company->name}}" id="company_name{{$idx}}">
+                                                                <input type="text" name="company_name[]" class="form-control" value="{{$company->company->name}}" id="company_name{{$idx}}" readonly>
                                                                 <input type="hidden" name="company_id[]" value="{{$company->company->id}}" id="company_id{{$idx}}">
                                                                 <div class="input-group-append">
                                                                     <span class="input-group-text show-modal-select" data-title="{{__('Company List')}}" data-url="{{route('company.select')}}" data-handler="onSelectedCompany" data-id="company"><i class="fas fa-search"></i></span>
@@ -194,7 +200,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="input-group">
-                                                                <input type="text" name="department_name[]" class="form-control" value="{{$department->department->name}}" id="department_name{{$idx}}">
+                                                                <input type="text" name="department_name[]" class="form-control" value="{{$department->department->name}}" id="department_name{{$idx}}" readonly>
                                                                 <input type="hidden" name="department_id[]" value="{{$department->department->id}}" id="department_id{{$idx}}">
                                                                 <div class="input-group-append">
                                                                     <span class="input-group-text show-modal-select" data-title="{{__('Department List')}}" data-url="{{route('department.select')}}" data-handler="onSelectedDepartment" data-id="department"><i class="fas fa-search"></i></span>
@@ -251,7 +257,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="input-group">
-                                                                <input type="text" name="position_name[]" class="form-control" value="{{$position->position->name}}" id="position_name{{$idx}}">
+                                                                <input type="text" name="position_name[]" class="form-control" value="{{$position->position->name}}" id="position_name{{$idx}}" readonly>
                                                                 <input type="hidden" name="position_id[]" value="{{$position->position->id}}" id="position_id{{$idx}}">
                                                                 <div class="input-group-append">
                                                                     <span class="input-group-text show-modal-select" data-title="{{__('Position List')}}" data-url="{{route('position.select')}}" data-handler="onSelectedPosition" data-id="position"><i class="fas fa-search"></i></span>
@@ -308,7 +314,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="input-group">
-                                                                <input type="text" name="attribute_name[]" class="form-control" value="{{$attribute->attribute->name}}" id="attribute_name{{$idx}}">
+                                                                <input type="text" name="attribute_name[]" class="form-control" value="{{$attribute->attribute->name}}" id="attribute_name{{$idx}}" readonly>
                                                                 <input type="hidden" name="attribute_id[]" value="{{$attribute->attribute->id}}" id="attribute_id{{$idx}}">
                                                                 <div class="input-group-append">
                                                                     <span class="input-group-text show-modal-select" data-title="{{__('Attribute List')}}" data-url="{{route('attribute.select')}}" data-handler="onSelectedAttribute" data-id="attribute"><i class="fas fa-search"></i></span>
@@ -342,7 +348,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="tab-pane fade" id="tab5" role="tabpanel">
+                                    <div class="tab-pane fade show active" id="tab5" role="tabpanel">
                                         <table class="table table-bordered" id="table-relationship">
                                             <thead>
                                                 <tr>
@@ -364,7 +370,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="input-group">
-                                                                <input type="text" name="relationship_name[]" class="form-control" value="{{$relationship->relationship->name}}" id="relationship_name{{$idx}}">
+                                                                <input type="text" name="relationship_name[]" class="form-control" value="{{$relationship->relationship->name}}" id="relationship_name{{$idx}}" readonly>
                                                                 <input type="hidden" name="relationship_id[]" value="{{$relationship->relationship->id}}" id="relationship_id{{$idx}}">
                                                                 <div class="input-group-append">
                                                                     <span class="input-group-text show-modal-select" data-title="{{__('Relationship List')}}" data-url="{{route('relationship.select')}}" data-handler="onSelectedRelationship" data-id="relationship"><i class="fas fa-search"></i></span>
@@ -405,7 +411,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="input-group">
-                                                                <input type="text" name="afdelink_name[]" class="form-control" value="{{$afdelink->afdelink->name}}" id="afdelink_name{{$idx}}">
+                                                                <input type="text" name="afdelink_name[]" class="form-control" value="{{$afdelink->afdelink->name}}" id="afdelink_name{{$idx}}" readonly>
                                                                 <input type="hidden" name="afdelink_id[]" value="{{$afdelink->afdelink->id}}" id="afdelink_id{{$idx}}">
                                                                 <div class="input-group-append">
                                                                     <span class="input-group-text show-modal-select" data-title="{{__('Afdelink List')}}" data-url="{{route('afdelink.select')}}" data-handler="onSelectedAfdelink" data-id="afdelink"><i class="fas fa-search"></i></span>
@@ -462,7 +468,7 @@
                 </td>
                 <td>
                     <div class="input-group">
-                        <input type="text" name="company_name[]" class="form-control">
+                        <input type="text" name="company_name[]" class="form-control" readonly>
                         <input type="hidden" name="company_id[]">
                         <div class="input-group-append">
                             <span class="input-group-text show-modal-select" data-title="{{__('Company List')}}" data-url="{{route('company.select')}}" data-handler="onSelectedCompany" data-id="company"><i class="fas fa-search"></i></span>
@@ -504,7 +510,7 @@
                 </td>
                 <td>
                     <div class="input-group">
-                        <input type="text" name="department_name[]" class="form-control">
+                        <input type="text" name="department_name[]" class="form-control" readonly>
                         <input type="hidden" name="department_id[]">
                         <div class="input-group-append">
                             <span class="input-group-text show-modal-select" data-title="{{__('Department List')}}" data-url="{{route('department.select')}}" data-handler="onSelectedDepartment" data-id="department"><i class="fas fa-search"></i></span>
@@ -546,7 +552,7 @@
                 </td>
                 <td>
                     <div class="input-group">
-                        <input type="text" name="position_name[]" class="form-control">
+                        <input type="text" name="position_name[]" class="form-control" readonly>
                         <input type="hidden" name="position_id[]">
                         <div class="input-group-append">
                             <span class="input-group-text show-modal-select" data-title="{{__('Position List')}}" data-url="{{route('position.select')}}" data-handler="onSelectedPosition" data-id="position"><i class="fas fa-search"></i></span>
@@ -588,7 +594,7 @@
                 </td>
                 <td>
                     <div class="input-group">
-                        <input type="text" name="attribute_name[]" class="form-control">
+                        <input type="text" name="attribute_name[]" class="form-control" readonly>
                         <input type="hidden" name="attribute_id[]">
                         <div class="input-group-append">
                             <span class="input-group-text show-modal-select" data-title="{{__('Attribute List')}}" data-url="{{route('attribute.select')}}" data-handler="onSelectedAttribute" data-id="attribute"><i class="fas fa-search"></i></span>
@@ -630,7 +636,7 @@
                 </td>
                 <td>
                     <div class="input-group">
-                        <input type="text" name="relationship_name[]" class="form-control">
+                        <input type="text" name="relationship_name[]" class="form-control" readonly>
                         <input type="hidden" name="relationship_id[]">
                         <div class="input-group-append">
                             <span class="input-group-text show-modal-select" data-title="{{__('Relationship List')}}" data-url="{{route('relationship.select')}}" data-handler="onSelectedRelationship" data-id="relationship"><i class="fas fa-search"></i></span>
@@ -656,7 +662,7 @@
                 </td>
                 <td>
                     <div class="input-group">
-                        <input type="text" name="afdelink_name[]" class="form-control">
+                        <input type="text" name="afdelink_name[]" class="form-control" readonly>
                         <input type="hidden" name="afdelink_id[]">
                         <div class="input-group-append">
                             <span class="input-group-text show-modal-select" data-title="{{__('Afdelink List')}}" data-url="{{route('afdelink.select')}}" data-handler="onSelectedAfdelink" data-id="afdelink"><i class="fas fa-search"></i></span>
@@ -776,14 +782,19 @@
             $('#attribute_name'+seqId).val(data[0].name);
         }
 
-        function onSelectedAfdelink(data) {
-            $('#afdelink_id'+seqId).val(data[0].id);
-            $('#afdelink_name'+seqId).val(data[0].name);
-        }
+        // function onSelectedAfdelink(data) {
+        //     $('#afdelink_id'+seqId).val(data[0].id);
+        //     $('#afdelink_name'+seqId).val(data[0].name);
+        // }
 
         function onSelectedRelationship(data) {
             $('#relationship_id'+seqId).val(data[0].id);
             $('#relationship_name'+seqId).val(data[0].name);
+        }
+
+        function onSelectedAfdelink(data) {
+            $('#afdelink_id').val(data[0].id);
+            $('#afdelink_name').val(data[0].name);
         }
     </script>
 @endsection

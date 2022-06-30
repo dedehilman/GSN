@@ -72,7 +72,7 @@
                                         <label class="col-md-2 col-form-label">{{__("Clinic")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" id="clinic_name" class="form-control required">
+                                                <input type="text" id="clinic_name" class="form-control" readonly>
                                                 <input type="hidden" name="clinic_id" id="clinic_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
@@ -84,7 +84,7 @@
                                         <label class="col-md-2 col-form-label d-none new-clinic">{{__("New Clinic")}}</label>
                                         <div class="col-md-4 d-none new-clinic">
                                             <div class="input-group">
-                                                <input type="text" id="new_clinic_name" class="form-control required">
+                                                <input type="text" id="new_clinic_name" class="form-control" readonly>
                                                 <input type="hidden" name="new_clinic_id" id="new_clinic_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedNewClinic"><i class="fas fa-search"></i></span>
@@ -94,7 +94,7 @@
                                         <label class="col-md-2 col-form-label reference d-none">{{__("Reference")}}</label>
                                         <div class="col-md-4 reference d-none">
                                             <div class="input-group">
-                                                <input type="text" id="reference_name" class="form-control">
+                                                <input type="text" id="reference_name" class="form-control" readonly>
                                                 <input type="hidden" name="reference_id" id="reference_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Reference List')}}" data-url="{{route('stock-transaction.select')}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>

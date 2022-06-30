@@ -34,7 +34,7 @@
                             <label class="col-md-3 col-form-label required">{{__("Company")}}</label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <input type="text" name="company_name" id="company_name" class="form-control required">
+                                    <input type="text" name="company_name" id="company_name" class="form-control required" readonly>
                                     <input type="hidden" name="company_id" id="company_id">
                                     <div class="input-group-append">
                                         <span class="input-group-text show-modal-select" data-title="{{__('Company List')}}" data-url="{{route('company.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>

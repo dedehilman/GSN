@@ -47,7 +47,7 @@
                             <label class="col-md-2 col-form-label required">{{__("Clinic")}}</label>
                             <div class="col-md-4">
                                 <div class="input-group">
-                                    <input type="text" name="clinic_name" id="clinic_name" class="form-control required" value="{{$data->clinic->name}}">
+                                    <input type="text" name="clinic_name" id="clinic_name" class="form-control required" value="{{$data->clinic->name}}" readonly>
                                     <input type="hidden" name="clinic_id" id="clinic_id" value="{{$data->clinic->id}}">
                                     <div class="input-group-append">
                                         <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
@@ -63,17 +63,17 @@
                             <label class="col-md-2 col-form-label required new-clinic @if($data->transaction_type != 'Transfer Out') d-none @endif">{{__("New Clinic")}}</label>
                             <div class="col-md-4 new-clinic @if($data->transaction_type != 'Transfer Out') d-none @endif">
                                 <div class="input-group">
-                                    <input type="text" name="new_clinic_name" id="new_clinic_name" class="form-control required" value="{{$data->newClinic->name ?? ''}}">
+                                    <input type="text" name="new_clinic_name" id="new_clinic_name" class="form-control required" value="{{$data->newClinic->name ?? ''}}" readonly>
                                     <input type="hidden" name="new_clinic_id" id="new_clinic_id" value="{{$data->newClinic->id ?? ''}}">
                                     <div class="input-group-append">
-                                        <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedNewClinic"><i class="fas fa-search"></i></span>
+                                        <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select', 'queryBuilder=0')}}" data-handler="onSelectedNewClinic"><i class="fas fa-search"></i></span>
                                     </div>
                                 </div>
                             </div>
                             <label class="col-md-2 col-form-label required reference @if($data->transaction_type != 'Transfer In') d-none @endif">{{__("Reference")}}</label>
                             <div class="col-md-4 reference @if($data->transaction_type != 'Transfer In') d-none @endif">
                                 <div class="input-group">
-                                    <input type="text" name="reference_name" id="reference_name" class="form-control required" value="{{$data->reference->transaction_no ?? ''}}">
+                                    <input type="text" name="reference_name" id="reference_name" class="form-control required" value="{{$data->reference->transaction_no ?? ''}}" readonly>
                                     <input type="hidden" name="reference_id" id="reference_id" value="{{$data->reference->id ?? ''}}">
                                     <div class="input-group-append">
                                         <span class="input-group-text show-modal-select" data-title="{{__('Reference List')}}" data-url="{{route('stock-transaction.select')}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>
@@ -96,7 +96,7 @@
                                                     <th width="10px" class="text-center">
                                                         <span class='btn btn-primary btn-sm' id="btn-add-detail" style="cursor: pointer"><i class='fas fa-plus-circle'></i></span>
                                                     </th>
-                                                    <th>{{ __('Medicine') }}</th>
+                                                    <th>{{ __('Product') }}</th>
                                                     <th>{{ __('Qty') }}</th>
                                                     <th>{{ __('Remark') }}</th>
                                                 </tr>
@@ -110,15 +110,15 @@
                                                         </td>
                                                         <td>
                                                             <div class="input-group">
-                                                                <input type="text" name="medicine_name[]" id="medicine_name{{$index}}" class="form-control " value="{{$detail->medicine->name}}">
+                                                                <input type="text" name="medicine_name[]" id="medicine_name{{$index}}" class="form-control " value="{{$detail->medicine->name}}" readonly>
                                                                 <input type="hidden" name="medicine_id[]" id="medicine_id{{$index}}" value="{{$detail->medicine->id}}">
                                                                 <div class="input-group-append">
-                                                                    <span class="input-group-text show-modal-select medicine" id="medicine{{$index}}" data-title="{{__('Medicine List')}}" data-url="{{route('medicine.select')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
+                                                                    <span class="input-group-text show-modal-select medicine" id="medicine{{$index}}" data-title="{{__('Product List')}}" data-url="{{route('medicine.select')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control " name="qty[]" id="qty{{$index}}" value="{{$detail->qty}}">
+                                                            <input type="number" class="form-control " name="qty[]" id="qty{{$index}}" value="{{$detail->qty}}">
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control " name="detail_remark[]" id="detail_remark{{$index}}" value="{{$detail->remark}}">
@@ -150,15 +150,15 @@
                 </td>
                 <td>
                     <div class="input-group">
-                        <input type="text" name="medicine_name[]" class="form-control ">
+                        <input type="text" name="medicine_name[]" class="form-control " readonly>
                         <input type="hidden" name="medicine_id[]">
                         <div class="input-group-append">
-                            <span class="input-group-text show-modal-select medicine" data-title="{{__('Medicine List')}}" data-url="{{route('medicine.select')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
+                            <span class="input-group-text show-modal-select medicine" data-title="{{__('Product List')}}" data-url="{{route('medicine.select')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
                         </div>
                     </div>
                 </td>
                 <td>
-                    <input type="text" class="form-control " name="qty[]">
+                    <input type="number" class="form-control " name="qty[]">
                 </td>
                 <td>
                     <input type="text" class="form-control " name="detail_remark[]">

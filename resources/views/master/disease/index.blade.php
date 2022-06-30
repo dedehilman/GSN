@@ -45,7 +45,7 @@
                                         <label class="col-md-2 col-form-label">{{__("Disease Group")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" name="disease_group_name" id="disease_group_name" class="form-control required">
+                                                <input type="text" name="disease_group_name" id="disease_group_name" class="form-control" readonly>
                                                 <input type="hidden" name="disease_group_id" id="disease_group_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Disease Group List')}}" data-url="{{route('disease-group.select')}}" data-handler="onSelected"><i class="fas fa-search"></i></span>

@@ -12,11 +12,8 @@ class AfdelinkController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('afdelink');
+        $this->setDefaultView('master.afdelink');
         $this->setSelect('master.afdelink.select');
-        $this->setIndex('master.afdelink.index');
-        $this->setCreate('master.afdelink.create');
-        $this->setEdit('master.afdelink.edit');
-        $this->setView('master.afdelink.view');
         $this->setModel('App\Models\Afdelink');
     }
 
