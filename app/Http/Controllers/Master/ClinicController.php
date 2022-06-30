@@ -46,9 +46,9 @@ class ClinicController extends AppCrudController
             
             if($request->image) {
                 $file = $request->file('image');
-                $tujuan_upload = 'img/clinic';
+                $tujuan_upload = 'public/img/clinic';
                 if($file->move($tujuan_upload, time().'_'.$file->getClientOriginalName())) {
-                    $data->image = 'img/clinic/'.time().'_'.$file->getClientOriginalName();
+                    $data->image = 'public/img/clinic/'.time().'_'.$file->getClientOriginalName();
                 };
             }
 
@@ -101,9 +101,9 @@ class ClinicController extends AppCrudController
             
             if($request->image) {
                 $file = $request->file('image');
-                $tujuan_upload = 'img/clinic';
+                $tujuan_upload = 'public/img/clinic';
                 if($file->move($tujuan_upload, time().'_'.$file->getClientOriginalName())) {
-                    $data->image = 'img/clinic/'.time().'_'.$file->getClientOriginalName();
+                    $data->image = 'public/img/clinic/'.time().'_'.$file->getClientOriginalName();
                 };
             }
 
