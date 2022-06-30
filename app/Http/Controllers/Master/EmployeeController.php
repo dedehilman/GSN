@@ -46,6 +46,14 @@ class EmployeeController extends AppCrudController
             $data = new Employee();
             $data->code = $request->code;
             $data->name = $request->name;
+            $data->birth_place = $request->birth_place;
+            $data->birth_date = $request->birth_date;
+            $data->gender = $request->gender;
+            $data->identity_number = $request->identity_number;
+            $data->phone = $request->phone;
+            $data->email = $request->email;
+            $data->blood_type = $request->blood_type;
+            $data->address = $request->address;
             $data->save();
 
             if($request->employee_company_id)
@@ -231,6 +239,14 @@ class EmployeeController extends AppCrudController
             DB::beginTransaction();
             $data->code = $request->code;
             $data->name = $request->name;
+            $data->birth_place = $request->birth_place;
+            $data->birth_date = $request->birth_date;
+            $data->gender = $request->gender;
+            $data->identity_number = $request->identity_number;
+            $data->phone = $request->phone;
+            $data->email = $request->email;
+            $data->blood_type = $request->blood_type;
+            $data->address = $request->address;
             $data->save();
 
             if($request->employee_company_id)

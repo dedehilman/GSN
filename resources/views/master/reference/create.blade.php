@@ -31,15 +31,15 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label required">{{__("Reference Type")}}</label>
+                            <label class="col-md-3 col-form-label">{{__("Phone")}}</label>
                             <div class="col-md-9">
-                                <div class="input-group">
-                                    <input type="text" name="reference_type_name" id="reference_type_name" class="form-control required">
-                                    <input type="hidden" name="reference_type_id" id="reference_type_id">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text show-modal-select" data-title="{{__('Reference Type List')}}" data-url="{{route('reference-type.select')}}" data-handler="onSelectedReferenceType"><i class="fas fa-search"></i></span>
-                                    </div>
-                                </div>
+                                <input type="text" name="phone" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Address")}}</label>
+                            <div class="col-md-9">
+                                <textarea name="address" rows="4" class="form-control"></textarea>
                             </div>
                         </div>
                     </div>
@@ -51,13 +51,4 @@
             </form>
         </div>
     </div>
-@endsection
-
-@section('script')
-    <script>
-        function onSelectedReferenceType(data) {
-            $('#reference_type_id').val(data[0].id);
-            $('#reference_type_name').val(data[0].code + ' ' + data[0].name);
-        }
-    </script>
 @endsection

@@ -70,6 +70,7 @@
                                 <th>{{ __("Code") }}</th>
                                 <th>{{ __("Name") }}</th>
                                 <th>{{ __("Address") }}</th>
+                                <th>{{ __("Location") }}</th>
                                 <th>{{ __("Phone") }}</th>
                                 <th>{{ __("Business Area") }}</th>
                             </tr>
@@ -145,6 +146,11 @@
                         defaultContent: '',
                     },
                     {
+                        data: 'location',
+                        name: 'location',
+                        defaultContent: '',
+                    },
+                    {
                         data: 'phone',
                         name: 'phone',
                         defaultContent: '',
@@ -159,17 +165,17 @@
                     {
                         extend: 'excel',
                         title: '{{__("Clinic")}}',
-                        exportOptions: { columns: [3, 4, 5, 6, 7] }
+                        exportOptions: { columns: [3, 4, 5, 6, 7, 8] }
                     },
                     {
                         extend: 'csv',
                         title: '{{__("Clinic")}}',
-                        exportOptions: { columns: [3, 4, 5, 6, 7] }
+                        exportOptions: { columns: [3, 4, 5, 6, 7, 8] }
                     },
                     {
                         extend: 'pdf',
                         title: '{{__("Clinic")}}',
-                        exportOptions: { columns: [3, 4, 5, 6, 7] }
+                        exportOptions: { columns: [3, 4, 5, 6, 7, 8] }
                     }
                 ],
             });

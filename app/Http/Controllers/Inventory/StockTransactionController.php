@@ -16,6 +16,7 @@ class StockTransactionController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('stock-transaction');
+        $this->setSelect('inventory.stock-transaction.select');
         $this->setIndex('inventory.stock-transaction.index');
         $this->setCreate('inventory.stock-transaction.create');
         $this->setEdit('inventory.stock-transaction.edit');
@@ -164,9 +165,13 @@ class StockTransactionController extends AppCrudController
             'clinic_id' => 'required',
         ]);
 
-        if($request->transaction_type == 'Transfer In' || $request->transaction_type == 'Transfer Out') {
+        if($request->transaction_type == 'Transfer Out') {
             $validator->addRules([
                 'new_clinic_id'=> 'required'
+            ]);
+        } else if($request->transaction_type == 'Transfer In') {
+            $validator->addRules([
+                'reference_id'=> 'required'
             ]);
         }
 
@@ -184,9 +189,13 @@ class StockTransactionController extends AppCrudController
             'clinic_id' => 'required',
         ]);
 
-        if($request->transaction_type == 'Transfer In' || $request->transaction_type == 'Transfer Out') {
+        if($request->transaction_type == 'Transfer Out') {
             $validator->addRules([
                 'new_clinic_id'=> 'required'
+            ]);
+        } else if($request->transaction_type == 'Transfer In') {
+            $validator->addRules([
+                'reference_id'=> 'required'
             ]);
         }
 

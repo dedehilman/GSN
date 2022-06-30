@@ -19,6 +19,13 @@
                     </div>
                     <div class="card-body">     
                         <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Logo")}}</label>
+                            <div class="col-md-9">
+                                <img src="{{ asset('public/img/200.png') }}" width="150" height="150" id="image_preview">
+                                <input style="display: none;" type='file' id="image" name="image"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-3 col-form-label required">{{__("Code")}}</label>
                             <div class="col-md-9">
                                 <input type="text" name="code" class="form-control required">
@@ -34,6 +41,12 @@
                             <label class="col-md-3 col-form-label">{{__("Address")}}</label>
                             <div class="col-md-9">
                                 <textarea name="address" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Location")}}</label>
+                            <div class="col-md-9">
+                                <input type="text" name="location" class="form-control">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -57,7 +70,7 @@
                     </div>
                     <div class="card-footer text-right">
                         <a href="{{route('clinic.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
-                        <button type="button" class="btn btn-primary" id="btn-store"><i class="fas fa fa-save"></i> {{__("Save")}}</button>
+                        <button type="button" class="btn btn-primary" id="btn-store-multipart"><i class="fas fa fa-save"></i> {{__("Save")}}</button>
                     </div>
                 </div>
             </form>

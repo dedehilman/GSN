@@ -17,6 +17,10 @@ class CreateMedicalStaffTable extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('name');
+            $table->enum('gender', ["Male", "Female"])->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->string('address')->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

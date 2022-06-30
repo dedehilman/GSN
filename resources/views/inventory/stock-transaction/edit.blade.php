@@ -21,7 +21,7 @@
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label required">{{__("Transaction No")}}</label>
                             <div class="col-md-4">
-                                <input type="text" name="transaction_no" class="form-control required" value="{{$data->transaction_no}}">
+                                <input type="text" name="transaction_no" class="form-control required" readonly value="{{$data->transaction_no}}">
                             </div>
                             <label class="col-md-2 col-form-label required">{{__("Transaction Type")}}</label>
                             <div class="col-md-4">
@@ -46,30 +46,11 @@
                             </div>
                             <label class="col-md-2 col-form-label required">{{__("Clinic")}}</label>
                             <div class="col-md-4">
-                                @include('partials.clinic-picker', [
-                                    'clinic' => $data->clinic
-                                ])
-                                {{-- <div class="input-group">
-                                    <input type="text" name="clinic_name" id="clinic_name" class="form-control required" value="{{$data->clinic->code}} {{$data->clinic->name}}">
+                                <div class="input-group">
+                                    <input type="text" name="clinic_name" id="clinic_name" class="form-control required" value="{{$data->clinic->name}}">
                                     <input type="hidden" name="clinic_id" id="clinic_id" value="{{$data->clinic->id}}">
                                     <div class="input-group-append">
                                         <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
-                                    </div>
-                                </div> --}}
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label">{{__("Reference")}}</label>
-                            <div class="col-md-4">
-                                <input type="text" name="reference" class="form-control" value="{{$data->reference}}">
-                            </div>
-                            <label class="col-md-2 col-form-label required new-clinic @if($data->transaction_type != 'Transfer In' && $data->transaction_type != 'Transfer Out') d-none @endif">{{__("New Clinic")}}</label>
-                            <div class="col-md-4 new-clinic @if($data->transaction_type != 'Transfer In' && $data->transaction_type != 'Transfer Out') d-none @endif">
-                                <div class="input-group">
-                                    <input type="text" name="new_clinic_name" id="new_clinic_name" class="form-control required" value="{{$data->newClinic->code ?? ''}} {{$data->newClinic->name ?? ''}}">
-                                    <input type="hidden" name="new_clinic_id" id="new_clinic_id" value="{{$data->newClinic->id}}">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedNewClinic"><i class="fas fa-search"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -78,6 +59,26 @@
                             <label class="col-md-2 col-form-label">{{__("Remark")}}</label>
                             <div class="col-md-4">
                                 <textarea name="remark" class="form-control" rows="4">{{$data->remark}}</textarea>
+                            </div>
+                            <label class="col-md-2 col-form-label required new-clinic @if($data->transaction_type != 'Transfer Out') d-none @endif">{{__("New Clinic")}}</label>
+                            <div class="col-md-4 new-clinic @if($data->transaction_type != 'Transfer Out') d-none @endif">
+                                <div class="input-group">
+                                    <input type="text" name="new_clinic_name" id="new_clinic_name" class="form-control required" value="{{$data->newClinic->name ?? ''}}">
+                                    <input type="hidden" name="new_clinic_id" id="new_clinic_id" value="{{$data->newClinic->id ?? ''}}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedNewClinic"><i class="fas fa-search"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="col-md-2 col-form-label required reference @if($data->transaction_type != 'Transfer In') d-none @endif">{{__("Reference")}}</label>
+                            <div class="col-md-4 reference @if($data->transaction_type != 'Transfer In') d-none @endif">
+                                <div class="input-group">
+                                    <input type="text" name="reference_name" id="reference_name" class="form-control required" value="{{$data->reference->transaction_no ?? ''}}">
+                                    <input type="hidden" name="reference_id" id="reference_id" value="{{$data->reference->id ?? ''}}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text show-modal-select" data-title="{{__('Reference List')}}" data-url="{{route('stock-transaction.select')}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -169,13 +170,21 @@
 
 @section('script')
     <script>
+        function onSelectedClinic(data) {
+            $('#clinic_id').val(data[0].id);
+            $('#clinic_name').val(data[0].name);
+        }
         function onSelectedNewClinic(data) {
             $('#new_clinic_id').val(data[0].id);
-            $('#new_clinic_name').val(data[0].code + ' ' + data[0].name);
+            $('#new_clinic_name').val(data[0].name);
         }
         function onSelectedMedicine(data) {
             $('#medicine_id'+seqId).val(data[0].id);
             $('#medicine_name'+seqId).val(data[0].name);
+        }
+        function onSelectedReference(data) {
+            $('#reference_id').val(data[0].id);
+            $('#reference_name').val(data[0].transaction_no);
         }
         $(function(){
             $('#btn-add-detail').on('click', function(){
@@ -199,10 +208,20 @@
             });
 
             $("select[name='transaction_type']").on('change', function(){
-                if($(this).val() == 'Transfer In' || $(this).val() == 'Transfer Out') {
+                $("#new_clinic_name").val('');
+                $("#new_clinic_id").val('');
+                $("#reference_name").val('');
+                $("#reference_id").val('');
+
+                if($(this).val() == 'Transfer Out') {
                     $(".new-clinic").removeClass("d-none");
+                    $(".reference").addClass("d-none");
+                } else if($(this).val() == 'Transfer In') {
+                    $(".new-clinic").addClass("d-none");
+                    $(".reference").removeClass("d-none");
                 } else {
                     $(".new-clinic").addClass("d-none");
+                    $(".reference").addClass("d-none");
                 }
             })
         })

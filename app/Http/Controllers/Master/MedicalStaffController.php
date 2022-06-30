@@ -41,6 +41,10 @@ class MedicalStaffController extends AppCrudController
             $data = new MedicalStaff();
             $data->code = $request->code;
             $data->name = $request->name;
+            $data->gender = $request->gender;
+            $data->phone = $request->phone;
+            $data->email = $request->email;
+            $data->address = $request->address;
             $data->save();
 
             if($request->medical_staff_clinic_id)
@@ -106,6 +110,10 @@ class MedicalStaffController extends AppCrudController
             DB::beginTransaction();
             $data->code = $request->code;
             $data->name = $request->name;
+            $data->gender = $request->gender;
+            $data->phone = $request->phone;
+            $data->email = $request->email;
+            $data->address = $request->address;
             $data->save();
 
             if($request->medical_staff_clinic_id)

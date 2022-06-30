@@ -8,8 +8,8 @@
                     <th>@if(($select ?? 'single') == 'multiple')<input type='checkbox' name="select-all"/>@endif</th>
                     <th>{{ __("Code") }}</th>
                     <th>{{ __("Name") }}</th>
-                    <th>{{ __("Unit") }}</th>
-                    <th>{{ __("Reference Type") }}</th>
+                    <th>{{ __("Phone") }}</th>
+                    <th>{{ __("Address") }}</th>
                 </tr>
             </thead>
         </table>
@@ -51,12 +51,12 @@
                     name: 'name',
                     defaultContent: '',
                 }, {
-                    data: 'unit.name',
-                    name: 'unit_id',
+                    data: 'phone',
+                    name: 'phone',
                     defaultContent: '',
                 }, {
-                    data: 'reference_type.name',
-                    name: 'reference_type_id',
+                    data: 'address',
+                    name: 'address',
                     defaultContent: '',
                 }
             ],

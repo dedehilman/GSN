@@ -16,6 +16,16 @@
                 </div>
                 <div class="card-body">       
                     <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Logo")}}</label>
+                        <div class="col-md-9">
+                            @if ($data->image)
+                                <img src="{{ asset($data->image) }}" width="150" height="150">
+                            @else
+                                <img src="{{ asset('public/img/logo.png') }}" width="150" height="150">
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{__("Code")}}</label>
                         <div class="col-md-9 col-form-label">{{$data->code}}</div>
                     </div>
@@ -26,6 +36,10 @@
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{__("Address")}}</label>
                         <div class="col-md-9 col-form-label">{{$data->address}}</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Location")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->Location}}</div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{__("Phone")}}</label>

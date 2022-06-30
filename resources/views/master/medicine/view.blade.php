@@ -25,11 +25,11 @@
                     </div>
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{__("Unit")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->unit->code}} {{$data->unit->name}}</div>
+                        <div class="col-md-9 col-form-label">{{$data->unit->name}}</div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{__("Product Type")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->medicineType->code}} {{$data->medicineType->name}}</div>
+                        <div class="col-md-9 col-form-label">{{$data->medicineType->name}}</div>
                     </div>
                 </div>
                 <div class="card-footer text-right">

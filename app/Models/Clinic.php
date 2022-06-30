@@ -10,7 +10,7 @@ class Clinic extends Model
 {
     use HasFactory, BlameableTrait;
 
-    protected $fillable = ['code', 'name', 'address', 'phone', 'estate_id'];
+    protected $fillable = ['code', 'name', 'address', 'phone', 'estate_id', 'location', 'image'];
 
     public function estate() {
         return $this->belongsTo(Estate::class);

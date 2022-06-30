@@ -434,30 +434,10 @@
         "title": "Reference",
         "class": "far fa-handshake nav-icon",
         "nav_header": 0,
-        "link": "reference.*,reference-type.*",
+        "link": "reference.index,reference.*",
         "sequence": 890,
         "display": 1,
         "parent_id": null
-    },
-    {
-        "code": "M-891",
-        "title": "Reference Type",
-        "class": "far fa-circle nav-icon",
-        "nav_header": 0,
-        "link": "reference-type.index,reference-type.*",
-        "sequence": 1,
-        "display": 1,
-        "parent_id": "M-890"
-    },
-    {
-        "code": "M-892",
-        "title": "Reference",
-        "class": "far fa-circle nav-icon",
-        "nav_header": 0,
-        "link": "reference.index,reference.*",
-        "sequence": 2,
-        "display": 1,
-        "parent_id": "M-890"
     },
     {
         "code": "M-200",
@@ -471,7 +451,7 @@
     },
     {
         "code": "M-210",
-        "title": "Register",
+        "title": "Registration",
         "class": "fas fa-clipboard-check nav-icon",
         "nav_header": 0,
         "link": "#",
@@ -510,9 +490,19 @@
         "parent_id": "M-210"
     },
     {
+        "code": "M-214",
+        "title": "Kecelakaan Kerja",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "#",
+        "sequence": 4,
+        "display": 1,
+        "parent_id": "M-210"
+    },
+    {
         "code": "M-220",
-        "title": "Surat",
-        "class": "fas fa-envelope nav-icon",
+        "title": "Action",
+        "class": "fas fa-heart nav-icon",
         "nav_header": 0,
         "link": "#",
         "sequence": 220,
@@ -521,7 +511,7 @@
     },
     {
         "code": "M-221",
-        "title": "Keterangan Sakit",
+        "title": "Rawat Jalan",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
         "link": "#",
@@ -531,7 +521,7 @@
     },
     {
         "code": "M-222",
-        "title": "Rujukan RS",
+        "title": "KB",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
         "link": "#",
@@ -540,14 +530,54 @@
         "parent_id": "M-220"
     },
     {
-        "code": "M-230",
-        "title": "Kecelakaan Kerja",
-        "class": "fas fa-wheelchair nav-icon",
+        "code": "M-223",
+        "title": "Test Kehamilan",
+        "class": "far fa-circle nav-icon",
         "nav_header": 0,
         "link": "#",
+        "sequence": 3,
+        "display": 1,
+        "parent_id": "M-220"
+    },
+    {
+        "code": "M-224",
+        "title": "Kecelakaan Kerja",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "#",
+        "sequence": 4,
+        "display": 1,
+        "parent_id": "M-220"
+    },
+    {
+        "code": "M-230",
+        "title": "Letter",
+        "class": "fas fa-envelope nav-icon",
+        "nav_header": 0,
+        "link": "reference-letter.*,sick-letter.*",
         "sequence": 230,
         "display": 1,
         "parent_id": null
+    },
+    {
+        "code": "M-231",
+        "title": "Keterangan Sakit",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "sick-letter.index,sick-letter.*",
+        "sequence": 1,
+        "display": 1,
+        "parent_id": "M-230"
+    },
+    {
+        "code": "M-232",
+        "title": "Rujukan RS",
+        "class": "far fa-circle nav-icon",
+        "nav_header": 0,
+        "link": "reference-letter.index,reference-letter.*",
+        "sequence": 2,
+        "display": 1,
+        "parent_id": "M-230"
     },
     {
         "code": "M-240",

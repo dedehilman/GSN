@@ -139,10 +139,6 @@
     {"name": "diagnosis-create"},
     {"name": "diagnosis-edit"},
     {"name": "diagnosis-delete"},
-    {"name": "reference-type-list"},
-    {"name": "reference-type-create"},
-    {"name": "reference-type-edit"},
-    {"name": "reference-type-delete"},
     {"name": "reference-list"},
     {"name": "reference-create"},
     {"name": "reference-edit"},
@@ -157,5 +153,12 @@
     {"name": "stock-transaction-delete"},
     {"name": "stock-report-list"},
     {"name": "stock-report-create"},
-    {"name": "stock-report-download"}
+    {"name": "sick-letter-list"},
+    {"name": "sick-letter-create"},
+    {"name": "sick-letter-edit"},
+    {"name": "sick-letter-delete"},
+    {"name": "reference-letter-list"},
+    {"name": "reference-letter-create"},
+    {"name": "reference-letter-edit"},
+    {"name": "reference-letter-delete"}
 ]

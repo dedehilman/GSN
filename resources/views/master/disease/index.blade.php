@@ -177,7 +177,7 @@
 
         function onSelected(data) {
             $('#disease_group_id').val(data[0].id);
-            $('#disease_group_name').val(data[0].code + ' ' + data[0].name);
+            $('#disease_group_name').val(data[0].name);
         }
     </script>
 @endsection

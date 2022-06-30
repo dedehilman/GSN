@@ -19,6 +19,8 @@ class CreateClinicsTable extends Migration
             $table->string('name');
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
+            $table->string('image')->nullable();
+            $table->string('location')->nullable();
             $table->unsignedBigInteger('estate_id');
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();

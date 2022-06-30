@@ -45,14 +45,13 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label required">{{__("Clinic")}}</label>
                             <div class="col-md-9">
-                                @include('partials.clinic-picker')
-                                {{-- <div class="input-group">
+                                <div class="input-group">
                                     <input type="text" name="clinic_name" id="clinic_name" class="form-control required">
                                     <input type="hidden" name="clinic_id" id="clinic_id">
                                     <div class="input-group-append">
                                         <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
                                     </div>
-                                </div> --}}
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -76,11 +75,15 @@
     <script>
         function onSelectedPeriod(data) {
             $('#period_id').val(data[0].id);
-            $('#period_name').val(data[0].code + ' ' + data[0].name);
+            $('#period_name').val(data[0].name);
         }
         function onSelectedMedicine(data) {
             $('#medicine_id').val(data[0].id);
-            $('#medicine_name').val(data[0].code + ' ' + data[0].name);
+            $('#medicine_name').val(data[0].name);
+        }
+        function onSelectedClinic(data) {
+            $('#clinic_id').val(data[0].id);
+            $('#clinic_name').val(data[0].name);
         }
     </script>
 @endsection

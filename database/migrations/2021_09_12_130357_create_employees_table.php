@@ -17,6 +17,14 @@ class CreateEmployeesTable extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('name');
+            $table->string('birth_place')->nullable();
+            $table->date('birth_date')->nullable();
+            $table->enum('gender', ["Male", "Female"])->nullable();
+            $table->string('identity_number')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->string('blood_type')->nullable();
+            $table->string('address')->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

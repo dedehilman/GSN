@@ -6,8 +6,9 @@
             <thead>
                 <tr>
                     <th>@if(($select ?? 'single') == 'multiple')<input type='checkbox' name="select-all"/>@endif</th>
-                    <th>{{ __("Code") }}</th>
-                    <th>{{ __("Name") }}</th>
+                    <th>{{ __("Transaction No") }}</th>
+                    <th>{{ __("Transcation Date") }}</th>
+                    <th>{{ __("Transaction Type") }}</th>
                 </tr>
             </thead>
         </table>
@@ -18,7 +19,7 @@
         $('#datatable-select').DataTable({
             ajax:
             {
-                url: "{{route('reference-type.datatable.select')}}",
+                url: "{{route('stock-transaction.datatable.select')}}",
                 type: 'POST',
                 data: function(data){
                     getDatatableSelectParameter(data);
@@ -41,12 +42,16 @@
                         return '';
                     }
                 }, {
-                    data: 'code',
-                    name: 'code',
+                    data: 'transaction_no',
+                    name: 'transaction_no',
                     defaultContent: '',
                 }, {
-                    data: 'name',
-                    name: 'name',
+                    data: 'transaction_date',
+                    name: 'transaction_no',
+                    defaultContent: '',
+                }, {
+                    data: 'transaction_type',
+                    name: 'transaction_type',
                     defaultContent: '',
                 }
             ],

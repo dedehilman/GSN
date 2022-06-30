@@ -25,17 +25,19 @@
                         <label class="col-md-2 col-form-label">{{__("Transaction Date")}}</label>
                         <div class="col-md-4 col-form-label">{{$data->transaction_date}}</div>
                         <label class="col-md-2 col-form-label">{{__("Clinic")}}</label>
-                        <div class="col-md-4 col-form-label">{{$data->clinic->code}} {{$data->clinic->name}}</div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label">{{__("Reference")}}</label>
-                        <div class="col-md-4 col-form-label">{{$data->reference}}</div>
-                        <label class="col-md-2 col-form-label @if($data->transaction_type != 'Transfer In' && $data->transaction_type != 'Transfer Out') d-none @endif">{{__("New Clinic")}}</label>
-                        <div class="col-md-4 col-form-label @if($data->transaction_type != 'Transfer In' && $data->transaction_type != 'Transfer Out') d-none @endif">{{$data->clinic->code ?? ''}} {{$data->clinic->name ?? ''}}</div>
+                        <div class="col-md-4 col-form-label">{{$data->clinic->name}}</div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-2 col-form-label">{{__("Remark")}}</label>
                         <div class="col-md-4 col-form-label">{!!nl2br($data->remark ?? '')!!}</div>
+                        @if ($data->transaction_type == 'Transfer Out')
+                            <label class="col-md-2 col-form-label">{{__("New Clinic")}}</label>
+                            <div class="col-md-4 col-form-label">{{$data->clinic->name ?? ''}}</div>    
+                        @elseif ($data->transaction_type == 'Transfer In')
+                            <label class="col-md-2 col-form-label">{{__("Reference")}}</label>
+                            <div class="col-md-4 col-form-label">{{$data->reference->transaction_no ?? ''}}</div>    
+                        @endif
+                        
                     </div>
                     <div class="row">
                         <div class="col-md-12">

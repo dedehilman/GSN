@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Stock Transaction"), 'subTitle' => Lang::get("Manage data stock transaction")])
+@extends('layout', ['title' => Lang::get("Reference Letter"), 'subTitle' => Lang::get("Manage data reference letter")])
 
 @section('content')
     <div class="row">
@@ -18,8 +18,8 @@
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div>
-                                @can('stock-transaction-create')                                
-                                <a href="{{route('stock-transaction.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
+                                @can('reference-letter-create')
+                                <a href="{{route('reference-letter.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
                                 @endcan
                             </div>
                             <div class="btn-group nav view">
@@ -59,48 +59,68 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Transaction Type")}}</label>
-                                        <div class="col-md-4">
-                                            <select name="transaction_type" class="form-control custom-select">
-                                                <option value="">{{__("All")}}</option>
-                                                <option value="In">{{__("In")}}</option>
-                                                <option value="Transfer In">{{__("Transfer In")}}</option>
-                                                <option value="Transfer Out">{{__("Transfer Out")}}</option>
-                                                <option value="Adjustment">{{__("Adjustment")}}</option>
-                                            </select>
-                                        </div>
                                         <label class="col-md-2 col-form-label">{{__("Clinic")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" id="clinic_name" class="form-control required">
+                                                <input type="text" id="clinic_name" class="form-control">
                                                 <input type="hidden" name="clinic_id" id="clinic_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-2 col-form-label d-none new-clinic">{{__("New Clinic")}}</label>
-                                        <div class="col-md-4 d-none new-clinic">
+                                        <label class="col-md-2 col-form-label">{{__("Medical Staff")}}</label>
+                                        <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" id="new_clinic_name" class="form-control required">
-                                                <input type="hidden" name="new_clinic_id" id="new_clinic_id">
+                                                <input type="text" id="medical_staff_name" class="form-control">
+                                                <input type="hidden" name="medical_staff_id" id="medical_staff_id">
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedNewClinic"><i class="fas fa-search"></i></span>
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Medical Staff List')}}" data-url="{{route('medical-staff.select')}}" data-handler="onSelectedMedicalStaff"><i class="fas fa-search"></i></span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <label class="col-md-2 col-form-label reference d-none">{{__("Reference")}}</label>
-                                        <div class="col-md-4 reference d-none">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label">{{__("Patient")}}</label>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <input type="text" id="patient_name" class="form-control">
+                                                <input type="hidden" name="patient_id" id="patient_id">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Patient List')}}" data-url="{{route('employee.select')}}" data-handler="onSelectedPatient"><i class="fas fa-search"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label class="col-md-2 col-form-label">{{__("Reference Type")}}</label>
+                                        <div class="col-md-4">
+                                            <select name="reference_type" class="form-control custom-select">
+                                                <option value=""></option>
+                                                <option value="Internal">{{__("Internal")}}</option>
+                                                <option value="External">{{__("External")}}</option>
+                                            </select>
+                                        </div>                                        
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label reference">{{__("Reference")}}</label>
+                                        <div class="col-md-4 reference">
                                             <div class="input-group">
                                                 <input type="text" id="reference_name" class="form-control">
                                                 <input type="hidden" name="reference_id" id="reference_id">
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Reference List')}}" data-url="{{route('stock-transaction.select')}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Reference List')}}" data-url="{{route('reference.select')}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>
                                                 </div>
                                             </div>
                                         </div>
+                                        <label class="col-md-2 col-form-label reference-clinic d-none">{{__("Reference Clinic")}}</label>
+                                        <div class="col-md-4 reference-clinic d-none">
+                                            <div class="input-group">
+                                                <input type="text" id="reference_clinic_name" class="form-control">
+                                                <input type="hidden" name="reference_clinic_id" id="reference_clinic_id">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedReferenceClinic"><i class="fas fa-search"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>                   
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12 text-right">
@@ -130,11 +150,10 @@
                                 <th></th>
                                 <th>{{ __("Transaction No") }}</th>
                                 <th>{{ __("Transaction Date") }}</th>
-                                <th>{{ __("Transaction Type") }}</th>
+                                <th>{{ __("Patient") }}</th>
                                 <th>{{ __("Clinic") }}</th>
-                                <th>{{ __("New Clinic") }}</th>
+                                <th>{{ __("Medical Staff") }}</th>
                                 <th>{{ __("Reference") }}</th>
-                                <th>{{ __("Remark") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -150,7 +169,7 @@
             $('#datatable').DataTable({
                 ajax:
                 {
-                    url: "{{route('stock-transaction.datatable')}}",
+                    url: "{{route('reference-letter.datatable')}}",
                     type: 'POST',
                     data: function(data){
                         getDatatableParameter(data);
@@ -175,7 +194,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('stock-transaction-delete') true @else false @endcan,
+                        visible: @can('reference-letter-delete') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-danger'><i class='fas fa-trash'></i></div>";
@@ -186,7 +205,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('stock-transaction-edit') true @else false @endcan,
+                        visible: @can('reference-letter-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
@@ -199,12 +218,12 @@
                     },
                     {
                         data: 'transaction_date',
-                        name: 'transaction_no',
+                        name: 'transaction_date',
                         defaultContent: '',
                     },
                     {
-                        data: 'transaction_type',
-                        name: 'transaction_type',
+                        data: 'patient.name',
+                        name: 'patient_id',
                         defaultContent: '',
                     },
                     {
@@ -213,70 +232,77 @@
                         defaultContent: '',
                     },
                     {
-                        data: 'new_clinic.name',
-                        name: 'new_clinic_id',
+                        data: 'medical_staff.name',
+                        name: 'medical_staff_id',
                         defaultContent: '',
                     },
                     {
-                        data: 'reference.transaction_no',
-                        name: 'reference_id',
+                        sortable: false,
                         defaultContent: '',
-                    },
-                    {
-                        data: 'remark',
-                        name: 'remark',
-                        defaultContent: '',
+                        render: function(data, type, row)
+                        {
+                            if(row.reference_type == 'Internal') {
+                                return row.reference_type + " - " + row.reference_clinic.name;
+                            }
+
+                            return row.reference_type + " - " + row.reference.name;
+                        }
                     }
                 ],
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Stock Transaction")}}',
-                        exportOptions: { columns: [3,4,5,6,7,8,9] }
+                        title: '{{__("Reference Letter")}}',
+                        exportOptions: { columns: [3,4,5,6,7,8] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Stock Transaction")}}',
-                        exportOptions: { columns: [3,4,5,6,7,8,9] }
+                        title: '{{__("Reference Letter")}}',
+                        exportOptions: { columns: [3,4,5,6,7,8] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Stock Transaction")}}',
-                        exportOptions: { columns: [3,4,5,6,7,8,9] }
+                        title: '{{__("Reference Letter")}}',
+                        exportOptions: { columns: [3,4,5,6,7,8] }
                     }
                 ],
             });
 
-            $("select[name='transaction_type']").on('change', function(){
-                $("#new_clinic_name").val('');
-                $("#new_clinic_id").val('');
-                $("#reference_name").val('');
-                $("#reference_id").val('');
-
-                if($(this).val() == 'Transfer Out') {
-                    $(".new-clinic").removeClass("d-none");
-                    $(".reference").addClass("d-none");
-                } else if($(this).val() == 'Transfer In') {
-                    $(".new-clinic").addClass("d-none");
-                    $(".reference").removeClass("d-none");
+            $("select[name='reference_type']").on('change', function(){
+                $("#reference_clinic_id").val("");
+                $("#reference_clinic_name").val("");
+                $("#reference_id").val("");
+                $("#reference_name").val("");
+                
+                if($(this).val() == 'Internal') {
+                    $(".reference").addClass('d-none');
+                    $(".reference-clinic").removeClass('d-none');
                 } else {
-                    $(".new-clinic").addClass("d-none");
-                    $(".reference").addClass("d-none");
+                    $(".reference").removeClass('d-none');
+                    $(".reference-clinic").addClass('d-none');
                 }
-            })
+            });
         });
 
         function onSelectedClinic(data) {
             $('#clinic_id').val(data[0].id);
             $('#clinic_name').val(data[0].name);
         }
-        function onSelectedNewClinic(data) {
-            $('#new_clinic_id').val(data[0].id);
-            $('#new_clinic_name').val(data[0].name);
+        function onSelectedMedicalStaff(data) {
+            $('#medical_staff_id').val(data[0].id);
+            $('#medical_staff_name').val(data[0].name);
+        }
+        function onSelectedPatient(data) {
+            $('#patient_id').val(data[0].id);
+            $('#patient_name').val(data[0].name);
         }
         function onSelectedReference(data) {
             $('#reference_id').val(data[0].id);
-            $('#reference_name').val(data[0].transaction_no);
+            $('#reference_name').val(data[0].name);
+        }
+        function onSelectedReferenceClinic(data) {
+            $('#reference_clinic_id').val(data[0].id);
+            $('#reference_clinic_name').val(data[0].name);
         }
     </script>
 @endsection

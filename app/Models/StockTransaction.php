@@ -10,7 +10,7 @@ class StockTransaction extends Model
 {
     use HasFactory, BlameableTrait;
 
-    protected $fillable = ['transaction_no', 'transaction_date', 'transaction_type', 'reference', 'remark', 'clinic_id', 'new_clinic_id'];
+    protected $fillable = ['transaction_no', 'transaction_date', 'transaction_type', 'reference_id', 'remark', 'clinic_id', 'new_clinic_id'];
 
     public function clinic() {
         return $this->belongsTo(Clinic::class);
@@ -20,9 +20,13 @@ class StockTransaction extends Model
         return $this->belongsTo(Clinic::class, 'new_clinic_id');
     }
 
+    public function reference() {
+        return $this->belongsTo(StockTransaction::class, 'reference_id');
+    }
+
     public function scopeWithAll($query) 
     {
-        return $query->with(['newClinic','clinic']);
+        return $query->with(['newClinic','clinic','reference']);
     }
 
     public function details()

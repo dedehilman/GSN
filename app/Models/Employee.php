@@ -11,7 +11,18 @@ class Employee extends Model
 {
     use HasFactory, BlameableTrait;
 
-    protected $fillable = ['code', 'name'];
+    protected $fillable = [
+        'code', 
+        'name', 
+        'birth_place',
+        'birth_date',
+        'gender',
+        'identity_number',
+        'phone',
+        'email',
+        'blood_type',
+        'address'
+    ];
 
     public function companies() {
         return $this->hasMany(EmployeeCompany::class)->orderBy('effective_date', 'ASC');

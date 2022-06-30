@@ -23,6 +23,34 @@
                         <label class="col-md-3 col-form-label">{{__("Name")}}</label>
                         <div class="col-md-9 col-form-label">{{$data->name}}</div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Birth Place / Date")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->birth_place}} / {{$data->birth_date}}</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Gender")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->gender}}</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Identity Number")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->identity_number}}</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Phone")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->phone}}</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Email")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->email}}</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Blood Type")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->blood_type}}</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Address")}}</label>
+                        <div class="col-md-9 col-form-label">{!!nl2br($data->address)!!}</div>
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">

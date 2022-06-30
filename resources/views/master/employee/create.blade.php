@@ -30,6 +30,67 @@
                                 <input type="text" name="name" class="form-control required">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Birth Place / Date")}}</label>
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="text" name="birth_place" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                            </div>
+                                            <input type="text" name="birth_date" class="form-control date">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Gender")}}</label>
+                            <div class="col-md-9 pt-2">
+                                <div class="form-check d-inline mr-3">
+                                    <input class="form-check-input" type="radio" name="gender" value="male">
+                                    <label class="form-check-label">{{__("Male")}}</label>
+                                </div>
+                                <div class="form-check d-inline">
+                                    <input class="form-check-input" type="radio" name="gender" value="female">
+                                    <label class="form-check-label">{{__("Female")}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Identity Number")}}</label>
+                            <div class="col-md-9">
+                                <input type="text" name="identity_number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Phone")}}</label>
+                            <div class="col-md-9">
+                                <input type="text" name="phone" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Email")}}</label>
+                            <div class="col-md-9">
+                                <input type="text" name="email" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Blood Type")}}</label>
+                            <div class="col-md-9">
+                                <input type="text" name="blood_type" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Address")}}</label>
+                            <div class="col-md-9">
+                                <textarea name="address" rows="4" class="form-control"></textarea>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">

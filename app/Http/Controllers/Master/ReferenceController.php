@@ -25,7 +25,6 @@ class ReferenceController extends AppCrudController
         $validator = Validator::make($request->all(), [
             'code' => 'required|max:255|unique:references',
             'name' => 'required|max:255',
-            'reference_type_id' => 'required',
         ]);
 
         if($validator->fails()){
@@ -38,7 +37,6 @@ class ReferenceController extends AppCrudController
         $validator = Validator::make($request->all(), [
             'code' => 'required|max:255|unique:references,code,'.$id,
             'name' => 'required|max:255',
-            'reference_type_id' => 'required',
         ]);
 
         if($validator->fails()){

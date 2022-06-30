@@ -41,18 +41,6 @@
                                             <input type="text" name="name" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Reference Type")}}</label>
-                                        <div class="col-md-4">
-                                            <div class="input-group">
-                                                <input type="text" name="reference_type_name" id="reference_type_name" class="form-control required">
-                                                <input type="hidden" name="reference_type_id" id="reference_type_id">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Reference Type List')}}" data-url="{{route('reference-type.select')}}" data-handler="onSelectedReferenceType"><i class="fas fa-search"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="row">
                                         <div class="col-sm-12 text-right">
                                             <button type="button" class="btn btn-sm btn-default" id="btn-clear" style="width: 100px;"><i class="fas fa-trash"></i> {{__('Clear')}}</button>
@@ -81,7 +69,8 @@
                                 <th></th>
                                 <th>{{ __("Code") }}</th>
                                 <th>{{ __("Name") }}</th>
-                                <th>{{ __("Reference Type") }}</th>
+                                <th>{{ __("Phone") }}</th>
+                                <th>{{ __("Address") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -150,8 +139,13 @@
                         defaultContent: '',
                     },
                     {
-                        data: 'reference_type.name',
-                        name: 'reference_type_id',
+                        data: 'phone',
+                        name: 'phone',
+                        defaultContent: '',
+                    },
+                    {
+                        data: 'address',
+                        name: 'address',
                         defaultContent: '',
                     }
                 ],
@@ -159,25 +153,20 @@
                     {
                         extend: 'excel',
                         title: '{{__("Reference")}}',
-                        exportOptions: { columns: [3,4,5] }
+                        exportOptions: { columns: [3,4,5,6] }
                     },
                     {
                         extend: 'csv',
                         title: '{{__("Reference")}}',
-                        exportOptions: { columns: [3,4,5] }
+                        exportOptions: { columns: [3,4,5,6] }
                     },
                     {
                         extend: 'pdf',
                         title: '{{__("Reference")}}',
-                        exportOptions: { columns: [3,4,5] }
+                        exportOptions: { columns: [3,4,5,6] }
                     }
                 ],
             });
         });
-
-        function onSelectedReferenceType(data) {
-            $('#reference_type_id').val(data[0].id);
-            $('#reference_type_name').val(data[0].code + ' ' + data[0].name);
-        }
     </script>
 @endsection

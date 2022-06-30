@@ -11,7 +11,14 @@ class MedicalStaff extends Model
 {
     use HasFactory, BlameableTrait;
 
-    protected $fillable = ['code', 'name'];
+    protected $fillable = [
+        'code', 
+        'name',
+        'gender',
+        'phone',
+        'email',
+        'address'
+    ];
 
     public function clinics() {
         return $this->hasMany(MedicalStaffClinic::class)->orderBy('effective_date', 'ASC');

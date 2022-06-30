@@ -30,6 +30,37 @@
                                 <input type="text" name="name" class="form-control required" value="{{$data->name}}">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Gender")}}</label>
+                            <div class="col-md-9 pt-2">
+                                <div class="form-check d-inline mr-3">
+                                    <input class="form-check-input" type="radio" name="gender" value="Male" @if($data->gender == 'Male') checked @endif>
+                                    <label class="form-check-label">{{__("Male")}}</label>
+                                </div>
+                                <div class="form-check d-inline">
+                                    <input class="form-check-input" type="radio" name="gender" value="Female" @if($data->gender == 'Female') checked @endif>
+                                    <label class="form-check-label">{{__("Female")}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Phone")}}</label>
+                            <div class="col-md-9">
+                                <input type="text" name="phone" class="form-control" value="{{$data->phone}}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Email")}}</label>
+                            <div class="col-md-9">
+                                <input type="text" name="email" class="form-control" value="{{$data->email}}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Address")}}</label>
+                            <div class="col-md-9">
+                                <textarea name="address" rows="4" class="form-control">{{$data->address}}</textarea>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">

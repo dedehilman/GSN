@@ -10,15 +10,6 @@ class Reference extends Model
 {
     use HasFactory, BlameableTrait;
 
-    protected $fillable = ['code', 'name', 'reference_type_id'];
+    protected $fillable = ['code', 'name'];
 
-
-    public function referenceType() {
-        return $this->belongsTo(ReferenceType::class);
-    }
-
-    public function scopeWithAll($query) 
-    {
-        return $query->with(['referenceType']);
-    }
 }

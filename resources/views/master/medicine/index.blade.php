@@ -193,11 +193,11 @@
 
         function onSelectedUnit(data) {
             $('#unit_id').val(data[0].id);
-            $('#unit_name').val(data[0].code + ' ' + data[0].name);
+            $('#unit_name').val(data[0].name);
         }
         function onSelectedProductType(data) {
             $('#medicine_type_id').val(data[0].id);
-            $('#medicine_type_name').val(data[0].code + ' ' + data[0].name);
+            $('#medicine_type_name').val(data[0].name);
         }
     </script>
 @endsection

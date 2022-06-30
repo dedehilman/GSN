@@ -17,15 +17,15 @@
                 <div class="card-body">       
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{__("Period")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->period->code}} {{$data->period->name}}</div>
+                        <div class="col-md-9 col-form-label">{{$data->period->name}}</div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{__("Medicine")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->medicine->code}} {{$data->medicine->name}}</div>
+                        <div class="col-md-9 col-form-label">{{$data->medicine->name}}</div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{__("Clinic")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->clinic->code}} {{$data->clinic->name}}</div>
+                        <div class="col-md-9 col-form-label">{{$data->clinic->name}}</div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{__("Quantity")}}</label>

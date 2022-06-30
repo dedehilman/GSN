@@ -9,6 +9,7 @@
                     <th>{{ __("Code") }}</th>
                     <th>{{ __("Name") }}</th>
                     <th>{{ __("Address") }}</th>
+                    <th>{{ __("Location") }}</th>
                     <th>{{ __("Phone") }}</th>
                     <th>{{ __("Business Area") }}</th>
                 </tr>
@@ -54,6 +55,10 @@
                 }, {
                     data: 'address',
                     name: 'address',
+                    defaultContent: '',
+                }, {
+                    data: 'location',
+                    name: 'location',
                     defaultContent: '',
                 }, {
                     data: 'phone',

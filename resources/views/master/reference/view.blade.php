@@ -24,12 +24,12 @@
                         <div class="col-md-9 col-form-label">{{$data->name}}</div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{__("Unit")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->unit->code}} {{$data->unit->name}}</div>
+                        <label class="col-md-3 col-form-label">{{__("Phone")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->phone}}</div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{__("Reference Type")}}</label>
-                        <div class="col-md-9 col-form-label">{{$data->referenceType->code}} {{$data->referenceType->name}}</div>
+                        <label class="col-md-3 col-form-label">{{__("Address")}}</label>
+                        <div class="col-md-9 col-form-label">{!!nl2br($data->address)!!}</div>
                     </div>
                 </div>
                 <div class="card-footer text-right">

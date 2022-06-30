@@ -21,7 +21,7 @@
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label required">{{__("Transaction No")}}</label>
                             <div class="col-md-4">
-                                <input type="text" name="transaction_no" class="form-control required">
+                                <input type="text" name="transaction_no" class="form-control required" readonly value="{{__('Auto Generate')}}">
                             </div>
                             <label class="col-md-2 col-form-label required">{{__("Transaction Type")}}</label>
                             <div class="col-md-4">
@@ -41,25 +41,24 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                     </div>
-                                    <input type="text" name="transaction_date" class="form-control required date">
+                                    <input type="text" name="transaction_date" class="form-control required date" value="{{\Carbon\Carbon::now()->isoFormat('YYYY-MM-DD')}}">
                                 </div>
                             </div>
                             <label class="col-md-2 col-form-label required">{{__("Clinic")}}</label>
                             <div class="col-md-4">
-                                @include('partials.clinic-picker')
-                                {{-- <div class="input-group">
+                                <div class="input-group">
                                     <input type="text" name="clinic_name" id="clinic_name" class="form-control required">
                                     <input type="hidden" name="clinic_id" id="clinic_id">
                                     <div class="input-group-append">
                                         <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
                                     </div>
-                                </div> --}}
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label">{{__("Reference")}}</label>
+                            <label class="col-md-2 col-form-label">{{__("Remark")}}</label>
                             <div class="col-md-4">
-                                <input type="text" name="reference" class="form-control">
+                                <textarea name="remark" class="form-control" rows="4"></textarea>
                             </div>
                             <label class="col-md-2 col-form-label required new-clinic d-none">{{__("New Clinic")}}</label>
                             <div class="col-md-4 new-clinic d-none">
@@ -71,11 +70,15 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label">{{__("Remark")}}</label>
-                            <div class="col-md-4">
-                                <textarea name="remark" class="form-control" rows="4"></textarea>
+                            <label class="col-md-2 col-form-label required reference d-none">{{__("Reference")}}</label>
+                            <div class="col-md-4 reference d-none">
+                                <div class="input-group">
+                                    <input type="text" name="reference_name" id="reference_name" class="form-control required">
+                                    <input type="hidden" name="reference_id" id="reference_id">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text show-modal-select" data-title="{{__('Reference List')}}" data-url="{{route('stock-transaction.select')}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -148,9 +151,17 @@
             $('#medicine_id'+seqId).val(data[0].id);
             $('#medicine_name'+seqId).val(data[0].name);
         }
+        function onSelectedClinic(data) {
+            $('#clinic_id').val(data[0].id);
+            $('#clinic_name').val(data[0].name);
+        }
         function onSelectedNewClinic(data) {
             $('#new_clinic_id').val(data[0].id);
-            $('#new_clinic_name').val(data[0].code + ' ' + data[0].name);
+            $('#new_clinic_name').val(data[0].name);
+        }
+        function onSelectedReference(data) {
+            $('#reference_id').val(data[0].id);
+            $('#reference_name').val(data[0].transaction_no);
         }
         $(function(){
             $('#btn-add-detail').on('click', function(){
@@ -174,10 +185,20 @@
             });
 
             $("select[name='transaction_type']").on('change', function(){
-                if($(this).val() == 'Transfer In' || $(this).val() == 'Transfer Out') {
+                $("#new_clinic_name").val('');
+                $("#new_clinic_id").val('');
+                $("#reference_name").val('');
+                $("#reference_id").val('');
+
+                if($(this).val() == 'Transfer Out') {
                     $(".new-clinic").removeClass("d-none");
+                    $(".reference").addClass("d-none");
+                } else if($(this).val() == 'Transfer In') {
+                    $(".new-clinic").addClass("d-none");
+                    $(".reference").removeClass("d-none");
                 } else {
                     $(".new-clinic").addClass("d-none");
+                    $(".reference").addClass("d-none");
                 }
             })
         })

@@ -17,14 +17,14 @@ class CreateReferencesTable extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('name');
-            $table->unsignedBigInteger('reference_type_id');
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
 
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('reference_type_id')->references('id')->on('reference_types')->onDelete('cascade');
         });
     }
 

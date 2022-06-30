@@ -175,11 +175,6 @@ Route::post('/master/disease-medicine/datatable/select', [App\Http\Controllers\M
 Route::get('/master/disease-medicine/select', [App\Http\Controllers\Master\DiseaseMedicineController::class, 'select'])->name('disease-medicine.select');
 Route::resource('master/disease-medicine', App\Http\Controllers\Master\DiseaseMedicineController::class);
 
-Route::post('/master/reference-type/datatable', [App\Http\Controllers\Master\ReferenceTypeController::class, 'datatable'])->name('reference-type.datatable');
-Route::post('/master/reference-type/datatable/select', [App\Http\Controllers\Master\ReferenceTypeController::class, 'datatableSelect'])->name('reference-type.datatable.select');
-Route::get('/master/reference-type/select', [App\Http\Controllers\Master\ReferenceTypeController::class, 'select'])->name('reference-type.select');
-Route::resource('master/reference-type', App\Http\Controllers\Master\ReferenceTypeController::class);
-
 Route::post('/master/reference/datatable', [App\Http\Controllers\Master\ReferenceController::class, 'datatable'])->name('reference.datatable');
 Route::post('/master/reference/datatable/select', [App\Http\Controllers\Master\ReferenceController::class, 'datatableSelect'])->name('reference.datatable.select');
 Route::get('/master/reference/select', [App\Http\Controllers\Master\ReferenceController::class, 'select'])->name('reference.select');
@@ -194,6 +189,8 @@ Route::post('/inventory/stock-opname/datatable', [App\Http\Controllers\Inventory
 Route::resource('inventory/stock-opname', App\Http\Controllers\Inventory\StockOpnameController::class);
 
 Route::post('/inventory/stock-transaction/datatable', [App\Http\Controllers\Inventory\StockTransactionController::class, 'datatable'])->name('stock-transaction.datatable');
+Route::post('/inventory/stock-transaction/datatable/select', [App\Http\Controllers\Inventory\StockTransactionController::class, 'datatableSelect'])->name('stock-transaction.datatable.select');
+Route::get('/inventory/stock-transaction/select', [App\Http\Controllers\Inventory\StockTransactionController::class, 'select'])->name('stock-transaction.select');
 Route::resource('inventory/stock-transaction', App\Http\Controllers\Inventory\StockTransactionController::class);
 
 Route::group(['prefix' => 'report', 'as' => 'report.'], function () {
@@ -201,3 +198,10 @@ Route::group(['prefix' => 'report', 'as' => 'report.'], function () {
     Route::get('stock/download/{id}', [App\Http\Controllers\Report\StockReportController::class, 'download'])->name('stock.download');
     Route::resource('stock', App\Http\Controllers\Report\StockReportController::class);
 });
+
+Route::post('/letter/sick-letter/datatable', [App\Http\Controllers\Letter\SickLetterController::class, 'datatable'])->name('sick-letter.datatable');
+Route::get('letter/sick-letter/download/{id}', [App\Http\Controllers\Letter\SickLetterController::class, 'download'])->name('sick-letter.download');
+Route::resource('letter/sick-letter', App\Http\Controllers\Letter\SickLetterController::class);
+Route::post('/letter/reference-letter/datatable', [App\Http\Controllers\Letter\ReferenceLetterController::class, 'datatable'])->name('reference-letter.datatable');
+Route::get('letter/reference-letter/download/{id}', [App\Http\Controllers\Letter\ReferenceLetterController::class, 'download'])->name('reference-letter.download');
+Route::resource('letter/reference-letter', App\Http\Controllers\Letter\ReferenceLetterController::class);
