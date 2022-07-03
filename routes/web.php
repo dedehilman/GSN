@@ -195,6 +195,7 @@ Route::get('letter/sick-letter/send-to-email/{id}', [App\Http\Controllers\Letter
 Route::resource('letter/sick-letter', App\Http\Controllers\Letter\SickLetterController::class);
 Route::post('/letter/reference-letter/datatable', [App\Http\Controllers\Letter\ReferenceLetterController::class, 'datatable'])->name('reference-letter.datatable');
 Route::get('letter/reference-letter/download/{id}', [App\Http\Controllers\Letter\ReferenceLetterController::class, 'download'])->name('reference-letter.download');
+Route::get('letter/reference-letter/send-to-email/{id}', [App\Http\Controllers\Letter\ReferenceLetterController::class, 'sendToEmail'])->name('reference-letter.send-to-email');
 Route::resource('letter/reference-letter', App\Http\Controllers\Letter\ReferenceLetterController::class);
 
 Route::group(['prefix' => 'registration', 'as' => 'registration.'], function () {

@@ -62,7 +62,7 @@
                                         <label class="col-md-2 col-form-label">{{__("Clinic")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" id="clinic_name" class="form-control">
+                                                <input type="text" id="clinic_name" class="form-control" readonly>
                                                 <input type="hidden" name="clinic_id" id="clinic_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
@@ -72,7 +72,7 @@
                                         <label class="col-md-2 col-form-label">{{__("Medical Staff")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" id="medical_staff_name" class="form-control">
+                                                <input type="text" id="medical_staff_name" class="form-control" readonly>
                                                 <input type="hidden" name="medical_staff_id" id="medical_staff_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Medical Staff List')}}" data-url="{{route('medical-staff.select')}}" data-handler="onSelectedMedicalStaff"><i class="fas fa-search"></i></span>
@@ -84,7 +84,7 @@
                                         <label class="col-md-2 col-form-label">{{__("Patient")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" id="patient_name" class="form-control">
+                                                <input type="text" id="patient_name" class="form-control" readonly>
                                                 <input type="hidden" name="patient_id" id="patient_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Patient List')}}" data-url="{{route('employee.select')}}" data-handler="onSelectedPatient"><i class="fas fa-search"></i></span>
@@ -101,26 +101,16 @@
                                         </div>                                        
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label reference">{{__("Reference")}}</label>
-                                        <div class="col-md-4 reference">
+                                        <label class="col-md-2 col-form-label">{{__("Reference")}}</label>
+                                        <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" id="reference_name" class="form-control">
+                                                <input type="text" id="reference_name" class="form-control" readonly>
                                                 <input type="hidden" name="reference_id" id="reference_id">
                                                 <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Reference List')}}" data-url="{{route('reference.select')}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>
+                                                    <span class="input-group-text show-modal-select reference-modal-select" data-title="{{__('Reference List')}}" data-url="{{route('reference.select')}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <label class="col-md-2 col-form-label reference-clinic d-none">{{__("Reference Clinic")}}</label>
-                                        <div class="col-md-4 reference-clinic d-none">
-                                            <div class="input-group">
-                                                <input type="text" id="reference_clinic_name" class="form-control">
-                                                <input type="hidden" name="reference_clinic_id" id="reference_clinic_id">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedReferenceClinic"><i class="fas fa-search"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>                   
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12 text-right">
@@ -269,17 +259,15 @@
             });
 
             $("select[name='reference_type']").on('change', function(){
-                $("#reference_clinic_id").val("");
-                $("#reference_clinic_name").val("");
                 $("#reference_id").val("");
                 $("#reference_name").val("");
                 
                 if($(this).val() == 'Internal') {
-                    $(".reference").addClass('d-none');
-                    $(".reference-clinic").removeClass('d-none');
+                    $(".reference-modal-select").attr("data-url", "{{route('clinic.select', 'queryBuilder=0')}}");
+                    $("#reference_id").attr("name", "reference_clinic_id");
                 } else {
-                    $(".reference").removeClass('d-none');
-                    $(".reference-clinic").addClass('d-none');
+                    $(".reference-modal-select").attr("data-url", "{{route('reference.select')}}");
+                    $("#reference_id").attr("name", "reference_id");
                 }
             });
         });
@@ -299,10 +287,6 @@
         function onSelectedReference(data) {
             $('#reference_id').val(data[0].id);
             $('#reference_name').val(data[0].name);
-        }
-        function onSelectedReferenceClinic(data) {
-            $('#reference_clinic_id').val(data[0].id);
-            $('#reference_clinic_name').val(data[0].name);
         }
     </script>
 @endsection

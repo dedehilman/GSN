@@ -19,10 +19,7 @@ class SickLetterController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('sick-letter');
-        $this->setIndex('letter.sick-letter.index');
-        $this->setCreate('letter.sick-letter.create');
-        $this->setEdit('letter.sick-letter.edit');
-        $this->setView('letter.sick-letter.view');
+        $this->setDefaultView('letter.sick-letter');
         $this->setModel('App\Models\SickLetter');
     }
 
@@ -67,6 +64,12 @@ class SickLetterController extends AppCrudController
             'remark'=> 'max:255'
         ]);
 
+        if($request->for_relationship == 1) {
+            $validator->addRules([
+                'patient_relationship_id'=> 'required'
+            ]);
+        }
+
         if($validator->fails()){
             return $validator->errors()->all();
         }
@@ -83,6 +86,12 @@ class SickLetterController extends AppCrudController
             'num_of_days' => 'required',
             'remark'=> 'max:255'
         ]);
+
+        if($request->for_relationship == 1) {
+            $validator->addRules([
+                'patient_relationship_id'=> 'required'
+            ]);
+        }
 
         if($validator->fails()){
             return $validator->errors()->all();
@@ -105,11 +114,10 @@ class SickLetterController extends AppCrudController
         try {
             $data = $this->model::find($id); 
             if($data) {
-                $path = storage_path('pdf/orders');
                 $pdf = PDF::loadview('letter.sick-letter.template', ['data'=>$data]);
                 Storage::put('public/letter/sick-letter/'.$data->transaction_no.'.pdf', $pdf->output());
                 $params = array();
-                $content = getParameter("SICK_LETTER_CONTENT");
+                $content = getParameter("SICK_LETTER_CONTENT") ?? '';
                 $params['title'] = $data->transaction_no;
                 
                 $params['attachment'] = Storage::path('public/letter/sick-letter/'.$data->transaction_no.'.pdf');
@@ -129,9 +137,7 @@ class SickLetterController extends AppCrudController
         } catch (\Throwable $th) {
             dd($th);
             return redirect()->back()->with(['info' => $th->getMessage()]);
-        }
-        
+        }   
     }
-    
 }
 

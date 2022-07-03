@@ -9,6 +9,9 @@ use PDF;
 use App\Models\ReferenceLetter;
 use Lang;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AppMail;
+use Storage;
 
 class ReferenceLetterController extends AppCrudController
 {
@@ -16,10 +19,7 @@ class ReferenceLetterController extends AppCrudController
     public function __construct()
     {
         $this->setDefaultMiddleware('reference-letter');
-        $this->setIndex('letter.reference-letter.index');
-        $this->setCreate('letter.reference-letter.create');
-        $this->setEdit('letter.reference-letter.edit');
-        $this->setView('letter.reference-letter.view');
+        $this->setDefaultView('letter.reference-letter');
         $this->setModel('App\Models\ReferenceLetter');
     }
 
@@ -27,7 +27,7 @@ class ReferenceLetterController extends AppCrudController
     {
         try {
             $count = ReferenceLetter::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->count();
-            $request['transaction_no'] = 'RL-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+            $request['transaction_no'] = 'SR-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);
             if($validateOnStore) {
@@ -74,6 +74,12 @@ class ReferenceLetterController extends AppCrudController
             ]);
         }
 
+        if($request->for_relationship == 1) {
+            $validator->addRules([
+                'patient_relationship_id'=> 'required'
+            ]);
+        }
+
         if($validator->fails()){
             return $validator->errors()->all();
         }
@@ -101,6 +107,12 @@ class ReferenceLetterController extends AppCrudController
             ]);
         }
 
+        if($request->for_relationship == 1) {
+            $validator->addRules([
+                'patient_relationship_id'=> 'required'
+            ]);
+        }
+
         if($validator->fails()){
             return $validator->errors()->all();
         }
@@ -115,6 +127,37 @@ class ReferenceLetterController extends AppCrudController
 
         $pdf = PDF::loadview('letter.reference-letter.template', ['data'=>$data]);
     	return $pdf->download($data->transaction_no.' '.$data->patient->name.'.pdf');
+    }
+
+    public function sendToEmail($id)
+    {
+        try {
+            $data = $this->model::find($id); 
+            if($data) {
+                $pdf = PDF::loadview('letter.reference-letter.template', ['data'=>$data]);
+                Storage::put('public/letter/reference-letter/'.$data->transaction_no.'.pdf', $pdf->output());
+                $params = array();
+                $content = getParameter("REFERENCE_LETTER_CONTENT") ?? '';
+                $params['title'] = $data->transaction_no;
+                
+                $params['attachment'] = Storage::path('public/letter/reference-letter/'.$data->transaction_no.'.pdf');
+                if($data->for_relationship == 0 && $data->patient->email) {
+                    $content = str_replace('{Recipient Name}', $data->patient->name, $content);
+                    $params['content'] = $content;
+                    Mail::to($data->patient->email)->send(new AppMail($params));
+                }
+                else if($data->for_relationship == 1 && $data->patientRelationship->email) {
+                    $content = str_replace('{Recipient Name}', $data->patientRelationship->name, $content);
+                    $params['content'] = $content;
+                    Mail::to($data->patientRelationship->email)->send(new AppMail($params));
+                }
+            }
+
+            return redirect()->back()->with(['success' => Lang::get("Data has been send")]);
+        } catch (\Throwable $th) {
+            dd($th);
+            return redirect()->back()->with(['info' => $th->getMessage()]);
+        }   
     }
 }
 

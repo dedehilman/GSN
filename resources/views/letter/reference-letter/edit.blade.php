@@ -17,90 +17,114 @@
                             </button>
                         </div>
                     </div>
-                    <div class="card-body">     
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label required">{{__("Transaction No")}}</label>
-                            <div class="col-md-4">
-                                <input type="text" name="transaction_no" class="form-control required" readonly value="{{$data->transaction_no}}">
-                            </div>
-                            <label class="col-md-2 col-form-label required">{{__("Clinic")}}</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <input type="text" name="clinic_name" id="clinic_name" class="form-control required" value="{{$data->clinic->name}}">
-                                    <input type="hidden" name="clinic_id" id="clinic_id" value="{{$data->clinic->id}}">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
+                    <div class="card-body">   
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label required">{{__("Patient")}}</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input type="text" name="patient_name" id="patient_name" class="form-control required" readonly value="{{$data->patient->name}}">
+                                            <input type="hidden" name="patient_id" id="patient_id" value="{{$data->patient->id}}">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text show-modal-select" data-title="{{__('Patient List')}}" data-url="{{route('employee.select')}}" data-handler="onSelectedPatient"><i class="fas fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{__("For Relationship")}}</label>
+                                    <div class="col-md-8">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="for_relationship" value="1" @if($data->for_relationship == '1') checked @endif>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row employee-relationship @if($data->for_relationship == '0') d-none @endif">
+                                    <label class="col-md-4 col-form-label required">{{__("Relationship")}}</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input type="text" name="patient_relationship_name" id="patient_relationship_name" class="form-control required" readonly value="{{$data->patientRelationship->name ?? ''}}">
+                                            <input type="hidden" name="patient_relationship_id" id="patient_relationship_id" value="{{$data->patientRelationship->id ?? ''}}">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text show-modal-select employee-relationship-select" data-title="{{__('Relationship List')}}" data-url="{{route('employee-relationship.select', 'employee_id='.$data->patient_id)}}" data-handler="onSelectedPatientRelationship"><i class="fas fa-search"></i></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label required">{{__("Transaction Date")}}</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                    </div>
-                                    <input type="text" name="transaction_date" class="form-control required date" value="{{$data->transaction_date}}">
-                                </div>
-                            </div>
-                            <label class="col-md-2 col-form-label required">{{__("Medical Staff")}}</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <input type="text" name="medical_staff_name" id="medical_staff_name" class="form-control required" value="{{$data->medicalStaff->name}}">
-                                    <input type="hidden" name="medical_staff_id" id="medical_staff_id" value="{{$data->medicalStaff->id}}">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text show-modal-select" data-title="{{__('Medical Staff List')}}" data-url="{{route('medical-staff.select')}}" data-handler="onSelectedMedicalStaff"><i class="fas fa-search"></i></span>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label required">{{__("Transaction No")}}</label>
+                                    <div class="col-md-8">
+                                        <input type="text" name="transaction_no" class="form-control required" readonly value="{{$data->transaction_no}}">
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label required">{{__("Reference Type")}}</label>
-                            <div class="col-md-4">
-                                <select name="reference_type" class="form-control custom-select required">
-                                    <option value=""></option>
-                                    <option value="Internal" @if($data->reference_type == 'Internal') selected @endif>{{__("Internal")}}</option>
-                                    <option value="External" @if($data->reference_type == 'External') selected @endif>{{__("External")}}</option>
-                                </select>
-                            </div>
-                            <label class="col-md-2 col-form-label required">{{__("Patient")}}</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <input type="text" name="patient_name" id="patient_name" class="form-control required" value="{{$data->patient->name}}">
-                                    <input type="hidden" name="patient_id" id="patient_id" value="{{$data->patient->id}}">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text show-modal-select" data-title="{{__('Patient List')}}" data-url="{{route('employee.select')}}" data-handler="onSelectedPatient"><i class="fas fa-search"></i></span>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label required">{{__("Transaction Date")}}</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                            </div>
+                                            <input type="text" name="transaction_date" class="form-control required date" value="{{$data->transaction_date}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label required">{{__("Clinic")}}</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input type="text" name="clinic_name" id="clinic_name" class="form-control required" readonly value="{{$data->clinic->name}}">
+                                            <input type="hidden" name="clinic_id" id="clinic_id" value="{{$data->clinic->id}}">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label required">{{__("Medical Staff")}}</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input type="text" name="medical_staff_name" id="medical_staff_name" class="form-control required" readonly value="{{$data->medicalStaff->name}}">
+                                            <input type="hidden" name="medical_staff_id" id="medical_staff_id" value="{{$data->medicalStaff->id}}">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text show-modal-select" data-title="{{__('Medical Staff List')}}" data-url="{{route('medical-staff.select')}}" data-handler="onSelectedMedicalStaff"><i class="fas fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label required">{{__("Reference Type")}}</label>
+                                    <div class="col-md-8">
+                                        <select name="reference_type" class="form-control custom-select required">
+                                            <option value=""></option>
+                                            <option value="Internal" @if($data->reference_type == 'Internal') selected @endif>{{__("Internal")}}</option>
+                                            <option value="External" @if($data->reference_type == 'External') selected @endif>{{__("External")}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label required">{{__("Reference")}}</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input type="text" id="reference_name" class="form-control required" value="{{$data->reference_type == 'Internal' ? $data->referenceClinic->name : $data->reference->name}}" readonly>
+                                            <input type="hidden" @if($data->reference_type=='Internal') name="reference_clinic_id" @else name="reference_id" @endif id="reference_id" value="{{$data->reference_type == 'Internal' ? $data->referenceClinic->id : $data->reference->id}}">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text show-modal-select reference-modal-select" data-title="{{__('Reference List')}}" data-url="{{$data->reference_type == 'Internal' ? route('clinic.select', 'queryBuilder=0') : route('reference.select')}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{__("Remark")}}</label>
+                                    <div class="col-md-8">
+                                        <textarea name="remark" rows="4" class="form-control">{{$data->remark}}</textarea>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label required reference @if($data->reference_type=='Internal') d-none @endif">{{__("Reference")}}</label>
-                            <div class="col-md-4 reference @if($data->reference_type=='Internal') d-none @endif">
-                                <div class="input-group">
-                                    <input type="text" name="reference_name" id="reference_name" class="form-control required" value="{{$data->reference->name ?? ''}}">
-                                    <input type="hidden" name="reference_id" id="reference_id" value="{{$data->reference->id ?? ''}}">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text show-modal-select" data-title="{{__('Reference List')}}" data-url="{{route('reference.select')}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <label class="col-md-2 col-form-label required reference-clinic @if($data->reference_type=='External') d-none @endif">{{__("Reference Clinic")}}</label>
-                            <div class="col-md-4 reference-clinic @if($data->reference_type=='External') d-none @endif">
-                                <div class="input-group">
-                                    <input type="text" name="reference_clinic_name" id="reference_clinic_name" class="form-control required" value="{{$data->referenceClinic->name ?? ''}}">
-                                    <input type="hidden" name="reference_clinic_id" id="reference_clinic_id" value="{{$data->referenceClinic->id ?? ''}}">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedReferenceClinic"><i class="fas fa-search"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <label class="col-md-2 col-form-label required">{{__("Remark")}}</label>
-                            <div class="col-md-4">
-                                <textarea name="remark" rows="4" class="form-control">{{$data->remark}}</textarea>
-                            </div>
-                        </div>
+                        </div>  
                     </div>
                     <div class="card-footer text-right">
                         <a href="{{route('reference-letter.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
@@ -116,27 +140,32 @@
     <script>
         $(function(){
             $("select[name='reference_type']").on('change', function(){
-                $("#reference_clinic_id").val("");
-                $("#reference_clinic_name").val("");
                 $("#reference_id").val("");
                 $("#reference_name").val("");
-
+                
                 if($(this).val() == 'Internal') {
-                    $(".reference").addClass('d-none');
-                    $(".reference-clinic").removeClass('d-none');
+                    $(".reference-modal-select").attr("data-url", "{{route('clinic.select', 'queryBuilder=0')}}");
+                    $("#reference_id").attr("name", "reference_clinic_id");
                 } else {
-                    $(".reference").removeClass('d-none');
-                    $(".reference-clinic").addClass('d-none');
+                    $(".reference-modal-select").attr("data-url", "{{route('reference.select')}}");
+                    $("#reference_id").attr("name", "reference_id");
                 }
             });
+
+            $("input[name='for_relationship']").on('click', function(){
+                $("#patient_relationship_name").val('');
+                $("#patient_relationship_id").val('');
+
+                if($(this).is(':checked')) {
+                    $(".employee-relationship").removeClass("d-none");
+                } else {
+                    $(".employee-relationship").addClass("d-none");
+                }
+            })
         });
         function onSelectedClinic(data) {
             $('#clinic_id').val(data[0].id);
             $('#clinic_name').val(data[0].name);
-        }
-        function onSelectedReferenceClinic(data) {
-            $('#reference_clinic_id').val(data[0].id);
-            $('#reference_clinic_name').val(data[0].name);
         }
         function onSelectedReference(data) {
             $('#reference_id').val(data[0].id);
@@ -149,6 +178,10 @@
         function onSelectedPatient(data) {
             $('#patient_id').val(data[0].id);
             $('#patient_name').val(data[0].name);
+        }
+        function onSelectedPatientRelationship(data) {
+            $('#patient_relationship_id').val(data[0].id);
+            $('#patient_relationship_name').val(data[0].name);
         }
     </script>
 @endsection

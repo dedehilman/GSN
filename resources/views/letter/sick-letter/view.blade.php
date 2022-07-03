@@ -78,7 +78,6 @@
                             <a class="dropdown-item" href="{{route('sick-letter.send-to-email', $data->id)}}">{{__('Send to Email')}}</a>
                         </div>
                     </div>
-                    
                     <a href="{{route('sick-letter.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
                 </div>
             </div>

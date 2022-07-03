@@ -10,7 +10,7 @@ class ReferenceLetter extends Model
 {
     use HasFactory, BlameableTrait;
 
-    protected $fillable = ['transaction_no', 'transaction_date', 'remark', 'clinic_id', 'medical_staff_id', 'patient_id', 'reference_type', 'reference_id', 'reference_clinic_id'];
+    protected $fillable = ['transaction_no', 'transaction_date', 'remark', 'clinic_id', 'medical_staff_id', 'patient_id', 'reference_type', 'reference_id', 'reference_clinic_id','for_relationship', 'patient_relationship_id'];
 
     public function clinic() {
         return $this->belongsTo(Clinic::class);
@@ -32,8 +32,12 @@ class ReferenceLetter extends Model
         return $this->belongsTo(Employee::class, 'patient_id');
     }
 
+    public function patientRelationship() {
+        return $this->belongsTo(EmployeeRelationship::class, 'patient_relationship_id');
+    }
+
     public function scopeWithAll($query) 
     {
-        return $query->with(['medicalStaff','clinic', 'reference', 'patient', 'referenceClinic']);
+        return $query->with(['medicalStaff','clinic', 'reference', 'patient', 'referenceClinic','patientRelationship']);
     }
 }

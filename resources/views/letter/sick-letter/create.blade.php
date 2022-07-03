@@ -152,7 +152,7 @@
             }
             $('.employee-relationship-select').attr('data-url', dataUrl+"?employee_id="+data[0].id);
         }
-        function onSelectedRelationship(data) {
+        function onSelectedPatientRelationship(data) {
             $('#patient_relationship_id').val(data[0].id);
             $('#patient_relationship_name').val(data[0].name);
         }

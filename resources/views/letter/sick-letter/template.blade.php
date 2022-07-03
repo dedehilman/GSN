@@ -14,7 +14,7 @@
 </table>
 <hr/>
 <p style="margin-bottom: 0px; font-weight: bold; text-decoration: underline; font-size: 16px; text-align: center;">Surat Keterangan Sakit</p>
-<p style="text-align: center; margin-top: 0px;">No: </p>
+<p style="text-align: center; margin-top: 0px;">No: {{$data->transaction_no}}</p>
 <p>Yang bertanda tangan dibawah ini Dokter pemeriksa {{$data->medicalStaff->name}}, menerangkan bahwa :</p>
 <table width="100%">
     <tr>

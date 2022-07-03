@@ -14,7 +14,7 @@
 </table>
 <hr/>
 <p style="margin-bottom: 0px; font-weight: bold; text-decoration: underline; font-size: 16px; text-align: center;">Surat Rujukan</p>
-<p style="text-align: center; margin-top: 0px;">No: </p>
+<p style="text-align: center; margin-top: 0px;">No: {{$data->transaction_no}}</p>
 
 <p>
     Kepada yang terhormat<br/>
@@ -26,19 +26,19 @@
 <table width="100%">
     <tr>
         <td width="20%">Nama</td>
-        <td>: {{$data->patient->name}}</td>
+        <td>: @if($data->for_relationship == 0) {{$data->patient->name}} @else {{$data->patientRelationship->name}} @endif</td>
     </tr>
     <tr>
         <td>Umur</td>
-        <td>: </td>
+        <td>: @if($data->for_relationship == 0) {{getAge($data->patient->birth_date)}} @else {{getAge($data->patientRelationship->birth_date)}} @endif Tahun</td>
     </tr>
     <tr>
         <td>Jenis Kelamin</td>
-        <td>: {{__($data->patient->gender)}}</td>
+        <td>: @if($data->for_relationship == 0) {{__($data->patient->gender)}} @else {{$data->patientRelationship->gender}} @endif</td>
     </tr>
     <tr>
         <td>Alamat</td>
-        <td>: {{$data->patient->address}}</td>
+        <td>: @if($data->for_relationship == 0) {{$data->patient->address}} @else {{$data->patientRelationship->address}} @endif</td>
     </tr>
     <tr>
         <td>Catatan</td>
