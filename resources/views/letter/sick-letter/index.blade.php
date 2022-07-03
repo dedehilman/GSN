@@ -62,7 +62,7 @@
                                         <label class="col-md-2 col-form-label">{{__("Clinic")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" id="clinic_name" class="form-control">
+                                                <input type="text" id="clinic_name" class="form-control" readonly>
                                                 <input type="hidden" name="clinic_id" id="clinic_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
@@ -72,7 +72,7 @@
                                         <label class="col-md-2 col-form-label">{{__("Medical Staff")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" id="medical_staff_name" class="form-control">
+                                                <input type="text" id="medical_staff_name" class="form-control" readonly>
                                                 <input type="hidden" name="medical_staff_id" id="medical_staff_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Medical Staff List')}}" data-url="{{route('medical-staff.select')}}" data-handler="onSelectedMedicalStaff"><i class="fas fa-search"></i></span>
@@ -84,7 +84,7 @@
                                         <label class="col-md-2 col-form-label">{{__("Patient")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" id="patient_name" class="form-control">
+                                                <input type="text" id="patient_name" class="form-control" readonly>
                                                 <input type="hidden" name="patient_id" id="patient_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select" data-title="{{__('Patient List')}}" data-url="{{route('employee.select')}}" data-handler="onSelectedPatient"><i class="fas fa-search"></i></span>

@@ -492,7 +492,7 @@ class AppCrudController extends Controller
         foreach($request->parameters ?? [] as $key => $value) {
             if($key == "search") continue;
 
-            if($value) {
+            if($value != null) {
                 if(Str::endsWith($key, '.like')) {
                     $query->where(Str::replace('.like', '', $key),'LIKE',"%{$value}%");
                 }
@@ -602,7 +602,7 @@ class AppCrudController extends Controller
 
     public function filterExtraParameter($query) {
         foreach($this->extraParameter ?? [] as $key => $value) {
-            if($value) {
+            if($value != null) {
                 if(Str::endsWith($key, '.like')) {
                     $query->where(Str::replace('.like', '', $key),'LIKE',"%{$value}%");
                 }
@@ -636,7 +636,7 @@ class AppCrudController extends Controller
 
     public function filterExtraParameterSelect($query) {
         foreach($this->extraParameterSelect ?? [] as $key => $value) {
-            if($value) {
+            if($value != null) {
                 if(Str::endsWith($key, '.like')) {
                     $query->where(Str::replace('.like', '', $key),'LIKE',"%{$value}%");
                 }

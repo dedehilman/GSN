@@ -120,9 +120,14 @@ $(function() {
 
 function getDatatableParameter(data) {
     var obj = {};
+    var objExtra = {};
     $('#formSearch input:not([type="checkbox"]):not([type="radio"])').each(function(){
         if($(this).attr('name')) {
-            obj[$(this).attr('name')] = $(this).val()
+            if($(this).attr('parameter-type') == 'extra') {
+                objExtra[$(this).attr('name')] = $(this).val()
+            } else {
+                obj[$(this).attr('name')] = $(this).val()
+            }
         }
     })
     $('#formSearch input[type="checkbox"]').each(function(){
@@ -133,21 +138,35 @@ function getDatatableParameter(data) {
             }
 
             arr.push($(this).val());
-            obj[$(this).attr('name')] = arr;
+
+            if($(this).attr('parameter-type') == 'extra') {
+                objExtra[$(this).attr('name')] = arr;
+            } else {
+                obj[$(this).attr('name')] = arr;
+            }
         }
     })
     $('#formSearch input[type="radio"]').each(function(){
         if($(this).attr('name') && $(this).prop("checked") == true){
-            obj[$(this).attr('name')] = $(this).val();
+            if($(this).attr('parameter-type') == 'extra') {
+                objExtra[$(this).attr('name')] = $(this).val();
+            } else {
+                obj[$(this).attr('name')] = $(this).val();
+            }
         }
     })
     $('#formSearch select').each(function(){
         if($(this).attr('name')){
-            obj[$(this).attr('name')] = $(this).val()
+            if($(this).attr('parameter-type') == 'extra') {
+                objExtra[$(this).attr('name')] = $(this).val()
+            } else {
+                obj[$(this).attr('name')] = $(this).val()
+            }
         }
     })
 
     data.parameters = obj;
+    data.extraParameters = objExtra;
 }
 
 function ajaxPost(element) {

@@ -10,7 +10,7 @@ class SickLetter extends Model
 {
     use HasFactory, BlameableTrait;
 
-    protected $fillable = ['transaction_no', 'transaction_date', 'num_of_days', 'remark', 'clinic_id', 'medical_staff_id', 'patient_id'];
+    protected $fillable = ['transaction_no', 'transaction_date', 'num_of_days', 'remark', 'clinic_id', 'medical_staff_id', 'patient_id', 'for_relationship', 'patient_relationship_id', 'diagnosis_id'];
 
     public function clinic() {
         return $this->belongsTo(Clinic::class);
@@ -24,8 +24,16 @@ class SickLetter extends Model
         return $this->belongsTo(Employee::class, 'patient_id');
     }
 
+    public function patientRelationship() {
+        return $this->belongsTo(EmployeeRelationship::class, 'patient_relationship_id');
+    }
+
+    public function diagnosis() {
+        return $this->belongsTo(Diagnosis::class);
+    }
+
     public function scopeWithAll($query) 
     {
-        return $query->with(['medicalStaff','clinic','patient']);
+        return $query->with(['medicalStaff','clinic','patient','patientRelationship','diagnosis']);
     }
 }

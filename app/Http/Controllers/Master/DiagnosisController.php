@@ -16,6 +16,7 @@ class DiagnosisController extends AppCrudController
     {
         $this->setDefaultMiddleware('diagnosis');
         $this->setDefaultView('master.diagnosis');
+        $this->setSelect('master.diagnosis.select');
         $this->setModel('App\Models\Diagnosis');
     }
 

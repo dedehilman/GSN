@@ -19,19 +19,27 @@
 <table width="100%">
     <tr>
         <td width="20%">Nama</td>
-        <td>: {{$data->patient->name}}</td>
+        <td>: @if($data->for_relationship == 0) {{$data->patient->name}} @else {{$data->patientRelationship->name}} @endif</td>
     </tr>
     <tr>
         <td>Umur</td>
-        <td>: </td>
+        <td>: @if($data->for_relationship == 0) {{getAge($data->patient->birth_date)}} @else {{getAge($data->patientRelationship->birth_date)}} @endif Tahun</td>
     </tr>
     <tr>
         <td>Jenis Kelamin</td>
-        <td>: {{__($data->patient->gender)}}</td>
+        <td>: @if($data->for_relationship == 0) {{__($data->patient->gender)}} @else {{$data->patientRelationship->gender}} @endif</td>
     </tr>
     <tr>
         <td>Alamat</td>
-        <td>: {{$data->patient->address}}</td>
+        <td>: @if($data->for_relationship == 0) {{$data->patient->address}} @else {{$data->patientRelationship->address}} @endif</td>
+    </tr>
+    <tr>
+        <td>Diagnosa</td>
+        <td>: {{$data->diagnosis->name ?? ''}}</td>
+    </tr>
+    <tr>
+        <td>Catatan</td>
+        <td>: {{$data->remark}}</td>
     </tr>
 </table>
 <p>Perlu beristirahat karena sakit selama {{$data->num_of_days}} hari terhitung dari {{\Carbon\Carbon::parse($data->transaction_date)->isoFormat('dddd, DD MMMM YYYY')}} hingga {{\Carbon\Carbon::parse($data->transaction_date)->addDays($data->num_of_days-1)->isoFormat('dddd, DD MMMM YYYY')}}.</p>

@@ -12,6 +12,7 @@ $(function() {
     });
 
     $(document).on('click', '.show-modal-select', function(){
+        setSelectedIds();
         onSelectHandler = $(this).attr('data-handler');
         $('#modal-select .modal-title').html($(this).attr('data-title'));
         $.ajax
@@ -44,23 +45,54 @@ $(function() {
 
 function getDatatableSelectParameter(data) {
     var obj = {};
-    $('#formSelectSearch input:not([type="checkbox"])').each(function(){
-        obj[$(this).attr('name')] = $(this).val()
+    var objExtra = {};
+    $('#formSelectSearch input:not([type="checkbox"]):not([type="radio"])').each(function(){
+        if($(this).attr('name')) {
+            if($(this).attr('parameter-type') == 'extra') {
+                objExtra[$(this).attr('name')] = $(this).val()
+            } else {
+                obj[$(this).attr('name')] = $(this).val()
+            }
+        }
     })
     $('#formSelectSearch input[type="checkbox"]').each(function(){
-        if($(this).prop("checked") == true){
+        if($(this).attr('name') && $(this).prop("checked") == true){
             var arr = [];
             if($(this).attr('name') in obj) {
                 arr = obj[$(this).attr('name')];
             }
 
             arr.push($(this).val());
-            obj[$(this).attr('name')] = arr;
+            if($(this).attr('parameter-type') == 'extra') {
+                objExtra[$(this).attr('name')] = arr;
+            } else {
+                obj[$(this).attr('name')] = arr;
+            }
+        }
+    })
+    $('#formSelectSearch input[type="radio"]').each(function(){
+        if($(this).attr('name') && $(this).prop("checked") == true){
+            if($(this).attr('parameter-type') == 'extra') {
+                objExtra[$(this).attr('name')] = $(this).val();
+            } else {
+                obj[$(this).attr('name')] = $(this).val();
+            }
         }
     })
     $('#formSelectSearch select').each(function(){
-        obj[$(this).attr('name')] = $(this).val()
+        if($(this).attr('name')){
+            if($(this).attr('parameter-type') == 'extra') {
+                objExtra[$(this).attr('name')] = $(this).val()
+            } else {
+                obj[$(this).attr('name')] = $(this).val()
+            }
+        }
     })
 
     data.parameters = obj;
+    data.extraParameters = objExtra;
+}
+
+function setSelectedIds() {
+    selectedIds = [];
 }

@@ -9,6 +9,9 @@ use PDF;
 use Lang;
 use Carbon\Carbon;
 use App\Models\SickLetter;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AppMail;
+use Storage;
 
 class SickLetterController extends AppCrudController
 {
@@ -27,7 +30,7 @@ class SickLetterController extends AppCrudController
     {
         try {
             $count = SickLetter::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->count();
-            $request['transaction_no'] = 'SL-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+            $request['transaction_no'] = 'SKS-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);
             if($validateOnStore) {
@@ -96,5 +99,39 @@ class SickLetterController extends AppCrudController
         $pdf = PDF::loadview('letter.sick-letter.template', ['data'=>$data]);
     	return $pdf->download($data->transaction_no.' '.$data->patient->name.'.pdf');
     }
+
+    public function sendToEmail($id)
+    {
+        try {
+            $data = $this->model::find($id); 
+            if($data) {
+                $path = storage_path('pdf/orders');
+                $pdf = PDF::loadview('letter.sick-letter.template', ['data'=>$data]);
+                Storage::put('public/letter/sick-letter/'.$data->transaction_no.'.pdf', $pdf->output());
+                $params = array();
+                $content = getParameter("SICK_LETTER_CONTENT");
+                $params['title'] = $data->transaction_no;
+                
+                $params['attachment'] = Storage::path('public/letter/sick-letter/'.$data->transaction_no.'.pdf');
+                if($data->for_relationship == 0 && $data->patient->email) {
+                    $content = str_replace('{Recipient Name}', $data->patient->name, $content);
+                    $params['content'] = $content;
+                    Mail::to($data->patient->email)->send(new AppMail($params));
+                }
+                else if($data->for_relationship == 1 && $data->patientRelationship->email) {
+                    $content = str_replace('{Recipient Name}', $data->patientRelationship->name, $content);
+                    $params['content'] = $content;
+                    Mail::to($data->patientRelationship->email)->send(new AppMail($params));
+                }
+            }
+
+            return redirect()->back()->with(['success' => Lang::get("Data has been send")]);
+        } catch (\Throwable $th) {
+            dd($th);
+            return redirect()->back()->with(['info' => $th->getMessage()]);
+        }
+        
+    }
+    
 }
 

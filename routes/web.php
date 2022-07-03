@@ -191,6 +191,7 @@ Route::group(['prefix' => 'report', 'as' => 'report.'], function () {
 
 Route::post('/letter/sick-letter/datatable', [App\Http\Controllers\Letter\SickLetterController::class, 'datatable'])->name('sick-letter.datatable');
 Route::get('letter/sick-letter/download/{id}', [App\Http\Controllers\Letter\SickLetterController::class, 'download'])->name('sick-letter.download');
+Route::get('letter/sick-letter/send-to-email/{id}', [App\Http\Controllers\Letter\SickLetterController::class, 'sendToEmail'])->name('sick-letter.send-to-email');
 Route::resource('letter/sick-letter', App\Http\Controllers\Letter\SickLetterController::class);
 Route::post('/letter/reference-letter/datatable', [App\Http\Controllers\Letter\ReferenceLetterController::class, 'datatable'])->name('reference-letter.datatable');
 Route::get('letter/reference-letter/download/{id}', [App\Http\Controllers\Letter\ReferenceLetterController::class, 'download'])->name('reference-letter.download');
@@ -200,3 +201,6 @@ Route::group(['prefix' => 'registration', 'as' => 'registration.'], function () 
     Route::post('outpatient/datatable', [App\Http\Controllers\Registration\OutpatientController::class, 'datatable'])->name('outpatient.datatable');
     Route::resource('outpatient', App\Http\Controllers\Registration\OutpatientController::class);
 });
+
+Route::post('/master/employee-relationship/datatable/select', [App\Http\Controllers\Master\EmployeeRelationshipController::class, 'datatableSelect'])->name('employee-relationship.datatable.select');
+Route::get('/master/employee-relationship/select', [App\Http\Controllers\Master\EmployeeRelationshipController::class, 'select'])->name('employee-relationship.select');
