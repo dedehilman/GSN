@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Registration;
 use App\Http\Controllers\AppCrudController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Registration;
 use Lang;
-use Illuminate\Support\Facades\DB;
+use App\Models\Outpatient;
 use Carbon\Carbon;
+use PDF;
 
 class OutpatientController extends AppCrudController
 {
@@ -17,16 +17,14 @@ class OutpatientController extends AppCrudController
     {
         $this->setDefaultMiddleware('registration-outpatient');
         $this->setDefaultView('registration.outpatient');
-        $this->setModel('App\Models\Registration');
-        $this->addExtraParameter('registration_type', 'Outpatient');
+        $this->setModel('App\Models\Outpatient');
     }
 
     public function store(Request $request)
     {
         try {
-            $count = Registration::whereDate('registration_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->where('registration_type', 'Outpatient')->count();
-            $request['registration_no'] = 'OP-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
-            $request['registration_type'] = 'Outpatient';
+            $count = Outpatient::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->count();
+            $request['transaction_no'] = 'RJL-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);
             if($validateOnStore) {
@@ -54,13 +52,29 @@ class OutpatientController extends AppCrudController
     public function validateOnStore(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'registration_no' => 'required|max:255|unique:registrations',
-            'registration_date' => 'required',
+            'transaction_no' => 'required|max:255|unique:outpatients',
+            'transaction_date' => 'required',
             'clinic_id' => 'required',
             'patient_id' => 'required',
             'medical_staff_id' => 'required',
-            'reference_id'=> 'required',
+            'reference_type' => 'required',
         ]);
+
+        if($request->reference_type == 'Internal') {
+            $validator->addRules([
+                'reference_clinic_id'=> 'required'
+            ]);
+        } else {
+            $validator->addRules([
+                'reference_id'=> 'required',
+            ]);
+        }
+
+        if($request->for_relationship == 1) {
+            $validator->addRules([
+                'patient_relationship_id'=> 'required'
+            ]);
+        }
 
         if($validator->fails()){
             return $validator->errors()->all();
@@ -70,17 +84,53 @@ class OutpatientController extends AppCrudController
     public function validateOnUpdate(Request $request, int $id)
     {
         $validator = Validator::make($request->all(), [
-            'registration_no' => 'required|max:255|unique:registrations,registration_no,'.$id,
-            'registration_date' => 'required',
+            'transaction_no' => 'required|max:255|unique:outpatients,transaction_no,'.$id,
+            'transaction_date' => 'required',
             'clinic_id' => 'required',
             'patient_id' => 'required',
             'medical_staff_id' => 'required',
-            'reference_id'=> 'required',
+            'reference_type' => 'required',
         ]);
+
+        if($request->reference_type == 'Internal') {
+            $validator->addRules([
+                'reference_clinic_id'=> 'required'
+            ]);
+        } else {
+            $validator->addRules([
+                'reference_id'=> 'required',
+            ]);
+        }
+
+        if($request->for_relationship == 1) {
+            $validator->addRules([
+                'patient_relationship_id'=> 'required'
+            ]);
+        }
 
         if($validator->fails()){
             return $validator->errors()->all();
         }
+    }
+
+    public function download($id, Request $request)
+    {
+        $data = $this->model::find($id);
+        if(!$data) {
+            return redirect()->back()->with(['info' => Lang::get("Data not found")]);
+        }
+
+        $transactionNo = explode("-", $data->transaction_no);
+        $queue = intval($transactionNo[count($transactionNo)-1]);
+        $pdf = PDF::loadview('registration.'.$request->type, [
+            'data' => $data,
+            'clinic' => $data->clinic,
+            'patient' => $data->for_relationship == 0 ? $data->patient : $data->patientRelationship,
+            'service' => "Rawat Jalan",
+            'queue' => $queue
+        ]);
+
+        return $pdf->download($data->transaction_no.'.pdf');
     }
 }
 

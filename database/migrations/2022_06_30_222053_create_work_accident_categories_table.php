@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateParametersTable extends Migration
+class CreateWorkAccidentCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateParametersTable extends Migration
      */
     public function up()
     {
-        Schema::create('parameters', function (Blueprint $table) {
+        Schema::create('work_accident_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('key')->unique();
-            $table->text('value');
-            $table->text('description')->nullable();
+            $table->string('code')->unique();
+            $table->string('name');
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
@@ -34,6 +33,6 @@ class CreateParametersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('parameters');
+        Schema::dropIfExists('work_accident_categories');
     }
 }

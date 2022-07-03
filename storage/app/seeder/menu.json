@@ -440,6 +440,26 @@
         "parent_id": null
     },
     {
+        "code": "M-891",
+        "title": "KK Category",
+        "class": "fas fa-ambulance nav-icon",
+        "nav_header": 0,
+        "link": "work-accident-category.index,work-accident-category.*",
+        "sequence": 891,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-892",
+        "title": "KB Category",
+        "class": "fas fa-venus-mars nav-icon",
+        "nav_header": 0,
+        "link": "family-planning-category.index,family-planning-category.*",
+        "sequence": 892,
+        "display": 1,
+        "parent_id": null
+    },
+    {
         "code": "M-200",
         "title": "Transaction",
         "class": "",
@@ -474,24 +494,24 @@
         "title": "KB",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
-        "link": "registration.kb.index,registration.kb.*",
+        "link": "registration.family-planning.index,registration.family-planning.*",
         "sequence": 2,
         "display": 1,
         "parent_id": "M-210"
     },
     {
         "code": "M-213",
-        "title": "Test Kehamilan",
+        "title": "PP Test",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
-        "link": "registration.pregnancy-test.index,registration.pregnancy-test.*",
+        "link": "registration.plano-test.index,registration.plano-test.*",
         "sequence": 3,
         "display": 1,
         "parent_id": "M-210"
     },
     {
         "code": "M-214",
-        "title": "Kecelakaan Kerja",
+        "title": "KK",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
         "link": "registration.work-accident.index,registration.work-accident.*",
@@ -531,7 +551,7 @@
     },
     {
         "code": "M-223",
-        "title": "Test Kehamilan",
+        "title": "PP Test",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
         "link": "#",
@@ -541,7 +561,7 @@
     },
     {
         "code": "M-224",
-        "title": "Kecelakaan Kerja",
+        "title": "KK",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
         "link": "#",

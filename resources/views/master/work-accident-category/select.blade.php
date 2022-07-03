@@ -8,7 +8,6 @@
                     <th>@if(($select ?? 'single') == 'multiple')<input type='checkbox' name="select-all"/>@endif</th>
                     <th>{{ __("Code") }}</th>
                     <th>{{ __("Name") }}</th>
-                    <th>{{ __("Business Area") }}</th>
                 </tr>
             </thead>
         </table>
@@ -19,7 +18,7 @@
         $('#datatable-select').DataTable({
             ajax:
             {
-                url: "{{route('afdelink.datatable.select')}}",
+                url: "{{route('work-accident-category.datatable.select')}}",
                 type: 'POST',
                 data: function(data){
                     getDatatableSelectParameter(data);
@@ -48,10 +47,6 @@
                 }, {
                     data: 'name',
                     name: 'name',
-                    defaultContent: '',
-                }, {
-                    data: 'estate.name',
-                    name: 'estate_id',
                     defaultContent: '',
                 }
             ],

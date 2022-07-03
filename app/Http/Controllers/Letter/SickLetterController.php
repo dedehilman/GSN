@@ -106,7 +106,7 @@ class SickLetterController extends AppCrudController
         }
 
         $pdf = PDF::loadview('letter.sick-letter.template', ['data'=>$data]);
-    	return $pdf->download($data->transaction_no.' '.$data->patient->name.'.pdf');
+    	return $pdf->download($data->transaction_no.'.pdf');
     }
 
     public function sendToEmail($id)

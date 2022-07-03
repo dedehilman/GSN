@@ -1,9 +1,9 @@
-@extends('layout', ['title' => Lang::get("Outpatient Registration"), 'subTitle' => Lang::get("Edit data outpatient registration")])
+@extends('layout', ['title' => Lang::get("Plano Test Registration"), 'subTitle' => Lang::get("Edit data plano test registration")])
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <form action="{{route('registration.outpatient.update', $data->id)}}" method="POST">
+            <form action="{{route('registration.plano-test.update', $data->id)}}" method="POST">
                 @csrf
 
                 <div class="card">
@@ -121,7 +121,7 @@
                         </div>  
                     </div>
                     <div class="card-footer text-right">
-                        <a href="{{route('registration.outpatient.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                        <a href="{{route('registration.plano-test.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
                         <button type="button" class="btn btn-primary" id="btn-update"><i class="fas fa fa-save"></i> {{__("Update")}}</button>
                     </div>
                 </div>

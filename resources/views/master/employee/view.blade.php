@@ -239,6 +239,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-right">
+                    <a href="{{route('employee.download', $data->id)}}" class="btn btn-default"><i class="fas fa fa-print"></i> {{__("Download")}}</a>
                     <a href="{{route('employee.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
                 </div>
             </div>

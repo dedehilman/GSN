@@ -99,6 +99,7 @@ Route::resource('master/attribute', App\Http\Controllers\Master\AttributeControl
 Route::post('/master/employee/datatable', [App\Http\Controllers\Master\EmployeeController::class, 'datatable'])->name('employee.datatable');
 Route::post('/master/employee/datatable/select', [App\Http\Controllers\Master\EmployeeController::class, 'datatableSelect'])->name('employee.datatable.select');
 Route::get('/master/employee/select', [App\Http\Controllers\Master\EmployeeController::class, 'select'])->name('employee.select');
+Route::get('master/employee/download/{id}', [App\Http\Controllers\Master\EmployeeController::class, 'download'])->name('employee.download');
 Route::resource('master/employee', App\Http\Controllers\Master\EmployeeController::class);
 Route::post('/master/relationship/datatable', [App\Http\Controllers\Master\RelationshipController::class, 'datatable'])->name('relationship.datatable');
 Route::post('/master/relationship/datatable/select', [App\Http\Controllers\Master\RelationshipController::class, 'datatableSelect'])->name('relationship.datatable.select');
@@ -199,9 +200,29 @@ Route::get('letter/reference-letter/send-to-email/{id}', [App\Http\Controllers\L
 Route::resource('letter/reference-letter', App\Http\Controllers\Letter\ReferenceLetterController::class);
 
 Route::group(['prefix' => 'registration', 'as' => 'registration.'], function () {
+    Route::post('plano-test/datatable', [App\Http\Controllers\Registration\PlanoTestController::class, 'datatable'])->name('plano-test.datatable');
+    Route::get('plano-test/download/{id}', [App\Http\Controllers\Registration\PlanoTestController::class, 'download'])->name('plano-test.download');
+    Route::resource('plano-test', App\Http\Controllers\Registration\PlanoTestController::class);
+    Route::post('work-accident/datatable', [App\Http\Controllers\Registration\WorkAccidentController::class, 'datatable'])->name('work-accident.datatable');
+    Route::get('work-accident/download/{id}', [App\Http\Controllers\Registration\WorkAccidentController::class, 'download'])->name('work-accident.download');
+    Route::resource('work-accident', App\Http\Controllers\Registration\WorkAccidentController::class);
+    Route::post('family-planning/datatable', [App\Http\Controllers\Registration\FamilyPlanningController::class, 'datatable'])->name('family-planning.datatable');
+    Route::get('family-planning/download/{id}', [App\Http\Controllers\Registration\FamilyPlanningController::class, 'download'])->name('family-planning.download');
+    Route::resource('family-planning', App\Http\Controllers\Registration\FamilyPlanningController::class);
     Route::post('outpatient/datatable', [App\Http\Controllers\Registration\OutpatientController::class, 'datatable'])->name('outpatient.datatable');
+    Route::get('outpatient/download/{id}', [App\Http\Controllers\Registration\OutpatientController::class, 'download'])->name('outpatient.download');
     Route::resource('outpatient', App\Http\Controllers\Registration\OutpatientController::class);
 });
 
 Route::post('/master/employee-relationship/datatable/select', [App\Http\Controllers\Master\EmployeeRelationshipController::class, 'datatableSelect'])->name('employee-relationship.datatable.select');
 Route::get('/master/employee-relationship/select', [App\Http\Controllers\Master\EmployeeRelationshipController::class, 'select'])->name('employee-relationship.select');
+
+Route::post('/master/family-planning-category/datatable', [App\Http\Controllers\Master\FamilyPlanningCategoryController::class, 'datatable'])->name('family-planning-category.datatable');
+Route::post('/master/family-planning-category/datatable/select', [App\Http\Controllers\Master\FamilyPlanningCategoryController::class, 'datatableSelect'])->name('family-planning-category.datatable.select');
+Route::get('/master/family-planning-category/select', [App\Http\Controllers\Master\FamilyPlanningCategoryController::class, 'select'])->name('family-planning-category.select');
+Route::resource('master/family-planning-category', App\Http\Controllers\Master\FamilyPlanningCategoryController::class);
+
+Route::post('/master/work-accident-category/datatable', [App\Http\Controllers\Master\WorkAccidentCategoryController::class, 'datatable'])->name('work-accident-category.datatable');
+Route::post('/master/work-accident-category/datatable/select', [App\Http\Controllers\Master\WorkAccidentCategoryController::class, 'datatableSelect'])->name('work-accident-category.datatable.select');
+Route::get('/master/work-accident-category/select', [App\Http\Controllers\Master\WorkAccidentCategoryController::class, 'select'])->name('work-accident-category.select');
+Route::resource('master/work-accident-category', App\Http\Controllers\Master\WorkAccidentCategoryController::class);

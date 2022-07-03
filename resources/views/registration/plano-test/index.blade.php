@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Outpatient Registration"), 'subTitle' => Lang::get("Manage data outpatient registration")])
+@extends('layout', ['title' => Lang::get("Plano Test Registration"), 'subTitle' => Lang::get("Manage data plano test registration")])
 
 @section('content')
     <div class="row">
@@ -18,8 +18,8 @@
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div>
-                                @can('registration-outpatient-create')
-                                <a href="{{route('registration.outpatient.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
+                                @can('registration-plano-test-create')
+                                <a href="{{route('registration.plano-test.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
                                 @endcan
                             </div>
                             <div class="btn-group nav view">
@@ -159,7 +159,7 @@
             $('#datatable').DataTable({
                 ajax:
                 {
-                    url: "{{route('registration.outpatient.datatable')}}",
+                    url: "{{route('registration.plano-test.datatable')}}",
                     type: 'POST',
                     data: function(data){
                         getDatatableParameter(data);
@@ -184,7 +184,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('registration-outpatient-delete') true @else false @endcan,
+                        visible: @can('registration-plano-test-delete') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-danger'><i class='fas fa-trash'></i></div>";
@@ -195,7 +195,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('registration-outpatient-edit') true @else false @endcan,
+                        visible: @can('registration-plano-test-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
@@ -242,17 +242,17 @@
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Outpatient")}}',
+                        title: '{{__("Plano Test")}}',
                         exportOptions: { columns: [3,4,5,6,7,8] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Outpatient")}}',
+                        title: '{{__("Plano Test")}}',
                         exportOptions: { columns: [3,4,5,6,7,8] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Outpatient")}}',
+                        title: '{{__("Plano Test")}}',
                         exportOptions: { columns: [3,4,5,6,7,8] }
                     }
                 ],

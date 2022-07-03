@@ -14,6 +14,8 @@ use App\Models\EmployeePosition;
 use App\Models\EmployeeAttribute;
 use App\Models\EmployeeRelationship;
 use App\Models\EmployeeAfdelink;
+use PDF;
+use QrCode;
 
 class EmployeeController extends AppCrudController
 {
@@ -428,5 +430,21 @@ class EmployeeController extends AppCrudController
         if($validator->fails()){
             return $validator->errors()->all();
         }
+    }
+
+    public function download($id, Request $request)
+    {
+        $data = $this->model::find($id);
+        if(!$data) {
+            return redirect()->back()->with(['info' => Lang::get("Data not found")]);
+        }
+
+        $clinic = \App\Models\Clinic::find(1);
+        $pdf = PDF::loadview('master.employee.card', [
+            'data' => $data,
+            'clinic' => $clinic,
+            'qrcode' => base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate('string')),
+        ]);
+        return $pdf->download($data->code.'.pdf');
     }
 }

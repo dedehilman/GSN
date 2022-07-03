@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Outpatient"), 'subTitle' => Lang::get("View data outpatient registration")])
+@extends('layout', ['title' => Lang::get("Family Planning"), 'subTitle' => Lang::get("View data family planning registration")])
 
 @section('content')
     <div class="row">
@@ -70,15 +70,15 @@
                 </div>
                 <div class="card-footer text-right">
                     <div class="btn-group">
-                        <a href="{{route('registration.outpatient.download', $data->id)}}?type=queue" class="btn btn-default"><i class="fas fa fa-print"></i> {{__("Download")}}</a>
+                        <a href="{{route('registration.family-planning.download', $data->id)}}?type=queue" class="btn btn-default"><i class="fas fa fa-print"></i> {{__("Download")}}</a>
                         <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
                         </button>
                         <div class="dropdown-menu" role="menu" style="">
-                            <a class="dropdown-item" href="{{route('registration.outpatient.download', $data->id)}}?type=queue">{{__('Queue')}}</a>
-                            <a class="dropdown-item" href="{{route('registration.outpatient.download', $data->id)}}?type=patient-identity">{{__('Patient')}}</a>
+                            <a class="dropdown-item" href="{{route('registration.family-planning.download', $data->id)}}?type=queue">{{__('Queue')}}</a>
+                            <a class="dropdown-item" href="{{route('registration.family-planning.download', $data->id)}}?type=patient-identity">{{__('Patient')}}</a>
                         </div>
                     </div>
-                    <a href="{{route('registration.outpatient.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                    <a href="{{route('registration.family-planning.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
                 </div>
             </div>
         </div>

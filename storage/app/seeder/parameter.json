@@ -45,31 +45,31 @@
     },
     {
       "key": "MAIL_HOST",
-      "value": "smtp.mailtrap.io"
+      "value": "mail.a3s.co.id"
     },
     {
       "key": "MAIL_PORT",
-      "value": ""
+      "value": "465"
     },
     {
       "key": "MAIL_USERNAME",
-      "value": "null"
+      "value": "no-reply@a3s.co.id"
     },
     {
       "key": "MAIL_PASSWORD",
-      "value": "null"
+      "value": "n&2IePsa2t?t"
     },
     {
       "key": "MAIL_ENCRYPTION",
-      "value": "null"
+      "value": "ssl"
     },
     {
       "key": "MAIL_FROM_ADDRESS",
-      "value": ""
+      "value": "no-reply@a3s.co.id"
     },
     {
       "key": "MAIL_FROM_NAME",
-      "value": ""
+      "value": "DIS"
     },
     {
       "key": "APP_NAME",
@@ -86,5 +86,13 @@
     {
       "key": "APP_FAVICON",
       "value": "http://localhost/dis/public/img/logo.png"
+    },
+    {
+      "key": "SICK_LETTER_CONTENT",
+      "value": "Kepada Yth. Bapak/Ibu/Sdr<br/><b>{Recipient Name}</b><br/><br/>Terlampir adalah Surat Keterangan Sakit Anda.<br/><i>Email ini dihasilkan secara otomatis oleh sistem dan mohon untuk tidak membalas email ini.</i><br/><br/>Salam hangat<br/><b>Diagnosa Information System</b>"
+    },
+    {
+      "key": "REFERENCE_LETTER_CONTENT",
+      "value": "Kepada Yth. Bapak/Ibu/Sdr<br/><b>{Recipient Name}</b><br/><br/>Terlampir adalah Surat Rujukan Anda.<br/><i>Email ini dihasilkan secara otomatis oleh sistem dan mohon untuk tidak membalas email ini.</i><br/><br/>Salam hangat<br/><b>Diagnosa Information System</b>"
     }
   ]
