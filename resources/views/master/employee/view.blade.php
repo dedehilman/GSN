@@ -191,16 +191,26 @@
                                         <thead>
                                             <tr>
                                                 <th>{{ __('Relationship') }}</th>
-                                                <th>{{ __('Identity Number') }}</th>
-                                                <th>{{ __('Name') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($data->relationships as $relationship)
-                                                <tr>
-                                                    <td>{{$relationship->relationship->name}}</td>
-                                                    <td>{{$relationship->identity_number}}</td>
-                                                    <td>{{$relationship->name}}</td>
+                                            @foreach ($data->relationships as $idx => $relationship)
+                                                <tr id="employee-relationship{{$idx}}">
+                                                    <td style="cursor: pointer" onclick="viewEmployeeRelationship(this)">
+                                                        <input type="hidden" name="employee_relationship_id[]" value="{{$relationship->id}}">
+                                                        <input type="hidden" name="relationship_id[]" value="{{$relationship->relationship->id}}">
+                                                        <input type="hidden" name="employee_identity_number[]" value="{{$relationship->identity_number}}">
+                                                        <input type="hidden" name="employee_name[]" value="{{$relationship->name}}">
+                                                        <input type="hidden" name="employee_birth_place[]" value="{{$relationship->birth_place}}">
+                                                        <input type="hidden" name="employee_birth_date[]" value="{{$relationship->birth_date}}">
+                                                        <input type="hidden" name="employee_gender[]" value="{{$relationship->gender}}">
+                                                        <input type="hidden" name="employee_phone[]" value="{{$relationship->phone}}">
+                                                        <input type="hidden" name="employee_email[]" value="{{$relationship->email}}">
+                                                        <input type="hidden" name="employee_address[]" value="{{$relationship->address}}">
+                                                        <p>
+                                                            ({{$relationship->relationship->name}}) {{$relationship->identity_number}} {{$relationship->name}}
+                                                        </p>                                                            
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -245,4 +255,120 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" data-backdrop="static" id="modalEmployeeRelationship">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{__('Employee Relationship')}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEmployeeRelationship">
+                        <input type="hidden" name="id">
+                        <input type="hidden" name="row">
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label required">{{__("Relationship")}}</label>
+                            <div class="col-md-8">
+                                <select name="emp_relationship_id" class="form-control custom-select required">
+                                    <option value=""></option>
+                                    @foreach (\App\Models\Relationship::all() as $relationship)
+                                        <option value="{{$relationship->id}}">{{$relationship->name}}</option>    
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label required">{{__("Identity Number")}}</label>
+                            <div class="col-md-8">
+                                <input type="text" name="emp_relationship_identity_number" class="form-control required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label required">{{__("Name")}}</label>
+                            <div class="col-md-8">
+                                <input type="text" name="emp_relationship_name" class="form-control required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">{{__("Birth Place / Date")}}</label>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="text" name="emp_relationship_birth_place" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                            </div>
+                                            <input type="text" name="emp_relationship_birth_date" class="form-control date">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">{{__("Gender")}}</label>
+                            <div class="col-md-8 pt-2">
+                                <div class="form-check d-inline mr-3">
+                                    <input class="form-check-input" type="radio" name="emp_relationship_gender" value="Male" checked>
+                                    <label class="form-check-label">{{__("Male")}}</label>
+                                </div>
+                                <div class="form-check d-inline">
+                                    <input class="form-check-input" type="radio" name="emp_relationship_gender" value="Female">
+                                    <label class="form-check-label">{{__("Female")}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">{{__("Phone")}}</label>
+                            <div class="col-md-8">
+                                <input type="text" name="emp_relationship_phone" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">{{__("Email")}}</label>
+                            <div class="col-md-8">
+                                <input type="text" name="emp_relationship_email" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">{{__("Address")}}</label>
+                            <div class="col-md-8">
+                                <textarea name="emp_relationship_address" rows="4" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ __("Cancel") }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('script')
+    <script>
+        function viewEmployeeRelationship(element) {
+            var row = $(element).closest('tr');
+            var inputElement = $(row).find('input');
+
+            $('#formEmployeeRelationship input[name="row"]').val($(row).attr('id'));
+            $('#formEmployeeRelationship input[name="id"]').val(inputElement.eq(0).val());
+            $('#formEmployeeRelationship select[name="emp_relationship_id"]').val(inputElement.eq(1).val());
+            $('#formEmployeeRelationship input[name="emp_relationship_identity_number"]').val(inputElement.eq(2).val());
+            $('#formEmployeeRelationship input[name="emp_relationship_name"]').val(inputElement.eq(3).val());
+            $('#formEmployeeRelationship input[name="emp_relationship_birth_place"]').val(inputElement.eq(4).val());
+            $('#formEmployeeRelationship input[name="emp_relationship_birth_date"]').val(inputElement.eq(5).val());
+            $("#formEmployeeRelationship input[name='emp_relationship_gender'][value='"+inputElement.eq(6).val()+"']").prop('checked', true);
+            $('#formEmployeeRelationship input[name="emp_relationship_phone"]').val(inputElement.eq(7).val());
+            $('#formEmployeeRelationship input[name="emp_relationship_email"]').val(inputElement.eq(8).val());
+            $('#formEmployeeRelationship textarea[name="emp_relationship_address"]').val(inputElement.eq(9).val());
+            $('#modalEmployeeRelationship').modal('show');
+        }
+    </script>
 @endsection

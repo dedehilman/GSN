@@ -353,36 +353,32 @@
                                             <thead>
                                                 <tr>
                                                     <th width="10px" class="text-center">
-                                                        <span class='btn btn-primary btn-sm btn-add-relationship' style="cursor: pointer"><i class='fas fa-plus-circle'></i></span>
+                                                        <span class='btn btn-primary btn-sm' id="btn-add-employee-relationship" style="cursor: pointer"><i class='fas fa-plus-circle'></i></span>
                                                     </th>
                                                     <th>{{ __('Relationship') }}</th>
-                                                    <th>{{ __('Identity Number') }}</th>
-                                                    <th>{{ __('Name') }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($data->relationships as $idx => $relationship)
-                                                    <tr>
+                                                    <tr id="employee-relationship{{$idx}}">
                                                         <td style="vertical-align: middle; text-align: center;">
                                                             <span class='btn btn-danger btn-sm' onclick="removeRow(this)" style="cursor: pointer"><i class='fas fa-trash-alt'></i></span>
-                                                            <input type="hidden" class="form-control" value="{{$idx}}">
-                                                            <input type="hidden" class="form-control" name="employee_relationship_id[]" value="{{$relationship->id}}" id="employee_relationship_id{{$idx}}">
+                                                            <input type="hidden" name="employee_relationship_id[]" value="{{$relationship->id}}">
+                                                            <input type="hidden" name="relationship_id[]" value="{{$relationship->relationship->id}}">
+                                                            <input type="hidden" name="employee_identity_number[]" value="{{$relationship->identity_number}}">
+                                                            <input type="hidden" name="employee_name[]" value="{{$relationship->name}}">
+                                                            <input type="hidden" name="employee_birth_place[]" value="{{$relationship->birth_place}}">
+                                                            <input type="hidden" name="employee_birth_date[]" value="{{$relationship->birth_date}}">
+                                                            <input type="hidden" name="employee_gender[]" value="{{$relationship->gender}}">
+                                                            <input type="hidden" name="employee_phone[]" value="{{$relationship->phone}}">
+                                                            <input type="hidden" name="employee_email[]" value="{{$relationship->email}}">
+                                                            <input type="hidden" name="employee_address[]" value="{{$relationship->address}}">
                                                         </td>
-                                                        <td>
-                                                            <div class="input-group">
-                                                                <input type="text" name="relationship_name[]" class="form-control" value="{{$relationship->relationship->name}}" id="relationship_name{{$idx}}" readonly>
-                                                                <input type="hidden" name="relationship_id[]" value="{{$relationship->relationship->id}}" id="relationship_id{{$idx}}">
-                                                                <div class="input-group-append">
-                                                                    <span class="input-group-text show-modal-select" data-title="{{__('Relationship List')}}" data-url="{{route('relationship.select')}}" data-handler="onSelectedRelationship" data-id="relationship"><i class="fas fa-search"></i></span>
-                                                                </div>
-                                                            </div>
+                                                        <td style="cursor: pointer" onclick="viewEmployeeRelationship(this)">
+                                                            <p>
+                                                                ({{$relationship->relationship->name}}) {{$relationship->identity_number}} {{$relationship->name}}
+                                                            </p>                                                            
                                                         </td>
-                                                        <td>
-															<input type="text" name="relationship_identity_number[]" class="form-control" value="{{$relationship->identity_number}}">
-														</td>
-														<td>
-															<input type="text" name="relationship_identity_name[]" class="form-control" value="{{$relationship->name}}">
-														</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -632,24 +628,18 @@
             <tr>
                 <td style="vertical-align: middle; text-align: center;">
                     <span class='btn btn-danger btn-sm' onclick="removeRow(this)" style="cursor: pointer"><i class='fas fa-trash-alt'></i></span>
-                    <input type="hidden" class="form-control">
-                    <input type="hidden" class="form-control" name="employee_relationship_id[]">
+                    <input type="hidden" name="employee_relationship_id[]">
+                    <input type="hidden" name="relationship_id[]">
+                    <input type="hidden" name="employee_identity_number[]">
+                    <input type="hidden" name="employee_name[]">
+                    <input type="hidden" name="employee_birth_place[]">
+                    <input type="hidden" name="employee_birth_date[]">
+                    <input type="hidden" name="employee_gender[]">
+                    <input type="hidden" name="employee_phone[]">
+                    <input type="hidden" name="employee_email[]">
+                    <input type="hidden" name="employee_address[]">
                 </td>
-                <td>
-                    <div class="input-group">
-                        <input type="text" name="relationship_name[]" class="form-control" readonly>
-                        <input type="hidden" name="relationship_id[]">
-                        <div class="input-group-append">
-                            <span class="input-group-text show-modal-select" data-title="{{__('Relationship List')}}" data-url="{{route('relationship.select')}}" data-handler="onSelectedRelationship" data-id="relationship"><i class="fas fa-search"></i></span>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <input type="text" name="relationship_identity_number[]" class="form-control">
-                </td>
-                <td>
-                    <input type="text" name="relationship_identity_name[]" class="form-control">
-                </td>
+                <td style="cursor: pointer;" onclick="viewEmployeeRelationship(this)"></td>
             </tr>
         </tbody>
     </table>
@@ -695,6 +685,101 @@
             </tr>
         </tbody>
     </table>
+
+    <div class="modal fade" data-backdrop="static" id="modalEmployeeRelationship">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{__('Employee Relationship')}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEmployeeRelationship">
+                        <input type="hidden" name="id">
+                        <input type="hidden" name="row">
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label required">{{__("Relationship")}}</label>
+                            <div class="col-md-8">
+                                <select name="emp_relationship_id" class="form-control custom-select required">
+                                    <option value=""></option>
+                                    @foreach (\App\Models\Relationship::all() as $relationship)
+                                        <option value="{{$relationship->id}}">{{$relationship->name}}</option>    
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label required">{{__("Identity Number")}}</label>
+                            <div class="col-md-8">
+                                <input type="text" name="emp_relationship_identity_number" class="form-control required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label required">{{__("Name")}}</label>
+                            <div class="col-md-8">
+                                <input type="text" name="emp_relationship_name" class="form-control required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">{{__("Birth Place / Date")}}</label>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="text" name="emp_relationship_birth_place" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                            </div>
+                                            <input type="text" name="emp_relationship_birth_date" class="form-control date">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">{{__("Gender")}}</label>
+                            <div class="col-md-8 pt-2">
+                                <div class="form-check d-inline mr-3">
+                                    <input class="form-check-input" type="radio" name="emp_relationship_gender" value="Male" checked>
+                                    <label class="form-check-label">{{__("Male")}}</label>
+                                </div>
+                                <div class="form-check d-inline">
+                                    <input class="form-check-input" type="radio" name="emp_relationship_gender" value="Female">
+                                    <label class="form-check-label">{{__("Female")}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">{{__("Phone")}}</label>
+                            <div class="col-md-8">
+                                <input type="text" name="emp_relationship_phone" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">{{__("Email")}}</label>
+                            <div class="col-md-8">
+                                <input type="text" name="emp_relationship_email" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">{{__("Address")}}</label>
+                            <div class="col-md-8">
+                                <textarea name="emp_relationship_address" rows="4" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ __("Cancel") }}</button>
+                    <button type="button" class="btn btn-primary" id="btn-save-employee-relationship">{{ __("Save") }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
@@ -748,6 +833,98 @@
             $(document).on('click', '.show-modal-select', function(){
                 seqId = $(this).closest('tr').find('input:first').val();
             });
+
+            $('#btn-add-employee-relationship').on('click', function(){
+                $('#formEmployeeRelationship input[name="row"]').val('');
+                $('#formEmployeeRelationship input[name="id"]').val('');
+                $('#formEmployeeRelationship select[name="emp_relationship_id"]').val('');
+                $('#formEmployeeRelationship input[name="emp_relationship_identity_number"]').val('');
+                $('#formEmployeeRelationship input[name="emp_relationship_name"]').val('');
+                $('#formEmployeeRelationship input[name="emp_relationship_birth_place"]').val('');
+                $('#formEmployeeRelationship input[name="emp_relationship_birth_date"]').val('');
+                $('#formEmployeeRelationship input[name="emp_relationship_phone"]').val('');
+                $('#formEmployeeRelationship input[name="emp_relationship_email"]').val('');
+                $('#formEmployeeRelationship textarea[name="emp_relationship_address"]').val('');
+                
+                validatorEmployeeRelationship.resetForm();
+                formEmployeeRelationship.find(".is-invalid").removeClass("is-invalid");
+                $('#modalEmployeeRelationship').modal('show');
+            });
+
+            $('#btn-save-employee-relationship').on('click', function(){
+                $('#formEmployeeRelationship').submit();
+            });
+
+            formEmployeeRelationship = $("#formEmployeeRelationship");
+            validatorEmployeeRelationship = formEmployeeRelationship.validate({
+                rules: {
+                    relationship_id: "required",
+                    emp_relationship_identity_number: "required",
+                    emp_relationship_name: "required",
+                },
+                messages: {
+                    relationship_id: {
+                        required: $messages[1],
+                    },
+                    emp_relationship_identity_number: {
+                        required: $messages[1],
+                    },
+                    emp_relationship_name: {
+                        required: $messages[1],
+                    },
+                },
+                errorElement: "span",
+                errorPlacement: function ( error, element ) {
+                    error.addClass('invalid-feedback');
+                    if(element.closest('.form-group').hasClass('row')) {
+                        element.closest('.form-group').find('div:first').append(error);
+                    } else {
+                        element.closest('.form-group').append(error);
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    if(element.classList.contains('form-check-input')) {
+
+                    } else {
+                        $(element).addClass('is-invalid');
+                    }
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+                    var i = 0;
+                    if($('#formEmployeeRelationship input[name="row"]').val() == '') {
+                        var cloneElement = $('#table-relationship-tmp tbody tr:last').clone();
+                        $('#table-relationship tbody').append(cloneElement);
+                        for(var i=1; $('#employee_relationship_id'+i).length;i++){}
+                        cloneElement.attr('id', 'employee-relationship'+i);
+                    } else {
+                        var cloneElement = $('#table-relationship #'+$('#formEmployeeRelationship input[name="row"]').val());
+                    }
+                    
+                    var textInput = cloneElement.find('input');
+                    var tdElement = cloneElement.find('td');
+
+                    if($('#formEmployeeRelationship input[name="id"]').val() != '') {
+                        textInput.eq(0).val($('#formEmployeeRelationship input[name="id"]').val());
+                    } else {
+                        textInput.eq(0).val('');
+                    }
+
+                    textInput.eq(1).val($('#formEmployeeRelationship select[name="emp_relationship_id"]').val());
+                    textInput.eq(2).val($('#formEmployeeRelationship input[name="emp_relationship_identity_number"]').val());
+                    textInput.eq(3).val($('#formEmployeeRelationship input[name="emp_relationship_name"]').val());
+                    textInput.eq(4).val($('#formEmployeeRelationship input[name="emp_relationship_birth_place"]').val());
+                    textInput.eq(5).val($('#formEmployeeRelationship input[name="emp_relationship_birth_date"]').val());
+                    textInput.eq(6).val($('#formEmployeeRelationship input[name="emp_relationship_gender"]:checked').val());
+                    textInput.eq(7).val($('#formEmployeeRelationship input[name="emp_relationship_phone"]').val());
+                    textInput.eq(8).val($('#formEmployeeRelationship input[name="emp_relationship_email"]').val());
+                    textInput.eq(9).val($('#formEmployeeRelationship textarea[name="emp_relationship_address"]').val());
+                    tdElement.eq(1).html("<p>(" + $('#formEmployeeRelationship select[name="emp_relationship_id"] option:selected').text() + ") " + $('#formEmployeeRelationship input[name="emp_relationship_identity_number"]').val() + " " +$('#formEmployeeRelationship input[name="emp_relationship_name"]').val() + "</p>")
+                    $('#modalEmployeeRelationship').modal('hide');
+                }
+            });
         })
 
         function isDefault(element) {
@@ -796,6 +973,27 @@
         function onSelectedAfdelink(data) {
             $('#afdelink_id').val(data[0].id);
             $('#afdelink_name').val(data[0].name);
+        }
+
+        function viewEmployeeRelationship(element) {
+            var row = $(element).closest('tr');
+            var inputElement = $(row).find('input');
+
+            $('#formEmployeeRelationship input[name="row"]').val($(row).attr('id'));
+            $('#formEmployeeRelationship input[name="id"]').val(inputElement.eq(0).val());
+            $('#formEmployeeRelationship select[name="emp_relationship_id"]').val(inputElement.eq(1).val());
+            $('#formEmployeeRelationship input[name="emp_relationship_identity_number"]').val(inputElement.eq(2).val());
+            $('#formEmployeeRelationship input[name="emp_relationship_name"]').val(inputElement.eq(3).val());
+            $('#formEmployeeRelationship input[name="emp_relationship_birth_place"]').val(inputElement.eq(4).val());
+            $('#formEmployeeRelationship input[name="emp_relationship_birth_date"]').val(inputElement.eq(5).val());
+            $("#formEmployeeRelationship input[name='emp_relationship_gender'][value='"+inputElement.eq(6).val()+"']").prop('checked', true);
+            $('#formEmployeeRelationship input[name="emp_relationship_phone"]').val(inputElement.eq(7).val());
+            $('#formEmployeeRelationship input[name="emp_relationship_email"]').val(inputElement.eq(8).val());
+            $('#formEmployeeRelationship textarea[name="emp_relationship_address"]').val(inputElement.eq(9).val());
+
+            validatorEmployeeRelationship.resetForm();
+            formEmployeeRelationship.find(".is-invalid").removeClass("is-invalid");
+            $('#modalEmployeeRelationship').modal('show');
         }
     </script>
 @endsection
