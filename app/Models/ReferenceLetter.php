@@ -10,7 +10,7 @@ class ReferenceLetter extends Model
 {
     use HasFactory, BlameableTrait;
 
-    protected $fillable = ['transaction_no', 'transaction_date', 'remark', 'clinic_id', 'medical_staff_id', 'patient_id', 'reference_type', 'reference_id', 'reference_clinic_id','for_relationship', 'patient_relationship_id'];
+    protected $fillable = ['transaction_no', 'transaction_date', 'remark', 'clinic_id', 'medical_staff_id', 'patient_id', 'reference_type', 'reference_id', 'reference_clinic_id','for_relationship', 'patient_relationship_id', 'model_id', 'model_type'];
 
     public function clinic() {
         return $this->belongsTo(Clinic::class);

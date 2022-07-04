@@ -25,8 +25,8 @@ class CreateSickLettersTable extends Migration
             $table->integer('num_of_days');
             $table->unsignedBigInteger('diagnosis_id')->nullable();
             $table->string('remark')->nullable();
-            $table->bigInteger('model_reference_id')->nullable();
-            $table->string('model_reference_type')->nullable();
+            $table->bigInteger('model_id')->nullable();
+            $table->string('model_type')->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

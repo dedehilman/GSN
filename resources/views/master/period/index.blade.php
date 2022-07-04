@@ -91,6 +91,7 @@
                                 <th>{{ __("Name") }}</th>
                                 <th>{{ __("Start Date") }}</th>
                                 <th>{{ __("End Date") }}</th>
+                                <th>{{ __("Closed Date") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -167,23 +168,28 @@
                         data: 'end_date',
                         name: 'end_date',
                         defaultContent: '',
+                    },
+                    {
+                        data: 'closed_date',
+                        name: 'closed_date',
+                        defaultContent: '',
                     }
                 ],
                 buttons: [
                     {
                         extend: 'excel',
                         title: '{{__("Period")}}',
-                        exportOptions: { columns: [3, 4, 5, 6] }
+                        exportOptions: { columns: [3, 4, 5, 6, 7] }
                     },
                     {
                         extend: 'csv',
                         title: '{{__("Period")}}',
-                        exportOptions: { columns: [3, 4, 5, 6] }
+                        exportOptions: { columns: [3, 4, 5, 6, 7] }
                     },
                     {
                         extend: 'pdf',
                         title: '{{__("Period")}}',
-                        exportOptions: { columns: [3, 4, 5, 6] }
+                        exportOptions: { columns: [3, 4, 5, 6, 7] }
                     }
                 ],
             });

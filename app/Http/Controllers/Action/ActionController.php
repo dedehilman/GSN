@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Action;
 use App\Models\Prescription;
+use App\Models\SymptomResult;
+use App\Models\DiagnosisResult;
 use Illuminate\Support\Facades\DB;
 use Lang;
 
@@ -40,6 +42,8 @@ class ActionController extends AppCrudController
             $this->documentHandler($data, $request);
             $this->actionHandler($data, $request);
             $this->prescriptionHandler($data, $request);
+            $this->symptomHandler($data, $request);
+            $this->diagnosisHandler($data, $request);
 
             DB::commit();
             return response()->json([
@@ -73,14 +77,14 @@ class ActionController extends AppCrudController
     }
 
     public function actionHandler($data, Request $request) {
-        $action = Action::where('model_reference_type', get_class($data))
-                    ->where('model_reference_id', $data->id)
+        $action = Action::where('model_type', get_class($data))
+                    ->where('model_id', $data->id)
                     ->first();
 
         if(!$action) {
             $action = new Action();
-            $action->model_reference_type = get_class($data);
-            $action->model_reference_id = $data->id;
+            $action->model_type = get_class($data);
+            $action->model_id = $data->id;
         }
 
         $action->action = $request->action_action;
@@ -102,20 +106,20 @@ class ActionController extends AppCrudController
         if($request->prescription_id)
         {
             $ids = array_filter($request->prescription_id); 
-            Prescription::where('model_reference_type', get_class($data))
-                        ->where('model_reference_id', $data->id)
+            Prescription::where('model_type', get_class($data))
+                        ->where('model_id', $data->id)
                         ->whereNotIn('id', $ids)->delete();
 
             for($i=0; $i<count($request->prescription_id); $i++)
             {
-                $prescription = Prescription::where('model_reference_type', get_class($data))
-                                    ->where('model_reference_id', $data->id)
+                $prescription = Prescription::where('model_type', get_class($data))
+                                    ->where('model_id', $data->id)
                                     ->where('id', $request->prescription_id[$i])->first();
                 if(!$prescription)
                 {
                     $prescription = new Prescription();
-                    $prescription->model_reference_type = get_class($data);
-                    $prescription->model_reference_id = $data->id;
+                    $prescription->model_type = get_class($data);
+                    $prescription->model_id = $data->id;
                 }
 
                 $prescription->medicine_id = $request->prescription_medicine_id[$i];
@@ -124,39 +128,67 @@ class ActionController extends AppCrudController
                 $prescription->save();
             }    
         } else {
-            Prescription::where('model_reference_type', get_class($data))
-                        ->where('model_reference_id', $data->id)->delete();
+            Prescription::where('model_type', get_class($data))
+                        ->where('model_id', $data->id)->delete();
         }
     }
 
-    public function referenceLetter($id) {
-        $data = $this->model::find($id);
-        $action = Action::where('model_reference_type', get_class($data))
-                    ->where('model_reference_id', $data->id)
-                    ->first();
-        return view("action.reference-letter", [
-            "data" => $data,
-            "action" => $action,
-        ]);
+    public function symptomHandler($data, Request $request) {
+        if($request->result_symptom_id)
+        {
+            $ids = array_filter($request->result_symptom_id); 
+            SymptomResult::where('model_type', get_class($data))
+                        ->where('model_id', $data->id)
+                        ->whereNotIn('id', $ids)->delete();
+
+            for($i=0; $i<count($request->result_symptom_id); $i++)
+            {
+                $symptom = SymptomResult::where('model_type', get_class($data))
+                                    ->where('model_id', $data->id)
+                                    ->where('id', $request->result_symptom_id[$i])->first();
+                if(!$symptom)
+                {
+                    $symptom = new SymptomResult();
+                    $symptom->model_type = get_class($data);
+                    $symptom->model_id = $data->id;
+                }
+
+                $symptom->symptom_id = $request->symptom_id[$i];
+                $symptom->save();
+            }    
+        } else {
+            SymptomResult::where('model_type', get_class($data))
+                        ->where('model_id', $data->id)->delete();
+        }
     }
 
-    public function sickLetter($id) {
-        $data = $this->model::find($id);
-        $action = Action::where('model_reference_type', get_class($data))
-                    ->where('model_reference_id', $data->id)
-                    ->first();
-        return view("action.sick-letter", [
-            "data" => $data,
-            "action" => $action,
-        ]);
-    }
+    public function diagnosisHandler($data, Request $request) {
+        if($request->result_diagnosis_id)
+        {
+            $ids = array_filter($request->result_diagnosis_id); 
+            DiagnosisResult::where('model_type', get_class($data))
+                        ->where('model_id', $data->id)
+                        ->whereNotIn('id', $ids)->delete();
 
-    public function storeReferenceLetter($id, Request $request) {
-        
-    }
+            for($i=0; $i<count($request->result_diagnosis_id); $i++)
+            {
+                $diagnosis = DiagnosisResult::where('model_type', get_class($data))
+                                    ->where('model_id', $data->id)
+                                    ->where('id', $request->result_diagnosis_id[$i])->first();
+                if(!$diagnosis)
+                {
+                    $diagnosis = new DiagnosisResult();
+                    $diagnosis->model_type = get_class($data);
+                    $diagnosis->model_id = $data->id;
+                }
 
-    public function storeSickLetter($id, Request $request) {
-        
+                $diagnosis->diagnosis_id = $request->diagnosis_id[$i];
+                $diagnosis->save();
+            }    
+        } else {
+            DiagnosisResult::where('model_type', get_class($data))
+                        ->where('model_id', $data->id)->delete();
+        }
     }
 
     public function datatable(Request $request)
@@ -180,14 +212,14 @@ class ActionController extends AppCrudController
             if(method_exists($this->model, 'scopeWithAll')) {
                 $query = $this->model::withAll()
                         ->leftJoin('actions', function ($join) {
-                            $join->on('actions.model_reference_type', '=', DB::Raw("'".$this->getClassName()."'"));
-                            $join->on('actions.model_reference_id', '=', $this->getTableName().".id");
+                            $join->on('actions.model_type', '=', DB::Raw("'".$this->getClassName()."'"));
+                            $join->on('actions.model_id', '=', $this->getTableName().".id");
                         })->select($this->getTableName().".*", 'actions.id AS action_id');
             } else {
                 $query = DB::table($this->getTableName())
                         ->leftJoin('actions', function ($join) {
-                            $join->on('actions.model_reference_type', '=', DB::Raw("'".$this->getClassName()."'"));
-                            $join->on('actions.model_reference_id', '=', $this->getTableName().".id");
+                            $join->on('actions.model_type', '=', DB::Raw("'".$this->getClassName()."'"));
+                            $join->on('actions.model_id', '=', $this->getTableName().".id");
                         })->select($this->getTableName().".*", 'actions.id AS action_id');
             }
             if($request->parentId) {

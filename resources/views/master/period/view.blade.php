@@ -33,6 +33,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-right">
+                    <a href="#" class="btn btn-default"><i class="fas fa-clipboard-list"></i> {{__("Stock Taking")}}</a>
                     <a href="{{route('period.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
                 </div>
             </div>

@@ -142,6 +142,10 @@
             $('#medical_staff_id').val(data[0].id);
             $('#medical_staff_name').val(data[0].name);
         }
+        function onSelectedDiagnosis(data) {
+            $('#diagnosis_id').val(data[0].id);
+            $('#diagnosis_name').val(data[0].name);
+        }
         function onSelectedPatient(data) {
             $('#patient_id').val(data[0].id);
             $('#patient_name').val(data[0].name);

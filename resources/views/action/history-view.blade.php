@@ -29,11 +29,11 @@
 <table class="table table-bordered table-striped mt-2">
     <thead>
         <tr>
-            <td>{{__('Transaction No')}}</td>
-            <td>{{__('Transaction Date')}}</td>
-            <td>{{__('Clinic')}}</td>
-            <td>{{__('Medical Staff')}}</td>
-            <td>{{__('Service')}}</td>
+            <th>{{__('Transaction No')}}</th>
+            <th>{{__('Transaction Date')}}</th>
+            <th>{{__('Clinic')}}</th>
+            <th>{{__('Medical Staff')}}</th>
+            <th>{{__('Service')}}</th>
         </tr>
     </thead>
     <tbody>

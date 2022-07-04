@@ -338,6 +338,15 @@
 
                 $('.select2').select2();
                 bsCustomFileInput.init();
+
+                $('.modal').on('shown.bs.modal', function() {
+                    zIndexModal = 1050;
+                    zIndexBackdrop = 1040;
+                    $(this).css("z-index", zIndexModal + ($(".modal-backdrop").length * 10));
+                    $(".modal-backdrop").each(function(index) {
+                        $(this).css("z-index", zIndexBackdrop + (index * 10));
+                    });
+                });
             });
         </script>
         @if (Session::has('info'))

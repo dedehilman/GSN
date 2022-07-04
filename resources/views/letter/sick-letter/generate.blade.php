@@ -1,14 +1,21 @@
 <div class="modal fade" id="modal-form" aria-hidden="true" >
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">{{__("Generate Sick Letter")}}</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="modalForm">
+            <form id="modalForm" action="{{route('sick-letter.generate.store')}}">
+                <input type="hidden" name="model_id" value="{{$data->id}}">
+                <input type="hidden" name="model_type" value="{{get_class($data)}}">
+                <input type="hidden" name="patient_id" value="{{$data->patient_id}}">
+                <input type="hidden" name="for_relationship" value="{{$data->for_relationship}}">
+                <input type="hidden" name="patient_relationship_id" value="{{$data->patient_relationship_id}}">
+                <input type="hidden" name="clinic_id" value="{{$data->clinic_id}}">
+                <input type="hidden" name="medical_staff_id" value="{{$data->medical_staff_id}}">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{__("Generate Sick Letter")}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group row">
@@ -55,23 +62,19 @@
                                 <div class="col-md-8 col-form-label">{{$data->medicalStaff->name}}</div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-4 col-form-label">{{__("Reference Type")}}</label>
+                                <label class="col-md-4 col-form-label required">{{__("Num Of Days")}}</label>
                                 <div class="col-md-8">
-                                    <select name="reference_type" class="form-control custom-select required">
-                                        <option value=""></option>
-                                        <option value="Internal" @if(($action->reference_type ?? '') == 'Internal') selected @endif>{{__("Internal")}}</option>
-                                        <option value="External" @if(($action->reference_type ?? '') == 'External') selected @endif>{{__("External")}}</option>
-                                    </select>
+                                    <input type="number" name="num_of_days" class="form-control required" value="1">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-4 col-form-label">{{__("Reference")}}</label>
+                                <label class="col-md-4 col-form-label">{{__("Diagnosis")}}</label>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="text" id="reference_name" class="form-control required" value="{{($action->reference_type ?? '') == 'Internal' ? ($action->referenceClinic->name ?? '') : ($action->reference->name ?? '')}}" readonly>
-                                        <input type="hidden" @if(($action->reference_type ?? '') =='Internal') name="reference_clinic_id" @else name="reference_id" @endif id="reference_id" value="{{($data->reference_type ?? '') == 'Internal' ? ($data->referenceClinic->id ?? '') : ($data->reference->id ?? '')}}">
+                                        <input type="text" name="diagnosis_name" id="diagnosis_name" class="form-control" readonly>
+                                        <input type="hidden" name="diagnosis_id" id="diagnosis_id">
                                         <div class="input-group-append">
-                                            <span class="input-group-text show-modal-select reference-modal-select" data-title="{{__('Reference List')}}" data-url="{{($data->reference_type ?? '') == 'Internal' ? route('clinic.select', 'queryBuilder=0') : route('reference.select')}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>
+                                            <span class="input-group-text show-modal-select" data-title="{{__('Diagnosis List')}}" data-url="{{route('diagnosis.select')}}" data-handler="onSelectedDiagnosis"><i class="fas fa-search"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -84,17 +87,51 @@
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer text-right">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{__('Cancel')}}</button>
-                <button type="button" class="btn btn-primary" id="btn-save-modal">{{__('Generate')}}</button>
-            </div>
+                </div>
+                <div class="modal-footer text-right">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{__('Cancel')}}</button>
+                    <button type="button" class="btn btn-primary" id="btn-save-modal">{{__('Generate')}}</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <script>
     $(function(){
+        $("#btn-save-modal").on('click', function(){
+            var form = $(this).closest('form')[0];
+            var data = $(form).serialize();
+            $.ajax
+            ({
+                type: "POST",
+                url: form.action,
+                data: data,
+                cache: false,
+                beforeSend: function() {
+                    $('#loader').modal('show');
+                },
+                success: function (data) {
+                    showNotification(data.status, data.message);
+                    if(data.status == '200') {
+                        $("#modal-form").modal('hide');
+                        setTimeout(function(){
+                            window.location.reload();
+                        }, 1000)
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    showNotification(500, xhr.responseJSON.message);
+                },
+                complete: function() {
+                    $('#loader').modal('hide');
+                },
+            });
+        })
     })
+
+    function onSelectedDiagnosis(data) {
+        $('#diagnosis_id').val(data[0].id);
+        $('#diagnosis_name').val(data[0].name);
+    }
 </script>

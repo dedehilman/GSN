@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AppMail;
 use Storage;
+use App\Models\Action;
 
 class ReferenceLetterController extends AppCrudController
 {
@@ -158,6 +159,46 @@ class ReferenceLetterController extends AppCrudController
             dd($th);
             return redirect()->back()->with(['info' => $th->getMessage()]);
         }   
+    }
+
+    public function generate(Request $request) {
+        $data = $request->model_type::find($request->model_id);
+        $action = Action::where('model_type', $request->model_type)
+                    ->where('model_id', $request->model_id)
+                    ->first();
+
+        return view("letter.reference-letter.generate", [
+            "data" => $data,
+            "action" => $action,
+        ]);
+    }
+
+    public function generateStore(Request $request) {
+        try {
+            $count = ReferenceLetter::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->count();
+            $request['transaction_no'] = 'SR-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+
+            $validateOnStore = $this->validateOnStore($request);
+            if($validateOnStore) {
+                return response()->json([
+                    'status' => '400',
+                    'data' => '',
+                    'message'=> $validateOnStore
+                ]);
+            }
+            $this->model::create($request->all());
+            return response()->json([
+                'status' => '200',
+                'data' => '',
+                'message'=> Lang::get("Data has been stored")
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => '500',
+                'data' => '',
+                'message'=> $th->getMessage()
+            ]);
+        }
     }
 }
 

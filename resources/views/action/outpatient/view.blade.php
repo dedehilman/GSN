@@ -91,7 +91,7 @@
                             </ul>
                             <div class="tab-content" style="padding-top: 10px">
                                 <div class="tab-pane fade show active" id="tab1" role="tabpanel">
-                                    
+                                    @include('action.diagnosis-view')
                                 </div>
                                 <div class="tab-pane fade" id="tab3" role="tabpanel">
                                     @include('action.prescription-view')

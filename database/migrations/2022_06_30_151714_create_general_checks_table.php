@@ -15,8 +15,8 @@ class CreateGeneralChecksTable extends Migration
     {
         Schema::create('general_checks', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('model_reference_id')->nullable();
-            $table->string('model_reference_type')->nullable();
+            $table->bigInteger('model_id')->nullable();
+            $table->string('model_type')->nullable();
             $table->integer('height')->nullable();
             $table->integer('weight')->nullable();
             $table->string('blood_pressure')->nullable();

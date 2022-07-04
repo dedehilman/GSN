@@ -10,5 +10,5 @@ class Period extends Model
 {
     use HasFactory, BlameableTrait;
 
-    protected $fillable = ['code', 'name', 'start_date', 'end_date'];
+    protected $fillable = ['code', 'name', 'start_date', 'end_date', 'closed_date'];
 }

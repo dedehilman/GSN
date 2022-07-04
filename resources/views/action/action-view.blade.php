@@ -1,6 +1,6 @@
 @php
-    $action = \App\Models\Action::where('model_reference_type', get_class($data))
-            ->where('model_reference_id', $data->id)
+    $action = \App\Models\Action::where('model_type', get_class($data))
+            ->where('model_id', $data->id)
             ->first();
 @endphp
 <div class="form-group row mt-2">

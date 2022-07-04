@@ -193,10 +193,14 @@ Route::group(['prefix' => 'report', 'as' => 'report.'], function () {
 Route::post('/letter/sick-letter/datatable', [App\Http\Controllers\Letter\SickLetterController::class, 'datatable'])->name('sick-letter.datatable');
 Route::get('letter/sick-letter/download/{id}', [App\Http\Controllers\Letter\SickLetterController::class, 'download'])->name('sick-letter.download');
 Route::get('letter/sick-letter/send-to-email/{id}', [App\Http\Controllers\Letter\SickLetterController::class, 'sendToEmail'])->name('sick-letter.send-to-email');
+Route::get('letter/sick-letter/generate', [App\Http\Controllers\Letter\SickLetterController::class, 'generate'])->name('sick-letter.generate');
+Route::post('letter/sick-letter/generate', [App\Http\Controllers\Letter\SickLetterController::class, 'generateStore'])->name('sick-letter.generate.store');
 Route::resource('letter/sick-letter', App\Http\Controllers\Letter\SickLetterController::class);
 Route::post('/letter/reference-letter/datatable', [App\Http\Controllers\Letter\ReferenceLetterController::class, 'datatable'])->name('reference-letter.datatable');
 Route::get('letter/reference-letter/download/{id}', [App\Http\Controllers\Letter\ReferenceLetterController::class, 'download'])->name('reference-letter.download');
 Route::get('letter/reference-letter/send-to-email/{id}', [App\Http\Controllers\Letter\ReferenceLetterController::class, 'sendToEmail'])->name('reference-letter.send-to-email');
+Route::get('letter/reference-letter/generate', [App\Http\Controllers\Letter\ReferenceLetterController::class, 'generate'])->name('reference-letter.generate');
+Route::post('letter/reference-letter/generate', [App\Http\Controllers\Letter\ReferenceLetterController::class, 'generateStore'])->name('reference-letter.generate.store');
 Route::resource('letter/reference-letter', App\Http\Controllers\Letter\ReferenceLetterController::class);
 
 Route::group(['prefix' => 'registration', 'as' => 'registration.'], function () {
@@ -219,8 +223,6 @@ Route::group(['prefix' => 'action', 'as' => 'action.'], function () {
     Route::post('plano-test/media', [App\Http\Controllers\Action\PlanoTestController::class, 'storeMedia'])->name('plano-test.store-media');
     Route::get('plano-test/download/{id}', [App\Http\Controllers\Action\PlanoTestController::class, 'download'])->name('plano-test.download');
     Route::get('plano-test/send-to-email/{id}', [App\Http\Controllers\Action\PlanoTestController::class, 'sendToEmail'])->name('plano-test.send-to-email');
-    Route::get('plano-test/sick-letter/{id}', [App\Http\Controllers\Action\PlanoTestController::class, 'sickLetter'])->name('plano-test.sick-letter');
-    Route::get('plano-test/reference-letter/{id}', [App\Http\Controllers\Action\PlanoTestController::class, 'referenceLetter'])->name('plano-test.reference-letter');
     Route::resource('plano-test', App\Http\Controllers\Action\PlanoTestController::class);
     
     Route::post('work-accident/datatable', [App\Http\Controllers\Action\WorkAccidentController::class, 'datatable'])->name('work-accident.datatable');

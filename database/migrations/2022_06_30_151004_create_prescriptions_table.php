@@ -15,8 +15,8 @@ class CreatePrescriptionsTable extends Migration
     {
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('model_reference_id')->nullable();
-            $table->string('model_reference_type')->nullable();
+            $table->bigInteger('model_id')->nullable();
+            $table->string('model_type')->nullable();
             $table->unsignedBigInteger('medicine_id');
             $table->unsignedBigInteger('medicine_rule_id');
             $table->decimal('qty', 5, 2);

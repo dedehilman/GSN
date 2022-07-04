@@ -1,6 +1,6 @@
 @php
-    $prescriptions = \App\Models\Prescription::where('model_reference_type', get_class($data))
-            ->where('model_reference_id', $data->id)
+    $prescriptions = \App\Models\Prescription::where('model_type', get_class($data))
+            ->where('model_id', $data->id)
             ->get();
 @endphp
 <table class="table table-bordered mt-2" id="table-prescription-medicine">
@@ -9,9 +9,9 @@
             <th width="10px" class="text-center">
                 <span class='btn btn-primary btn-sm' id="btn-add-medicine" style="cursor: pointer"><i class='fas fa-plus-circle'></i></span>
             </th>
-            <td>{{__('Product')}}</td>
-            <td>{{__('Qty')}}</td>
-            <td>{{__('Rule')}}</td>
+            <th>{{__('Product')}}</th>
+            <th>{{__('Qty')}}</th>
+            <th>{{__('Rule')}}</th>
         </tr>
     </thead>
     <tbody>
