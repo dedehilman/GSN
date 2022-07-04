@@ -517,15 +517,27 @@ class AppCrudController extends Controller
                     $query->where(Str::replace('.lte', '', $key),'<=',$value);
                 }
                 else if(Str::endsWith($key, '.eq')) {
-                    $query->where(Str::replace('.eq', '', $key),'=',$value);
+                    if($value == "null") {
+                        $query->whereNull(Str::replace('.eq', '', $key));
+                    } else {
+                        $query->where(Str::replace('.eq', '', $key),'=',$value);
+                    }
                 }
                 else if(Str::endsWith($key, '.neq')) {
-                    $query->where(Str::replace('.neq', '', $key),'<>',$value);
+                    if($value == "null") {
+                        $query->whereNotNull(Str::replace('.neq', '', $key));
+                    } else {
+                        $query->where(Str::replace('.neq', '', $key),'<>',$value);
+                    }
                 }
                 else if(Str::startsWith($value, '%') || Str::endsWith($value, '%')) {
                     $query->where($key,'LIKE',"$value");
                 } else {
-                    $query->where($key,$value);
+                    if($value == "null") {
+                        $query->whereNull($key);
+                    } else {
+                        $query->where($key,$value);
+                    }
                 }
             }
         }
@@ -627,15 +639,27 @@ class AppCrudController extends Controller
                     $query->where(Str::replace('.lte', '', $key),'<=',$value);
                 }
                 else if(Str::endsWith($key, '.eq')) {
-                    $query->where(Str::replace('.eq', '', $key),'=',$value);
+                    if($value == "null") {
+                        $query->whereNull(Str::replace('.eq', '', $key));
+                    } else {
+                        $query->where(Str::replace('.eq', '', $key),'=',$value);
+                    }
                 }
                 else if(Str::endsWith($key, '.neq')) {
-                    $query->where(Str::replace('.neq', '', $key),'<>',$value);
+                    if($value == "null") {
+                        $query->whereNotNull(Str::replace('.neq', '', $key));
+                    } else {
+                        $query->where(Str::replace('.neq', '', $key),'<>',$value);
+                    }
                 }
                 else if(Str::startsWith($value, '%') || Str::endsWith($value, '%')) {
                     $query->where($key,'LIKE',"$value");
                 } else {
-                    $query->where($key,$value);
+                    if($value == "null") {
+                        $query->whereNull($key);
+                    } else {
+                        $query->where($key,$value);
+                    }
                 }
             }
         }
@@ -661,15 +685,27 @@ class AppCrudController extends Controller
                     $query->where(Str::replace('.lte', '', $key),'<=',$value);
                 }
                 else if(Str::endsWith($key, '.eq')) {
-                    $query->where(Str::replace('.eq', '', $key),'=',$value);
+                    if($value == "null") {
+                        $query->whereNull(Str::replace('.eq', '', $key));
+                    } else {
+                        $query->where(Str::replace('.eq', '', $key),'=',$value);
+                    }
                 }
                 else if(Str::endsWith($key, '.neq')) {
-                    $query->where(Str::replace('.neq', '', $key),'<>',$value);
+                    if($value == "null") {
+                        $query->whereNotNull(Str::replace('.neq', '', $key));
+                    } else {
+                        $query->where(Str::replace('.neq', '', $key),'<>',$value);
+                    }
                 }
                 else if(Str::startsWith($value, '%') || Str::endsWith($value, '%')) {
                     $query->where($key,'LIKE',"$value");
                 } else {
-                    $query->where($key,$value);
+                    if($value == "null") {
+                        $query->whereNull($key);
+                    } else {
+                        $query->where($key,$value);
+                    }
                 }
             }
         }

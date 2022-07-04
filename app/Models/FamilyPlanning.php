@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\BlameableTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class FamilyPlanning extends Model
+class FamilyPlanning extends Model implements HasMedia
 {
-    use HasFactory, BlameableTrait;
+    use HasFactory, BlameableTrait, InteractsWithMedia;
 
     protected $fillable = ['transaction_no', 'transaction_date', 'remark', 'clinic_id', 'medical_staff_id', 'patient_id', 'reference_type', 'reference_id', 'reference_clinic_id','for_relationship', 'patient_relationship_id', 'family_planning_category_id', 'installation_date'];
 
