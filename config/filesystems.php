@@ -53,10 +53,10 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
 
-        'grievanceFiles' => [
+        'media' => [
             'driver' => 'local',
-            'root'   => storage_path('app/public/grievance'),
-            'url'        => env('APP_URL') . '/public/storage/grievance',
+            'root'   => storage_path('app/public/media'),
+            'url'        => env('APP_URL') . '/public/storage/media',
             'visibility' => 'public',
         ],
 

@@ -184,5 +184,21 @@
     {"name": "registration-work-accident-list"},
     {"name": "registration-work-accident-create"},
     {"name": "registration-work-accident-edit"},
-    {"name": "registration-work-accident-delete"}
+    {"name": "registration-work-accident-delete"},
+    {"name": "action-outpatient-list"},
+    {"name": "action-outpatient-create"},
+    {"name": "action-outpatient-edit"},
+    {"name": "action-outpatient-delete"},
+    {"name": "action-family-planning-list"},
+    {"name": "action-family-planning-create"},
+    {"name": "action-family-planning-edit"},
+    {"name": "action-family-planning-delete"},
+    {"name": "action-plano-test-list"},
+    {"name": "action-plano-test-create"},
+    {"name": "action-plano-test-edit"},
+    {"name": "action-plano-test-delete"},
+    {"name": "action-work-accident-list"},
+    {"name": "action-work-accident-create"},
+    {"name": "action-work-accident-edit"},
+    {"name": "action-work-accident-delete"}
 ]

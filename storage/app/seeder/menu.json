@@ -524,7 +524,7 @@
         "title": "Action",
         "class": "fas fa-heart nav-icon",
         "nav_header": 0,
-        "link": "#",
+        "link": "action.outpatient.*,action.plano-test.*,action.family-planning.*,action.work-accident.*",
         "sequence": 220,
         "display": 1,
         "parent_id": null
@@ -534,7 +534,7 @@
         "title": "Rawat Jalan",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
-        "link": "#",
+        "link": "action.outpatient.index,action.outpatient.*",
         "sequence": 1,
         "display": 1,
         "parent_id": "M-220"
@@ -544,7 +544,7 @@
         "title": "KB",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
-        "link": "#",
+        "link": "action.family-planning.index,action.family-planning.*",
         "sequence": 2,
         "display": 1,
         "parent_id": "M-220"
@@ -554,7 +554,7 @@
         "title": "PP Test",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
-        "link": "#",
+        "link": "action.plano-test.index,action.plano-test.*",
         "sequence": 3,
         "display": 1,
         "parent_id": "M-220"
@@ -564,7 +564,7 @@
         "title": "KK",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
-        "link": "#",
+        "link": "action.work-accident.index,action.work-accident.*",
         "sequence": 4,
         "display": 1,
         "parent_id": "M-220"

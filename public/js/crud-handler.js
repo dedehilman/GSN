@@ -132,17 +132,25 @@ function getDatatableParameter(data) {
     })
     $('#formSearch input[type="checkbox"]').each(function(){
         if($(this).attr('name') && $(this).prop("checked") == true){
-            var arr = [];
-            if($(this).attr('name') in obj) {
-                arr = obj[$(this).attr('name')];
-            }
-
-            arr.push($(this).val());
-
-            if($(this).attr('parameter-type') == 'extra') {
-                objExtra[$(this).attr('name')] = arr;
+            if($('input[type="checkbox"][name="'+$(this).attr('name')+'"]').length > 1) {
+                var arr = [];
+                if($(this).attr('name') in obj) {
+                    arr = obj[$(this).attr('name')];
+                }
+    
+                arr.push($(this).val());
+    
+                if($(this).attr('parameter-type') == 'extra') {
+                    objExtra[$(this).attr('name')] = arr;
+                } else {
+                    obj[$(this).attr('name')] = arr;
+                }    
             } else {
-                obj[$(this).attr('name')] = arr;
+                if($(this).attr('parameter-type') == 'extra') {
+                    objExtra[$(this).attr('name')] = $(this).val()
+                } else {
+                    obj[$(this).attr('name')] = $(this).val()
+                }
             }
         }
     })

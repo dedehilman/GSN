@@ -189,8 +189,14 @@ class EmployeeController extends AppCrudController
 
                     $detail->employee_id = $data->id;
                     $detail->relationship_id = $request->relationship_id[$i];
-                    $detail->identity_number = $request->relationship_identity_number[$i];
-                    $detail->name = $request->relationship_identity_name[$i];
+                    $detail->identity_number = $request->employee_identity_number[$i];
+                    $detail->name = $request->employee_name[$i];
+                    $detail->birth_place = $request->employee_birth_place[$i];
+                    $detail->birth_date = $request->employee_birth_date[$i];
+                    $detail->gender = $request->employee_gender[$i];
+                    $detail->phone = $request->employee_phone[$i];
+                    $detail->email = $request->employee_email[$i];
+                    $detail->address = $request->employee_address[$i];
                     $detail->save();
                 }    
             } else {
@@ -382,8 +388,14 @@ class EmployeeController extends AppCrudController
 
                     $detail->employee_id = $data->id;
                     $detail->relationship_id = $request->relationship_id[$i];
-                    $detail->identity_number = $request->relationship_identity_number[$i];
-                    $detail->name = $request->relationship_identity_name[$i];
+                    $detail->identity_number = $request->employee_identity_number[$i];
+                    $detail->name = $request->employee_name[$i];
+                    $detail->birth_place = $request->employee_birth_place[$i];
+                    $detail->birth_date = $request->employee_birth_date[$i];
+                    $detail->gender = $request->employee_gender[$i];
+                    $detail->phone = $request->employee_phone[$i];
+                    $detail->email = $request->employee_email[$i];
+                    $detail->address = $request->employee_address[$i];
                     $detail->save();
                 }    
             } else {

@@ -81,11 +81,11 @@
     },
     {
       "key": "APP_LOGO",
-      "value": "http://localhost/dis/public/img/logo.png"
+      "value": "http://localhost:81/dis/public/img/logo.png"
     },
     {
       "key": "APP_FAVICON",
-      "value": "http://localhost/dis/public/img/logo.png"
+      "value": "http://localhost:81/dis/public/img/logo.png"
     },
     {
       "key": "SICK_LETTER_CONTENT",
@@ -94,5 +94,9 @@
     {
       "key": "REFERENCE_LETTER_CONTENT",
       "value": "Kepada Yth. Bapak/Ibu/Sdr<br/><b>{Recipient Name}</b><br/><br/>Terlampir adalah Surat Rujukan Anda.<br/><i>Email ini dihasilkan secara otomatis oleh sistem dan mohon untuk tidak membalas email ini.</i><br/><br/>Salam hangat<br/><b>Diagnosa Information System</b>"
+    },
+    {
+      "key": "PPT_LETTER_CONTENT",
+      "value": "Kepada Yth. Bapak/Ibu/Sdr<br/><b>{Recipient Name}</b><br/><br/>Terlampir adalah hasil tes kehamilan Anda.<br/><i>Email ini dihasilkan secara otomatis oleh sistem dan mohon untuk tidak membalas email ini.</i><br/><br/>Salam hangat<br/><b>Diagnosa Information System</b>"
     }
   ]

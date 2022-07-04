@@ -122,6 +122,15 @@
                     </div>
                     <div class="card-footer text-right">
                         <a href="{{route('registration.outpatient.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                        <div class="btn-group">
+                            <a href="{{route('registration.outpatient.download', $data->id)}}?type=queue" class="btn btn-default"><i class="fas fa fa-print"></i> {{__("Download")}}</a>
+                            <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-expanded="false">
+                            </button>
+                            <div class="dropdown-menu" role="menu" style="">
+                                <a class="dropdown-item" href="{{route('registration.outpatient.download', $data->id)}}?type=queue">{{__('Queue')}}</a>
+                                <a class="dropdown-item" href="{{route('registration.outpatient.download', $data->id)}}?type=patient-identity">{{__('Patient')}}</a>
+                            </div>
+                        </div>
                         <button type="button" class="btn btn-primary" id="btn-update"><i class="fas fa fa-save"></i> {{__("Update")}}</button>
                     </div>
                 </div>

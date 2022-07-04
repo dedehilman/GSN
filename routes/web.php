@@ -214,6 +214,28 @@ Route::group(['prefix' => 'registration', 'as' => 'registration.'], function () 
     Route::resource('outpatient', App\Http\Controllers\Registration\OutpatientController::class);
 });
 
+Route::group(['prefix' => 'action', 'as' => 'action.'], function () {
+    Route::post('plano-test/datatable', [App\Http\Controllers\Action\PlanoTestController::class, 'datatable'])->name('plano-test.datatable');
+    Route::post('plano-test/media', [App\Http\Controllers\Action\PlanoTestController::class, 'storeMedia'])->name('plano-test.store-media');
+    Route::get('plano-test/download/{id}', [App\Http\Controllers\Action\PlanoTestController::class, 'download'])->name('plano-test.download');
+    Route::get('plano-test/send-to-email/{id}', [App\Http\Controllers\Action\PlanoTestController::class, 'sendToEmail'])->name('plano-test.send-to-email');
+    Route::get('plano-test/sick-letter/{id}', [App\Http\Controllers\Action\PlanoTestController::class, 'sickLetter'])->name('plano-test.sick-letter');
+    Route::get('plano-test/reference-letter/{id}', [App\Http\Controllers\Action\PlanoTestController::class, 'referenceLetter'])->name('plano-test.reference-letter');
+    Route::resource('plano-test', App\Http\Controllers\Action\PlanoTestController::class);
+    
+    Route::post('work-accident/datatable', [App\Http\Controllers\Action\WorkAccidentController::class, 'datatable'])->name('work-accident.datatable');
+    Route::post('work-accident/media', [App\Http\Controllers\Action\WorkAccidentController::class, 'storeMedia'])->name('work-accident.store-media');
+    Route::resource('work-accident', App\Http\Controllers\Action\WorkAccidentController::class);
+    
+    Route::post('family-planning/datatable', [App\Http\Controllers\Action\FamilyPlanningController::class, 'datatable'])->name('family-planning.datatable');
+    Route::post('family-planning/media', [App\Http\Controllers\Action\FamilyPlanningController::class, 'storeMedia'])->name('family-planning.store-media');
+    Route::resource('family-planning', App\Http\Controllers\Action\FamilyPlanningController::class);
+    
+    Route::post('outpatient/datatable', [App\Http\Controllers\Action\OutpatientController::class, 'datatable'])->name('outpatient.datatable');
+    Route::post('outpatient/media', [App\Http\Controllers\Action\OutpatientController::class, 'storeMedia'])->name('outpatient.store-media');
+    Route::resource('outpatient', App\Http\Controllers\Action\OutpatientController::class);
+});
+
 Route::post('/master/employee-relationship/datatable/select', [App\Http\Controllers\Master\EmployeeRelationshipController::class, 'datatableSelect'])->name('employee-relationship.datatable.select');
 Route::get('/master/employee-relationship/select', [App\Http\Controllers\Master\EmployeeRelationshipController::class, 'select'])->name('employee-relationship.select');
 

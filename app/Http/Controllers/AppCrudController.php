@@ -92,6 +92,14 @@ class AppCrudController extends Controller
         return with(new $this->model)->getTable();
     }
 
+    public function getClassName($replaceBackSlash = true) {
+        $className = get_class(with(new $this->model));
+        if($replaceBackSlash) {
+            return str_replace("\\", "\\\\", $className);
+        }
+        return $className;
+    }
+
     public function getParentTableName() {
         return with(new $this->parentModel)->getTable();
     }
@@ -559,7 +567,7 @@ class AppCrudController extends Controller
             }       
         }
 
-        $path = storage_path($this->getFilePath());
+        $path = storage_path("media/".$this->getFilePath());
 
         if (!file_exists($path)) {
             $old = umask(0);

@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Family Planning Registration"), 'subTitle' => Lang::get("Manage data family planning registration")])
+@extends('layout', ['title' => Lang::get("Plano Test"), 'subTitle' => Lang::get("Manage data plano test")])
 
 @section('content')
     <div class="row">
@@ -18,9 +18,6 @@
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div>
-                                @can('registration-family-planning-create')
-                                <a href="{{route('registration.family-planning.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
-                                @endcan
                             </div>
                             <div class="btn-group nav view">
                                 <a data-toggle="collapse" href="#collapseOne" class="btn btn-default btn-sm" style="padding-top: 8px"><i class="fas fa-filter"></i></a>
@@ -111,6 +108,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <label class="col-md-2 col-form-label">{{__("Action")}}</label>
+                                        <div class="col-md-4">
+                                            <div class="form-check pt-2">
+                                                <input class="form-check-input" type="checkbox" name="actions.id" value="null" checked>
+                                                <label class="form-check-label">{{__("Yes")}}</label>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12 text-right">
@@ -144,6 +148,7 @@
                                 <th>{{ __("Clinic") }}</th>
                                 <th>{{ __("Medical Staff") }}</th>
                                 <th>{{ __("Reference") }}</th>
+                                <th>{{ __("Action") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -159,7 +164,7 @@
             $('#datatable').DataTable({
                 ajax:
                 {
-                    url: "{{route('registration.family-planning.datatable')}}",
+                    url: "{{route('action.plano-test.datatable')}}",
                     type: 'POST',
                     data: function(data){
                         getDatatableParameter(data);
@@ -184,7 +189,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('registration-family-planning-delete') true @else false @endcan,
+                        visible: @can('action-plano-test-delete') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-danger'><i class='fas fa-trash'></i></div>";
@@ -195,7 +200,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('registration-family-planning-edit') true @else false @endcan,
+                        visible: @can('action-plano-test-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
@@ -237,23 +242,35 @@
 
                             return row.reference_type + " - " + row.reference.name;
                         }
+                    },
+                    {
+                        sortable: false,
+                        defaultContent: '',
+                        render: function(data, type, row)
+                        {
+                            if(row.action_id == null) {
+                                return "Belum Ditindak"
+                            }
+
+                            return "Sudah Ditindak";
+                        }
                     }
                 ],
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Family Planning")}}',
-                        exportOptions: { columns: [3,4,5,6,7,8] }
+                        title: '{{__("Plano Test")}}',
+                        exportOptions: { columns: [3,4,5,6,7,8,9] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Family Planning")}}',
-                        exportOptions: { columns: [3,4,5,6,7,8] }
+                        title: '{{__("Plano Test")}}',
+                        exportOptions: { columns: [3,4,5,6,7,8,9] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Family Planning")}}',
-                        exportOptions: { columns: [3,4,5,6,7,8] }
+                        title: '{{__("Plano Test")}}',
+                        exportOptions: { columns: [3,4,5,6,7,8,9] }
                     }
                 ],
             });

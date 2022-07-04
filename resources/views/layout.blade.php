@@ -177,6 +177,8 @@
             </div>
         </div>
 
+        <div id="modal-form-container"></div>
+
         <aside class="control-sidebar control-sidebar-light">
             <div class="row">
                 <div class="col-12 d-flex justify-content-between pr-4 pt-3 pb-3 pl-4">
