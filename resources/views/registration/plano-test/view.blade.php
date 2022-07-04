@@ -31,7 +31,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row @if($data->for_relationship == 0) d-none @endif">
                                 <label class="col-md-4 col-form-label">{{__("Relationship")}}</label>
                                 <div class="col-md-8 col-form-label">{{$data->patientRelationship->name ?? ''}}</div>
                             </div>
