@@ -49,6 +49,14 @@
                             @endif
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Period")}}</label>
+                        <div class="col-md-5 col-form-label">{{$data->period->name}}</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Clinic")}}</label>
+                        <div class="col-md-5 col-form-label">{{$data->clinic->name}}</div>
+                    </div>
                 </div>
                 <div class="card-footer text-right">
                     @if($data->status == 2)

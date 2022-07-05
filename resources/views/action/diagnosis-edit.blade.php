@@ -58,7 +58,7 @@
                         <input type="text" class="form-control" id="diagnosis_name{{$index}}" readonly value="{{$diagnosis->diagnosis->name}}">
                         <input type="hidden" id="diagnosis_id{{$index}}" name="diagnosis_id[]" value="{{$diagnosis->diagnosis->id}}">
                         <div class="input-group-append">
-                            <span class="input-group-text show-modal-select" data-title="{{__('Diagnosis List')}}" data-url="{{route('diagnosis.select')}}" data-handler="onSelectedResultDiagnosis"><i class="fas fa-search"></i></span>
+                            <span class="input-group-text show-modal-select-custom" data-title="{{__('Diagnosis List')}}" data-url="{{route('diagnosis.calculate')}}" data-handler="onSelectedResultDiagnosis"><i class="fas fa-search"></i></span>
                         </div>
                     </div>
                 </td>
@@ -101,7 +101,7 @@
                     <input type="text" class="form-control" readonly>
                     <input type="hidden">
                     <div class="input-group-append">
-                        <span class="input-group-text show-modal-select" data-title="{{__('Diagnosis List')}}" data-url="{{route('diagnosis.select')}}" data-handler="onSelectedResultDiagnosis"><i class="fas fa-search"></i></span>
+                        <span class="input-group-text show-modal-select-custom" data-title="{{__('Diagnosis List')}}" data-url="{{route('diagnosis.calculate')}}" data-handler="onSelectedResultDiagnosis"><i class="fas fa-search"></i></span>
                     </div>
                 </div>
             </td>
@@ -117,6 +117,7 @@
         }
 
         function onSelectedResultDiagnosis(data) {
+            console.log(data);
             $('#diagnosis_id'+seqId).val(data[0].id);
             $('#diagnosis_name'+seqId).val(data[0].name);
         }
@@ -159,6 +160,42 @@
             $(document).on('click', '.show-modal-select', function(){
                 seqId = $(this).closest('tr').find('input:first').val();
             });
+            
+            $(document).on('click', '.show-modal-select-custom', function(){
+                seqId = $(this).closest('tr').find('input:first').val();
+            });
+
+            $(document).on('click', '.show-modal-select-custom', function(){
+                setSelectedIds();
+                onSelectHandler = $(this).attr('data-handler');
+                $('#modal-select .modal-title').html($(this).attr('data-title'));
+                symptomIds = "";
+                $("input[name^=symptom_id]").each(function(index, element){
+                    if($(element).val() != "") {
+                        if(symptomIds != "") {
+                            symptomIds = symptomIds + "," + $(element).val()
+                        } else {
+                            symptomIds = $(element).val();
+                        }
+                    }
+                });
+                $.ajax
+                ({
+                    type: "GET",
+                    url: $(this).attr('data-url')+"?symptom_id="+symptomIds,
+                    cache: false,
+                    beforeSend: function() {
+                        $('#loader').modal('show');
+                    },
+                    success: function (data) {
+                        $('#modal-select .modal-body').html(data);
+                        $('#modal-select').modal('show');
+                    },
+                    complete: function() {
+                        $('#loader').modal('hide');
+                    },
+                });
+            })
         })
 
         function removeRow(element)

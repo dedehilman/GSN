@@ -131,5 +131,40 @@ class DiagnosisController extends AppCrudController
             return $validator->errors()->all();
         }
     }
+
+    public function calculate(Request $request) {
+        $parameters = array();
+        foreach ($request->all() as $key => $value) {
+            if($key == "_") continue;
+
+            $parameters[$key] = $value;
+        }
+        $select = $request->select ?? 'single';
+        return view('master.diagnosis.calculate', compact('select', 'parameters'));
+    }
+
+    public function datatableCalculate(Request $request) {
+        try
+        {
+            $data = DB::select('SELECT a.id,a.code,a.name, COALESCE(b.matchCount, 0) AS matchCount, COALESCE(c.totalCount, 0) AS totalCount FROM diagnoses a LEFT JOIN ( SELECT diagnosis_id,COUNT(1) AS matchCount FROM diagnosis_symptoms WHERE symptom_id IN ('.$request->parameters['symptom_id'].') GROUP BY diagnosis_id ) b ON a.id = b.diagnosis_id LEFT JOIN ( SELECT diagnosis_id,COUNT(1) AS totalCount FROM diagnosis_symptoms GROUP BY diagnosis_id ) c ON a.id = c.diagnosis_id ORDER BY matchCount DESC,totalCount ASC');
+            $totalData = count($data);
+            $totalFiltered = $totalData;
+            
+            return response()->json([
+                "draw" => intval($request->input('draw')),  
+                "recordsTotal" => intval($totalData),  
+                "recordsFiltered" => intval($totalFiltered), 
+                "data" => $data
+            ]);
+        } 
+        catch (\Throwable $th)
+        {
+            return response()->json([
+                'status' => '500',
+                'data' => '',
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
 }
 

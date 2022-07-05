@@ -164,6 +164,8 @@ Route::resource('master/disease', App\Http\Controllers\Master\DiseaseController:
 Route::post('/master/diagnosis/datatable', [App\Http\Controllers\Master\DiagnosisController::class, 'datatable'])->name('diagnosis.datatable');
 Route::post('/master/diagnosis/datatable/select', [App\Http\Controllers\Master\DiagnosisController::class, 'datatableSelect'])->name('diagnosis.datatable.select');
 Route::get('/master/diagnosis/select', [App\Http\Controllers\Master\DiagnosisController::class, 'select'])->name('diagnosis.select');
+Route::post('/master/diagnosis/datatable/calculate', [App\Http\Controllers\Master\DiagnosisController::class, 'datatableCalculate'])->name('diagnosis.datatable.calculate');
+Route::get('/master/diagnosis/calculate', [App\Http\Controllers\Master\DiagnosisController::class, 'calculate'])->name('diagnosis.calculate');
 Route::resource('master/diagnosis', App\Http\Controllers\Master\DiagnosisController::class);
 
 Route::post('/master/reference/datatable', [App\Http\Controllers\Master\ReferenceController::class, 'datatable'])->name('reference.datatable');

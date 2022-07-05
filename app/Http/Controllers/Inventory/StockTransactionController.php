@@ -25,8 +25,8 @@ class StockTransactionController extends AppCrudController
     public function store(Request $request)
     {
         try {
-            $count = StockTransaction::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->count();
-            $request['transaction_no'] = 'INV-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+            $count = StockTransaction::whereDate('transaction_date', Carbon::parse($request->transaction_date)->isoFormat('YYYY-MM-DD'))->count();
+            $request['transaction_no'] = 'INV-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);
             if($validateOnStore) {

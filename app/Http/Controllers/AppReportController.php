@@ -13,9 +13,8 @@ abstract class AppReportController extends AppCrudController
 
     public function setDefaultMiddleware($permission) {
         $this->middleware('auth');
-        $this->middleware('permission:'.$permission.'-report-list|'.$permission.'-report-create|'.$permission.'-report-download', ['only' => ['index','show']]);
+        $this->middleware('permission:'.$permission.'-report-list|'.$permission.'-report-create', ['only' => ['index','show', 'download']]);
         $this->middleware('permission:'.$permission.'-report-create', ['only' => ['create','store']]);
-        $this->middleware('permission:'.$permission.'-report-download', ['only' => ['download']]);
     }
 
     public function download($id)
