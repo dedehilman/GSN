@@ -1842,10 +1842,10 @@ INSERT INTO clinics(code,name,estate_id,address,phone,location) VALUE('KM SWA','
 INSERT INTO clinics(code,name,estate_id,address,phone,location) VALUE('KM 10','KM 10',1,'Jl. Pahlawan No 28 Jakarta', '021-245678', 'Jakarta');
 INSERT INTO clinics(code,name,estate_id,address,phone,location) VALUE('INDUK','INDUK',1,'Jl. Pahlawan No 28 Jakarta', '021-245678', 'Jakarta');
 
-INSERT INTO medical_staff(code,name) VALUE('MS001', 'Staff 1');
-INSERT INTO medical_staff(code,name) VALUE('MS002', 'Staff 2');
-INSERT INTO medical_staff(code,name) VALUE('MS003', 'Dokter 1');
-INSERT INTO medical_staff(code,name) VALUE('MS004', 'Dokter 2');
+INSERT INTO medical_staff(code,name,clinic_id) VALUE('MS001', 'Staff 1', 1);
+INSERT INTO medical_staff(code,name,clinic_id) VALUE('MS002', 'Staff 2', 1);
+INSERT INTO medical_staff(code,name,clinic_id) VALUE('MS003', 'Dokter 1', 1);
+INSERT INTO medical_staff(code,name,clinic_id) VALUE('MS004', 'Dokter 2', 1);
 
 INSERT INTO employees(code,name,afdelink_id,birth_place,birth_date,gender,identity_number,phone,email,address) VALUE('P001', 'Patient 1',1,'Jakarta','1995-01-01','Male','000000000000','08123465856','patient@gmail.com','Jl. Pahlawan No 28 Jakarta');
 INSERT INTO employees(code,name,afdelink_id,birth_place,birth_date,gender,identity_number,phone,email,address) VALUE('P002', 'Patient 2',1,'Jakarta','1995-01-01','Male','000000000000','08123465856','patient@gmail.com','Jl. Pahlawan No 28 Jakarta');

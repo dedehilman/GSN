@@ -61,7 +61,19 @@
                                 <textarea name="address" rows="4" class="form-control"></textarea>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label required">{{__("Clinic")}}</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="text" name="clinic_name" id="clinic_name" class="form-control required" readonly>
+                                    <input type="hidden" name="clinic_id" id="clinic_id">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinicSingle"><i class="fas fa-search"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-none">
                             <div class="col-md-12">
                                 <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                                     <li class="nav-item">
@@ -147,6 +159,11 @@
         function onSelectedClinic(data) {
             $('#clinic_id'+seqId).val(data[0].id);
             $('#clinic_name'+seqId).val(data[0].name);
+        }
+
+        function onSelectedClinicSingle(data) {
+            $('#clinic_id').val(data[0].id);
+            $('#clinic_name').val(data[0].name);
         }
     </script>
 @endsection

@@ -48,6 +48,10 @@
                             ]
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("User Detail")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->userDetail->name ?? ''}}</div>
+                    </div>
                 </div>
                 <div class="card-footer text-right">
                     <a href="{{route('user.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>

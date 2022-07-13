@@ -56,9 +56,10 @@ class UserController extends AppCrudController
             $data->username = $request->username;
             $data->name = $request->name;
             $data->email = $request->email;
-            $data->phone = $request->phone;
+            // $data->phone = $request->phone;
             $data->password = Hash::make($request->password);
             $data->enabled = $request->enabled ?? 0;
+            $data->user_detail_id = $request->user_detail_id;
 
             $data->save();
             $data->syncRoles($request->roles);
@@ -114,11 +115,12 @@ class UserController extends AppCrudController
             $data->username = $request->username;
             $data->name = $request->name;
             $data->email = $request->email;
-            $data->phone = $request->phone;
+            // $data->phone = $request->phone;
             if($request->password){
                 $data->password = Hash::make($request->password);
             }
             $data->enabled = $request->enabled;
+            $data->user_detail_id = $request->user_detail_id;
 
             $data->save();
             $data->syncRoles($request->roles);

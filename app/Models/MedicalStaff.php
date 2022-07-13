@@ -17,8 +17,14 @@ class MedicalStaff extends Model
         'gender',
         'phone',
         'email',
-        'address'
+        'address',
+        'clinic_id'
     ];
+
+    public function clinic()
+    {
+        return $this->belongsTo(Clinic::class);
+    }
 
     public function clinics()
     {
@@ -29,5 +35,10 @@ class MedicalStaff extends Model
     {
         $this->clinics()->detach();   
         $this->clinics()->attach($clinics);
+    }
+
+    public function scopeWithAll($query) 
+    {
+        return $query->with(['clinic']);
     }
 }

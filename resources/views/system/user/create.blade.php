@@ -61,6 +61,18 @@
                                 @endforeach
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("User Detail")}}</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="text" id="user_detail_name" class="form-control" readonly>
+                                    <input type="hidden" name="user_detail_id" id="user_detail_id">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text show-modal-select" data-title="{{__('Medical Staff List')}}" data-url="{{route('medical-staff.select')}}" data-handler="onSelectedMedicalStaff"><i class="fas fa-search"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer text-right">
                         <a href="{{route('user.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
@@ -70,4 +82,13 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        function onSelectedMedicalStaff(data) {
+            $('#user_detail_id').val(data[0].id);
+            $('#user_detail_name').val(data[0].name);
+        }
+    </script>
 @endsection

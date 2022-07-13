@@ -39,7 +39,11 @@
                         <label class="col-md-3 col-form-label">{{__("Address")}}</label>
                         <div class="col-md-9 col-form-label">{!!nl2br($data->address)!!}</div>
                     </div>
-                    <div class="row">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Clinic")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->clinic->name}}</div>
+                    </div>
+                    <div class="row d-none">
                         <div class="col-md-12">
                             <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                                 <li class="nav-item">

@@ -41,6 +41,7 @@ class MedicalStaffController extends AppCrudController
             $data->phone = $request->phone;
             $data->email = $request->email;
             $data->address = $request->address;
+            $data->clinic_id = $request->clinic_id;
             $data->save();
 
             $data->syncClinics($request->clinics);
@@ -89,6 +90,7 @@ class MedicalStaffController extends AppCrudController
             $data->phone = $request->phone;
             $data->email = $request->email;
             $data->address = $request->address;
+            $data->clinic_id = $request->clinic_id;
             $data->save();
 
             $data->syncClinics($request->clinics);
@@ -114,6 +116,7 @@ class MedicalStaffController extends AppCrudController
         $validator = Validator::make($request->all(), [
             'code' => 'required|max:255|unique:medical_staff',
             'name' => 'required|max:255',
+            'clinic_id' => 'required',
         ]);
 
         if($validator->fails()){
@@ -126,6 +129,7 @@ class MedicalStaffController extends AppCrudController
         $validator = Validator::make($request->all(), [
             'code' => 'required|max:255|unique:medical_staff,code,'.$id,
             'name' => 'required|max:255',
+            'clinic_id' => 'required',
         ]);
 
         if($validator->fails()){

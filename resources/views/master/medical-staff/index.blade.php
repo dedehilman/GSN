@@ -41,6 +41,18 @@
                                             <input type="text" name="name" class="form-control">
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label">{{__("Clinic")}}</label>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <input type="text" id="clinic_name" class="form-control" readonly>
+                                                <input type="hidden" name="clinic_id" id="clinic_id">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-sm-12 text-right">
                                             <button type="button" class="btn btn-sm btn-default" id="btn-clear" style="width: 100px;"><i class="fas fa-trash"></i> {{__('Clear')}}</button>
@@ -69,6 +81,7 @@
                                 <th></th>
                                 <th>{{ __("Code") }}</th>
                                 <th>{{ __("Name") }}</th>
+                                <th>{{ __("Clinic") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -135,26 +148,36 @@
                         data: 'name',
                         name: 'name',
                         defaultContent: '',
+                    },
+                    {
+                        data: 'clinic.name',
+                        name: 'clinic_id',
+                        defaultContent: '',
                     }
                 ],
                 buttons: [
                     {
                         extend: 'excel',
                         title: '{{__("Medical Staff")}}',
-                        exportOptions: { columns: [3,4] }
+                        exportOptions: { columns: [3,4,5] }
                     },
                     {
                         extend: 'csv',
                         title: '{{__("Medical Staff")}}',
-                        exportOptions: { columns: [3, 4] }
+                        exportOptions: { columns: [3, 4,5] }
                     },
                     {
                         extend: 'pdf',
                         title: '{{__("Medical Staff")}}',
-                        exportOptions: { columns: [3, 4] }
+                        exportOptions: { columns: [3, 4,5] }
                     }
                 ],
             });
         });
+
+        function onSelectedClinic(data) {
+            $('#clinic_id').val(data[0].id);
+            $('#clinic_name').val(data[0].name);
+        }
     </script>
 @endsection
