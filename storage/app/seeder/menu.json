@@ -601,43 +601,53 @@
     },
     {
         "code": "M-240",
-        "title": "Inventory",
-        "class": "fas fa-archive nav-icon",
+        "title": "Pharmacy",
+        "class": "fas fa-shopping-cart nav-icon",
         "nav_header": 0,
-        "link": "stock-opname.*,stock-transaction.*,period*",
+        "link": "pharmacy.index,pharmacy.*",
         "sequence": 240,
         "display": 1,
         "parent_id": null
     },
     {
-        "code": "M-241",
+        "code": "M-250",
+        "title": "Inventory",
+        "class": "fas fa-archive nav-icon",
+        "nav_header": 0,
+        "link": "stock-opname.*,stock-transaction.*,period*",
+        "sequence": 250,
+        "display": 1,
+        "parent_id": null
+    },
+    {
+        "code": "M-251",
         "title": "Period",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
         "link": "period.index,period.*",
         "sequence": 1,
         "display": 1,
-        "parent_id": "M-240"
+        "parent_id": "M-250"
     },
     {
-        "code": "M-242",
+        "code": "M-252",
         "title": "Stock Opname",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
         "link": "stock-opname.index,stock-opname.*",
         "sequence": 2,
         "display": 1,
-        "parent_id": "M-240"
+        "parent_id": "M-250"
     },
     {
-        "code": "M-243",
+        "code": "M-253",
         "title": "Transaction",
         "class": "far fa-circle nav-icon",
         "nav_header": 0,
         "link": "stock-transaction.index,stock-transaction.*",
         "sequence": 3,
         "display": 1,
-        "parent_id": "M-240"
+        "parent_id": "M-250"
     },
     {
         "code": "M-300",

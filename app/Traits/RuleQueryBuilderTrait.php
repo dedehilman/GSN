@@ -44,21 +44,16 @@ trait RuleQueryBuilderTrait
 
             if(!$isFound) continue;
 
-            $curClinics = "";
-            if(getCurrentUser()->userDetail) {
-                $curClinics = implode(",", getCurrentUser()->userDetail->currentClinics->pluck('clinic_id')->toArray() ?? []);
-            }
-
             $rule = str_replace(
                 [
                     '@currUser',
                     '@currMedicalStaff',
-                    '@currClinics',
+                    '@currClinic',
                 ], 
                 [
                     getCurrentUser()->id ?? '', 
                     getCurrentUser()->userDetail->id ?? '', 
-                    $curClinics,
+                    getCurrentUser()->userDetail->clinic->id ?? '',
                 ], 
                 $rule
             );

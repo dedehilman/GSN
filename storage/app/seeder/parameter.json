@@ -69,11 +69,15 @@
     },
     {
       "key": "MAIL_FROM_NAME",
-      "value": "DIS"
+      "value": "SIDIK"
     },
     {
       "key": "APP_NAME",
-      "value": "DIS"
+      "value": "SIDIK"
+    },
+    {
+      "key": "APP_FULL_NAME",
+      "value": "SIDIK"
     },
     {
       "key": "APP_VERSION",

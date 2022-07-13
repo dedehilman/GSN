@@ -338,7 +338,7 @@ class AppCrudController extends Controller
             if($request->parentId) {
                 $query = $query->where(rtrim($this->getParentTableName(), "s")."_id", $request->parentId);
             }
-            if(!$request->queryBuilder || $request->queryBuilder == '1') {
+            if(($request->parameters['queryBuilder'] ?? null) == null || $request->parameters['queryBuilder'] == '1') {
                 $query = $this->queryBuilder([$this->getTableName()], $query);
             }
             $this->setExtraParameter($request);
@@ -368,6 +368,7 @@ class AppCrudController extends Controller
         } 
         catch (\Throwable $th)
         {
+            dd($th);
             return response()->json([
                 'status' => '500',
                 'data' => '',
@@ -402,7 +403,7 @@ class AppCrudController extends Controller
             if($request->parentId) {
                 $query = $query->where(rtrim($this->getParentTableName(), "s")."_id", $request->parentId);
             }
-            if(!$request->queryBuilder || $request->queryBuilder == '1') {
+            if(($request->parameters['queryBuilder'] ?? null) == null || $request->parameters['queryBuilder'] == '1') {
                 $query = $this->queryBuilder([$this->getTableName()], $query);
             }
             $this->setExtraParameterSelect($request);
@@ -498,8 +499,8 @@ class AppCrudController extends Controller
         }
 
         foreach($request->parameters ?? [] as $key => $value) {
-            if($key == "search") continue;
-
+            if($key == "search" || $key == "queryBuilder") continue;
+            
             if($value != null) {
                 if(Str::endsWith($key, '.like')) {
                     $query->where(Str::replace('.like', '', $key),'LIKE',"%{$value}%");

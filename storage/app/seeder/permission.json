@@ -200,5 +200,9 @@
     {"name": "action-work-accident-list"},
     {"name": "action-work-accident-create"},
     {"name": "action-work-accident-edit"},
-    {"name": "action-work-accident-delete"}
+    {"name": "action-work-accident-delete"},
+    {"name": "pharmacy-list"},
+    {"name": "pharmacy-create"},
+    {"name": "pharmacy-edit"},
+    {"name": "pharmacy-delete"}
 ]
