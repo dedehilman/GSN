@@ -1,4 +1,11 @@
 @extends('layout', ['title' => Lang::get("Pharmacy"), 'subTitle' => Lang::get("Manage data pharmacy")])
+@section('style')
+    <style>
+        #datatable-unprocessed tbody td {
+            cursor: pointer;
+        }
+    </style>
+@endsection
 
 @section('content')
     <div class="row">
@@ -259,6 +266,32 @@
                         defaultContent: '',
                     }
                 ],
+            });
+
+            $(document).on('click' , '#datatable-unprocessed tbody td', function() {
+                var index = $(this).index();
+                var datatable = $('#datatable-unprocessed').DataTable();
+                var modelId = datatable.row(this).data().id;
+                var modelType = datatable.row(this).data().model_type;
+                
+                if($(this).closest('td').hasClass('select-checkbox')) {
+                    index = 0;
+                } else {
+                    index = 1;
+                }
+
+                if(index == 0) {
+                    if(datatable.rows({selected: true}).count() == datatable.rows().count()) {
+                        $("#datatable-unprocessed input[type='checkbox'][name='select-all']").prop('checked', true);
+                    } else {
+                        $("#datatable-unprocessed input[type='checkbox'][name='select-all']").prop('checked', false);
+                    }
+                }
+                else if(index > 0) {
+                    datatable.rows().deselect();
+                    var url = window.location.toString();
+                    window.location.href = url.replace(window.location.search, "").replace("/index", "") + "/create?model_id=" + modelId + "&model_type=" + modelType;
+                }
             });
         });
 

@@ -108,7 +108,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <label class="col-md-2 col-form-label">{{__("Action")}}</label>
+                                        <label class="col-md-2 col-form-label">{{__("Exclude Processed")}}</label>
                                         <div class="col-md-4">
                                             <div class="form-check pt-2">
                                                 <input class="form-check-input" type="checkbox" name="actions.id" value="null" checked>
@@ -148,7 +148,7 @@
                                 <th>{{ __("Clinic") }}</th>
                                 <th>{{ __("Medical Staff") }}</th>
                                 <th>{{ __("Reference") }}</th>
-                                <th>{{ __("Action") }}</th>
+                                <th>{{ __("Status") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -249,10 +249,10 @@
                         render: function(data, type, row)
                         {
                             if(row.action_id == null) {
-                                return "Belum Ditindak"
+                                return "{{__('Unprocessed')}}"
                             }
 
-                            return "Sudah Ditindak";
+                            return "{{__('Processed')}}";
                         }
                     }
                 ],

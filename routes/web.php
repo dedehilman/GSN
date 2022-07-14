@@ -124,6 +124,8 @@ Route::resource('master/medicine-type', App\Http\Controllers\Master\MedicineType
 Route::post('/master/medicine/datatable', [App\Http\Controllers\Master\MedicineController::class, 'datatable'])->name('medicine.datatable');
 Route::post('/master/medicine/datatable/select', [App\Http\Controllers\Master\MedicineController::class, 'datatableSelect'])->name('medicine.datatable.select');
 Route::get('/master/medicine/select', [App\Http\Controllers\Master\MedicineController::class, 'select'])->name('medicine.select');
+Route::post('/master/medicine/datatable/select-stock', [App\Http\Controllers\Master\MedicineController::class, 'datatableSelectStock'])->name('medicine.datatable.select-stock');
+Route::get('/master/medicine/select-stock', [App\Http\Controllers\Master\MedicineController::class, 'selectStock'])->name('medicine.select-stock');
 Route::resource('master/medicine', App\Http\Controllers\Master\MedicineController::class);
 
 Route::post('/master/clinic/datatable', [App\Http\Controllers\Master\ClinicController::class, 'datatable'])->name('clinic.datatable');

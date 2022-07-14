@@ -229,43 +229,51 @@ class PharmacyController extends AppCrudController
     {
         try
         {
+            $ids = Pharmacy::where('model_type', 'App\Models\FamilyPlanning')->pluck('model_id')->toArray();
             $q1 = DB::table('family_plannings')
                     ->join('prescriptions', function ($join) {
                         $join->on('prescriptions.model_id', '=', 'family_plannings.id');
                         $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\FamilyPlanning"'));
                     })
                     ->join('clinics', 'clinics.id', '=', 'family_plannings.clinic_id')
-                    ->select('family_plannings.transaction_no','family_plannings.transaction_date','clinics.name AS clinic_name')
+                    ->select('family_plannings.id','family_plannings.transaction_no','family_plannings.transaction_date','clinics.name AS clinic_name','prescriptions.model_type')
+                    ->whereNotIn('family_plannings.id', $ids)
                     ->distinct();
             $q1 = $this->queryBuilder(['family_plannings'], $q1);
 
+            $ids = Pharmacy::where('model_type', 'App\Models\Outpatient')->pluck('model_id')->toArray();
             $q2 = DB::table('outpatients')
                     ->join('prescriptions', function ($join) {
                         $join->on('prescriptions.model_id', '=', 'outpatients.id');
                         $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\Outpatient"'));
                     })
                     ->join('clinics', 'clinics.id', '=', 'outpatients.clinic_id')
-                    ->select('outpatients.transaction_no','outpatients.transaction_date','clinics.name AS clinic_name')
+                    ->select('outpatients.id','outpatients.transaction_no','outpatients.transaction_date','clinics.name AS clinic_name','prescriptions.model_type')
+                    ->whereNotIn('outpatients.id', $ids)
                     ->distinct();
             $q2 = $this->queryBuilder(['outpatients'], $q2);
 
+            $ids = Pharmacy::where('model_type', 'App\Models\PlanoTest')->pluck('model_id')->toArray();
             $q3 = DB::table('plano_tests')
                     ->join('prescriptions', function ($join) {
                         $join->on('prescriptions.model_id', '=', 'plano_tests.id');
                         $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\PlanoTest"'));
                     })
                     ->join('clinics', 'clinics.id', '=', 'plano_tests.clinic_id')
-                    ->select('plano_tests.transaction_no','plano_tests.transaction_date','clinics.name AS clinic_name')
+                    ->select('plano_tests.id','plano_tests.transaction_no','plano_tests.transaction_date','clinics.name AS clinic_name','prescriptions.model_type')
+                    ->whereNotIn('plano_tests.id', $ids)
                     ->distinct();
             $q3 = $this->queryBuilder(['plano_tests'], $q3);
 
+            $ids = Pharmacy::where('model_type', 'App\Models\WorkAccident')->pluck('model_id')->toArray();
             $q4 = DB::table('work_accidents')
                     ->join('prescriptions', function ($join) {
                         $join->on('prescriptions.model_id', '=', 'work_accidents.id');
                         $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\WorkAccident"'));
                     })
                     ->join('clinics', 'clinics.id', '=', 'work_accidents.clinic_id')
-                    ->select('work_accidents.transaction_no','work_accidents.transaction_date','clinics.name AS clinic_name')
+                    ->select('work_accidents.id','work_accidents.transaction_no','work_accidents.transaction_date','clinics.name AS clinic_name','prescriptions.model_type')
+                    ->whereNotIn('work_accidents.id', $ids)
                     ->distinct();
             $q4 = $this->queryBuilder(['work_accidents'], $q4);
 

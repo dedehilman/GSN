@@ -12,7 +12,7 @@ $(function() {
     });
 
     $(document).on('click', '.show-modal-select', function(){
-        setSelectedIds();
+        setSelectedIds($(this));
         onSelectHandler = $(this).attr('data-handler');
         $('#modal-select .modal-title').html($(this).attr('data-title'));
         $.ajax

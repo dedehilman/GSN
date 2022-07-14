@@ -11,6 +11,13 @@ use App\Models\SymptomResult;
 use App\Models\DiagnosisResult;
 use Illuminate\Support\Facades\DB;
 use Lang;
+use App\Models\DiseaseMedicine;
+use App\Models\Diagnosis;
+use App\Models\Period;
+use Carbon\Carbon;
+use App\Models\StockOpname;
+use App\Models\StockTransaction;
+use App\Models\Pharmacy;
 
 class ActionController extends AppCrudController
 {
@@ -256,6 +263,85 @@ class ActionController extends AppCrudController
         } 
         catch (\Throwable $th)
         {
+            return response()->json([
+                'status' => '500',
+                'data' => '',
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
+
+    public function generatePrescription(Request $request) {
+        try {
+            $diseaseIds = Diagnosis::whereNotNull('disease_id')
+                        ->whereIn('id', $request->diagnosis_id ?? [])
+                        ->pluck('id')
+                        ->toArray();
+            
+            $data = DiseaseMedicine::whereIn('disease_id', $diseaseIds)->withAll()->get();
+
+            $prevPeriod = StockOpname::join('periods', 'periods.id', '=', 'stock_opnames.period_id')
+                    ->where('clinic_id', $request->clinic_id ?? null)
+                    ->where('start_date','<', Carbon::now()->isoFormat('YYYY-MM-DD'))
+                    ->select('periods.*')
+                    ->orderBy('start_date','desc')
+                    ->first();
+            foreach ($data as $dt) {
+                $dt->setAttribute("stock", '0.00');
+                if($prevPeriod) {
+                    $begin = StockOpname::where('period_id', $prevPeriod->id)
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->where('medicine_id', $dt->medicine_id)
+                            ->sum('qty');
+
+                    $in = StockTransaction::join('stock_transaction_details', 'stock_transaction_details.stock_transaction_id', '=', 'stock_transactions.id')
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->whereDate('transaction_date','>',$prevPeriod->end_date)
+                            ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
+                            ->where('transaction_type', 'In')
+                            ->where('medicine_id', $dt->medicine_id)
+                            ->sum('qty');
+                    $transferIn = StockTransaction::join('stock_transaction_details', 'stock_transaction_details.stock_transaction_id', '=', 'stock_transactions.id')
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->whereDate('transaction_date','>',$prevPeriod->end_date)
+                            ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
+                            ->where('transaction_type', 'Transfer In')
+                            ->where('medicine_id', $dt->medicine_id)
+                            ->sum('qty');
+
+                    $transferOut = StockTransaction::join('stock_transaction_details', 'stock_transaction_details.stock_transaction_id', '=', 'stock_transactions.id')
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->whereDate('transaction_date','>',$prevPeriod->end_date)
+                            ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
+                            ->where('transaction_type', 'Transfer Out')
+                            ->where('medicine_id', $dt->medicine_id)
+                            ->sum('qty');
+
+                    $adj = StockTransaction::join('stock_transaction_details', 'stock_transaction_details.stock_transaction_id', '=', 'stock_transactions.id')
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->whereDate('transaction_date','>',$prevPeriod->end_date)
+                            ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
+                            ->where('transaction_type', 'Adjusment')
+                            ->where('medicine_id', $dt->medicine_id)
+                            ->sum('qty');
+
+                    $out = Pharmacy::join('pharmacy_details', 'pharmacy_details.pharmacy_id', '=', 'pharmacies.id')
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->whereDate('transaction_date','>',$prevPeriod->end_date)
+                            ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
+                            ->where('medicine_id', $dt->medicine_id)
+                            ->sum('actual_qty');
+                    
+                    
+                    $dt->setAttribute("stock", $begin+$in+$transferIn-$transferOut-$out+$adj);
+                }
+            }
+            return response()->json([
+                'status' => '200',
+                'data' => $data,
+                'message' => ''
+            ]);
+        } catch (\Throwable $th) {
             return response()->json([
                 'status' => '500',
                 'data' => '',

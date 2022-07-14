@@ -98,7 +98,7 @@
                                                                 <input type="text" name="medicine_name[]" class="form-control " readonly id="medicine_name{{$index}}" value="{{$prescription->medicine->name}}">
                                                                 <input type="hidden" name="medicine_id[]" id="medicine_id{{$index}}" value="{{$prescription->medicine->id}}">
                                                                 <div class="input-group-append">
-                                                                    <span class="input-group-text show-modal-select medicine" data-title="{{__('Product List')}}" data-url="{{route('medicine.select')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
+                                                                    <span class="input-group-text show-modal-select medicine" data-title="{{__('Product List')}}" data-url="{{route('medicine.select-stock')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -150,7 +150,7 @@
                         <input type="text" name="medicine_name[]" class="form-control " readonly>
                         <input type="hidden" name="medicine_id[]">
                         <div class="input-group-append">
-                            <span class="input-group-text show-modal-select medicine" data-title="{{__('Product List')}}" data-url="{{route('medicine.select')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
+                            <span class="input-group-text show-modal-select medicine" data-title="{{__('Product List')}}" data-url="{{route('medicine.select-stock')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
                         </div>
                     </div>
                 </td>
@@ -182,6 +182,7 @@
         function onSelectedMedicine(data) {
             $('#medicine_id'+seqId).val(data[0].id);
             $('#medicine_name'+seqId).val(data[0].name);
+            $('#stock_qty'+seqId).val(data[0].stock);
         }
         function onSelectedMedicineRule(data) {
             $('#medicine_rule_id'+seqId).val(data[0].id);
@@ -223,6 +224,16 @@
         {
             var tableId = $(element).closest('table').attr("id");
             $(element).closest('tr').remove();
+        }
+
+        function setSelectedIds(element) {
+            if($(element).attr('data-handler') == 'onSelectedMedicine') {
+                dataUrl = $(element).attr('data-url');
+                if(dataUrl.indexOf("?") >= 0) {
+                    dataUrl = dataUrl.substring(0, dataUrl.indexOf("?"));
+                }
+                $(element).attr('data-url', dataUrl+"?clinic_id="+$("#clinic_id").val());
+            }
         }
     </script>
 @endsection

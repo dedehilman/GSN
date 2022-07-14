@@ -19,4 +19,9 @@ class DiseaseMedicine extends Model
     public function medicineRule() {
         return $this->belongsTo(MedicineRule::class);
     }
+
+    public function scopeWithAll($query) 
+    {
+        return $query->with(['medicine', 'medicineRule']);
+    }
 }
