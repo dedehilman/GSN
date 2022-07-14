@@ -54,15 +54,12 @@
                     name: 'name',
                     defaultContent: '',
                 }, {
-                    data: 'matchCount',
+                    data: 'percentage',
                     defaultContent: '0',
                     className: 'text-center',
                     render: function(data, type, row)
                     {
-                        if(row.totalCount > 0) {
-                            return '<span class="badge bg-success">'+(data/row.totalCount * 100).toFixed(2)+' %</span>';
-                        }
-                        return '<span class="badge bg-success">100.00 %</span>';
+                        return '<span class="badge bg-success">'+data+' %</span>';
                     }
                 }
             ],

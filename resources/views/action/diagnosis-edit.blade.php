@@ -171,7 +171,7 @@
                 $('#modal-select .modal-title').html($(this).attr('data-title'));
                 symptomIds = "";
                 $("input[name^=symptom_id]").each(function(index, element){
-                    if($(element).val() != "") {
+                    if($(element).val() != "" && $(element).attr("id") != undefined) {
                         if(symptomIds != "") {
                             symptomIds = symptomIds + "," + $(element).val()
                         } else {
