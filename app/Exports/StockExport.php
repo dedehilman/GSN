@@ -10,6 +10,7 @@ use App\Models\Medicine;
 use App\Models\StockOpname;
 use App\Models\StockTransaction;
 use App\Models\Period;
+use App\Models\Pharmacy;
 
 class StockExport implements ShouldAutoSize, FromView
 {
@@ -36,7 +37,7 @@ class StockExport implements ShouldAutoSize, FromView
         $medicines = Medicine::all();
         $stockOpnames = StockOpname::where('period_id', $prevPeriod->id)->where('clinic_id', $this->reportModel->clinic_id)->get();
         $stockTransactions = StockTransaction::where('clinic_id', $this->reportModel->clinic_id)
-                            ->whereDate('transaction_date','>=',$this->reportModel->period->start_date)
+                            ->whereDate('transaction_date','>',$prevPeriod->end_date)
                             ->whereDate('transaction_date','<=',$this->reportModel->period->end_date)->get();
 
         foreach ($stockOpnames as $stockOpname) {
@@ -51,29 +52,40 @@ class StockExport implements ShouldAutoSize, FromView
             foreach ($stockTransaction->details as $detail) {
                 if($stockTransaction->transaction_type == "In") {
                     if(!array_key_exists($detail->medicine->code, $in)) {
-                        $in[$detail->medicine->code] = $detail->qty;
+                        $in[$detail->medicine->code] = 0;
                     }
                     $in[$detail->medicine->code] = $in[$detail->medicine->code] + $detail->qty;    
                 } else if($stockTransaction->transaction_type == "Transfer In") {
                     if(!array_key_exists($detail->medicine->code, $transferIn)) {
-                        $transferIn[$detail->medicine->code] = $detail->qty;
+                        $transferIn[$detail->medicine->code] = 0;
                     }
                     $transferIn[$detail->medicine->code] = $transferIn[$detail->medicine->code] + $detail->qty;    
                 } else if($stockTransaction->transaction_type == "Transfer Out") {
                     if(!array_key_exists($detail->medicine->code, $transferOut)) {
-                        $transferOut[$detail->medicine->code] = $detail->qty;
+                        $transferOut[$detail->medicine->code] = 0;
                     }
                     $transferOut[$detail->medicine->code] = $transferOut[$detail->medicine->code] + $detail->qty;    
                 } else if($stockTransaction->transaction_type == "Adjustment") {
                     if(!array_key_exists($detail->medicine->code, $adj)) {
-                        $adj[$detail->medicine->code] = $detail->qty;
+                        $adj[$detail->medicine->code] = 0;
                     }
                     $adj[$detail->medicine->code] = $adj[$detail->medicine->code] + $detail->qty;    
                 }
             }
         }
 
+        $pharmacies = Pharmacy::where('clinic_id', $this->reportModel->clinic_id)
+                            ->whereDate('transaction_date','>',$prevPeriod->end_date)
+                            ->whereDate('transaction_date','<=',$this->reportModel->period->end_date)->get();
 
+        foreach ($pharmacies as $pharmacy) {
+            foreach ($pharmacy->details as $detail) {
+                if(!array_key_exists($detail->medicine->code, $out)) {
+                    $out[$detail->medicine->code] = 0;
+                }
+                $out[$detail->medicine->code] = $out[$detail->medicine->code] + $detail->actual_qty;
+            }
+        }
         return view('report.stock.template', [
             "reportModel"=> $this->reportModel,
             "medicines"=> $medicines,

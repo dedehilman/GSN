@@ -11,8 +11,6 @@
                     <th>@if(($select ?? 'single') == 'multiple')<input type='checkbox' name="select-all"/>@endif</th>
                     <th>{{ __("Code") }}</th>
                     <th>{{ __("Name") }}</th>
-                    <th>{{ __("Match Symptom") }}</th>
-                    <th>{{ __("Total Symptom") }}</th>
                     <th>{{ __("Percentage") }}</th>
                 </tr>
             </thead>
@@ -58,16 +56,13 @@
                 }, {
                     data: 'matchCount',
                     defaultContent: '0',
-                }, {
-                    data: 'totalCount',
-                    defaultContent: '0',
-                }, {
-                    data: 'totalCount',
-                    defaultContent: '0',
                     className: 'text-center',
                     render: function(data, type, row)
                     {
-                        return '<span class="badge bg-success">'+(row.matchCount/row.totalCount * 100).toFixed(2)+' %</span>';
+                        if(row.totalCount > 0) {
+                            return '<span class="badge bg-success">'+(data/row.totalCount * 100).toFixed(2)+' %</span>';
+                        }
+                        return '<span class="badge bg-success">100.00 %</span>';
                     }
                 }
             ],

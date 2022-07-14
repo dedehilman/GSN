@@ -146,7 +146,8 @@ class DiagnosisController extends AppCrudController
     public function datatableCalculate(Request $request) {
         try
         {
-            $data = DB::select('SELECT a.id,a.code,a.name, COALESCE(b.matchCount, 0) AS matchCount, COALESCE(c.totalCount, 0) AS totalCount FROM diagnoses a LEFT JOIN ( SELECT diagnosis_id,COUNT(1) AS matchCount FROM diagnosis_symptoms WHERE symptom_id IN ('.$request->parameters['symptom_id'].') GROUP BY diagnosis_id ) b ON a.id = b.diagnosis_id LEFT JOIN ( SELECT diagnosis_id,COUNT(1) AS totalCount FROM diagnosis_symptoms GROUP BY diagnosis_id ) c ON a.id = c.diagnosis_id ORDER BY matchCount DESC,totalCount ASC');
+            $symptomIds = explode(",", $request->parameters['symptom_id'] ?? "");
+            $data = DB::select('SELECT a.id,a.code,a.name, COALESCE(b.matchCount, 0) AS matchCount, '.count($symptomIds).' AS totalCount FROM diagnoses a LEFT JOIN ( SELECT diagnosis_id,COUNT(1) AS matchCount FROM diagnosis_symptoms WHERE symptom_id IN ('.$request->parameters['symptom_id'].') GROUP BY diagnosis_id ) b ON a.id = b.diagnosis_id WHERE matchCount >= '.count($symptomIds));
             $totalData = count($data);
             $totalFiltered = $totalData;
             

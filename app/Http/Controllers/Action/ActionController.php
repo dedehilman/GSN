@@ -124,6 +124,7 @@ class ActionController extends AppCrudController
 
                 $prescription->medicine_id = $request->prescription_medicine_id[$i];
                 $prescription->medicine_rule_id = $request->prescription_medicine_rule_id[$i];
+                $prescription->stock_qty = $request->prescription_stock_qty[$i];
                 $prescription->qty = $request->prescription_qty[$i];
                 $prescription->save();
             }    

@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\BlameableTrait;
 
-class Prescription extends Model
+class PharmacyDetail extends Model
 {
     use HasFactory, BlameableTrait;
 
-    protected $fillable = ['disease_id', 'medicine_id', 'medicine_rule_id', 'qty', 'stock_qty'];
+    protected $fillable = ['pharmacy_id', 'medicine_id', 'medicine_rule_id', 'stock_qty', 'qty', 'actual_qty'];
 
     public function medicine() {
         return $this->belongsTo(Medicine::class);
@@ -19,7 +19,7 @@ class Prescription extends Model
     public function medicineRule() {
         return $this->belongsTo(MedicineRule::class);
     }
-
+    
     public function scopeWithAll($query) 
     {
         return $query->with(['medicine', 'medicineRule']);

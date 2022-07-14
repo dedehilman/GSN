@@ -368,7 +368,6 @@ class AppCrudController extends Controller
         } 
         catch (\Throwable $th)
         {
-            dd($th);
             return response()->json([
                 'status' => '500',
                 'data' => '',
