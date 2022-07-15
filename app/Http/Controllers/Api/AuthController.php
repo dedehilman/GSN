@@ -161,7 +161,7 @@ class AuthController extends Controller
     }
 
     public function user(){
-        $user = auth()->user();
+        $user = User::where('id', auth()->user()->id)->withAll()->first();
         return response()->json([
             'status'=> '200',
             'message'=> '',

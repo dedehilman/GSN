@@ -13,11 +13,10 @@ use App\Http\Controllers\Controller;
 class ApiController extends Controller
 {
     use RuleQueryBuilderTrait;
-    private $model;
+    protected $model;
 
     public function setDefaultMiddleware($permission) {
         $this->middleware('auth:api');
-        $this->middleware('permission:'.$permission.'-list|'.$permission.'-create|'.$permission.'-edit|'.$permission.'-delete', ['only' => ['index','show']]);
         $this->middleware('permission:'.$permission.'-create', ['only' => ['create','store']]);
         $this->middleware('permission:'.$permission.'-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:'.$permission.'-delete', ['only' => ['destroy']]);
@@ -52,17 +51,22 @@ class ApiController extends Controller
                 $query = DB::table($this->getTableName());
             }
 
-            $query = $this->queryBuilder([$this->getTableName()], $query);
+            if($request->query_builder ?? "1" == "1") {
+                $query = $this->queryBuilder([$this->getTableName()], $query);
+            }
             $totalData = $query->count();
             $query = $this->filterBuilder($request, $query);
             $query = $this->sortBuilder($request, $query);
             $totalFiltered = $query->count();
 
             if ($size == -1) {
-                $totalPage = 1;
+                $totalPage = 0;
                 $data = $query->get();
             } else {
                 $totalPage = ceil($totalFiltered / $size);
+                if($totalPage > 0) {
+                    $totalPage = $totalPage - 1;
+                }
                 $data = $query
                     ->offset($page * $size)
                     ->limit($size)
@@ -204,7 +208,7 @@ class ApiController extends Controller
                 ]);
             }
 
-            $data = $data->fill($request->all())->save();
+            $data->fill($request->all())->save();
             return response()->json([
                 'status' => '200',
                 'message'=> Lang::get("Data has been updated"),
@@ -278,11 +282,22 @@ class ApiController extends Controller
 
     public function filterBuilder(Request $request, $query)
     {
+        $search = $request->input('search') ?? "";
+        $columns = $request->input("column") ?? [];
+        if($search && $columns) {
+            $query->where(function($query) use ($search, $columns) 
+            {
+                foreach($columns as $column) {
+                    $query->orWhere($column,'LIKE', $search);
+                }
+            });    
+        }
+
         foreach ($request->all() as $key => $value) {
-            if($key == "sort" || $key == "page" || $key == "size")
+            if($key == "sort" || $key == "page" || $key == "size" || $key == "search" || $key == "column" || $key == "query_builder")
                 continue;
 
-            if($value) {                
+            if($value != null) {            
                 if(Str::endsWith($key, '_like')) {
                     $query->where(Str::replace('_like', '', $key),'LIKE',"%{$value}%");
                 }
@@ -312,8 +327,9 @@ class ApiController extends Controller
                         $query->where(Str::replace('_neq', '', $key),'<>',$value);
                     }
                 }
-                else if(Str::startsWith($value, '%') || Str::endsWith($value, '%')) {
-                    $query->where($key,'LIKE',"$value");
+                else if(Str::startsWith($value, '\\x') || Str::startsWith($value, '%') || Str::endsWith($value, '%')) {
+                    $value = Str::replace('\\x', '%', $value);
+                    $query->where($key,'LIKE', $value);
                 } else {
                     if($value == "null") {
                         $query->whereNull($key);
