@@ -43,6 +43,16 @@
                         <label class="col-md-3 col-form-label">{{__("Clinic")}}</label>
                         <div class="col-md-9 col-form-label">{{$data->clinic->name}}</div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Digital Sign")}}</label>
+                        <div class="col-md-9">
+                            @if ($data->image)
+                                <img src="{{ asset($data->image) }}" width="150" height="150">
+                            @else
+                                <img src="#" width="150" height="150">
+                            @endif
+                        </div>
+                    </div>
                     <div class="row d-none">
                         <div class="col-md-12">
                             <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">

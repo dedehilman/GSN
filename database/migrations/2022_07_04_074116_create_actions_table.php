@@ -17,7 +17,7 @@ class CreateActionsTable extends Migration
             $table->id();
             $table->bigInteger('model_id')->nullable();
             $table->string('model_type')->nullable();
-            $table->enum('action', ['Finished', 'Re-Medicate', 'Refer']);
+            $table->enum('action', ['Finished', 'Remedicate', 'Refer']);
             $table->string('remark')->nullable();
             $table->enum('reference_type', ['Internal', 'External'])->default('Internal');
             $table->unsignedBigInteger('reference_clinic_id')->nullable();

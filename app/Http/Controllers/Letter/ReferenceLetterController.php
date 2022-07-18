@@ -27,8 +27,8 @@ class ReferenceLetterController extends AppCrudController
     public function store(Request $request)
     {
         try {
-            $count = ReferenceLetter::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->count();
-            $request['transaction_no'] = 'SR-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+            $count = ReferenceLetter::whereDate('transaction_date', Carbon::parse($request->transaction_date)->isoFormat('YYYY-MM-DD'))->count();
+            $request['transaction_no'] = 'SR-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);
             if($validateOnStore) {
@@ -175,8 +175,8 @@ class ReferenceLetterController extends AppCrudController
 
     public function generateStore(Request $request) {
         try {
-            $count = ReferenceLetter::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->count();
-            $request['transaction_no'] = 'SR-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+            $count = ReferenceLetter::whereDate('transaction_date', Carbon::parse($request->transaction_date)->isoFormat('YYYY-MM-DD'))->count();
+            $request['transaction_no'] = 'SR-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);
             if($validateOnStore) {

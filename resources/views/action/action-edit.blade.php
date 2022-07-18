@@ -9,7 +9,7 @@
         <select name="action_action" class="form-control custom-select required">
             <option value=""></option>
             <option value="Finished" @if(($action->action ?? '') == 'Finished') selected @endif>{{__("Finished")}}</option>
-            <option value="Re-Medicate" @if(($action->action ?? '') == 'Re-Medicate') selected @endif>{{__("Re-Medicate")}}</option>
+            <option value="Remedicate" @if(($action->action ?? '') == 'Remedicate') selected @endif>{{__("Remedicate")}}</option>
             <option value="Refer" @if(($action->action ?? '') == 'Refer') selected @endif>{{__("Refer")}}</option>
         </select>
     </div>
@@ -42,8 +42,8 @@
         </div>
     </div>
 </div>
-<div class="form-group row remedicate @if(($action->action ?? '') != 'Re-Medicate') d-none @endif">
-    <label class="col-md-2 col-form-label required">{{__("Re-Medicate Date")}}</label>
+<div class="form-group row remedicate @if(($action->action ?? '') != 'Remedicate') d-none @endif">
+    <label class="col-md-2 col-form-label required">{{__("Remedicate Date")}}</label>
     <div class="col-md-4">
         <div class="input-group">
             <div class="input-group-prepend">
@@ -78,7 +78,7 @@
                 $(".reference").addClass("d-none");
                 $(".remedicate").addClass("d-none");
 
-                if($(this).val() == 'Re-Medicate') {
+                if($(this).val() == 'Remedicate') {
                     $(".remedicate").removeClass("d-none");
                 } else if($(this).val() == 'Refer') {
                     $(".reference").removeClass("d-none");

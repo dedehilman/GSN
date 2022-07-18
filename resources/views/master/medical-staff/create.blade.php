@@ -73,6 +73,13 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Digital Sign")}}</label>
+                            <div class="col-md-9">
+                                <img src="{{ asset('public/img/200.png') }}" width="150" height="150" id="image_preview">
+                                <input style="display: none;" type='file' id="image" name="image"/>
+                            </div>
+                        </div>
                         <div class="row d-none">
                             <div class="col-md-12">
                                 <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
@@ -101,7 +108,7 @@
                     </div>
                     <div class="card-footer text-right">
                         <a href="{{route('medical-staff.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
-                        <button type="button" class="btn btn-primary" id="btn-store"><i class="fas fa fa-save"></i> {{__("Save")}}</button>
+                        <button type="button" class="btn btn-primary" id="btn-store-multipart"><i class="fas fa fa-save"></i> {{__("Save")}}</button>
                     </div>
                 </div>
             </form>

@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Api\Action;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\Api\Action\ActionController;
 use Illuminate\Support\Facades\Validator;
 use App\Models\FamilyPlanning;
 use Carbon\Carbon;
 use Lang;
 
-class FamilyPlanningController extends ApiController
+class FamilyPlanningController extends ActionController
 {
 
     public function __construct()

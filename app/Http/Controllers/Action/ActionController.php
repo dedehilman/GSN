@@ -96,7 +96,7 @@ class ActionController extends AppCrudController
 
         $action->action = $request->action_action;
         $action->remark = $request->action_remark;
-        if($action->action == 'Re-Medicate') {
+        if($action->action == 'Remedicate') {
             $action->remedicate_date = $request->action_remedicate_date;
         } else if ($action->action == 'Refer') {
             $action->reference_type = $request->action_reference_type;

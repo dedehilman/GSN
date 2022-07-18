@@ -18,7 +18,8 @@ class MedicalStaff extends Model
         'phone',
         'email',
         'address',
-        'clinic_id'
+        'clinic_id',
+        'image'
     ];
 
     public function clinic()

@@ -151,10 +151,10 @@
                     </div>
                 </td>
                 <td>
-                    <input type="number" class="form-control " name="stock_qty[]" value="0.00">
+                    <input type="number" class="form-control " name="stock_qty[]" value="0.00" readonly>
                 </td>
                 <td>
-                    <input type="number" class="form-control " name="qty[]" value="0.00">
+                    <input type="number" class="form-control " name="qty[]" value="0.00" readonly>
                 </td>
                 <td>
                     <input type="number" class="form-control " name="actual_qty[]" value="0.00">

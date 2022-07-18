@@ -19,7 +19,7 @@
     <label class="col-md-2 col-form-label ">{{__("Reference")}}</label>
     <div class="col-md-4 col-form-label">{{($action->reference_type ?? '') == 'Internal' ? $action->referenceClinic->name ?? '' : $action->reference->name ?? ''}}</div>
 </div>
-<div class="form-group row remedicate @if(($action->action ?? '') != 'Re-Medicate') d-none @endif">
-    <label class="col-md-2 col-form-label ">{{__("Re-Medicate Date")}}</label>
+<div class="form-group row remedicate @if(($action->action ?? '') != 'Remedicate') d-none @endif">
+    <label class="col-md-2 col-form-label ">{{__("Remedicate Date")}}</label>
     <div class="col-md-4 col-form-label">{{$action->remedicate_date ?? ''}}</div>
 </div>

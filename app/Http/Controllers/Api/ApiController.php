@@ -14,6 +14,7 @@ class ApiController extends Controller
 {
     use RuleQueryBuilderTrait;
     protected $model;
+    protected $filePath = '';
 
     public function setDefaultMiddleware($permission) {
         $this->middleware('auth:api');
@@ -32,6 +33,14 @@ class ApiController extends Controller
 
     public function getTableName() {
         return with(new $this->model)->getTable();
+    }
+
+    public function getClassName($replaceBackSlash = true) {
+        $className = get_class(with(new $this->model));
+        if($replaceBackSlash) {
+            return str_replace("\\", "\\\\", $className);
+        }
+        return $className;
     }
 
     /**
@@ -86,6 +95,7 @@ class ApiController extends Controller
                 )
             ]);
         } catch (\Throwable $th) {
+            dd($th);
             return response()->json([
                 'status' => '500',
                 'message'=> $th->getMessage(),
@@ -375,5 +385,58 @@ class ApiController extends Controller
         }
 
         return $query;
+    }
+
+    public function storeMedia(Request $request)
+    {
+        try {
+            $maxUploadSize = getParameter('MAX_UPLOAD_SIZE');
+            if($maxUploadSize && $maxUploadSize != "") {
+                $validator = Validator::make($request->all(), [
+                    'file' => 'required|file|max:'.$maxUploadSize,
+                ]);
+        
+                if($validator->fails()){
+                    return response()->json([
+                        'status' => '400',
+                        'data' => '',
+                        'message'=> $validator->errors()->all(),
+                    ]);
+                }       
+            }
+
+            $path = storage_path("media/".$this->getFilePath());
+
+            if (!file_exists($path)) {
+                $old = umask(0);
+                mkdir($path, 0777, true);
+                umask($old);
+            }
+
+            $file = $request->file('file');
+            $name = uniqid() . '.' . pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+
+            $file->move($path, $name);
+
+            return response()->json([
+                'status' => '200',
+                'message'=> "",
+                'data' => [
+                    "id" => 0,
+                    'name' => $name,
+                    'file_name' => $name,
+                ],
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => '500',
+                'message'=> $th->getMessage(),
+                'data' => '',
+            ]);
+        }
+    }
+
+    public function getFilePath() {
+        return $this->filePath;
     }
 }

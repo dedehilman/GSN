@@ -4,6 +4,7 @@
     <div class="row">
         <div class="col-md-12">
             <form action="{{route('medical-staff.update', $data->id)}}" method="POST">
+                @method('PUT')
                 @csrf
 
                 <div class="card">
@@ -73,6 +74,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Digital Sign")}}</label>
+                            <div class="col-md-9">
+                                @if ($data->image)
+                                    <img src="{{ asset($data->image) }}" width="150" height="150" id="image_preview">
+                                @else
+                                    <img src="#" width="150" height="150" id="image_preview">
+                                @endif
+                                <input style="display: none;" type='file' id="image" name="image"/>
+                            </div>
+                        </div>
                         <div class="row d-none">
                             <div class="col-md-12">
                                 <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
@@ -118,7 +130,7 @@
                     </div>
                     <div class="card-footer text-right">
                         <a href="{{route('medical-staff.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
-                        <button type="button" class="btn btn-primary" id="btn-update"><i class="fas fa fa-save"></i> {{__("Update")}}</button>
+                        <button type="button" class="btn btn-primary" id="btn-update-multipart"><i class="fas fa fa-save"></i> {{__("Update")}}</button>
                     </div>
                 </div>
             </form>

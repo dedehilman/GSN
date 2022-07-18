@@ -23,6 +23,6 @@ class Pharmacy extends Model
 
     public function scopeWithAll($query) 
     {
-        return $query->with(['clinic']);
+        return $query->with(['clinic', 'details', 'details.medicine', 'details.medicineRule']);
     }
 }

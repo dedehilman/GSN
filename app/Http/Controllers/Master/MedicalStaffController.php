@@ -42,6 +42,13 @@ class MedicalStaffController extends AppCrudController
             $data->email = $request->email;
             $data->address = $request->address;
             $data->clinic_id = $request->clinic_id;
+            if($request->image) {
+                $file = $request->file('image');
+                $tujuan_upload = 'public/img/medical-staff';
+                if($file->move($tujuan_upload, time().'_'.$file->getClientOriginalName())) {
+                    $data->image = 'public/img/medical-staff/'.time().'_'.$file->getClientOriginalName();
+                };
+            }
             $data->save();
 
             $data->syncClinics($request->clinics);
@@ -91,6 +98,13 @@ class MedicalStaffController extends AppCrudController
             $data->email = $request->email;
             $data->address = $request->address;
             $data->clinic_id = $request->clinic_id;
+            if($request->image) {
+                $file = $request->file('image');
+                $tujuan_upload = 'public/img/medical-staff';
+                if($file->move($tujuan_upload, time().'_'.$file->getClientOriginalName())) {
+                    $data->image = 'public/img/medical-staff/'.time().'_'.$file->getClientOriginalName();
+                };
+            }
             $data->save();
 
             $data->syncClinics($request->clinics);

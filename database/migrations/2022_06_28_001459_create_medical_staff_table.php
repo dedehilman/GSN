@@ -21,6 +21,7 @@ class CreateMedicalStaffTable extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('address')->nullable();
+            $table->string('image')->nullable();
             $table->unsignedBigInteger('clinic_id');
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();

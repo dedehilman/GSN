@@ -25,8 +25,38 @@ class ReferenceLetterController extends ApiController
     public function store(Request $request)
     {
         try {
-            $count = ReferenceLetter::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->count();
-            $request['transaction_no'] = 'SR-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+            $count = ReferenceLetter::whereDate('transaction_date', Carbon::parse($request->transaction_date)->isoFormat('YYYY-MM-DD'))->count();
+            $request['transaction_no'] = 'SR-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+
+            $validateOnStore = $this->validateOnStore($request);
+            if($validateOnStore) {
+                return response()->json([
+                    'status' => '400',
+                    'message'=> $validateOnStore,
+                    'data' => '',
+                ]);
+            }
+
+            $data = $this->model::create($request->all());
+            return response()->json([
+                'status' => '200',
+                'message'=> Lang::get("Data has been stored"),
+                'data' => $data,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => '500',
+                'message'=> $th->getMessage(),
+                'data' => '',
+            ]);
+        }        
+    }
+
+    public function generate(Request $request)
+    {
+        try {
+            $count = ReferenceLetter::whereDate('transaction_date', Carbon::parse($request->transaction_date)->isoFormat('YYYY-MM-DD'))->count();
+            $request['transaction_no'] = 'SR-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);
             if($validateOnStore) {

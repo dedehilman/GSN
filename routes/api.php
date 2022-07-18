@@ -32,14 +32,24 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.' ], function () {
     Route::apiResource('clinics', App\Http\Controllers\Api\ClinicController::class);
     Route::apiResource('references', App\Http\Controllers\Api\ReferenceController::class);
     Route::apiResource('parameters', App\Http\Controllers\Api\ParameterController::class);
+    Route::get('diagnoses/calculate', [App\Http\Controllers\Api\DiagnosisController::class, 'calculate']);
     Route::apiResource('diagnoses', App\Http\Controllers\Api\DiagnosisController::class);
     Route::apiResource('family-planning-categories', App\Http\Controllers\Api\FamilyPlanningCategoryController::class);
     Route::apiResource('work-accident-categories', App\Http\Controllers\Api\WorkAccidentCategoryController::class);
+    Route::apiResource('medicines', App\Http\Controllers\Api\MedicineController::class);
+    Route::apiResource('medicine-rules', App\Http\Controllers\Api\MedicineRuleController::class);
+    Route::apiResource('histories', App\Http\Controllers\Api\HistoryController::class);
+    Route::get('pharmacies/unprocessed', [App\Http\Controllers\Api\PharmacyController::class, 'unprocessed']);
+    Route::apiResource('pharmacies', App\Http\Controllers\Api\PharmacyController::class);
+    Route::apiResource('prescriptions', App\Http\Controllers\Api\PrescriptionController::class);
+    Route::apiResource('symptoms', App\Http\Controllers\Api\SymptomController::class);
 
     Route::group(['prefix' => 'letter/', 'as' => 'letter.' ], function () {
         Route::get('references/send-to-email/{id}', [App\Http\Controllers\Api\Letter\ReferenceLetterController::class, 'sendToEmail']);
+        Route::post('references/generate', [App\Http\Controllers\Api\Letter\ReferenceLetterController::class, 'generate']);
         Route::apiResource('references', App\Http\Controllers\Api\Letter\ReferenceLetterController::class);
         Route::get('sicks/send-to-email/{id}', [App\Http\Controllers\Api\Letter\SickLetterController::class, 'sendToEmail']);
+        Route::post('sicks/generate', [App\Http\Controllers\Api\Letter\SickLetterController::class, 'generate']);
         Route::apiResource('sicks', App\Http\Controllers\Api\Letter\SickLetterController::class);
     });
 
@@ -51,9 +61,14 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.' ], function () {
     });
 
     Route::group(['prefix' => 'action/', 'as' => 'action.' ], function () {
+        Route::get('plano-tests/send-to-email/{id}', [App\Http\Controllers\Api\Action\PlanoTestController::class, 'sendToEmail']);
+        Route::post('plano-tests/media', [App\Http\Controllers\Api\Action\PlanoTestController::class, 'storeMedia']);
         Route::apiResource('plano-tests', App\Http\Controllers\Api\Action\PlanoTestController::class);
+        Route::post('family-plannings/media', [App\Http\Controllers\Api\Action\FamilyPlanningController::class, 'storeMedia']);
         Route::apiResource('family-plannings', App\Http\Controllers\Api\Action\FamilyPlanningController::class);
+        Route::post('outpatients/media', [App\Http\Controllers\Api\Action\OutpatientController::class, 'storeMedia']);
         Route::apiResource('outpatients', App\Http\Controllers\Api\Action\OutpatientController::class);
+        Route::post('work-accidents/media', [App\Http\Controllers\Api\Action\WorkAccidentController::class, 'storeMedia']);
         Route::apiResource('work-accidents', App\Http\Controllers\Api\Action\WorkAccidentController::class);
     });
 });
