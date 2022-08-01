@@ -479,7 +479,7 @@ class AppCrudController extends Controller
             {
                 foreach($columns as $column) {
                     if($column['name'] && !Str::endsWith($column['name'], '_id')) {
-                        $query->orWhere($column['name'],'LIKE', $search);
+                        $query->orWhere($column['name'],'LIKE', "%{$search}%");
                     }
                 }
             });    
@@ -491,7 +491,7 @@ class AppCrudController extends Controller
             {
                 foreach($columns as $column) {
                     if($column['name'] && !Str::endsWith($column['name'], '_id')) {
-                        $query->orWhere($column['name'],'LIKE', $search);
+                        $query->orWhere($column['name'],'LIKE', "%{$search}%");
                     }
                 }
             });    

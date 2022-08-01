@@ -298,7 +298,7 @@ class ApiController extends Controller
             $query->where(function($query) use ($search, $columns) 
             {
                 foreach($columns as $column) {
-                    $query->orWhere($column,'LIKE', $search);
+                    $query->orWhere($column,'LIKE', "%{$search}%");
                 }
             });    
         }

@@ -13,45 +13,111 @@
     </tr>
 </table>
 <hr/>
-<p style="margin-bottom: 0px; font-weight: bold; text-decoration: underline; font-size: 16px; text-align: center;">Surat Rujukan</p>
-<p style="text-align: center; margin-top: 0px;">No: {{$data->transaction_no}}</p>
-
-<p>
-    Kepada yang terhormat<br/>
-    @if($data->reference_type == 'Internal') {{$data->referenceClinic->name}} @else {{$data->reference->name}} @endif <br/>
-    Di<br>
-    @if($data->reference_type == 'Internal') {!!nl2br($data->referenceClinic->address)!!} @else {!!nl2br($data->reference->address)!!} @endif
-<p>
-<p>Kami merujuk pasien</p>
 <table width="100%">
     <tr>
-        <td width="20%">Nama</td>
-        <td>: @if($data->for_relationship == 0) {{$data->patient->name}} @else {{$data->patientRelationship->name}} @endif</td>
+        <td width="20%">No</td>
+        <td>: {{$data->transaction_no}}</td>
     </tr>
     <tr>
-        <td>Umur</td>
-        <td>: @if($data->for_relationship == 0) {{getAge($data->patient->birth_date)}} @else {{getAge($data->patientRelationship->birth_date)}} @endif Tahun</td>
+        <td>Tanggal</td>
+        <td>: {{\Carbon\Carbon::parse($data->transaction_date)->isoFormat("DD MMMM YYYY")}}</td>
     </tr>
     <tr>
-        <td>Jenis Kelamin</td>
-        <td>: @if($data->for_relationship == 0) {{__($data->patient->gender)}} @else {{$data->patientRelationship->gender}} @endif</td>
+        <td>Kepada Yth</td>
+        <td>: @if($data->reference_type == 'Internal') {{$data->referenceClinic->name}} @else {{$data->reference->name}} @endif</td>
     </tr>
     <tr>
-        <td>Alamat</td>
-        <td>: @if($data->for_relationship == 0) {{$data->patient->address}} @else {{$data->patientRelationship->address}} @endif</td>
+        <td>Di</td>
+        <td>: @if($data->reference_type == 'Internal') {!!nl2br($data->referenceClinic->address)!!} @else {!!nl2br($data->reference->address)!!} @endif</td>
     </tr>
     <tr>
-        <td>Catatan</td>
-        <td>: {{$data->remark}}</td>
+        <td>Perihal</td>
+        <td>: Rujukan Pasien</td>
     </tr>
 </table>
-<p>Mohon perawatan dan penanganan selanjutnya.</p>
-<p>Terima Kasih</p>
+<p>TS yang terhormat,</p>
+<p>Mohon penanganan pasien lebih lanjut:</p>
+<table width="100%">
+    <tr>
+        <td width="5%">I</td>
+        <td width="30%">Identitas</td>
+        <td>:</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Nama Pasien</td>
+        <td colspan="3">: @if($data->for_relationship == 0) {{$data->patient->name}} @else {{$data->patientRelationship->name}} @endif 
+            (@if($data->for_relationship == 0) {{__($data->patient->gender)}} @else {{$data->patientRelationship->gender}} @endif)</td>
+        <td>Umur</td>
+        <td width="30%">: @if($data->for_relationship == 0) {{getAge($data->patient->birth_date)}} @else {{getAge($data->patientRelationship->birth_date)}} @endif Thn</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Status di Perusahan</td>
+        <td colspan="5">: @if($data->for_relationship == 0) Karyawan @else Tanggungan @endif</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Nama Karyawan</td>
+        <td width="30%">: {{$data->patient->name}}</td>
+        <td>NPK</td>
+        <td width="20%">: {{$data->patient->code}}</td>
+        <td>Golongan</td>
+        <td width="10%">: </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Unit Kerja</td>
+        <td width="30%">:</td>
+        <td>Status</td>
+        <td>: </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Site</td>
+        <td width="30%">:</td>
+        <td>TMK</td>
+        <td>: </td>
+    </tr>
+</table>
+<br/>
+<table width="100%">
+    <tr>
+        <td width="5%" rowspan="7" valign="top">II</td>
+        <td colspan="2">PHYSIC DIAGNOSTIC</td>
+    </tr>
+    <tr>
+        <td width="5%">1</td>
+        <td>Keluhan Utama :</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Riwayat Penyakit Sekarang :</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Pemeriksaan Fifik :</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>- Vital Sign</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Diagnosa Kerja :</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Terapi Sementara :</td>
+    </tr>
+</table>
+<p>Atas kerjasamanya di ucapkan terimakasih</p>
 <table width="100%">
     <tr>
         <td width="70%"></td>
         <td width="30%" align="center">
             {{$data->clinic->location}}, {{\Carbon\Carbon::parse($data->transaction_date)->isoFormat("DD MMMM YYYY")}}<br/>
+            Hormat Saya<br/>
             <br/>
             <img src="{{ asset($data->medicalStaff->image) }}" width="60" height="60">
             <br/>

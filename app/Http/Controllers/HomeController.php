@@ -45,6 +45,133 @@ class HomeController extends Controller
             'label'=> $label,
             'data'=> $data,
         ];
-        return view('home', ["topDiseases"=>$topDiseases]);
+
+        // KK
+        $ids = \App\Models\WorkAccidentCategory::orderBy('id', 'ASC')->pluck('id')->toArray();
+        $label = \App\Models\WorkAccidentCategory::orderBy('id', 'ASC')->pluck('name')->toArray();
+        $data = array();
+        for ($i=0; $i < count($label); $i++) { 
+            array_push($data, 0);
+        }
+        $dataFromDb = \App\Models\WorkAccident::select(
+                    'work_accident_category_id',
+                    DB::Raw('COUNT(1) AS count')
+                )
+                ->groupBy('work_accident_category_id')
+                ->get();
+
+        foreach($dataFromDb as $db)
+        {
+            $data[array_search($db->work_accident_category_id, $ids)] = $db->count;
+        }
+
+        $kkBasedOnCategory = [
+            'label'=> $label,
+            'data'=> $data,
+        ];
+
+        // KB
+        $ids = \App\Models\FamilyPlanningCategory::orderBy('id', 'ASC')->pluck('id')->toArray();
+        $label = \App\Models\FamilyPlanningCategory::orderBy('id', 'ASC')->pluck('name')->toArray();
+        $data = array();
+        for ($i=0; $i < count($label); $i++) { 
+            array_push($data, 0);
+        }
+        $dataFromDb = \App\Models\FamilyPlanning::select(
+                    'family_planning_category_id',
+                    DB::Raw('COUNT(1) AS count')
+                )
+                ->groupBy('family_planning_category_id')
+                ->get();
+
+        foreach($dataFromDb as $db)
+        {
+            $data[array_search($db->family_planning_category_id, $ids)] = $db->count;
+        }
+
+        $kbBasedOnCategory = [
+            'label'=> $label,
+            'data'=> $data,
+        ];
+
+        // PP
+        $label = ['Positive', 'Negative'];
+        $data = array();
+        for ($i=0; $i < count($label); $i++) { 
+            array_push($data, 0);
+        }
+        $dataFromDb = \App\Models\PlanoTest::select(
+                    'result',
+                    DB::Raw('COUNT(1) AS count')
+                )
+                ->groupBy('result')
+                ->get();
+
+        foreach($dataFromDb as $db)
+        {
+            $data[array_search($db->label, $label)] = $db->count;
+        }
+
+        $ppTestBasedOnResult = [
+            'label'=> $label,
+            'data'=> $data,
+        ];
+
+        // Sick Letter
+        $ids = \App\Models\Clinic::orderBy('id', 'ASC')->pluck('id')->toArray();
+        $label = \App\Models\Clinic::orderBy('id', 'ASC')->pluck('code')->toArray();
+        $data = array();
+        for ($i=0; $i < count($label); $i++) { 
+            array_push($data, 0);
+        }
+        $dataFromDb = \App\Models\SickLetter::select(
+                    'clinic_id',
+                    DB::Raw('COUNT(1) AS count')
+                )
+                ->groupBy('clinic_id')
+                ->get();
+
+        foreach($dataFromDb as $db)
+        {
+            $data[array_search($db->clinic_id, $ids)] = $db->count;
+        }
+
+        $slBasedOnClinic = [
+            'label'=> $label,
+            'data'=> $data,
+        ];
+
+        // Reference Letter
+        $ids = \App\Models\Clinic::orderBy('id', 'ASC')->pluck('id')->toArray();
+        $label = \App\Models\Clinic::orderBy('id', 'ASC')->pluck('code')->toArray();
+        $data = array();
+        for ($i=0; $i < count($label); $i++) { 
+            array_push($data, 0);
+        }
+        $dataFromDb = \App\Models\ReferenceLetter::select(
+                    'clinic_id',
+                    DB::Raw('COUNT(1) AS count')
+                )
+                ->groupBy('clinic_id')
+                ->get();
+
+        foreach($dataFromDb as $db)
+        {
+            $data[array_search($db->clinic_id, $ids)] = $db->count;
+        }
+
+        $rlBasedOnClinic = [
+            'label'=> $label,
+            'data'=> $data,
+        ];
+
+        return view('home', [
+            "topDiseases"=>$topDiseases,
+            "kkBasedOnCategory"=>$kkBasedOnCategory,
+            "kbBasedOnCategory"=>$kbBasedOnCategory,
+            "ppTestBasedOnResult"=>$ppTestBasedOnResult,
+            "slBasedOnClinic"=>$slBasedOnClinic,
+            "rlBasedOnClinic"=>$rlBasedOnClinic,
+        ]);
     }
 }

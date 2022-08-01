@@ -15,7 +15,7 @@
     <tbody>
         @foreach ($symptoms as $symptom)
             <tr>
-                <td>{{$symptom->symptom->name}}</td>
+                <td>{{$symptom->symptom->code.' - '.$symptom->symptom->name}}</td>
             </tr>            
         @endforeach
     </tbody>
@@ -29,7 +29,7 @@
     <tbody>
         @foreach ($diagnoses as $diagnosis)
             <tr>
-                <td>{{$diagnosis->diagnosis->name}}</td>
+                <td>{{$symptom->diagnosis->code.' - '.$diagnosis->diagnosis->name}}</td>
             </tr>            
         @endforeach
     </tbody>

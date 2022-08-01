@@ -25,7 +25,7 @@
                 </td>
                 <td>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="symptom_name{{$index}}" readonly value="{{$symptom->symptom->name}}">
+                        <input type="text" class="form-control" id="symptom_name{{$index}}" readonly value="{{$symptom->symptom->code.' - '.$symptom->symptom->name}}">
                         <input type="hidden" id="symptom_id{{$index}}" name="symptom_id[]" value="{{$symptom->symptom->id}}">
                         <div class="input-group-append">
                             <span class="input-group-text show-modal-select" data-title="{{__('Symptom List')}}" data-url="{{route('symptom.select')}}" data-handler="onSelectedResultSymptom"><i class="fas fa-search"></i></span>
@@ -55,7 +55,7 @@
                 </td>
                 <td>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="diagnosis_name{{$index}}" readonly value="{{$diagnosis->diagnosis->name}}">
+                        <input type="text" class="form-control" id="diagnosis_name{{$index}}" readonly value="{{$diagnosis->diagnosis->code.' - '.$diagnosis->diagnosis->name}}">
                         <input type="hidden" id="diagnosis_id{{$index}}" name="diagnosis_id[]" value="{{$diagnosis->diagnosis->id}}">
                         <div class="input-group-append">
                             <span class="input-group-text show-modal-select-custom" data-title="{{__('Diagnosis List')}}" data-url="{{route('diagnosis.calculate')}}" data-handler="onSelectedResultDiagnosis"><i class="fas fa-search"></i></span>
@@ -113,13 +113,13 @@
     <script>
         function onSelectedResultSymptom(data) {
             $('#symptom_id'+seqId).val(data[0].id);
-            $('#symptom_name'+seqId).val(data[0].name);
+            $('#symptom_name'+seqId).val(data[0].code + " - " + data[0].name);
         }
 
         function onSelectedResultDiagnosis(data) {
             console.log(data);
             $('#diagnosis_id'+seqId).val(data[0].id);
-            $('#diagnosis_name'+seqId).val(data[0].name);
+            $('#diagnosis_name'+seqId).val(data[0].code + " - " + data[0].name);
         }
 
         $(function(){
