@@ -19,7 +19,7 @@ class DiagnosisController extends ApiController
     public function calculate(Request $request) {
         try
         {
-            $data = DB::select('SELECT a.id,a.code,a.name, ROUND((COALESCE(b.matchCount, 0) / COALESCE(c.totalCount, 0) * 100), 0) AS percentage FROM diagnoses a LEFT JOIN ( SELECT diagnosis_id,COUNT(1) AS matchCount FROM diagnosis_symptoms WHERE symptom_id IN ('.implode(",", $request->symptom_id ?? []).') GROUP BY diagnosis_id ) b ON a.id = b.diagnosis_id LEFT JOIN (SELECT diagnosis_id,COUNT(1) AS totalCount FROM diagnosis_symptoms GROUP BY diagnosis_id) c ON a.id = c.diagnosis_id WHERE matchCount >= '.count($request->symptom_id ?? []));
+            $data = DB::select('SELECT a.id,a.code,a.name, ROUND((COALESCE(b.matchCount, 0) / COALESCE(c.totalCount, 0) * 100), 0) AS percentage FROM diagnoses a LEFT JOIN ( SELECT diagnosis_id,COUNT(1) AS matchCount FROM diagnosis_symptoms WHERE symptom_id IN ('.implode(",", $request->symptom_id ?? []).') GROUP BY diagnosis_id ) b ON a.id = b.diagnosis_id LEFT JOIN (SELECT diagnosis_id,COUNT(1) AS totalCount FROM diagnosis_symptoms GROUP BY diagnosis_id) c ON a.id = c.diagnosis_id WHERE matchCount >= '.count($request->symptom_id ?? []). ' ORDER BY percentage DESC');
             $totalData = count($data);
             $totalFiltered = $totalData;
             
