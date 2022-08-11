@@ -349,5 +349,52 @@ class ActionController extends AppCrudController
             ]);
         }
     }
+
+    public function validateOnUpdate(Request $request, int $id)
+    {
+        $validator = Validator::make($request->all(), []);
+
+        if(!$request->action_action) {
+            $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => Lang::get("Action")]));
+        }
+
+        if($request->prescription_id)
+        {
+            for($i=0; $i<count($request->prescription_id); $i++)
+            {
+                if(!$request->prescription_medicine_id[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Product")]));
+                }
+                if(!$request->prescription_medicine_rule_id[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Medicine Rule")]));
+                }
+                if(!$request->prescription_qty[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Qty")]));
+                }
+            }    
+        }
+
+        if($request->result_diagnosis_id)
+        {
+            for($i=0; $i<count($request->result_diagnosis_id); $i++)
+            {
+                if(!$request->diagnosis_id[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Diagnosis")]));
+                }
+            }    
+        }
+
+        if($request->result_symptom_id)
+        {
+            for($i=0; $i<count($request->result_symptom_id); $i++)
+            {
+                if(!$request->symptom_id[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Symptom")]));
+                }
+            }    
+        }
+
+        return $validator->errors()->all();
+    }
 }
 

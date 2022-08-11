@@ -29,7 +29,7 @@
     <tbody>
         @foreach ($diagnoses as $diagnosis)
             <tr>
-                <td>{{$symptom->diagnosis->code.' - '.$diagnosis->diagnosis->name}}</td>
+                <td>{{$diagnosis->diagnosis->code.' - '.$diagnosis->diagnosis->name}}</td>
             </tr>            
         @endforeach
     </tbody>

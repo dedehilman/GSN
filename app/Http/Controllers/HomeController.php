@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Lang;
 
 class HomeController extends Controller
 {
@@ -95,7 +96,7 @@ class HomeController extends Controller
         ];
 
         // PP
-        $label = ['Positive', 'Negative'];
+        $label = [Lang::get('Positive'), Lang::get('Negative')];
         $data = array();
         for ($i=0; $i < count($label); $i++) { 
             array_push($data, 0);

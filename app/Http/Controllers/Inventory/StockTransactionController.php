@@ -176,9 +176,20 @@ class StockTransactionController extends AppCrudController
             ]);
         }
 
-        if($validator->fails()){
-            return $validator->errors()->all();
+        if($request->transaction_detail_id)
+        {
+            for($i=0; $i<count($request->transaction_detail_id); $i++)
+            {
+                if(!$request->medicine_id[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Product")]));
+                }
+                if(!$request->qty[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Qty")]));
+                }
+            }    
         }
+
+        return $validator->errors()->all();
     }
 
     public function validateOnUpdate(Request $request, int $id)
@@ -200,8 +211,19 @@ class StockTransactionController extends AppCrudController
             ]);
         }
 
-        if($validator->fails()){
-            return $validator->errors()->all();
+        if($request->transaction_detail_id)
+        {
+            for($i=0; $i<count($request->transaction_detail_id); $i++)
+            {
+                if(!$request->medicine_id[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Product")]));
+                }
+                if(!$request->qty[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Qty")]));
+                }
+            }    
         }
+
+        return $validator->errors()->all();
     }
 }
