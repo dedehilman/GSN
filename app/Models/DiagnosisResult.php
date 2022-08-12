@@ -16,8 +16,19 @@ class DiagnosisResult extends Model
         return $this->belongsTo(Diagnosis::class);
     }
 
+    public function symptoms()
+    {
+        return $this->belongsToMany(Symptom::class, DiagnosisSymptomResult::class);
+    }
+
     public function scopeWithAll($query) 
     {
         return $query->with(['diagnosis']);
+    }
+
+    public function syncSymptoms($symptoms)
+    {
+        $this->symptoms()->detach();   
+        $this->symptoms()->attach($symptoms);
     }
 }

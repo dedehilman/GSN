@@ -2,176 +2,167 @@
     $diagnoses = \App\Models\DiagnosisResult::where('model_type', get_class($data))
             ->where('model_id', $data->id)
             ->get();
-    $symptoms = \App\Models\SymptomResult::where('model_type', get_class($data))
-            ->where('model_id', $data->id)
-            ->get();
 @endphp
-<table class="table table-bordered mt-2" id="table-symptom">
-    <thead>
-        <tr>
-            <th width="10px" class="text-center">
-                <span class='btn btn-primary btn-sm' id="btn-add-symptom" style="cursor: pointer"><i class='fas fa-plus-circle'></i></span>
-            </th>
-            <th>{{__('Symptom')}}</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($symptoms as $index => $symptom)
-            <tr>
-                <td style="vertical-align: middle; text-align: center;">
-                    <span class='btn btn-danger btn-sm' onclick="removeRow(this)" style="cursor: pointer"><i class='fas fa-trash-alt'></i></span>
-                    <input type="hidden" value="{{$index}}">
-                    <input type="hidden" name="result_symptom_id[]" id="result_symptom_id{{$index}}" value="{{$symptom->id}}">
-                </td>
-                <td>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="symptom_name{{$index}}" readonly value="{{$symptom->symptom->code.' - '.$symptom->symptom->name}}">
-                        <input type="hidden" id="symptom_id{{$index}}" name="symptom_id[]" value="{{$symptom->symptom->id}}">
-                        <div class="input-group-append">
-                            <span class="input-group-text show-modal-select" data-title="{{__('Symptom List')}}" data-url="{{route('symptom.select')}}" data-handler="onSelectedResultSymptom"><i class="fas fa-search"></i></span>
+<button class="btn btn-default mb-2" type="button" id="btn-add-diagnosis">{{__("Add Diagnosis")}}</button>
+<div id="diagnosis-cards" class="pt-2">
+    @foreach ($diagnoses as $diagnosis)
+        <div class="card" id="diagnosis-card{{$diagnosis->id}}">
+            <div class="card-header">
+                <h2 class="card-title">{{$diagnosis->diagnosis->code.' - '.$diagnosis->diagnosis->name}}</h2>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" onclick="removeCard(this)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label required">{{__("Diagnosis")}}</label>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <input type="hidden" name="diagnosis_result_id[]" value="{{$diagnosis->id}}">
+                            <input type="text" class="form-control" id="diagnosis_result_diagnosis_name{{$diagnosis->id}}" readonly value="{{$diagnosis->diagnosis->code.' - '.$diagnosis->diagnosis->name}}">
+                            <input type="hidden" id="diagnosis_result_diagnosis_id{{$diagnosis->id}}" name="diagnosis_result_diagnosis_id[]" value="{{$diagnosis->diagnosis->id}}">
+                            <div class="input-group-append">
+                                <span class="input-group-text show-modal-select-custom" style="cursor: pointer" data-title="{{__('Diagnosis List')}}" data-url="{{route('diagnosis.calculate')}}" data-handler="onSelectedResultDiagnosis"><i class="fas fa-search"></i></span>
+                            </div>
                         </div>
                     </div>
-                </td>
-            </tr>            
-        @endforeach
-    </tbody>
-</table>
-<table class="table table-bordered mt-2" id="table-diagnosis">
-    <thead>
-        <tr>
-            <th width="10px" class="text-center">
-                <span class='btn btn-primary btn-sm' id="btn-add-diagnosis" style="cursor: pointer"><i class='fas fa-plus-circle'></i></span>
-            </th>
-            <th>{{__('Diagnosis')}}</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($diagnoses as $index => $diagnosis)
-            <tr>
-                <td style="vertical-align: middle; text-align: center;">
-                    <span class='btn btn-danger btn-sm' onclick="removeRow(this)" style="cursor: pointer"><i class='fas fa-trash-alt'></i></span>
-                    <input type="hidden" value="{{$index}}">
-                    <input type="hidden" name="result_diagnosis_id[]" id="result_diagnosis_id{{$index}}" value="{{$diagnosis->id}}">
-                </td>
-                <td>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="diagnosis_name{{$index}}" readonly value="{{$diagnosis->diagnosis->code.' - '.$diagnosis->diagnosis->name}}">
-                        <input type="hidden" id="diagnosis_id{{$index}}" name="diagnosis_id[]" value="{{$diagnosis->diagnosis->id}}">
-                        <div class="input-group-append">
-                            <span class="input-group-text show-modal-select-custom" data-title="{{__('Diagnosis List')}}" data-url="{{route('diagnosis.calculate')}}" data-handler="onSelectedResultDiagnosis"><i class="fas fa-search"></i></span>
-                        </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label required">{{__("Symptom")}}</label>
+                    <div class="col-md-10">
+                        <table class="table table-bordered mt-2">
+                            <thead>
+                                <tr>
+                                    <th width="10px" class="text-center">
+                                        <span class='btn btn-primary btn-sm show-modal-select-custom' style="cursor: pointer" data-title="{{__('Symptom List')}}" data-url="{{route('symptom.select')}}" data-handler="onSelectedResultSymptom"><i class='fas fa-plus-circle'></i></span>
+                                    </th>
+                                    <th>{{__('Symptom')}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($diagnosis->symptoms as $symptom)                                
+                                    <tr>
+                                        <td style="vertical-align: middle; text-align: center;">
+                                            <span class='btn btn-danger btn-sm' onclick="removeRow(this)" style="cursor: pointer"><i class='fas fa-trash-alt'></i></span>
+                                            <input type="hidden" class="diagnosis_symptom_id" name="diagnosis_symptom_id{{$diagnosis->id}}[]" value="{{$symptom->id}}">
+                                        </td>
+                                        <td>{{$symptom->code.' - '.$symptom->name}}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                </td>
-            </tr>            
-        @endforeach
-    </tbody>
-</table>
+                </div>
+            </div>
+        </div>
+    @endforeach
+</div>
 
-<table class="d-none" id="table-symptom-tmp">
+<div class="card d-none" id="diagnosis-card-tmp">
+    <div class="card-header">
+        <h2 class="card-title"></h2>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" onclick="removeCard(this)">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label required">{{__("Diagnosis")}}</label>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <input type="hidden">
+                    <input type="text" class="form-control" readonly>
+                    <input type="hidden">
+                    <div class="input-group-append">
+                        <span class="input-group-text show-modal-select-custom" style="cursor: pointer" data-title="{{__('Diagnosis List')}}" data-url="{{route('diagnosis.calculate')}}" data-handler="onSelectedResultDiagnosis"><i class="fas fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label required">{{__("Symptom")}}</label>
+            <div class="col-md-10">
+                <table class="table table-bordered mt-2">
+                    <thead>
+                        <tr>
+                            <th width="10px" class="text-center">
+                                <span class='btn btn-primary btn-sm show-modal-select-custom' style="cursor: pointer" data-title="{{__('Symptom List')}}" data-url="{{route('symptom.select')}}" data-handler="onSelectedResultSymptom"><i class='fas fa-plus-circle'></i></span>
+                            </th>
+                            <th>{{__('Symptom')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table id="table-symptom-tmp" class="d-none">
     <tbody>
         <tr>
             <td style="vertical-align: middle; text-align: center;">
                 <span class='btn btn-danger btn-sm' onclick="removeRow(this)" style="cursor: pointer"><i class='fas fa-trash-alt'></i></span>
-                <input type="hidden">
-                <input type="hidden">
+                <input type="hidden" class="diagnosis_symptom_id">
             </td>
-            <td>
-                <div class="input-group">
-                    <input type="text" class="form-control" readonly>
-                    <input type="hidden">
-                    <div class="input-group-append">
-                        <span class="input-group-text show-modal-select" data-title="{{__('Symptom List')}}" data-url="{{route('symptom.select')}}" data-handler="onSelectedResultSymptom"><i class="fas fa-search"></i></span>
-                    </div>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-<table class="d-none" id="table-diagnosis-tmp">
-    <tbody>
-        <tr>
-            <td style="vertical-align: middle; text-align: center;">
-                <span class='btn btn-danger btn-sm' onclick="removeRow(this)" style="cursor: pointer"><i class='fas fa-trash-alt'></i></span>
-                <input type="hidden">
-                <input type="hidden">
-            </td>
-            <td>
-                <div class="input-group">
-                    <input type="text" class="form-control" readonly>
-                    <input type="hidden">
-                    <div class="input-group-append">
-                        <span class="input-group-text show-modal-select-custom" data-title="{{__('Diagnosis List')}}" data-url="{{route('diagnosis.calculate')}}" data-handler="onSelectedResultDiagnosis"><i class="fas fa-search"></i></span>
-                    </div>
-                </div>
-            </td>
-        </tr>
+            <td></td>
+        </tr>    
     </tbody>
 </table>
 
 @section('scriptDiagnosis')
     <script>
         function onSelectedResultSymptom(data) {
-            $('#symptom_id'+seqId).val(data[0].id);
-            $('#symptom_name'+seqId).val(data[0].code + " - " + data[0].name);
+            console.log(seqId);
+            var clonedElement = $('#table-symptom-tmp tbody tr:last').clone();
+            $('#diagnosis-card' + seqId).find('tbody').append(clonedElement);
+            var textInput = clonedElement.find('input');
+            var td = clonedElement.find('td');
+            var id = $('#diagnosis-card' + seqId).find('input[name^=diagnosis_result_id]').val();
+            textInput.eq(0).attr('name', 'diagnosis_symptom_id'+id+'[]');
+            textInput.eq(0).val(data[0].id);
+            td.eq(1).html(data[0].code + " - " + data[0].name);
         }
 
         function onSelectedResultDiagnosis(data) {
-            console.log(data);
-            $('#diagnosis_id'+seqId).val(data[0].id);
-            $('#diagnosis_name'+seqId).val(data[0].code + " - " + data[0].name);
+            $('#diagnosis_result_diagnosis_id'+seqId).val(data[0].id);
+            $('#diagnosis_result_diagnosis_name'+seqId).val(data[0].code + " - " + data[0].name);
         }
 
         $(function(){
-            $('#btn-add-symptom').on('click', function(){
-                var clonedRow = $('#table-symptom-tmp tbody tr:last').clone();
-                $('#table-symptom tbody').append(clonedRow);
-                var textInput = clonedRow.find('input');
-                
-                var i = 0;
-                for(var i=1; $('#result_symptom_id'+i).length;i++){}
-
-                textInput.eq(1).attr('id', 'result_symptom_id' + i);
-                textInput.eq(2).attr('id', 'symptom_name' + i);
-                textInput.eq(3).attr('id', 'symptom_id' + i);
-                textInput.eq(1).attr('name', 'result_symptom_id[]');
-                textInput.eq(3).attr('name', 'symptom_id[]');
-                textInput.val('');
-                textInput.eq(0).val(i);
-            });
-
             $('#btn-add-diagnosis').on('click', function(){
-                var clonedRow = $('#table-diagnosis-tmp tbody tr:last').clone();
-                $('#table-diagnosis tbody').append(clonedRow);
-                var textInput = clonedRow.find('input');
-                
                 var i = 0;
-                for(var i=1; $('#result_diagnosis_id'+i).length;i++){}
+                for(var i=1; $('#diagnosis_result_idn'+i).length;i++){}
 
-                textInput.eq(1).attr('id', 'result_diagnosis_id' + i);
-                textInput.eq(2).attr('id', 'diagnosis_name' + i);
-                textInput.eq(3).attr('id', 'diagnosis_id' + i);
-                textInput.eq(1).attr('name', 'result_diagnosis_id[]');
-                textInput.eq(3).attr('name', 'diagnosis_id[]');
-                textInput.val('');
-                textInput.eq(0).val(i);
-            });
-
-            $(document).on('click', '.show-modal-select', function(){
-                seqId = $(this).closest('tr').find('input:first').val();
-            });
-            
-            $(document).on('click', '.show-modal-select-custom', function(){
-                seqId = $(this).closest('tr').find('input:first').val();
+                var clonedElement = $('#diagnosis-card-tmp').clone();
+                clonedElement.attr('id', 'diagnosis-cardn'+i)
+                $('#diagnosis-cards').append(clonedElement.removeClass("d-none"));
+                var textInput = clonedElement.find('input');                
+                textInput.eq(0).val('n'+i);
+                textInput.eq(0).attr('id', 'diagnosis_result_idn'+i);
+                textInput.eq(0).attr('name', 'diagnosis_result_id[]');
+                textInput.eq(1).attr('id', 'diagnosis_result_diagnosis_namen'+i);
+                textInput.eq(2).attr('id', 'diagnosis_result_diagnosis_idn'+i);
+                textInput.eq(2).attr('name', 'diagnosis_result_diagnosis_id[]');
             });
 
             $(document).on('click', '.show-modal-select-custom', function(){
-                setSelectedIds();
                 onSelectHandler = $(this).attr('data-handler');
+                seqId = $(this).closest('.card-body').find('input:first').val();
                 $('#modal-select .modal-title').html($(this).attr('data-title'));
                 symptomIds = "";
-                $("input[name^=symptom_id]").each(function(index, element){
-                    if($(element).val() != "" && $(element).attr("id") != undefined) {
+                $(this).closest(".card-body").find(".diagnosis_symptom_id").each(function(index, element){
+                    if($(element).val() != "") {
                         if(symptomIds != "") {
                             symptomIds = symptomIds + "," + $(element).val()
                         } else {
@@ -202,6 +193,10 @@
         {
             var tableId = $(element).closest('table').attr("id");
             $(element).closest('tr').remove();
+        }
+
+        function removeCard(element) {
+            $(element).closest('.card').remove();
         }
     </script>
 @endsection
