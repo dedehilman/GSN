@@ -42,8 +42,16 @@
         <td>: {{$data->diagnosis->name ?? ''}}</td>
     </tr>
 </table>
-<p>Dalam keadaan sakit dan memerlukan istirahat selama {{$data->num_of_days}} hari terhitung dari {{\Carbon\Carbon::parse($data->transaction_date)->isoFormat('dddd, DD MMMM YYYY')}} s/d {{\Carbon\Carbon::parse($data->transaction_date)->addDays($data->num_of_days-1)->isoFormat('dddd, DD MMMM YYYY')}}.</p>
+<p>Dalam keadaan sakit dan memerlukan istirahat selama @if($data->num_of_days == 0) - hari terhitung dari - s/d - @else {{$data->num_of_days}} terhitung dari {{\Carbon\Carbon::parse($data->transaction_date)->isoFormat('dddd, DD MMMM YYYY')}} s/d {{\Carbon\Carbon::parse($data->transaction_date)->addDays($data->num_of_days-1)->isoFormat('dddd, DD MMMM YYYY')}} @endif.</p>
 <p>Demikian surat keterangan ini dibuat untuk dapat dipergunakan sebagaimana mestinya.</p>
+@if($data->remark)
+    <table>
+        <tr>
+            <td valign="top">Catatan :</td>
+            <td>{{$data->remark}}</td>
+        </tr>
+    </table>
+@endif
 <table width="100%">
     <tr>
         <td width="70%"></td>
