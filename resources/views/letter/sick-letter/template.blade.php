@@ -31,7 +31,7 @@
     </tr>
     <tr>
         <td>Status Karyawan</td>
-        <td>: </td>
+        <td>: @if($data->for_relationship == 0) Karyawan @else Tanggungan @endif</td>
     </tr>
     <tr>
         <td>Afdelink / Dept</td>
