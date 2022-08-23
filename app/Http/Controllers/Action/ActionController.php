@@ -252,7 +252,7 @@ class ActionController extends AppCrudController
             $data = DiseaseMedicine::whereIn('disease_id', $diseaseIds)->withAll()->get();
 
             $prevPeriod = StockOpname::join('periods', 'periods.id', '=', 'stock_opnames.period_id')
-                    ->where('clinic_id', $request->clinic_id ?? null)
+                    ->where('stock_opnames.clinic_id', $request->clinic_id ?? null)
                     ->where('start_date','<', Carbon::now()->isoFormat('YYYY-MM-DD'))
                     ->select('periods.*')
                     ->orderBy('start_date','desc')
