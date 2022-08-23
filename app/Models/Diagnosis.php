@@ -18,7 +18,7 @@ class Diagnosis extends Model
 
     public function scopeWithAll($query) 
     {
-        return $query->with(['disease']);
+        return $query->with(['disease', 'symptoms']);
     }
 
     public function symptoms()

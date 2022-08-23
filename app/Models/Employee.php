@@ -162,6 +162,6 @@ class Employee extends Model
 
     public function scopeWithAll($query) 
     {
-        return $query->with(['afdelink']);
+        return $query->with(['afdelink', 'relationships']);
     }
 }
