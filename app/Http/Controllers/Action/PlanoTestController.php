@@ -71,7 +71,6 @@ class PlanoTestController extends ActionController
 
             return redirect()->back()->with(['success' => Lang::get("Data has been send")]);
         } catch (\Throwable $th) {
-            dd($th);
             return redirect()->back()->with(['info' => $th->getMessage()]);
         }   
     }

@@ -95,7 +95,6 @@ class ApiController extends Controller
                 )
             ]);
         } catch (\Throwable $th) {
-            dd($th);
             return response()->json([
                 'status' => '500',
                 'message'=> $th->getMessage(),

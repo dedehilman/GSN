@@ -248,7 +248,6 @@ class PharmacyController extends ApiController
         } 
         catch (\Throwable $th)
         {
-            dd("123");
             return response()->json([
                 'status' => '500',
                 'data' => '',

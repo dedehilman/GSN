@@ -124,7 +124,6 @@ class MedicineController extends ApiController
                 )
             ]);
         } catch (\Throwable $th) {
-            dd($th);
             return response()->json([
                 'status' => '500',
                 'message'=> $th->getMessage(),
