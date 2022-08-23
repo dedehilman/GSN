@@ -334,7 +334,7 @@ function validateForm(element) {
         }
     });
 
-    $('input.required').each(function() {
+    $(element).closest('form').find('input.required').each(function() {
         $(this).rules("add", {
             required: true,
             messages: {

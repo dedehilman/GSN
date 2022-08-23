@@ -31,9 +31,13 @@
                         <label class="col-md-3 col-form-label">{{__("End Date")}}</label>
                         <div class="col-md-9 col-form-label">{{$data->end_date}}</div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Clinic")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->clinic->name ?? ''}}</div>
+                    </div>
                 </div>
                 <div class="card-footer text-right">
-                    <a href="#" class="btn btn-default"><i class="fas fa-clipboard-list"></i> {{__("Stock Taking")}}</a>
+                    <a href="{{route('period.stock-taking', $data->id)}}" class="btn btn-default"><i class="fas fa-clipboard-list"></i> {{__("Stock Taking")}}</a>
                     <a href="{{route('period.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
                 </div>
             </div>

@@ -41,7 +41,7 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-4 col-form-label">{{__("Gender / Old")}}</label>
-                                <div class="col-md-8 col-form-label">{{$data->for_relationship == 0 ? $data->patient->gender.' / '.getAge($data->patient->birth_date) : $data->patientRelationship->gender.' / '.getAge($data->patientRelationship->birth_date)}} Tahun</div>
+                                <div class="col-md-8 col-form-label">{{$data->for_relationship == 0 ? Lang::get($data->patient->gender).' / '.getAge($data->patient->birth_date) : Lang::get($data->patientRelationship->gender).' / '.getAge($data->patientRelationship->birth_date)}} {{__("Year")}}</div>
                             </div>
                         </div>
                         <div class="col-md-6">

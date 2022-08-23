@@ -47,7 +47,7 @@
         <td></td>
         <td>Nama Pasien</td>
         <td colspan="3">: @if($data->for_relationship == 0) {{$data->patient->name}} @else {{$data->patientRelationship->name}} @endif 
-            (@if($data->for_relationship == 0) {{__($data->patient->gender)}} @else {{$data->patientRelationship->gender}} @endif)</td>
+            (@if($data->for_relationship == 0) {{__($data->patient->gender)}} @else {{__($data->patientRelationship->gender)}} @endif)</td>
         <td>Umur</td>
         <td width="30%">: @if($data->for_relationship == 0) {{getAge($data->patient->birth_date)}} @else {{getAge($data->patientRelationship->birth_date)}} @endif Thn</td>
     </tr>

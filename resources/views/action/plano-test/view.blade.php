@@ -41,7 +41,7 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-4 col-form-label">{{__("Gender / Old")}}</label>
-                                <div class="col-md-8 col-form-label">{{$data->for_relationship == 0 ? $data->patient->gender.' / '.getAge($data->patient->birth_date) : $data->patientRelationship->gender.' / '.getAge($data->patientRelationship->birth_date)}} Tahun</div>
+                                <div class="col-md-8 col-form-label">{{$data->for_relationship == 0 ? Lang::get($data->patient->gender).' / '.getAge($data->patient->birth_date) : Lang::get($data->patientRelationship->gender).' / '.getAge($data->patientRelationship->birth_date)}} {{__("Year")}}</div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -134,7 +134,8 @@
                         </button>
                         <div class="dropdown-menu" role="menu" style="">
                             <a class="dropdown-item" href="{{route('action.plano-test.download', $data->id)}}">{{__('Download')}}</a>
-                            <a class="dropdown-item" href="{{route('action.plano-test.send-to-email', $data->id)}}">{{__('Send to Email')}}</a>
+                            <a class="dropdown-item" href="{{route('action.plano-test.send-to-email', 'id='.$data->id)}}">{{__('Send to Email')}}</a>
+                            <a class="dropdown-item send-to-email" href="#" data-href="{{route('action.plano-test.send-to-email', 'id='.$data->id)}}">{{__('Send to Email')}} ...</a>
                         </div>
                     </div>
                     <a href="{{route('action.plano-test.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>

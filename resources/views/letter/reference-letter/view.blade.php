@@ -75,7 +75,8 @@
                         </button>
                         <div class="dropdown-menu" role="menu" style="">
                             <a class="dropdown-item" href="{{route('reference-letter.download', $data->id)}}">{{__('Download')}}</a>
-                            <a class="dropdown-item" href="{{route('reference-letter.send-to-email', $data->id)}}">{{__('Send to Email')}}</a>
+                            <a class="dropdown-item" href="{{route('reference-letter.send-to-email', 'id='.$data->id)}}">{{__('Send to Email')}}</a>
+                            <a class="dropdown-item send-to-email" href="#" data-href="{{route('reference-letter.send-to-email', 'id='.$data->id)}}">{{__('Send to Email')}} ...</a>
                         </div>
                     </div>
                     <a href="{{route('reference-letter.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>

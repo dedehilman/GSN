@@ -191,6 +191,35 @@
             </div> 
         </aside>
 
+        <div class="modal fade" id="modal-send-to-email" aria-hidden="true" >
+            <div class="modal-dialog modal-sm">
+                <form id="sendToEmailForm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">{{__("Send to Email")}}</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="required">{{__("Receiver Name")}}</label>
+                                <input type="text" name="name" class="form-control required">
+                            </div>
+                            <div class="form-group">
+                                <label class="required">{{__("Email")}}</label>
+                                <input type="email" name="email" class="form-control required">
+                            </div>
+                        </div>
+                        <div class="modal-footer text-right">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">{{__('Cancel')}}</button>
+                            <button type="button" class="btn btn-primary send-to-email-send">{{__('Send')}}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <script src="{{ asset('public/plugins/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('public/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('public/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>        
@@ -346,6 +375,22 @@
                     $(".modal-backdrop").each(function(index) {
                         $(this).css("z-index", zIndexBackdrop + (index * 10));
                     });
+                });
+
+                $(".send-to-email").on('click', function(){
+                    $("#sendToEmailForm").attr('action', $(this).attr('data-href'));
+                    $("#sendToEmailForm input[name='email']").val('');
+                    $("#sendToEmailForm input[name='name']").val('');
+                    $("#modal-send-to-email").modal('show');
+                });
+
+                $(".send-to-email-send").on('click', function(){
+                    if(validateForm($(this))) {
+                        $("#modal-send-to-email").modal('hide');
+                        var href = $(this).closest('form')[0].action;
+                        href = href + "&email=" + $("#sendToEmailForm input[name='email']").val() + "&name=" + $("#sendToEmailForm input[name='name']").val();
+                        window.location.href = href;
+                    }
                 });
             });
         </script>

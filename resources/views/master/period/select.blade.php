@@ -8,6 +8,7 @@
                     <th>@if(($select ?? 'single') == 'multiple')<input type='checkbox' name="select-all"/>@endif</th>
                     <th>{{ __("Code") }}</th>
                     <th>{{ __("Name") }}</th>
+                    <th>{{ __("Clinic") }}</th>
                     <th>{{ __("Start Date") }}</th>
                     <th>{{ __("End Date") }}</th>
                 </tr>
@@ -49,6 +50,10 @@
                 }, {
                     data: 'name',
                     name: 'name',
+                    defaultContent: '',
+                }, {
+                    data: 'clinic.name',
+                    name: 'clinic_id',
                     defaultContent: '',
                 }, {
                     data: 'start_date',

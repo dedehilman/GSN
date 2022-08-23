@@ -52,6 +52,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label required">{{__("Clinic")}}</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="text" name="clinic_name" id="clinic_name" class="form-control required" readonly value="{{$data->clinic->name ?? ''}}">
+                                    <input type="hidden" name="clinic_id" id="clinic_id" value="{{$data->clinic->id ?? ''}}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer text-right">
                         <a href="{{route('period.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
@@ -61,4 +73,13 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        function onSelectedClinic(data) {
+            $('#clinic_id').val(data[0].id);
+            $('#clinic_name').val(data[0].name);
+        }
+    </script>
 @endsection

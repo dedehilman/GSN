@@ -27,7 +27,7 @@
     </tr>
     <tr>
         <td>Jenis Kelamin</td>
-        <td>: @if($data->for_relationship == 0) {{__($data->patient->gender)}} @else {{$data->patientRelationship->gender}} @endif</td>
+        <td>: @if($data->for_relationship == 0) {{__($data->patient->gender)}} @else {{__($data->patientRelationship->gender)}} @endif</td>
     </tr>
     <tr>
         <td>Status Karyawan</td>

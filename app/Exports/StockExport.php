@@ -42,7 +42,7 @@ class StockExport implements ShouldAutoSize, FromView
 
         foreach ($stockOpnames as $stockOpname) {
             if(!array_key_exists($stockOpname->medicine->code, $begin)) {
-                $begin[$stockOpname->medicine->code] = $stockOpname->qty;
+                $begin[$stockOpname->medicine->code] = 0;
             }
 
             $begin[$stockOpname->medicine->code] = $begin[$stockOpname->medicine->code] + $stockOpname->qty;

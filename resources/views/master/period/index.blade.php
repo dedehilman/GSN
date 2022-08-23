@@ -42,22 +42,35 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-2 col-form-label">{{__("Start Date")}}</label>
-                                        <div class="col-4">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                        <label class="col-md-2 col-form-label">{{__("Date")}}</label>
+                                        <div class="col-md-4">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                        </div>
+                                                        <input type="text" name="start_date" class="form-control date">
+                                                    </div>
                                                 </div>
-                                                <input type="text" name="start_date" class="form-control date">
+                                                <div class="col-md-6">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                        </div>
+                                                        <input type="text" name="end_date" class="form-control date">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <label class="col-2 col-form-label">{{__("End Date")}}</label>
-                                        <div class="col-4">
+                                        <label class="col-md-2 col-form-label">{{__("Clinic")}}</label>
+                                        <div class="col-md-4">
                                             <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                <input type="text" id="clinic_name" class="form-control" readonly>
+                                                <input type="hidden" name="clinic_id" id="clinic_id">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
                                                 </div>
-                                                <input type="text" name="end_date" class="form-control date">
                                             </div>
                                         </div>
                                     </div>
@@ -89,6 +102,7 @@
                                 <th></th>
                                 <th>{{ __("Code") }}</th>
                                 <th>{{ __("Name") }}</th>
+                                <th>{{ __("Clinic") }}</th>
                                 <th>{{ __("Start Date") }}</th>
                                 <th>{{ __("End Date") }}</th>
                                 <th>{{ __("Closed Date") }}</th>
@@ -158,6 +172,11 @@
                         data: 'name',
                         name: 'name',
                         defaultContent: '',
+                    }, 
+                    {
+                        data: 'clinic.name',
+                        name: 'clinic_id',
+                        defaultContent: '',
                     },
                     {
                         data: 'start_date',
@@ -179,20 +198,25 @@
                     {
                         extend: 'excel',
                         title: '{{__("Period")}}',
-                        exportOptions: { columns: [3, 4, 5, 6, 7] }
+                        exportOptions: { columns: [3, 4, 5, 6, 7, 8] }
                     },
                     {
                         extend: 'csv',
                         title: '{{__("Period")}}',
-                        exportOptions: { columns: [3, 4, 5, 6, 7] }
+                        exportOptions: { columns: [3, 4, 5, 6, 7, 8] }
                     },
                     {
                         extend: 'pdf',
                         title: '{{__("Period")}}',
-                        exportOptions: { columns: [3, 4, 5, 6, 7] }
+                        exportOptions: { columns: [3, 4, 5, 6, 7, 8] }
                     }
                 ],
             });
         });
+
+        function onSelectedClinic(data) {
+            $('#clinic_id').val(data[0].id);
+            $('#clinic_name').val(data[0].name);
+        }
     </script>
 @endsection
