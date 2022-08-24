@@ -48,7 +48,7 @@ class PlanoTestController extends ActionController
             DB::commit();
             return response()->json([
                 'status' => '200',
-                'data' => '',
+                'data' => $data,
                 'message'=> Lang::get("Data has been stored")
             ]);
         } catch (\Throwable $th) {
