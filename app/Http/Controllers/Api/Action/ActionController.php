@@ -400,5 +400,50 @@ class ActionController extends ApiController
             ]);
         }
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $data = $this->model::find($id);
+            if(!$data) {
+                return response()->json([
+                    'status' => '400',
+                    'message'=> Lang::get("Data not found"),
+                    'data' => '',
+                ]);
+            }
+
+            $validateOnDestroy = $this->validateOnDestroy($id);
+            if($validateOnDestroy) {
+                return response()->json([
+                    'status' => '400',
+                    'message'=> $validateOnDestroy,
+                    'data' => '',
+                ]);
+            }
+
+            $data->clearMediaCollection('media');
+            Prescription::where('model_type', get_class($data))->where('model_id', $data->id)->delete();
+            Action::where('model_type', get_class($data))->where('model_id', $data->id)->delete();
+            DiagnosisResult::where('model_type', get_class($data))->where('model_id', $data->id)->delete();
+            return response()->json([
+                'status' => '200',
+                'message'=> Lang::get("Data has been deleted"),
+                'data' => $data,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => '500',
+                'message'=> $th->getMessage(),
+                'data' => '',
+            ]);
+        }
+    }
 }
 
