@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\AppMail;
 use Storage;
 use App\Traits\MailServerTrait;
+use Illuminate\Support\Facades\DB;
 
 class PlanoTestController extends ActionController
 {
@@ -21,6 +22,43 @@ class PlanoTestController extends ActionController
     {
         $this->setDefaultMiddleware('action-plano-test');
         $this->setModel('App\Models\PlanoTest');
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            $count = PlanoTest::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->count();
+            $request['transaction_no'] = 'PPT-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+
+            $validateOnStore = $this->validateOnStore($request);
+            if($validateOnStore) {
+                return response()->json([
+                    'status' => '400',
+                    'data' => '',
+                    'message'=> $validateOnStore
+                ]);
+            }
+            DB::beginTransaction();
+            $data = $this->model::create($request->all());
+            $this->documentHandler($data, $request);
+            $this->actionHandler($data, $request);
+            $this->prescriptionHandler($data, $request);
+            $this->diagnosisHandler($data, $request);
+
+            DB::commit();
+            return response()->json([
+                'status' => '200',
+                'data' => '',
+                'message'=> Lang::get("Data has been stored")
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json([
+                'status' => '500',
+                'data' => '',
+                'message'=> $th->getMessage()
+            ]);
+        }        
     }
 
     public function sendToEmail(Request $request)
