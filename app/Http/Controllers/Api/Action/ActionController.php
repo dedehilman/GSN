@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Action;
 use App\Models\Prescription;
-use App\Models\SymptomResult;
 use App\Models\DiagnosisResult;
 use Illuminate\Support\Facades\DB;
 use Lang;
@@ -74,11 +73,7 @@ class ActionController extends ApiController
                             ->where('model_type', DB::Raw("'".$this->getClassName()."'"))
                             ->first();
 
-                $symptoms = SymptomResult::where('model_id', $dt->id)->with('symptom')
-                            ->where('model_type', DB::Raw("'".$this->getClassName()."'"))
-                            ->get();
-
-                $diagnoses = DiagnosisResult::where('model_id', $dt->id)->with('diagnosis')
+                $diagnoses = DiagnosisResult::where('model_id', $dt->id)->with('diagnosis','symptoms')
                             ->where('model_type', DB::Raw("'".$this->getClassName()."'"))
                             ->get();
 
@@ -99,7 +94,6 @@ class ActionController extends ApiController
                             ->first();
                 
                 $dt->setAttribute("action", $action);
-                $dt->setAttribute("symptoms", $symptoms);
                 $dt->setAttribute("diagnoses", $diagnoses);
                 $dt->setAttribute("prescriptions", $prescriptions);
                 $dt->setAttribute("medias", $medias);
@@ -154,7 +148,6 @@ class ActionController extends ApiController
             $this->documentHandler($data, $request);
             $this->actionHandler($data, $request);
             $this->prescriptionHandler($data, $request);
-            $this->symptomHandler($data, $request);
             $this->diagnosisHandler($data, $request);
 
             DB::commit();
@@ -256,37 +249,6 @@ class ActionController extends ApiController
         }
     }
 
-    public function symptomHandler($data, Request $request) {
-        if($request->symptoms)
-        {
-            $ids = array(); 
-            foreach ($request->symptoms as $index => $symptom) {
-                array_push($ids, $symptom['id']);
-            }
-            SymptomResult::where('model_type', get_class($data))
-                        ->where('model_id', $data->id)
-                        ->whereNotIn('id', $ids)->delete();
-
-            foreach ($request->symptoms as $index => $symptom) {
-                $detail = SymptomResult::where('model_type', get_class($data))
-                                    ->where('model_id', $data->id)
-                                    ->where('id', $symptom['id'])->first();
-                if(!$detail)
-                {
-                    $detail = new SymptomResult();
-                    $detail->model_type = get_class($data);
-                    $detail->model_id = $data->id;
-                }
-
-                $detail->symptom_id = $symptom['symptom_id'];
-                $detail->save();
-            }
-        } else {
-            SymptomResult::where('model_type', get_class($data))
-                        ->where('model_id', $data->id)->delete();
-        }
-    }
-
     public function diagnosisHandler($data, Request $request) {
         if($request->diagnoses)
         {
@@ -311,6 +273,12 @@ class ActionController extends ApiController
 
                 $detail->diagnosis_id = $diagnosis['diagnosis_id'];
                 $detail->save();
+
+                $ids = array(); 
+                foreach ($diagnosis['symptoms'] ?? [] as $index => $symptom) {
+                    array_push($ids, $symptom['id']);
+                }
+                $detail->syncSymptoms($ids);
             }
         } else {
             DiagnosisResult::where('model_type', get_class($data))
@@ -318,83 +286,119 @@ class ActionController extends ApiController
         }
     }
 
-    // public function generatePrescription(Request $request) {
-    //     try {
-    //         $diseaseIds = Diagnosis::whereNotNull('disease_id')
-    //                     ->whereIn('id', $request->diagnosis_id ?? [])
-    //                     ->pluck('id')
-    //                     ->toArray();
+    public function validateOnUpdate(Request $request, int $id)
+    {
+        $validator = Validator::make($request->all(), []);
+
+        if(!$request->action) {
+            $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => Lang::get("Action")]));
+        }
+
+        if($request->prescriptions)
+        {
+            foreach ($request->prescriptions as $index => $prescription)
+            {
+                if(!$prescription['medicine_id']) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($index+1)."] ".Lang::get("Product")]));
+                }
+                if(!$prescription['medicine_rule_id']) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($index+1)."] ".Lang::get("Medicine Rule")]));
+                }
+                if(!$prescription['qty']) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($index+1)."] ".Lang::get("Qty")]));
+                }
+            }
+        }
+
+        if($request->diagnoses)
+        {
+            foreach ($request->diagnoses as $index => $diagnosis) {
+                if(!$diagnosis['diagnosis_id']) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($index+1)."] ".Lang::get("Diagnosis")]));
+                }
+            }
+        }
+
+        return $validator->errors()->all();
+    }
+
+    public function generatePrescription(Request $request) {
+        try {
+            $diseaseIds = Diagnosis::whereNotNull('disease_id')
+                        ->whereIn('id', $request->diagnosis_id ?? [])
+                        ->pluck('id')
+                        ->toArray();
             
-    //         $data = DiseaseMedicine::whereIn('disease_id', $diseaseIds)->withAll()->get();
+            $data = DiseaseMedicine::whereIn('disease_id', $diseaseIds)->withAll()->get();
 
-    //         $prevPeriod = StockOpname::join('periods', 'periods.id', '=', 'stock_opnames.period_id')
-    //                 ->where('clinic_id', $request->clinic_id ?? null)
-    //                 ->where('start_date','<', Carbon::now()->isoFormat('YYYY-MM-DD'))
-    //                 ->select('periods.*')
-    //                 ->orderBy('start_date','desc')
-    //                 ->first();
-    //         foreach ($data as $dt) {
-    //             $dt->setAttribute("stock", '0.00');
-    //             if($prevPeriod) {
-    //                 $begin = StockOpname::where('period_id', $prevPeriod->id)
-    //                         ->where('clinic_id', $request->clinic_id ?? null)
-    //                         ->where('medicine_id', $dt->medicine_id)
-    //                         ->sum('qty');
+            $prevPeriod = StockOpname::join('periods', 'periods.id', '=', 'stock_opnames.period_id')
+                    ->where('stock_opnames.clinic_id', $request->clinic_id ?? null)
+                    ->where('start_date','<', Carbon::now()->isoFormat('YYYY-MM-DD'))
+                    ->select('periods.*')
+                    ->orderBy('start_date','desc')
+                    ->first();
+            foreach ($data as $dt) {
+                $dt->setAttribute("stock", '0.00');
+                if($prevPeriod) {
+                    $begin = StockOpname::where('period_id', $prevPeriod->id)
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->where('medicine_id', $dt->medicine_id)
+                            ->sum('qty');
 
-    //                 $in = StockTransaction::join('stock_transaction_details', 'stock_transaction_details.stock_transaction_id', '=', 'stock_transactions.id')
-    //                         ->where('clinic_id', $request->clinic_id ?? null)
-    //                         ->whereDate('transaction_date','>',$prevPeriod->end_date)
-    //                         ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
-    //                         ->where('transaction_type', 'In')
-    //                         ->where('medicine_id', $dt->medicine_id)
-    //                         ->sum('qty');
-    //                 $transferIn = StockTransaction::join('stock_transaction_details', 'stock_transaction_details.stock_transaction_id', '=', 'stock_transactions.id')
-    //                         ->where('clinic_id', $request->clinic_id ?? null)
-    //                         ->whereDate('transaction_date','>',$prevPeriod->end_date)
-    //                         ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
-    //                         ->where('transaction_type', 'Transfer In')
-    //                         ->where('medicine_id', $dt->medicine_id)
-    //                         ->sum('qty');
+                    $in = StockTransaction::join('stock_transaction_details', 'stock_transaction_details.stock_transaction_id', '=', 'stock_transactions.id')
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->whereDate('transaction_date','>',$prevPeriod->end_date)
+                            ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
+                            ->where('transaction_type', 'In')
+                            ->where('medicine_id', $dt->medicine_id)
+                            ->sum('qty');
+                    $transferIn = StockTransaction::join('stock_transaction_details', 'stock_transaction_details.stock_transaction_id', '=', 'stock_transactions.id')
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->whereDate('transaction_date','>',$prevPeriod->end_date)
+                            ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
+                            ->where('transaction_type', 'Transfer In')
+                            ->where('medicine_id', $dt->medicine_id)
+                            ->sum('qty');
 
-    //                 $transferOut = StockTransaction::join('stock_transaction_details', 'stock_transaction_details.stock_transaction_id', '=', 'stock_transactions.id')
-    //                         ->where('clinic_id', $request->clinic_id ?? null)
-    //                         ->whereDate('transaction_date','>',$prevPeriod->end_date)
-    //                         ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
-    //                         ->where('transaction_type', 'Transfer Out')
-    //                         ->where('medicine_id', $dt->medicine_id)
-    //                         ->sum('qty');
+                    $transferOut = StockTransaction::join('stock_transaction_details', 'stock_transaction_details.stock_transaction_id', '=', 'stock_transactions.id')
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->whereDate('transaction_date','>',$prevPeriod->end_date)
+                            ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
+                            ->where('transaction_type', 'Transfer Out')
+                            ->where('medicine_id', $dt->medicine_id)
+                            ->sum('qty');
 
-    //                 $adj = StockTransaction::join('stock_transaction_details', 'stock_transaction_details.stock_transaction_id', '=', 'stock_transactions.id')
-    //                         ->where('clinic_id', $request->clinic_id ?? null)
-    //                         ->whereDate('transaction_date','>',$prevPeriod->end_date)
-    //                         ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
-    //                         ->where('transaction_type', 'Adjusment')
-    //                         ->where('medicine_id', $dt->medicine_id)
-    //                         ->sum('qty');
+                    $adj = StockTransaction::join('stock_transaction_details', 'stock_transaction_details.stock_transaction_id', '=', 'stock_transactions.id')
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->whereDate('transaction_date','>',$prevPeriod->end_date)
+                            ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
+                            ->where('transaction_type', 'Adjusment')
+                            ->where('medicine_id', $dt->medicine_id)
+                            ->sum('qty');
 
-    //                 $out = Pharmacy::join('pharmacy_details', 'pharmacy_details.pharmacy_id', '=', 'pharmacies.id')
-    //                         ->where('clinic_id', $request->clinic_id ?? null)
-    //                         ->whereDate('transaction_date','>',$prevPeriod->end_date)
-    //                         ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
-    //                         ->where('medicine_id', $dt->medicine_id)
-    //                         ->sum('actual_qty');
+                    $out = Pharmacy::join('pharmacy_details', 'pharmacy_details.pharmacy_id', '=', 'pharmacies.id')
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->whereDate('transaction_date','>',$prevPeriod->end_date)
+                            ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
+                            ->where('medicine_id', $dt->medicine_id)
+                            ->sum('actual_qty');
                     
                     
-    //                 $dt->setAttribute("stock", $begin+$in+$transferIn-$transferOut-$out+$adj);
-    //             }
-    //         }
-    //         return response()->json([
-    //             'status' => '200',
-    //             'data' => $data,
-    //             'message' => ''
-    //         ]);
-    //     } catch (\Throwable $th) {
-    //         return response()->json([
-    //             'status' => '500',
-    //             'data' => '',
-    //             'message' => $th->getMessage()
-    //         ]);
-    //     }
-    // }
+                    $dt->setAttribute("stock", $begin+$in+$transferIn-$transferOut-$out+$adj);
+                }
+            }
+            return response()->json([
+                'status' => '200',
+                'data' => $data,
+                'message' => ''
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => '500',
+                'data' => '',
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
 }
 

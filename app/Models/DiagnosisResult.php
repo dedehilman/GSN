@@ -23,7 +23,7 @@ class DiagnosisResult extends Model
 
     public function scopeWithAll($query) 
     {
-        return $query->with(['diagnosis']);
+        return $query->with(['diagnosis', 'symptoms']);
     }
 
     public function syncSymptoms($symptoms)

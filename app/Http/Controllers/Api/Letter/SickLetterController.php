@@ -12,10 +12,13 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\AppMail;
 use Storage;
 use PDF;
+use App\Traits\MailServerTrait;
 
 class SickLetterController extends ApiController
 {
 
+    use MailServerTrait;
+    
     public function __construct()
     {
         $this->setDefaultMiddleware('sick-letter');
@@ -82,10 +85,10 @@ class SickLetterController extends ApiController
         }        
     }
 
-    public function sendToEmail($id)
+    public function sendToEmail(Request $request)
     {
         try {
-            $data = $this->model::find($id); 
+            $data = $this->model::find($request->id); 
             if($data) {
                 $pdf = PDF::loadview('letter.sick-letter.template', ['data'=>$data]);
                 Storage::put('public/letter/sick-letter/'.$data->transaction_no.'.pdf', $pdf->output());
@@ -94,16 +97,25 @@ class SickLetterController extends ApiController
                 $params['title'] = $data->transaction_no;
                 
                 $params['attachment'] = Storage::path('public/letter/sick-letter/'.$data->transaction_no.'.pdf');
-                if($data->for_relationship == 0 && $data->patient->email) {
+                $email = "";
+                if($request->email && $request->name) {
+                    $content = str_replace('{Recipient Name}', $request->name, $content);
+                    $params['content'] = $content;
+                    $email = $request->email;
+                } 
+                else if($data->for_relationship == 0 && $data->patient->email) {
                     $content = str_replace('{Recipient Name}', $data->patient->name, $content);
                     $params['content'] = $content;
-                    Mail::to($data->patient->email)->send(new AppMail($params));
+                    $email = $data->patient->email;
                 }
                 else if($data->for_relationship == 1 && $data->patientRelationship->email) {
                     $content = str_replace('{Recipient Name}', $data->patientRelationship->name, $content);
                     $params['content'] = $content;
-                    Mail::to($data->patientRelationship->email)->send(new AppMail($params));
+                    $email = $data->patientRelationship->email;
                 }
+
+                $this->setMailConfig();
+                Mail::to($email)->send(new AppMail($params));
             }
 
             return response()->json([
