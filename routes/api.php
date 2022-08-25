@@ -63,11 +63,11 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.' ], function () {
     Route::group(['prefix' => 'action/', 'as' => 'action.' ], function () {
         Route::get('plano-tests/send-to-email', [App\Http\Controllers\Api\Action\PlanoTestController::class, 'sendToEmail']);
         Route::post('plano-tests/media', [App\Http\Controllers\Api\Action\PlanoTestController::class, 'storeMedia']);
-        Route::post('plano-test/generate-prescription', [App\Http\Controllers\Api\Action\PlanoTestController::class, 'generatePrescription']);
+        Route::post('plano-tests/generate-prescription', [App\Http\Controllers\Api\Action\PlanoTestController::class, 'generatePrescription']);
         Route::apiResource('plano-tests', App\Http\Controllers\Api\Action\PlanoTestController::class);
         Route::post('family-plannings/media', [App\Http\Controllers\Api\Action\FamilyPlanningController::class, 'storeMedia']);
-        Route::apiResource('family-plannings', App\Http\Controllers\Api\Action\FamilyPlanningController::class);
         Route::post('family-plannings/generate-prescription', [App\Http\Controllers\Api\Action\FamilyPlanningController::class, 'generatePrescription']);
+        Route::apiResource('family-plannings', App\Http\Controllers\Api\Action\FamilyPlanningController::class);
         Route::post('outpatients/media', [App\Http\Controllers\Api\Action\OutpatientController::class, 'storeMedia']);
         Route::post('outpatients/generate-prescription', [App\Http\Controllers\Api\Action\OutpatientController::class, 'generatePrescription']);
         Route::apiResource('outpatients', App\Http\Controllers\Api\Action\OutpatientController::class);
