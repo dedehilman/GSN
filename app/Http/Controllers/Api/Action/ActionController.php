@@ -322,6 +322,42 @@ class ActionController extends ApiController
         return $validator->errors()->all();
     }
 
+    public function validateOnStore(Request $request)
+    {
+        $validator = Validator::make($request->all(), []);
+
+        if(!$request->action) {
+            $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => Lang::get("Action")]));
+        }
+
+        if($request->prescriptions)
+        {
+            foreach ($request->prescriptions as $index => $prescription)
+            {
+                if(!$prescription['medicine_id']) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($index+1)."] ".Lang::get("Product")]));
+                }
+                if(!$prescription['medicine_rule_id']) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($index+1)."] ".Lang::get("Medicine Rule")]));
+                }
+                if(!$prescription['qty']) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($index+1)."] ".Lang::get("Qty")]));
+                }
+            }
+        }
+
+        if($request->diagnoses)
+        {
+            foreach ($request->diagnoses as $index => $diagnosis) {
+                if(!$diagnosis['diagnosis_id']) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($index+1)."] ".Lang::get("Diagnosis")]));
+                }
+            }
+        }
+
+        return $validator->errors()->all();
+    }
+
     public function generatePrescription(Request $request) {
         try {
             $diseaseIds = Diagnosis::whereNotNull('disease_id')
