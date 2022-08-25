@@ -338,7 +338,7 @@ class ActionController extends ApiController
                     ->orderBy('start_date','desc')
                     ->first();
             foreach ($data as $dt) {
-                $dt->setAttribute("stock", '0.00');
+                $dt->setAttribute("stock_qty", '0.00');
                 if($prevPeriod) {
                     $begin = StockOpname::where('period_id', $prevPeriod->id)
                             ->where('clinic_id', $request->clinic_id ?? null)
