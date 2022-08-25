@@ -384,7 +384,7 @@ class ActionController extends ApiController
                             ->sum('actual_qty');
                     
                     
-                    $dt->setAttribute("stock", $begin+$in+$transferIn-$transferOut-$out+$adj);
+                    $dt->setAttribute("stock_qty", $begin+$in+$transferIn-$transferOut-$out+$adj);
                 }
             }
             return response()->json([
