@@ -139,7 +139,7 @@
                 url = url.substring(0, url.indexOf("action"));
                 url = url + "action/" + urlSplit[urlSplit.length - 3] + "/generate-prescription";
                 diagnosisIds = [];
-                $("input[name^='diagnosis_id']").each(function(index, value) {
+                $("input[name^='diagnosis_result_diagnosis_id']").each(function(index, value) {
                     diagnosisIds.push($(this).val());
                 });
 

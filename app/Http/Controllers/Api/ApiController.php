@@ -303,7 +303,7 @@ class ApiController extends Controller
         }
 
         foreach ($request->all() as $key => $value) {
-            if($key == "sort" || $key == "page" || $key == "size" || $key == "search" || $key == "column" || $key == "query_builder")
+            if($key == "sort" || $key == "page" || $key == "size" || $key == "search" || $key == "column" || $key == "query_builder" || $key == "is_deleted" || $key == "is_sync")
                 continue;
 
             if($value != null) {            
