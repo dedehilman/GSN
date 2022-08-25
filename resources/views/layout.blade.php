@@ -277,7 +277,7 @@
                 ordering: true,
                 order: [[3, "asc"]],
                 select: "multiple",
-                lengthMenu: [[10, 25, 50, -1], [10, 25, 50, '{{__("All")}}']],
+                lengthMenu: [[5, 10, 20, 25, 50, -1], [5, 10, 20, 25, 50, '{{__("All")}}']],
                 language: {
                     'lengthMenu': '{{__("_MENU_ Entries")}}',
                     'info': '{{__("Showing _START_ to _END_ of _TOTAL_ entries")}}',
