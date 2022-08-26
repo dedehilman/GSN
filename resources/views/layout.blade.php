@@ -277,6 +277,7 @@
                 ordering: true,
                 order: [[3, "asc"]],
                 select: "multiple",
+				pageLength: 5,
                 lengthMenu: [[5, 10, 20, 25, 50, -1], [5, 10, 20, 25, 50, '{{__("All")}}']],
                 language: {
                     'lengthMenu': '{{__("_MENU_ Entries")}}',
