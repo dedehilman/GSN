@@ -63,7 +63,7 @@ class User extends Authenticatable
 
     public function scopeWithAll($query) 
     {
-        return $query->with(['roles', 'userDetail', 'roles.recordRules']);
+        return $query->with(['roles', 'userDetail', 'userDetail.clinic', 'roles.recordRules']);
     }
 
     public function userDetail()

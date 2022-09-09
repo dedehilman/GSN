@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\PlanoTest;
 use Carbon\Carbon;
 use Lang;
+use Illuminate\Support\Str;
 
 class PlanoTestController extends ApiController
 {
@@ -21,7 +22,12 @@ class PlanoTestController extends ApiController
     public function store(Request $request)
     {
         try {
-            $count = PlanoTest::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->count();
+            $transactionNo = PlanoTest::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->orderBy('transaction_no', 'desc')->first();
+			$count = 0;
+			try {
+				$count = (int) Str::substr($transactionNo->transaction_no, -5);				
+			} catch (\Throwable $th) {
+			}
             $request['transaction_no'] = 'PPT-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);

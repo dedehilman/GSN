@@ -13,6 +13,7 @@ use App\Mail\AppMail;
 use Storage;
 use PDF;
 use App\Traits\MailServerTrait;
+use Illuminate\Support\Str;
 
 class ReferenceLetterController extends ApiController
 {
@@ -28,8 +29,13 @@ class ReferenceLetterController extends ApiController
     public function store(Request $request)
     {
         try {
-            $count = ReferenceLetter::whereDate('transaction_date', Carbon::parse($request->transaction_date)->isoFormat('YYYY-MM-DD'))->count();
-            $request['transaction_no'] = 'SR-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+            $transactionNo = ReferenceLetter::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->orderBy('transaction_no', 'desc')->first();
+			$count = 0;
+			try {
+				$count = (int) Str::substr($transactionNo->transaction_no, -5);				
+			} catch (\Throwable $th) {
+			}
+            $request['transaction_no'] = 'SR-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);
             if($validateOnStore) {
@@ -58,8 +64,13 @@ class ReferenceLetterController extends ApiController
     public function generate(Request $request)
     {
         try {
-            $count = ReferenceLetter::whereDate('transaction_date', Carbon::parse($request->transaction_date)->isoFormat('YYYY-MM-DD'))->count();
-            $request['transaction_no'] = 'SR-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+            $transactionNo = ReferenceLetter::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->orderBy('transaction_no', 'desc')->first();
+			$count = 0;
+			try {
+				$count = (int) Str::substr($transactionNo->transaction_no, -5);				
+			} catch (\Throwable $th) {
+			}
+            $request['transaction_no'] = 'SR-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);
             if($validateOnStore) {

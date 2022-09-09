@@ -9,6 +9,7 @@ use Lang;
 use App\Models\FamilyPlanning;
 use Carbon\Carbon;
 use PDF;
+use Illuminate\Support\Str;
 
 class FamilyPlanningController extends AppCrudController
 {
@@ -23,7 +24,12 @@ class FamilyPlanningController extends AppCrudController
     public function store(Request $request)
     {
         try {
-            $count = FamilyPlanning::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->count();
+			$transactionNo = FamilyPlanning::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->orderBy('transaction_no', 'desc')->first();
+			$count = 0;
+			try {
+				$count = (int) Str::substr($transactionNo->transaction_no, -5);				
+			} catch (\Throwable $th) {
+			}
             $request['transaction_no'] = 'KB-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);
