@@ -18,7 +18,7 @@
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-user"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">{{__("Patient")}}</span>
-                    <span class="info-box-number">{{\App\Models\Employee::count()}}</span>
+                    <span class="info-box-number">{{$patientCount ?? 0}}</span>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-user-md"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">{{__("Medical Staff")}}</span>
-                    <span class="info-box-number">{{\App\Models\MedicalStaff::count()}}</span>
+                    <span class="info-box-number">{{$medicalStaffCount ?? 0}}</span>
                 </div>
             </div>
         </div>
