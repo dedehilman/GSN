@@ -51,6 +51,9 @@ class EmployeeController extends AppCrudController
             $data->phone = $request->phone;
             $data->email = $request->email;
             $data->address = $request->address;
+            $data->join_date = $request->join_date;
+            $data->no_bpjs_kesehatan = $request->no_bpjs_kesehatan;
+            $data->no_bpjs_ketenagakerjaan = $request->no_bpjs_ketenagakerjaan;
             $data->afdelink_id = $request->afdelink_id;
             $data->save();
 
@@ -250,6 +253,9 @@ class EmployeeController extends AppCrudController
             $data->phone = $request->phone;
             $data->email = $request->email;
             $data->address = $request->address;
+            $data->join_date = $request->join_date;
+            $data->no_bpjs_kesehatan = $request->no_bpjs_kesehatan;
+            $data->no_bpjs_ketenagakerjaan = $request->no_bpjs_ketenagakerjaan;
             $data->afdelink_id = $request->afdelink_id;
             $data->save();
 
