@@ -44,6 +44,8 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.' ], function () {
     Route::apiResource('prescriptions', App\Http\Controllers\Api\PrescriptionController::class);
     Route::apiResource('symptoms', App\Http\Controllers\Api\SymptomController::class);
     Route::apiResource('diseases/medicines', App\Http\Controllers\Api\DiseaseMedicineController::class);
+    Route::apiResource('estates', App\Http\Controllers\Api\EstateController::class);
+    Route::apiResource('afdelinks', App\Http\Controllers\Api\AfdelinkController::class);
 
     Route::group(['prefix' => 'letter/', 'as' => 'letter.' ], function () {
         Route::get('references/send-to-email', [App\Http\Controllers\Api\Letter\ReferenceLetterController::class, 'sendToEmail']);
