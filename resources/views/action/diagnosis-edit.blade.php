@@ -123,7 +123,6 @@
 @section('scriptDiagnosis')
     <script>
         function onSelectedResultSymptom(data) {
-            console.log(seqId);
             var clonedElement = $('#table-symptom-tmp tbody tr:last').clone();
             $('#diagnosis-card' + seqId).find('tbody').append(clonedElement);
             var textInput = clonedElement.find('input');
@@ -132,6 +131,9 @@
             textInput.eq(0).attr('name', 'diagnosis_symptom_id'+id+'[]');
             textInput.eq(0).val(data[0].id);
             td.eq(1).html(data[0].code + " - " + data[0].name);
+
+            $('#diagnosis-card' + seqId).find('input[name^=diagnosis_result_id]').val('');
+            $('#diagnosis-card' + seqId).find('input[name^=diagnosis_result_name]').val('');
         }
 
         function onSelectedResultDiagnosis(data) {

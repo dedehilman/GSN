@@ -61,9 +61,6 @@ trait RuleQueryBuilderTrait
                     '@currClinic',
 					'@currEstate',
 					'@currAfdelinks',
-					'@clinicEstate',
-					'@clinicAfdelinks',
-					'@estateAfdelinks',
                 ], 
                 [
                     getCurrentUser()->id ?? '', 

@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Lang;
+use App\Traits\RuleQueryBuilderTrait;
 
 class HomeController extends Controller
 {
+    use RuleQueryBuilderTrait;
+
     /**
      * Create a new controller instance.
      *
@@ -58,8 +61,8 @@ class HomeController extends Controller
                     'work_accident_category_id',
                     DB::Raw('COUNT(1) AS count')
                 )
-                ->groupBy('work_accident_category_id')
-                ->get();
+                ->groupBy('work_accident_category_id');
+        $dataFromDb = $this->queryBuilder(['work_accidents'], $dataFromDb)->get();
 
         foreach($dataFromDb as $db)
         {
@@ -82,8 +85,8 @@ class HomeController extends Controller
                     'family_planning_category_id',
                     DB::Raw('COUNT(1) AS count')
                 )
-                ->groupBy('family_planning_category_id')
-                ->get();
+                ->groupBy('family_planning_category_id');
+        $dataFromDb = $this->queryBuilder(['family_plannings'], $dataFromDb)->get();
 
         foreach($dataFromDb as $db)
         {
@@ -105,8 +108,8 @@ class HomeController extends Controller
                     'result',
                     DB::Raw('COUNT(1) AS count')
                 )
-                ->groupBy('result')
-                ->get();
+                ->groupBy('result');
+        $dataFromDb = $this->queryBuilder(['plano_tests'], $dataFromDb)->get();
 
         foreach($dataFromDb as $db)
         {
@@ -119,8 +122,11 @@ class HomeController extends Controller
         ];
 
         // Sick Letter
-        $ids = \App\Models\Clinic::orderBy('id', 'ASC')->pluck('id')->toArray();
-        $label = \App\Models\Clinic::orderBy('id', 'ASC')->pluck('code')->toArray();
+        $ids = \App\Models\Clinic::orderBy('id', 'ASC');
+        $ids = $this->queryBuilder(['clinics'], $ids)->pluck('id')->toArray();
+        $label = \App\Models\Clinic::orderBy('id', 'ASC');
+        $label = $this->queryBuilder(['clinics'], $label)->pluck('id')->toArray();
+
         $data = array();
         for ($i=0; $i < count($label); $i++) { 
             array_push($data, 0);
@@ -143,8 +149,6 @@ class HomeController extends Controller
         ];
 
         // Reference Letter
-        $ids = \App\Models\Clinic::orderBy('id', 'ASC')->pluck('id')->toArray();
-        $label = \App\Models\Clinic::orderBy('id', 'ASC')->pluck('code')->toArray();
         $data = array();
         for ($i=0; $i < count($label); $i++) { 
             array_push($data, 0);
