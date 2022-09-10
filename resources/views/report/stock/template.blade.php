@@ -3,7 +3,7 @@
         <td colspan="11" align="center">LAPORAN STOK PENERIMAAN / PENGELUARAN OBAT DAN ALKES</td>
     </tr>
     <tr>
-        <td colspan="11" align="center">{{$reportModel->clinic->name}}</td>
+        <td colspan="11" align="center">{{$reportModel->period->clinic->name}}</td>
     </tr>
     <tr>
         <td colspan="11" align="center">PERIODE : {{$reportModel->period->start_date}} - {{$reportModel->period->end_date}}</td>
