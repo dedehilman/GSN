@@ -48,6 +48,18 @@
                         <div class="col-md-9 col-form-label">{!!nl2br($data->address)!!}</div>
                     </div>
                     <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Join Date")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->join_date}}</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("BPJS Kesehatan")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->no_bpjs_kesehatan}}</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("BPJS Ketenagakerjaan")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->no_bpjs_ketenagakerjaan}}</div>
+                    </div>
+                    <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{__("Afdelink")}}</label>
                         <div class="col-md-9 col-form-label">{{$data->afdelink->name ?? ''}}</div>
                     </div>

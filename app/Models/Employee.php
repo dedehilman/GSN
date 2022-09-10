@@ -21,6 +21,9 @@ class Employee extends Model
         'phone',
         'email',
         'address',
+        'join_date',
+        'no_bpjs_kesehatan',
+        'no_bpjs_ketenagakerjaan',
         'afdelink_id'
     ];
 

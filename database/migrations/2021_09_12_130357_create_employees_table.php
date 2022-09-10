@@ -24,6 +24,9 @@ class CreateEmployeesTable extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('address')->nullable();
+            $table->date('join_date')->nullable();
+            $table->string('no_bpjs_kesehatan')->nullable();
+            $table->string('no_bpjs_ketenagakerjaan')->nullable();
             $table->unsignedBigInteger('afdelink_id');
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();

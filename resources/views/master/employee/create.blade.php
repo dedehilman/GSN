@@ -86,6 +86,29 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Join Date")}}</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                    </div>
+                                    <input type="text" name="join_date" class="form-control date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("BPJS Kesehatan")}}</label>
+                            <div class="col-md-9">
+                                <input type="text" name="no_bpjs_kesehatan" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("BPJS Ketenagakerjaan")}}</label>
+                            <div class="col-md-9">
+                                <input type="text" name="no_bpjs_ketenagakerjaan" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-3 col-form-label required">{{__("Afdelink")}}</label>
                             <div class="col-md-9">
                                 <div class="input-group">
