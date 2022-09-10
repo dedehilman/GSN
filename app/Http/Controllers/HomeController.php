@@ -125,7 +125,7 @@ class HomeController extends Controller
         $ids = \App\Models\Clinic::orderBy('id', 'ASC');
         $ids = $this->queryBuilder(['clinics'], $ids)->pluck('id')->toArray();
         $label = \App\Models\Clinic::orderBy('id', 'ASC');
-        $label = $this->queryBuilder(['clinics'], $label)->pluck('id')->toArray();
+        $label = $this->queryBuilder(['clinics'], $label)->pluck('code')->toArray();
 
         $data = array();
         for ($i=0; $i < count($label); $i++) { 
