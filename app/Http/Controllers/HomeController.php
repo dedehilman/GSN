@@ -32,11 +32,13 @@ class HomeController extends Controller
         $topDiseaseDatas = \App\Models\DiagnosisResult::select("diseases.code", DB::raw("count(*) as total"))
                         ->join('diagnoses', 'diagnoses.id', '=', 'diagnosis_results.diagnosis_id')
                         ->join('diseases', 'diseases.id', '=', 'diagnoses.disease_id')
+                        ->join('outpatients', 'outpatients.id', '=', 'diagnosis_results.model_id')
+                        ->join('clinics', 'outpatients.clinic_id', '=', 'clinics.id')
                         ->groupBy('diseases.code')
                         ->orderBy('total', 'DESC')
                         ->limit(10)
-                        ->whereNotNull('diagnoses.disease_id')
-                        ->get();
+                        ->whereNotNull('diagnoses.disease_id');
+        $topDiseaseDatas = $this->queryBuilder(['clinics'], $topDiseaseDatas)->get();        
         $label = array();
         $data = array();
 
