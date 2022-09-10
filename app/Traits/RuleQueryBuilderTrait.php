@@ -43,17 +43,34 @@ trait RuleQueryBuilderTrait
             }
 
             if(!$isFound) continue;
+			
+			$currAfdelinks = "";
+			$afdelinks = DB::table("afdelinks")->where('estate_id', getCurrentUser()->userDetail->clinic->estate->id ?? null)->get();
+			foreach ($afdelinks as $afdelink) {
+				if($currAfdelinks != "") {
+					$currAfdelinks = $currAfdelinks.',';
+				}
+				
+				$currAfdelinks = $currAfdelinks.$afdelink->id;
+			}
 
             $rule = str_replace(
                 [
                     '@currUser',
                     '@currMedicalStaff',
                     '@currClinic',
+					'@currEstate',
+					'@currAfdelinks',
+					'@clinicEstate',
+					'@clinicAfdelinks',
+					'@estateAfdelinks',
                 ], 
                 [
                     getCurrentUser()->id ?? '', 
                     getCurrentUser()->userDetail->id ?? '', 
                     getCurrentUser()->userDetail->clinic->id ?? '',
+					getCurrentUser()->userDetail->clinic->estate->id ?? '',
+					$currAfdelinks,
                 ], 
                 $rule
             );
