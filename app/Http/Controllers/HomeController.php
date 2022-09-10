@@ -170,6 +170,10 @@ class HomeController extends Controller
             'data'=> $data,
         ];
 
+        $patientCount = DB::table('employees');
+        $patientCount = $this->queryBuilder(['employees'], $patientCount)->count();
+        $medicalStaffCount = DB::table('medical_staff');
+        $medicalStaffCount = $this->queryBuilder(['medical_staff'], $medicalStaffCount)->count();
         return view('home', [
             "topDiseases"=>$topDiseases,
             "kkBasedOnCategory"=>$kkBasedOnCategory,
@@ -177,6 +181,8 @@ class HomeController extends Controller
             "ppTestBasedOnResult"=>$ppTestBasedOnResult,
             "slBasedOnClinic"=>$slBasedOnClinic,
             "rlBasedOnClinic"=>$rlBasedOnClinic,
+            "patientCount"=>$patientCount,
+            "medicalStaffCount"=>$medicalStaffCount,
         ]);
     }
 }
