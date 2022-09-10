@@ -176,6 +176,12 @@ class HomeController extends Controller
         $patientCount = $this->queryBuilder(['employees'], $patientCount)->count();
         $medicalStaffCount = DB::table('medical_staff');
         $medicalStaffCount = $this->queryBuilder(['medical_staff'], $medicalStaffCount)->count();
+        $topMedicines = \App\Models\Prescription::select("medicines.name", DB::raw("count(*) as total"))
+                        ->join('medicines', 'medicines.id', '=', 'prescriptions.medicine_id')
+                        ->groupBy('medicines.name')
+                        ->orderBy('total', 'DESC')
+                        ->limit(10)
+                        ->get();
         return view('home', [
             "topDiseases"=>$topDiseases,
             "kkBasedOnCategory"=>$kkBasedOnCategory,
@@ -185,6 +191,7 @@ class HomeController extends Controller
             "rlBasedOnClinic"=>$rlBasedOnClinic,
             "patientCount"=>$patientCount,
             "medicalStaffCount"=>$medicalStaffCount,
+            "topMedicines"=>$topMedicines,
         ]);
     }
 }

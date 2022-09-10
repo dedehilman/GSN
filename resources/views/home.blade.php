@@ -65,14 +65,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                                $topMedicines = \App\Models\Prescription::select("medicines.name", DB::raw("count(*) as total"))
-                                                ->join('medicines', 'medicines.id', '=', 'prescriptions.medicine_id')
-                                                ->groupBy('medicines.name')
-                                                ->orderBy('total', 'DESC')
-                                                ->limit(10)
-                                                ->get();
-                            @endphp
                             @foreach ($topMedicines as $index => $topMedicine)
                                 <tr>
                                     <td>{{$index+1}}</td>

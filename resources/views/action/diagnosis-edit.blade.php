@@ -132,8 +132,8 @@
             textInput.eq(0).val(data[0].id);
             td.eq(1).html(data[0].code + " - " + data[0].name);
 
-            $('#diagnosis-card' + seqId).find('input[name^=diagnosis_result_id]').val('');
-            $('#diagnosis-card' + seqId).find('input[name^=diagnosis_result_name]').val('');
+            $('#diagnosis-card' + seqId).find('input[id^=diagnosis_result_diagnosis_id]').val('');
+            $('#diagnosis-card' + seqId).find('input[id^=diagnosis_result_diagnosis_name]').val('');
         }
 
         function onSelectedResultDiagnosis(data) {

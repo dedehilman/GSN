@@ -22,7 +22,6 @@ class CreateStockReportsTable extends Migration
             $table->datetime('runned_at')->nullable();
             $table->datetime('finished_at')->nullable();
             $table->enum('status', [0,1,2,3])->default(0);
-            $table->unsignedBigInteger('clinic_id');
             $table->unsignedBigInteger('period_id');
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
@@ -30,7 +29,6 @@ class CreateStockReportsTable extends Migration
 
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('cascade');
             $table->foreign('period_id')->references('id')->on('periods')->onDelete('cascade');
         });
     }

@@ -35,8 +35,8 @@ class StockExport implements ShouldAutoSize, FromView
 
         $prevPeriod = Period::where('start_date','<',$this->reportModel->period->start_date)->orderBy('start_date','desc')->first();
         $medicines = Medicine::all();
-        $stockOpnames = StockOpname::where('period_id', $prevPeriod->id)->where('clinic_id', $this->reportModel->clinic_id)->get();
-        $stockTransactions = StockTransaction::where('clinic_id', $this->reportModel->clinic_id)
+        $stockOpnames = StockOpname::where('period_id', $prevPeriod->id)->where('clinic_id', $this->reportModel->period->clinic_id)->get();
+        $stockTransactions = StockTransaction::where('clinic_id', $this->reportModel->period->clinic_id)
                             ->whereDate('transaction_date','>',$prevPeriod->end_date)
                             ->whereDate('transaction_date','<=',$this->reportModel->period->end_date)->get();
 
@@ -74,7 +74,7 @@ class StockExport implements ShouldAutoSize, FromView
             }
         }
 
-        $pharmacies = Pharmacy::where('clinic_id', $this->reportModel->clinic_id)
+        $pharmacies = Pharmacy::where('clinic_id', $this->reportModel->period->clinic_id)
                             ->whereDate('transaction_date','>',$prevPeriod->end_date)
                             ->whereDate('transaction_date','<=',$this->reportModel->period->end_date)->get();
 
