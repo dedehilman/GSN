@@ -94,22 +94,22 @@ trait RuleQueryBuilderTrait
                     $q = substr($q, 5, $pos-5);
                     $q = explode(';', $q);
                     if($q[1] == 'in') {
-                        $query->whereIn($q[0], explode(',', $q[2]));
+                        $query->whereIn($q[0], explode(',', $this->getValue($q[2])));
                     } else if($q[1] == 'notin') {
-                        $query->whereNotIn($q[0], explode(',', $q[2]));
+                        $query->whereNotIn($q[0], explode(',', $this->getValue($q[2])));
                     } else {
-                        $query->where($q[0], $q[1], $q[2]);
+                        $query->where($q[0], $q[1], $this->getValue($q[2]));
                     }
     
                 } else if(Str::startsWith($q, '@or(')) {
                     $q = substr($q, 4, $pos-4);
                     $q = explode(';', $q);
                     if($q[1] == 'in') {
-                        $query->orWhereIn($q[0], explode(',', $q[2]));
+                        $query->orWhereIn($q[0], explode(',', $this->getValue($q[2])));
                     } else if($q[1] == 'notin') {
-                        $query->orWhereNotIn($q[0], explode(',', $q[2]));
+                        $query->orWhereNotIn($q[0], explode(',', $this->getValue($q[2])));
                     } else {
-                        $query->orWhere($q[0], $q[1], $q[2]);
+                        $query->orWhere($q[0], $q[1], $this->getValue($q[2]));
                     }
                 }
     
@@ -145,22 +145,22 @@ trait RuleQueryBuilderTrait
                 $q = explode(';', $q);
 
                 if($q[1] == 'in') {
-                    array_push($data, $query->whereIn($q[0], explode(',', $q[2])));
+                    array_push($data, $query->whereIn($q[0], explode(',', $this->getValue($q[2]))));
                 } else if($q[1] == 'notin') {
-                    array_push($data, $query->whereNotIn($q[0], explode(',', $q[2])));
+                    array_push($data, $query->whereNotIn($q[0], explode(',', $this->getValue($q[2]))));
                 } else {
-                    array_push($data, $query->where($q[0], $q[1], $q[2]));
+                    array_push($data, $query->where($q[0], $q[1], $this->getValue($q[2])));
                 }
 
             } else if(Str::startsWith($q, '@or(')) {
                 $q = substr($q, 4, $pos-4);
                 $q = explode(';', $q);
                 if($q[1] == 'in') {
-                    array_push($data, $query->orWhereIn($q[0], explode(',', $q[2])));
+                    array_push($data, $query->orWhereIn($q[0], explode(',', $this->getValue($q[2]))));
                 } else if($q[1] == 'notin') {
-                    array_push($data, $query->orWhereNotIn($q[0], explode(',', $q[2])));
+                    array_push($data, $query->orWhereNotIn($q[0], explode(',', $this->getValue($q[2]))));
                 } else {
-                    array_push($data, $query->orWhere($q[0], $q[1], $q[2]));
+                    array_push($data, $query->orWhere($q[0], $q[1], $this->getValue($q[2])));
                 }
             }
 
@@ -188,6 +188,42 @@ trait RuleQueryBuilderTrait
             }
         }
         return -1;
+    }
+
+    function getValue($value) {
+        if(Str::startsWith($value, 'clinicEstate:') || Str::startsWith($value, 'clinicAfdelink:')) {
+            $valueArr = explode(',', str_replace('clinicAfdelink:','',str_replace('clinicEstate:','',$value)));
+            $valueTmp = "";
+            foreach ($valueArr as $index => $val) {
+                $clinic = DB::table("clinics")->where('id', $val)->first();
+                if($clinic) {
+                    if($valueTmp == "") {
+                        $valueTmp = $clinic->estate_id;
+                    } else {
+                        $valueTmp = $valueTmp.','.$clinic->estate_id;
+                    }
+                }
+            }
+
+            if(Str::startsWith($value, 'clinicAfdelink:') && $valueTmp != "") {
+                $valueArr = explode(',', $valueTmp);
+                $valueTmp = "";
+                foreach ($valueArr as $index => $val) {
+                    $afdelink = DB::table("afdelinks")->where('estate_id', $val)->first();
+                    if($afdelink) {
+                        if($valueTmp == "") {
+                            $valueTmp = $afdelink->id;
+                        } else {
+                            $valueTmp = $valueTmp.','.$afdelink->id;
+                        }
+                    }
+                }
+            }
+
+            $value = $valueTmp;
+        }
+
+        return $value;
     }
 
 }

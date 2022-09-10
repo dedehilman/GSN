@@ -176,12 +176,42 @@ class HomeController extends Controller
         $patientCount = $this->queryBuilder(['employees'], $patientCount)->count();
         $medicalStaffCount = DB::table('medical_staff');
         $medicalStaffCount = $this->queryBuilder(['medical_staff'], $medicalStaffCount)->count();
-        $topMedicines = \App\Models\Prescription::select("medicines.name", DB::raw("count(*) as total"))
-                        ->join('medicines', 'medicines.id', '=', 'prescriptions.medicine_id')
+        $q1 = \App\Models\Prescription::select("prescriptions.medicine_id", DB::raw("count(*) as total"))
+                ->join('outpatients', function ($join) {
+                    $join->on('prescriptions.model_id', '=', 'outpatients.id');
+                    $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\Outpatient"'));
+                })
+                ->groupBy('prescriptions.medicine_id');
+        $q1 = $this->queryBuilder(['outpatients'], $q1);
+        $q2 = \App\Models\Prescription::select("prescriptions.medicine_id", DB::raw("count(*) as total"))
+                ->join('family_plannings', function ($join) {
+                    $join->on('prescriptions.model_id', '=', 'family_plannings.id');
+                    $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\FamilyPlanning"'));
+                })
+                ->groupBy('prescriptions.medicine_id');
+        $q2 = $this->queryBuilder(['family_plannings'], $q2);
+        $q3 = \App\Models\Prescription::select("prescriptions.medicine_id", DB::raw("count(*) as total"))
+                ->join('plano_tests', function ($join) {
+                    $join->on('prescriptions.model_id', '=', 'plano_tests.id');
+                    $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\PlanoTest"'));
+                })
+                ->groupBy('prescriptions.medicine_id');
+        $q3 = $this->queryBuilder(['plano_tests'], $q3);
+        $q4 = \App\Models\Prescription::select("prescriptions.medicine_id", DB::raw("count(*) as total"))
+                ->join('work_accidents', function ($join) {
+                    $join->on('prescriptions.model_id', '=', 'work_accidents.id');
+                    $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\WorkAccident"'));
+                })
+                ->groupBy('prescriptions.medicine_id');
+        $q4 = $this->queryBuilder(['work_accidents'], $q4);
+        $topMedicines = DB::table('medicines')
+                        ->select('medicines.name',DB::raw("sum(total) as total"))
+                        ->joinSub($q1->unionAll($q2)->unionAll($q3)->unionAll($q4), 'sq', 'medicines.id', 'sq.medicine_id')
                         ->groupBy('medicines.name')
-                        ->orderBy('total', 'DESC')
                         ->limit(10)
+                        ->orderBy('total', 'desc')
                         ->get();
+        
         return view('home', [
             "topDiseases"=>$topDiseases,
             "kkBasedOnCategory"=>$kkBasedOnCategory,
