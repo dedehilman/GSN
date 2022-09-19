@@ -55,6 +55,8 @@ class EmployeeController extends AppCrudController
             $data->no_bpjs_kesehatan = $request->no_bpjs_kesehatan;
             $data->no_bpjs_ketenagakerjaan = $request->no_bpjs_ketenagakerjaan;
             $data->afdelink_id = $request->afdelink_id;
+            $data->work_unit_id = $request->work_unit_id;
+            $data->grade_id = $request->grade_id;
             $data->save();
 
             if($request->employee_company_id)
@@ -257,6 +259,8 @@ class EmployeeController extends AppCrudController
             $data->no_bpjs_kesehatan = $request->no_bpjs_kesehatan;
             $data->no_bpjs_ketenagakerjaan = $request->no_bpjs_ketenagakerjaan;
             $data->afdelink_id = $request->afdelink_id;
+            $data->work_unit_id = $request->work_unit_id;
+            $data->grade_id = $request->grade_id;
             $data->save();
 
             if($request->employee_company_id)

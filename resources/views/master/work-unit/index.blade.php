@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Stock"), 'subTitle' => Lang::get("Manage data stock report")])
+@extends('layout', ['title' => Lang::get("Work Unit"), 'subTitle' => Lang::get("Manage data work-unit")])
 
 @section('content')
     <div class="row">
@@ -18,8 +18,8 @@
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div>
-                                @can('stock-report-create')
-                                <a href="{{route('report.stock.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
+                                @can('work-unit-create')
+                                <a href="{{route('work-unit.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
                                 @endcan
                             </div>
                             <div class="btn-group nav view">
@@ -32,15 +32,13 @@
                             <div id="collapseOne" class="panel-collapse collapse in" style="padding:10px 0px 0px 0px;">
                                 <form id="formSearch">
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Status")}}</label>
+                                        <label class="col-md-2 col-form-label">{{__("Code")}}</label>
                                         <div class="col-md-4">
-                                            <select name="status" class="custom-select">
-                                                <option value=""></option>
-                                                <option value="0">{{__("Draft")}}</option>
-                                                <option value="1">{{__("On Progress")}}</option>
-                                                <option value="2">{{__("Completed")}}</option>
-                                                <option value="3">{{__("Failed")}}</option>
-                                            </select>
+                                            <input type="text" name="code" class="form-control">
+                                        </div>
+                                        <label class="col-md-2 col-form-label">{{__("Name")}}</label>
+                                        <div class="col-md-4">
+                                            <input type="text" name="name" class="form-control">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -70,11 +68,7 @@
                                 <th></th>
                                 <th></th>
                                 <th>{{ __("Code") }}</th>
-                                <th>{{ __("Runned At") }}</th>
-                                <th>{{ __("Finished At") }}</th>
-                                <th>{{ __("Num Of Downloaded") }}</th>
-                                <th>{{ __("Remark") }}</th>
-                                <th>{{ __("Status") }}</th>
+                                <th>{{ __("Name") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -90,7 +84,7 @@
             $('#datatable').DataTable({
                 ajax:
                 {
-                    url: "{{route('report.stock.datatable')}}",
+                    url: "{{route('work-unit.datatable')}}",
                     type: 'POST',
                     data: function(data){
                         getDatatableParameter(data);
@@ -99,7 +93,6 @@
                         
                     }
                 },
-                order: [[4, "desc"]],
                 columns: [
                     {
                         width: "30px",
@@ -116,7 +109,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('grievance-report-stock-delete') true @else false @endcan,
+                        visible: @can('work-unit-delete') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-danger'><i class='fas fa-trash'></i></div>";
@@ -127,7 +120,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: false,
+                        visible: @can('work-unit-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
@@ -135,58 +128,30 @@
                     },
                     {
                         data: 'code',
+                        name: 'code',
                         defaultContent: '',
                     },
                     {
-                        data: 'runned_at',
+                        data: 'name',
+                        name: 'name',
                         defaultContent: '',
-                    },
-                    {
-                        data: 'finished_at',
-                        defaultContent: '',
-                    },
-                    {
-                        data: 'num_of_downloaded',
-                        defaultContent: '',
-                    },
-                    {
-                        data: 'remark',
-                        defaultContent: '',
-                    },
-                    {
-                        data: 'status',
-                        defaultContent: '',
-                        className: 'text-center',
-                        render: function(data, type, row)
-                        {
-                            if(data == '1') {
-                                return '<span class="badge badge-warning">{{__("On Progress")}}</span>';
-                            } else if(data == '2') {
-                                return '<span class="badge badge-success">{{__("Completed")}}</span>';
-                            } else if(data == '3') {
-                                return '<span class="badge badge-danger">{{__("Failed")}}</span>';
-                            }
-
-                            return '<span class="badge badge-primary">{{__("Draft")}}</span>';
-                        }
                     }
                 ],
-                
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Stock")}}',
-                        exportOptions: { columns: [3, 4, 5, 6, 7, 8] }
+                        title: '{{__("Work Unit")}}',
+                        exportOptions: { columns: [3,4] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Stock")}}',
-                        exportOptions: { columns: [3, 4, 5, 6, 7, 8] }
+                        title: '{{__("Work Unit")}}',
+                        exportOptions: { columns: [3, 4] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Stock")}}',
-                        exportOptions: { columns: [3, 4, 5, 6, 7, 8] }
+                        title: '{{__("Work Unit")}}',
+                        exportOptions: { columns: [3, 4] }
                     }
                 ],
             });

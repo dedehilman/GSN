@@ -24,7 +24,9 @@ class Employee extends Model
         'join_date',
         'no_bpjs_kesehatan',
         'no_bpjs_ketenagakerjaan',
-        'afdelink_id'
+        'afdelink_id',
+        'work_unit_id',
+        'grade_id'
     ];
 
     public function companies() {
@@ -163,8 +165,16 @@ class Employee extends Model
         return $this->hasMany(EmployeeRelationship::class);
     }
 
+    public function workUnit() {
+        return $this->belongsTo(WorkUnit::class);
+    }
+
+    public function grade() {
+        return $this->belongsTo(Grade::class);
+    }
+
     public function scopeWithAll($query) 
     {
-        return $query->with(['afdelink', 'relationships']);
+        return $query->with(['afdelink', 'relationships', 'workUnit', 'grade']);
     }
 }

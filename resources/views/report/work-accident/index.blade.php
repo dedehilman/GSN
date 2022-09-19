@@ -1,4 +1,4 @@
-@extends('layout', ['title' => Lang::get("Stock"), 'subTitle' => Lang::get("Manage data stock report")])
+@extends('layout', ['title' => Lang::get("Work Accident"), 'subTitle' => Lang::get("Manage data sick letter report")])
 
 @section('content')
     <div class="row">
@@ -18,9 +18,9 @@
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-between">
                             <div>
-                                @can('stock-report-create')
-                                <a href="{{route('report.stock.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
-                                @endcan
+                                {{-- @can('work-accident-report-create') --}}
+                                <a href="{{route('report.work-accident.create')}}" class="btn btn-primary" id="btn-add"><i class="fas fa-plus"></i> {{__('Create')}}</a>
+                                {{-- @endcan --}}
                             </div>
                             <div class="btn-group nav view">
                                 <a data-toggle="collapse" href="#collapseOne" class="btn btn-default btn-sm" style="padding-top: 8px"><i class="fas fa-filter"></i></a>
@@ -90,7 +90,7 @@
             $('#datatable').DataTable({
                 ajax:
                 {
-                    url: "{{route('report.stock.datatable')}}",
+                    url: "{{route('report.work-accident.datatable')}}",
                     type: 'POST',
                     data: function(data){
                         getDatatableParameter(data);
@@ -116,7 +116,7 @@
                         orderable: false,
                         defaultContent: '',
                         className: 'text-center',
-                        visible: @can('grievance-report-stock-delete') true @else false @endcan,
+                        visible: @can('grievance-report-work-accident-delete') true @else false @endcan,
                         render: function(data, type, row)
                         {
                             return "<div class='text-danger'><i class='fas fa-trash'></i></div>";
@@ -175,17 +175,17 @@
                 buttons: [
                     {
                         extend: 'excel',
-                        title: '{{__("Stock")}}',
+                        title: '{{__("Work Accident")}}',
                         exportOptions: { columns: [3, 4, 5, 6, 7, 8] }
                     },
                     {
                         extend: 'csv',
-                        title: '{{__("Stock")}}',
+                        title: '{{__("Work Accident")}}',
                         exportOptions: { columns: [3, 4, 5, 6, 7, 8] }
                     },
                     {
                         extend: 'pdf',
-                        title: '{{__("Stock")}}',
+                        title: '{{__("Work Accident")}}',
                         exportOptions: { columns: [3, 4, 5, 6, 7, 8] }
                     }
                 ],

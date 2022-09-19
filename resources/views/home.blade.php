@@ -42,6 +42,50 @@
         </div> --}}
     </div>
     <div class="row">
+        <div class="col-md-12">
+            <div class="card collapsed-card">
+                <div class="card-header">
+                    <h3 class="card-title">{{__('Filter')}}</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label">{{__("Date From")}}</label>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                </div>
+                                <input type="text" name="dateFrom" class="form-control date" value="{{Request::get('dateFrom') ? Request::get('dateFrom') : \Carbon\Carbon::now()->firstOfMonth()->isoFormat("YYYY-MM-DD")}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 col-form-label">{{__("Date To")}}</label>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                </div>
+                                <input type="text" name="dateTo" class="form-control date" value="{{Request::get('dateTo') ? Request::get('dateTo') : \Carbon\Carbon::now()->endOfMonth()->isoFormat("YYYY-MM-DD")}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-primary" type="button" onclick="applyFilter()">{{__("Apply")}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
@@ -421,6 +465,11 @@
                 color += letters[Math.floor(Math.random() * 16)];
             }
             return color;
+        }
+
+        function applyFilter() {
+            var url = window.location.toString();
+            window.location.href = url.replace(window.location.search, "") + "?dateFrom=" + $("input[name='dateFrom']").val() + "&dateTo=" + $("input[name='dateTo']").val()
         }
     </script>
     

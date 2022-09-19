@@ -67,6 +67,14 @@
                         <label class="col-md-3 col-form-label">{{__("Business Area")}}</label>
                         <div class="col-md-9 col-form-label">{{$data->afdelink->estate->name ?? ''}}</div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Work Unit")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->workUnit->name ?? ''}}</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Grade")}}</label>
+                        <div class="col-md-9 col-form-label">{{$data->grade->name ?? ''}}</div>
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">

@@ -194,6 +194,26 @@ Route::group(['prefix' => 'report', 'as' => 'report.'], function () {
     Route::post('stock/datatable', [App\Http\Controllers\Report\StockReportController::class, 'datatable'])->name('stock.datatable');
     Route::get('stock/download/{id}', [App\Http\Controllers\Report\StockReportController::class, 'download'])->name('stock.download');
     Route::resource('stock', App\Http\Controllers\Report\StockReportController::class);
+
+    Route::post('sick-letter/datatable', [App\Http\Controllers\Report\SickLetterReportController::class, 'datatable'])->name('sick-letter.datatable');
+    Route::get('sick-letter/download/{id}', [App\Http\Controllers\Report\SickLetterReportController::class, 'download'])->name('sick-letter.download');
+    Route::resource('sick-letter', App\Http\Controllers\Report\SickLetterReportController::class);
+
+    Route::post('family-planning/datatable', [App\Http\Controllers\Report\FamilyPlanningReportController::class, 'datatable'])->name('family-planning.datatable');
+    Route::get('family-planning/download/{id}', [App\Http\Controllers\Report\FamilyPlanningReportController::class, 'download'])->name('family-planning.download');
+    Route::resource('family-planning', App\Http\Controllers\Report\FamilyPlanningReportController::class);
+
+    Route::post('work-accident/datatable', [App\Http\Controllers\Report\WorkAccidentReportController::class, 'datatable'])->name('work-accident.datatable');
+    Route::get('work-accident/download/{id}', [App\Http\Controllers\Report\WorkAccidentReportController::class, 'download'])->name('work-accident.download');
+    Route::resource('work-accident', App\Http\Controllers\Report\WorkAccidentReportController::class);
+
+    Route::post('plano-test/datatable', [App\Http\Controllers\Report\PlanoTestReportController::class, 'datatable'])->name('plano-test.datatable');
+    Route::get('plano-test/download/{id}', [App\Http\Controllers\Report\PlanoTestReportController::class, 'download'])->name('plano-test.download');
+    Route::resource('plano-test', App\Http\Controllers\Report\PlanoTestReportController::class);
+
+    Route::post('outpatient/datatable', [App\Http\Controllers\Report\OutpatientReportController::class, 'datatable'])->name('outpatient.datatable');
+    Route::get('outpatient/download/{id}', [App\Http\Controllers\Report\OutpatientReportController::class, 'download'])->name('outpatient.download');
+    Route::resource('outpatient', App\Http\Controllers\Report\OutpatientReportController::class);
 });
 
 Route::post('/letter/sick-letter/datatable', [App\Http\Controllers\Letter\SickLetterController::class, 'datatable'])->name('sick-letter.datatable');
@@ -264,3 +284,13 @@ Route::resource('master/work-accident-category', App\Http\Controllers\Master\Wor
 Route::post('pharmacy/datatable', [App\Http\Controllers\Pharmacy\PharmacyController::class, 'datatable'])->name('pharmacy.datatable');
 Route::post('pharmacy/datatable-unprocessed', [App\Http\Controllers\Pharmacy\PharmacyController::class, 'datatableUnprocessed'])->name('pharmacy.datatable-unprocessed');
 Route::resource('pharmacy', App\Http\Controllers\Pharmacy\PharmacyController::class);
+
+Route::post('/master/work-unit/datatable', [App\Http\Controllers\Master\WorkUnitController::class, 'datatable'])->name('work-unit.datatable');
+Route::post('/master/work-unit/datatable/select', [App\Http\Controllers\Master\WorkUnitController::class, 'datatableSelect'])->name('work-unit.datatable.select');
+Route::get('/master/work-unit/select', [App\Http\Controllers\Master\WorkUnitController::class, 'select'])->name('work-unit.select');
+Route::resource('master/work-unit', App\Http\Controllers\Master\WorkUnitController::class);
+
+Route::post('/master/grade/datatable', [App\Http\Controllers\Master\GradeController::class, 'datatable'])->name('grade.datatable');
+Route::post('/master/grade/datatable/select', [App\Http\Controllers\Master\GradeController::class, 'datatableSelect'])->name('grade.datatable.select');
+Route::get('/master/grade/select', [App\Http\Controllers\Master\GradeController::class, 'select'])->name('grade.select');
+Route::resource('master/grade', App\Http\Controllers\Master\GradeController::class);

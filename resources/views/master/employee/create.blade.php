@@ -120,6 +120,30 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Work Unit")}}</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="text" name="work_unit_name" id="work_unit_name" class="form-control" readonly>
+                                    <input type="hidden" name="work_unit_id" id="work_unit_id">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text show-modal-select" data-title="{{__('Work Unit List')}}" data-url="{{route('work-unit.select')}}" data-handler="onSelectedWorkUnit"><i class="fas fa-search"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Grade")}}</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="text" name="grade_name" id="grade_name" class="form-control" readonly>
+                                    <input type="hidden" name="grade_id" id="grade_id">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text show-modal-select" data-title="{{__('Grade List')}}" data-url="{{route('grade.select')}}" data-handler="onSelectedGrade"><i class="fas fa-search"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
@@ -794,6 +818,16 @@
             validatorEmployeeRelationship.resetForm();
             formEmployeeRelationship.find(".is-invalid").removeClass("is-invalid");
             $('#modalEmployeeRelationship').modal('show');
+        }
+
+        function onSelectedWorkUnit(data) {
+            $('#work_unit_id').val(data[0].id);
+            $('#work_unit_name').val(data[0].name);
+        }
+
+        function onSelectedGrade(data) {
+            $('#grade_id').val(data[0].id);
+            $('#grade_name').val(data[0].name);
         }
     </script>
 @endsection

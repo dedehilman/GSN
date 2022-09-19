@@ -27,13 +27,23 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+        if(!$request->dateFrom || !$request->dateTo) {
+            $dateFrom = Carbon::now()->firstOfMonth()->isoFormat("YYYY-MM-DD");
+            $dateTo = Carbon::now()->endOfMonth()->isoFormat("YYYY-MM-DD");    
+        } else {
+            $dateFrom = $request->dateFrom;
+            $dateTo = $request->dateTo;
+        }
+
         $topDiseaseDatas = \App\Models\DiagnosisResult::select("diseases.code", DB::raw("count(*) as total"))
                         ->join('diagnoses', 'diagnoses.id', '=', 'diagnosis_results.diagnosis_id')
                         ->join('diseases', 'diseases.id', '=', 'diagnoses.disease_id')
                         ->join('outpatients', 'outpatients.id', '=', 'diagnosis_results.model_id')
                         ->join('clinics', 'outpatients.clinic_id', '=', 'clinics.id')
+                        ->whereDate('transaction_date', '>=', $dateFrom)
+                        ->whereDate('transaction_date', '<=', $dateTo)
                         ->groupBy('diseases.code')
                         ->orderBy('total', 'DESC')
                         ->limit(10)
@@ -63,6 +73,8 @@ class HomeController extends Controller
                     'work_accident_category_id',
                     DB::Raw('COUNT(1) AS count')
                 )
+                ->whereDate('transaction_date', '>=', $dateFrom)
+                ->whereDate('transaction_date', '<=', $dateTo)
                 ->groupBy('work_accident_category_id');
         $dataFromDb = $this->queryBuilder(['work_accidents'], $dataFromDb)->get();
 
@@ -87,6 +99,8 @@ class HomeController extends Controller
                     'family_planning_category_id',
                     DB::Raw('COUNT(1) AS count')
                 )
+                ->whereDate('transaction_date', '>=', $dateFrom)
+                ->whereDate('transaction_date', '<=', $dateTo)
                 ->groupBy('family_planning_category_id');
         $dataFromDb = $this->queryBuilder(['family_plannings'], $dataFromDb)->get();
 
@@ -110,6 +124,8 @@ class HomeController extends Controller
                     'result',
                     DB::Raw('COUNT(1) AS count')
                 )
+                ->whereDate('transaction_date', '>=', $dateFrom)
+                ->whereDate('transaction_date', '<=', $dateTo)
                 ->groupBy('result');
         $dataFromDb = $this->queryBuilder(['plano_tests'], $dataFromDb)->get();
 
@@ -137,6 +153,8 @@ class HomeController extends Controller
                     'clinic_id',
                     DB::Raw('COUNT(1) AS count')
                 )
+                ->whereDate('transaction_date', '>=', $dateFrom)
+                ->whereDate('transaction_date', '<=', $dateTo)
                 ->groupBy('clinic_id')
                 ->get();
 
@@ -159,6 +177,8 @@ class HomeController extends Controller
                     'clinic_id',
                     DB::Raw('COUNT(1) AS count')
                 )
+                ->whereDate('transaction_date', '>=', $dateFrom)
+                ->whereDate('transaction_date', '<=', $dateTo)
                 ->groupBy('clinic_id')
                 ->get();
 
@@ -181,6 +201,8 @@ class HomeController extends Controller
                     $join->on('prescriptions.model_id', '=', 'outpatients.id');
                     $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\Outpatient"'));
                 })
+                ->whereDate('transaction_date', '>=', $dateFrom)
+                ->whereDate('transaction_date', '<=', $dateTo)
                 ->groupBy('prescriptions.medicine_id');
         $q1 = $this->queryBuilder(['outpatients'], $q1);
         $q2 = \App\Models\Prescription::select("prescriptions.medicine_id", DB::raw("count(*) as total"))
@@ -188,6 +210,8 @@ class HomeController extends Controller
                     $join->on('prescriptions.model_id', '=', 'family_plannings.id');
                     $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\FamilyPlanning"'));
                 })
+                ->whereDate('transaction_date', '>=', $dateFrom)
+                ->whereDate('transaction_date', '<=', $dateTo)
                 ->groupBy('prescriptions.medicine_id');
         $q2 = $this->queryBuilder(['family_plannings'], $q2);
         $q3 = \App\Models\Prescription::select("prescriptions.medicine_id", DB::raw("count(*) as total"))
@@ -195,6 +219,8 @@ class HomeController extends Controller
                     $join->on('prescriptions.model_id', '=', 'plano_tests.id');
                     $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\PlanoTest"'));
                 })
+                ->whereDate('transaction_date', '>=', $dateFrom)
+                ->whereDate('transaction_date', '<=', $dateTo)
                 ->groupBy('prescriptions.medicine_id');
         $q3 = $this->queryBuilder(['plano_tests'], $q3);
         $q4 = \App\Models\Prescription::select("prescriptions.medicine_id", DB::raw("count(*) as total"))
@@ -202,6 +228,8 @@ class HomeController extends Controller
                     $join->on('prescriptions.model_id', '=', 'work_accidents.id');
                     $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\WorkAccident"'));
                 })
+                ->whereDate('transaction_date', '>=', $dateFrom)
+                ->whereDate('transaction_date', '<=', $dateTo)
                 ->groupBy('prescriptions.medicine_id');
         $q4 = $this->queryBuilder(['work_accidents'], $q4);
         $topMedicines = DB::table('medicines')
