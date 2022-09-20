@@ -70,13 +70,34 @@
                             <div class="form-group row">
                                 <label class="col-md-4 col-form-label">{{__("Diagnosis")}}</label>
                                 <div class="col-md-8">
-                                    <div class="input-group">
+                                    <table class="table table-bordered mt-2" id="table-diganosis">
+                                        <thead>
+                                            <tr>
+                                                <th width="10px" class="text-center">
+                                                    <span class='btn btn-primary btn-sm show-modal-select' style="cursor: pointer" data-title="{{__('Diagnosis List')}}" data-url="{{route('diagnosis.select')}}" data-handler="onSelectedSickLetterDiagnosis"><i class='fas fa-plus-circle'></i></span>
+                                                </th>
+                                                <th>{{__('Diagnosis')}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($diagnoses ?? [] as $diagnosis)
+                                            <tr>
+                                                <td style="vertical-align: middle; text-align: center;">
+                                                    <span class='btn btn-danger btn-sm' onclick="removeRow(this)" style="cursor: pointer"><i class='fas fa-trash-alt'></i></span>
+                                                    <input type="hidden" name="diagnosis[]" value="{{$diagnosis->id}}">
+                                                </td>
+                                                <td>{{$diagnosis->code.' - '.$diagnosis->name}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    {{-- <div class="input-group">
                                         <input type="text" name="diagnosis_name" id="diagnosis_name" class="form-control" readonly>
                                         <input type="hidden" name="diagnosis_id" id="diagnosis_id">
                                         <div class="input-group-append">
                                             <span class="input-group-text show-modal-select" data-title="{{__('Diagnosis List')}}" data-url="{{route('diagnosis.select')}}" data-handler="onSelectedDiagnosis"><i class="fas fa-search"></i></span>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -96,6 +117,18 @@
         </div>
     </div>
 </div>
+
+<table id="table-diagnosis-tmp" class="d-none">
+    <tbody>
+        <tr>
+            <td style="vertical-align: middle; text-align: center;">
+                <span class='btn btn-danger btn-sm' onclick="removeRow(this)" style="cursor: pointer"><i class='fas fa-trash-alt'></i></span>
+                <input type="hidden" name="diagnosis[]">
+            </td>
+            <td></td>
+        </tr>    
+    </tbody>
+</table>
 
 <script>
     $(function(){
@@ -134,4 +167,19 @@
         $('#diagnosis_id').val(data[0].id);
         $('#diagnosis_name').val(data[0].name);
     }
+
+    function onSelectedSickLetterDiagnosis(data) {
+            var clonedElement = $('#table-diagnosis-tmp tbody tr:last').clone();
+            $('#table-diganosis').find('tbody').append(clonedElement);
+            var textInput = clonedElement.find('input');
+            var td = clonedElement.find('td');
+            textInput.eq(0).val(data[0].id);
+            td.eq(1).html(data[0].code + " - " + data[0].name);
+        }
+
+        function removeRow(element)
+        {
+            var tableId = $(element).closest('table').attr("id");
+            $(element).closest('tr').remove();
+        }
 </script>

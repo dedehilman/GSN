@@ -39,7 +39,7 @@
     </tr>
     <tr>
         <td>Diagnosa</td>
-        <td>: {{$data->diagnosis->name ?? ''}}</td>
+        <td>: {{implode(',', $data->diagnoses->pluck('name')->toArray() ?? [])}}</td>
     </tr>
 </table>
 <p>Dalam keadaan sakit dan memerlukan istirahat selama @if($data->num_of_days == 0) - hari terhitung dari - s/d - @else {{$data->num_of_days}} terhitung dari {{\Carbon\Carbon::parse($data->transaction_date)->isoFormat('dddd, DD MMMM YYYY')}} s/d {{\Carbon\Carbon::parse($data->transaction_date)->addDays($data->num_of_days-1)->isoFormat('dddd, DD MMMM YYYY')}} @endif.</p>

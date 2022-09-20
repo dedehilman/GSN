@@ -34,6 +34,21 @@ class SickLetter extends Model
 
     public function scopeWithAll($query) 
     {
-        return $query->with(['medicalStaff','clinic','patient','patientRelationship','diagnosis']);
+        return $query->with(['medicalStaff','clinic','patient','patientRelationship','diagnoses']);
+    }
+
+    // public function diagnosis() {
+    //     return $this->belongsTo(Diagnosis::class);
+    // }
+
+    public function diagnoses()
+    {
+        return $this->belongsToMany(Diagnosis::class, SickLetterDiagnosis::class);
+    }
+
+    public function syncDiagnoses($diagnoses)
+    {
+        $this->diagnoses()->detach();   
+        $this->diagnoses()->attach($diagnoses);
     }
 }

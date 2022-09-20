@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\AppMail;
 use Storage;
 use App\Models\Action;
+use App\Models\Diagnosis;
 use App\Traits\MailServerTrait;
 use Illuminate\Support\Str;
 
@@ -47,7 +48,9 @@ class SickLetterController extends AppCrudController
                     'message'=> $validateOnStore
                 ]);
             }
-            $this->model::create($request->all());
+            $data = $this->model::create($request->all());
+            $data->syncDiagnoses($request->diagnosis);
+
             return response()->json([
                 'status' => '200',
                 'data' => '',
@@ -60,6 +63,45 @@ class SickLetterController extends AppCrudController
                 'message'=> $th->getMessage()
             ]);
         }        
+    }
+
+    public function update(Request $request, $id)
+    {
+        $parameterName = $request->route()->parameterNames[count($request->route()->parameterNames)-1];
+        $id = $request->route()->parameters[$parameterName];
+        try {
+            $data = $this->model::find($id);
+            if(!$data) {
+                return response()->json([
+                    'status' => '400',
+                    'data' => '',
+                    'message'=> Lang::get("Data not found")
+                ]);
+            }
+
+            $validateOnUpdate = $this->validateOnUpdate($request, $id);
+            if($validateOnUpdate) {
+                return response()->json([
+                    'status' => '400',
+                    'data' => '',
+                    'message'=> $validateOnUpdate
+                ]);
+            }
+
+            $data->fill($request->all())->save();
+            $data->syncDiagnoses($request->diagnosis);
+            return response()->json([
+                'status' => '200',
+                'data' => '',
+                'message'=> Lang::get("Data has been updated")
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => '500',
+                'data' => '',
+                'message'=> $th->getMessage()
+            ]);
+        }     
     }
 
     public function validateOnStore(Request $request)
@@ -163,10 +205,11 @@ class SickLetterController extends AppCrudController
         $action = Action::where('model_type', $request->model_type)
                     ->where('model_id', $request->model_id)
                     ->first();
-
+        $diagnoses = Diagnosis::whereIn('id', explode(',', $request->diagnosisId ?? ""))->get();
         return view("letter.sick-letter.generate", [
             "data" => $data,
             "action" => $action,
+            "diagnoses" => $diagnoses,
         ]);
     }
 
@@ -188,7 +231,8 @@ class SickLetterController extends AppCrudController
                     'message'=> $validateOnStore
                 ]);
             }
-            $this->model::create($request->all());
+            $data = $this->model::create($request->all());
+            $data->syncDiagnoses($request->diagnosis);
             return response()->json([
                 'status' => '200',
                 'data' => '',

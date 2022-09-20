@@ -59,6 +59,22 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-4 col-form-label">{{__("Diagnosis")}}</label>
+                                <div class="col-md-8">
+                                    <table class="table table-bordered mt-2" id="table-diganosis">
+                                        <thead>
+                                            <tr>
+                                                <th>{{__('Diagnosis')}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($data->diagnoses as $diagnosis)
+                                            <tr>
+                                                <td>{{$diagnosis->code.' - '.$diagnosis->name}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <div class="col-md-8 col-form-label">{{$data->diagnosis->name ?? ''}}</div>
                             </div>
                             <div class="form-group row">
