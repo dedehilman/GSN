@@ -47,6 +47,13 @@ class SickLetterController extends ApiController
             }
 
             $data = $this->model::create($request->all());
+            $diagnoses = array(); 
+            foreach ($request->diagnoses ?? [] as $diagnosis) {
+                if(!in_array($diagnosis['id'], $diagnoses)) {
+                    array_push($diagnoses, $diagnosis['id']);
+                }
+            }
+            $data->syncDiagnoses($diagnoses);
             return response()->json([
                 'status' => '200',
                 'message'=> Lang::get("Data has been stored"),
@@ -59,6 +66,49 @@ class SickLetterController extends ApiController
                 'data' => '',
             ]);
         }        
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $data = $this->model::find($id);
+            if(!$data) {
+                return response()->json([
+                    'status' => '400',
+                    'message'=> Lang::get("Data not found"),
+                    'data' => '',
+                ]);
+            }
+
+            $validateOnUpdate = $this->validateOnUpdate($request, $id);
+            if($validateOnUpdate) {
+                return response()->json([
+                    'status' => '400',
+                    'message'=> $validateOnUpdate,
+                    'data' => '',
+                ]);
+            }
+
+            $data->fill($request->all())->save();
+            $diagnoses = array(); 
+            foreach ($request->diagnoses ?? [] as $diagnosis) {
+                if(!in_array($diagnosis['id'], $diagnoses)) {
+                    array_push($diagnoses, $diagnosis['id']);
+                }
+            }
+            $data->syncDiagnoses($diagnoses);
+            return response()->json([
+                'status' => '200',
+                'message'=> Lang::get("Data has been updated"),
+                'data' => $data,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => '500',
+                'message'=> $th->getMessage(),
+                'data' => '',
+            ]);
+        }
     }
 
     public function generate(Request $request)
@@ -82,6 +132,13 @@ class SickLetterController extends ApiController
             }
 
             $data = $this->model::create($request->all());
+            $diagnoses = array(); 
+            foreach ($request->diagnoses ?? [] as $diagnosis) {
+                if(!in_array($diagnosis['id'], $diagnoses)) {
+                    array_push($diagnoses, $diagnosis['id']);
+                }
+            }
+            $data->syncDiagnoses($diagnoses);
             return response()->json([
                 'status' => '200',
                 'message'=> Lang::get("Data has been stored"),
