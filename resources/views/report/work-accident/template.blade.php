@@ -15,6 +15,7 @@
             <th>{{__("Number")}}</th>
             <th>{{__("Tanggal")}}</th>
             <th>{{__("Nama")}}</th>
+            <th>{{__("Address")}}</th>
             <th>{{__("Sex")}}</th>
             <th>{{__("NPK")}}</th>
             <th>{{__("Unit Kerja")}}</th>
@@ -29,6 +30,7 @@
                 <td>{{$index+1}}</td>
                 <td>{{$data->transaction_date}}</td>
                 <td>{{$data->patient->name}}</td>
+                <td>{{$data->patient->address}}</td>
                 <td>{{__($data->patient->gender)}}</td>
                 <td>{{$data->patient->code}}</td>
                 <td>{{$data->patient->workUnit->name ?? ""}}</td>

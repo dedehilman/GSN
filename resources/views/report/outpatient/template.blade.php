@@ -16,6 +16,7 @@
             <th>{{__("Number")}}</th>
             <th>{{__("Nama Karyawan")}}</th>
             <th>{{__("Nama Pasien")}}</th>
+            <th>{{__("Umur")}}</th>
             <th>{{__("Sex")}}</th>
             <th>{{__("Alamat")}}</th>
             <th>{{__("Unit Kerja")}}</th>
@@ -38,11 +39,12 @@
                 <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$index+1}}</td>
                 <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->patient->name}}</td>
                 <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->for_relationship == 0 ? $data->patient->name : $data->patientRelationship->name}}</td>
+                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{getAge($data->for_relationship == 0 ? $data->patient->birth_date : $data->patientRelationship->birth_date)}}</td>
                 <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{__($data->for_relationship == 0 ? $data->patient->gender : $data->patientRelationship->gender)}}</td>
                 <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->patient->address}}</td>
                 <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->patient->workUnit->name ?? ""}}</td>
                 <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->patient->code}}</td>
-                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top"></td>
+                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->for_relationship == 0 ? "Karyawan" : "Tanggungan"}}</td>
                 @if (count($data->details) > 0)
                     @foreach ($data->details as $index => $detail)
                         @if ($index == 0)
