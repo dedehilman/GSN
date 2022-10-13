@@ -9,7 +9,7 @@
         <td colspan="17" align="center">PERIODE : {{$reportModel->start_date}} - {{$reportModel->end_date}}</td>
     </tr>
 </table>
-<table>
+<table border="1">
     <thead>
         <tr>
             <th>{{__("Date")}}</th>
@@ -34,15 +34,15 @@
     <tbody>
         @foreach ($datas as $index => $data)
             <tr>
-                <td rowspan="{{count($data->details)}}" valign="top">{{$data->transaction_date}}</td>
-                <td rowspan="{{count($data->details)}}" valign="top">{{$index+1}}</td>
-                <td rowspan="{{count($data->details)}}" valign="top">{{$data->patient->name}}</td>
-                <td rowspan="{{count($data->details)}}" valign="top">{{$data->for_relationship == 0 ? $data->patient->name : $data->patientRelationship->name}}</td>
-                <td rowspan="{{count($data->details)}}" valign="top">{{__($data->for_relationship == 0 ? $data->patient->gender : $data->patientRelationship->gender)}}</td>
-                <td rowspan="{{count($data->details)}}" valign="top">{{$data->patient->address}}</td>
-                <td rowspan="{{count($data->details)}}" valign="top">{{$data->patient->workUnit->name ?? ""}}</td>
-                <td rowspan="{{count($data->details)}}" valign="top">{{$data->patient->code}}</td>
-                <td rowspan="{{count($data->details)}}" valign="top"></td>
+                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->transaction_date}}</td>
+                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$index+1}}</td>
+                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->patient->name}}</td>
+                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->for_relationship == 0 ? $data->patient->name : $data->patientRelationship->name}}</td>
+                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{__($data->for_relationship == 0 ? $data->patient->gender : $data->patientRelationship->gender)}}</td>
+                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->patient->address}}</td>
+                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->patient->workUnit->name ?? ""}}</td>
+                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->patient->code}}</td>
+                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top"></td>
                 @if (count($data->details) > 0)
                     @foreach ($data->details as $index => $detail)
                         @if ($index == 0)
@@ -53,7 +53,7 @@
                                 <td></td>
                                 <td></td>
                                 <td>{{$detail['gol_diagnosis'] ?? ""}}</td>
-                                <td rowspan="{{count($data->details)}}" valign="top">{{$data->patient->grade->name ?? ""}}</td>
+                                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->patient->grade->name ?? ""}}</td>
                             </tr>
                         @else
                             <tr>
@@ -75,7 +75,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td rowspan="{{count($data->details)}}" valign="top">{{$data->patient->grade->name ?? ""}}</td>
+                    <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->patient->grade->name ?? ""}}</td>
                 </tr>
                 @endif
         @endforeach
