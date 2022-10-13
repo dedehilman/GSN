@@ -112,14 +112,14 @@
                 for(var i=1; $('#prescription_id'+i).length;i++){}
 
                 textInput.eq(1).attr('id', 'prescription_id' + i);
+                textInput.eq(1).attr('name', 'prescription_id[]');
                 textInput.eq(2).attr('id', 'prescription_medicine_name' + i);
                 textInput.eq(3).attr('id', 'prescription_medicine_id' + i);
+				textInput.eq(3).attr('name', 'prescription_medicine_id[]');
                 textInput.eq(4).attr('id', 'prescription_medicine_rule_name' + i);
-                textInput.eq(5).attr('id', 'prescription_medicine_rule_id' + i);
-                textInput.eq(1).attr('name', 'prescription_id[]');
-                textInput.eq(3).attr('name', 'prescription_medicine_id[]');
                 textInput.eq(5).attr('name', 'prescription_medicine_rule_id[]');
-                textInput.eq(6).attr('id', 'prescription_stock_qty[]');
+                textInput.eq(5).attr('id', 'prescription_medicine_rule_id' + i);
+                textInput.eq(6).attr('id', 'prescription_stock_qty' + i);
                 textInput.eq(6).attr('name', 'prescription_stock_qty[]');
                 textInput.eq(7).attr('name', 'prescription_qty[]');
                 textInput.val('');
