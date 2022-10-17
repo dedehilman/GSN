@@ -30,6 +30,16 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Report Format")}}</label>
+                            <div class="col-md-9">
+                                <select name="report_format" class="custom-select">
+                                    <option value="Generic">Generic</option>
+                                    <option value="Induk">Induk</option>
+                                    <option value="Estate">Estate</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer text-right">
                         <a href="{{route('report.stock.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>

@@ -20,6 +20,7 @@ class StockReport extends Model
         'num_of_downloaded',
         'period_id', 
         'clinic_id',
+        'report_format',
     ];
 
     public function period() {
