@@ -129,12 +129,11 @@
                     $('#loader').modal('show');
                 },
                 success: function (data) {
-                    showNotification(data.status, data.message);
                     if(data.status == '200') {
                         $("#modal-form").modal('hide');
-                        setTimeout(function(){
-                            window.location.reload();
-                        }, 1000)
+                        onGeneratedReferenceLetter(data);
+                    } else {
+                        showNotification(data.status, data.message);
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {

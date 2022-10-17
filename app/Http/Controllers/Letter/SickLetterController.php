@@ -235,7 +235,7 @@ class SickLetterController extends AppCrudController
             $data->syncDiagnoses($request->diagnosis);
             return response()->json([
                 'status' => '200',
-                'data' => '',
+                'data' => $data,
                 'message'=> Lang::get("Data has been stored")
             ]);
         } catch (\Throwable $th) {

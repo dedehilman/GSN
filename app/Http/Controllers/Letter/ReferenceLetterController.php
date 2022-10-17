@@ -208,10 +208,10 @@ class ReferenceLetterController extends AppCrudController
                     'message'=> $validateOnStore
                 ]);
             }
-            $this->model::create($request->all());
+            $data = $this->model::create($request->all());
             return response()->json([
                 'status' => '200',
-                'data' => '',
+                'data' => $data,
                 'message'=> Lang::get("Data has been stored")
             ]);
         } catch (\Throwable $th) {

@@ -6,10 +6,10 @@
                     ->where('model_id', $data->id)
                     ->first();
 @endphp
-<p class="mt-2">
+<p class="mt-2 sick-letter">
     @if($sickLetter) <a href="{{route('sick-letter.show', $sickLetter->id ?? '')}}">{{$sickLetter->transaction_no}}</a> @else <a href="#" class="show-modal-form-custom" data-url="{{route('sick-letter.generate', 'model_id='.$data->id."&model_type=".get_class($data))}}">{{__("Generate Sick Letter")}}</a> @endif
 </p>
-<p>
+<p class="reference-letter">
     @if($referenceLetter) <a href="{{route('reference-letter.show', $referenceLetter->id ?? '')}}">{{$referenceLetter->transaction_no}}</a> @else <a href="#" class="show-modal-form" data-url="{{route('reference-letter.generate', 'model_id='.$data->id."&model_type=".get_class($data))}}">{{__("Generate Reference Letter")}}</a> @endif
 </p>
 
@@ -50,6 +50,16 @@
                 });
             })
         })
+
+        function onGeneratedSickLetter(data) {
+            var url = "{{route('sick-letter.index')}}/" + data.data.id;
+            $("p.sick-letter").html("<a href='" + url + "'>" + data.data.transaction_no + "</a>");
+        }
+
+        function onGeneratedReferenceLetter(data) {
+            var url = "{{route('reference-letter.index')}}/" + data.data.id;
+            $("p.reference-letter").html("<a href='" + url + "'>" + data.data.transaction_no + "</a>");
+        }
     </script>
 @endsection
 
