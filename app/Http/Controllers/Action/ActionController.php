@@ -246,7 +246,7 @@ class ActionController extends AppCrudController
         try {
             $diseaseIds = Diagnosis::whereNotNull('disease_id')
                         ->whereIn('id', $request->diagnosis_id ?? [])
-                        ->pluck('id')
+                        ->pluck('disease_id')
                         ->toArray();
             
             $data = DiseaseMedicine::whereIn('disease_id', $diseaseIds)->withAll()->get();
