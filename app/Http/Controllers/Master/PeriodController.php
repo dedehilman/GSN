@@ -76,50 +76,51 @@ class PeriodController extends AppCrudController
         return $query;
     }
 
+    public function filterDatatableSelect(Request $request, $query)
+    {
+        return parent::filterDatatable($request, $query);
+    }
+
     public function stockTaking($id) {
         try {
             $stock = array();
             $period = Period::find($id);
-            $prevPeriod = Period::where('start_date','<',$period->start_date)->orderBy('start_date','desc')->first();
-            $stockOpnames = StockOpname::where('period_id', $prevPeriod->id)->where('clinic_id', $period->clinic_id)->get();
-            $stockTransactions = StockTransaction::where('clinic_id', $period->clinic_id)
-                            ->whereDate('transaction_date','>',$prevPeriod->end_date)
-                            ->whereDate('transaction_date','<=',$period->end_date)->get();
-            $pharmacies = Pharmacy::where('clinic_id', $period->clinic_id)
-                            ->whereDate('transaction_date','>',$prevPeriod->end_date)
-                            ->whereDate('transaction_date','<=',$period->end_date)->get();
+            $prevPeriod = Period::where('end_date','<',$period->start_date)->where('clinic_id', $period->clinic_id)->orderBy('start_date','desc')->first();
+            if($prevPeriod) {
+                $stockOpnames = StockOpname::where('period_id', $prevPeriod->id)->where('clinic_id', $period->clinic_id)->get();
+                $stockTransactions = StockTransaction::where('clinic_id', $period->clinic_id)
+                                ->whereDate('transaction_date','>',$prevPeriod->end_date)
+                                ->whereDate('transaction_date','<=',$period->end_date)->get();
+                $pharmacies = Pharmacy::where('clinic_id', $period->clinic_id)
+                                ->whereDate('transaction_date','>',$prevPeriod->end_date)
+                                ->whereDate('transaction_date','<=',$period->end_date)->get();
 
-            foreach ($stockOpnames as $stockOpname) {
-                if(!array_key_exists($stockOpname->medicine_id, $stock)) {
-                    $stock[$stockOpname->medicine_id] = 0;
-                }
-    
-                $stock[$stockOpname->medicine_id] = $stock[$stockOpname->medicine_id] + $stockOpname->qty;
+                foreach ($stockOpnames as $stockOpname) {
+                    if(!array_key_exists($stockOpname->medicine_id, $stock)) {
+                        $stock[$stockOpname->medicine_id] = 0;
+                    }
+        
+                    $stock[$stockOpname->medicine_id] = $stock[$stockOpname->medicine_id] + $stockOpname->qty;
+                }                    
+            } else {
+                $stockTransactions = StockTransaction::where('clinic_id', $period->clinic_id)
+                                ->whereDate('transaction_date','<=',$period->end_date)->get();
+                $pharmacies = Pharmacy::where('clinic_id', $period->clinic_id)
+                                ->whereDate('transaction_date','<=',$period->end_date)->get();
             }
 
             foreach ($stockTransactions as $stockTransaction) {
                 foreach ($stockTransaction->details as $detail) {
-                    if($stockTransaction->transaction_type == "In") {
+                    if($stockTransaction->transaction_type == "In" || $stockTransaction->transaction_type == "Transfer In" || $stockTransaction->transaction_type == "Adjustment") {
                         if(!array_key_exists($detail->medicine_id, $stock)) {
                             $stock[$detail->medicine_id] = 0;
                         }
-                        $stock[$detail->medicine_id] = $stock[$detail->medicine_id] + $detail->qty;    
-                        
-                    } else if($stockTransaction->transaction_type == "Transfer In") {
-                        if(!array_key_exists($detail->medicine_id, $stock)) {
-                            $stock[$detail->medicine_id] = 0;
-                        }
-                        $stock[$detail->medicine_id] = $stock[$detail->medicine_id] + $detail->qty;    
+                        $stock[$detail->medicine_id] = $stock[$detail->medicine_id] + $detail->qty;                            
                     } else if($stockTransaction->transaction_type == "Transfer Out") {
                         if(!array_key_exists($detail->medicine_id, $stock)) {
                             $stock[$detail->medicine_id] = 0;
                         }
                         $stock[$detail->medicine_id] = $stock[$detail->medicine_id] - $detail->qty;    
-                    } else if($stockTransaction->transaction_type == "Adjustment") {
-                        if(!array_key_exists($detail->medicine_id, $stock)) {
-                            $stock[$detail->medicine_id] = 0;
-                        }
-                        $stock[$detail->medicine_id] = $stock[$detail->medicine_id] + $detail->qty;    
                     }
                 }
             }

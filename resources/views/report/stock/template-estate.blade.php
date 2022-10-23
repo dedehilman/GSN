@@ -1,15 +1,15 @@
 <table>
     <tr>
-        <td colspan="41" align="center">LAPORAN STOK PENERIMAAN / PENGELUARAN OBAT DAN ALKES</td>
+        <td colspan="42" align="center">LAPORAN STOK PENERIMAAN / PENGELUARAN OBAT DAN ALKES</td>
     </tr>
     <tr>
-        <td colspan="41" align="center">{{$reportModel->period->clinic->name}}</td>
+        <td colspan="42" align="center">{{$reportModel->clinic->name}}</td>
     </tr>
     <tr>
-        <td colspan="41" align="center">{{$reportModel->period->clinic->estate->company->name ?? ""}}</td>
+        <td colspan="42" align="center">{{$reportModel->clinic->estate->company->name ?? ""}}</td>
     </tr>
     <tr>
-        <td colspan="41" align="center">PERIODE : {{$reportModel->period->start_date}} - {{$reportModel->period->end_date}}</td>
+        <td colspan="42" align="center">PERIODE : {{$reportModel->start_date}} - {{$reportModel->end_date}}</td>
     </tr>
 </table>
 <table>
@@ -24,6 +24,7 @@
             <th rowspan="2" valign="middle" align="center">JUMLAH</th>
             <th rowspan="2" valign="middle" align="center">MUTASI</th>
             <th rowspan="2" valign="middle" align="center">ED</th>
+            <th rowspan="2" valign="middle" align="center">{{__("Adjustment")}}</th>
             <th rowspan="2" valign="middle" align="center">STOCK AKHIR</th>
             <th rowspan="2" valign="middle" align="center">KET</th>
         </tr>
@@ -53,7 +54,8 @@
                 <td>{{$totalOut}}</td>
                 <td>{{$transferOut[$medicine->code] ?? 0}}</td>
                 <td></td>
-                <td>{{($begin[$medicine->code] ?? 0) + ($in[$medicine->code] ?? 0) + ($transferIn[$medicine->code] ?? 0) - ($transferOut[$medicine->code] ?? 0) - $totalOut}}</td>
+                <td>{{$adj[$medicine->code] ?? 0}}</td>
+                <td>{{($begin[$medicine->code] ?? 0) + ($in[$medicine->code] ?? 0) + ($transferIn[$medicine->code] ?? 0) - ($transferOut[$medicine->code] ?? 0) - $totalOut + ($adj[$medicine->code] ?? 0)}}</td>
                 <td></td>
             </tr>
         @endforeach
@@ -61,7 +63,7 @@
 </table>
 <table>
     <tr>
-        <td colspan="41" align="right">{{$reportModel->period->clinic->location ?? ""}}, {{Carbon\Carbon::now()->isoFormat('DD MMM YYYY')}}</td>
+        <td colspan="42" align="right">{{$reportModel->clinic->location ?? ""}}, {{Carbon\Carbon::now()->isoFormat('DD MMM YYYY')}}</td>
     </tr>
     <tr>
         <td colspan="2" align="center">Diketahui Oleh,</td>
@@ -69,7 +71,7 @@
             <td></td>
         @endfor
         <td colspan="8" align="center">Diperiksa Oleh,</td>
-        @for ($i = 0; $i < 12; $i++)
+        @for ($i = 0; $i < 13; $i++)
             <td></td>
         @endfor
         <td colspan="6" align="center">Dibuat Oleh,</td>
@@ -80,14 +82,14 @@
             <td></td>
         @endfor
         <td colspan="8" rowspan="6"></td>
-        @for ($i = 0; $i < 12; $i++)
+        @for ($i = 0; $i < 13; $i++)
             <td></td>
         @endfor
         <td colspan="6" rowspan="6"></td>
     </tr>
     @for ($i = 0; $i < 5; $i++)
         <tr>
-            @for ($j = 0; $j < 25; $j++)
+            @for ($j = 0; $j < 26; $j++)
                 <td></td>
             @endfor
         </tr>
@@ -98,7 +100,7 @@
             <td></td>
         @endfor
         <td colspan="8" align="center">Asst. / Dokter Wilayah</td>
-        @for ($i = 0; $i < 12; $i++)
+        @for ($i = 0; $i < 13; $i++)
             <td></td>
         @endfor
         <td colspan="6" align="center">Paramedis</td>

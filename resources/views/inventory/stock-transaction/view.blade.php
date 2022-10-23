@@ -52,6 +52,7 @@
                                         <thead>
                                             <tr>
                                                 <th>{{ __('Product') }}</th>
+                                                <th>{{ __('Stock Qty') }}</th>
                                                 <th>{{ __('Qty') }}</th>
                                                 <th>{{ __('Remark') }}</th>
                                             </tr>
@@ -60,6 +61,7 @@
                                             @foreach ($data->details ?? [] as $index => $detail)
                                                 <tr>
                                                     <td>{{$detail->medicine->name}}</td>
+                                                    <td>{{$detail->stock_qty}}</td>
                                                     <td>{{$detail->qty}}</td>
                                                     <td>{{$detail->remark}}</td>
                                                 </tr>

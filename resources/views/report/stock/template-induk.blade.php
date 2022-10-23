@@ -1,15 +1,15 @@
 <table>
     <tr>
-        <td colspan="{{$clinicCount+12}}" align="center">LAPORAN STOK PENERIMAAN / PENGELUARAN OBAT DAN ALKES</td>
+        <td colspan="{{$clinicCount+13}}" align="center">LAPORAN STOK PENERIMAAN / PENGELUARAN OBAT DAN ALKES</td>
     </tr>
     <tr>
-        <td colspan="{{$clinicCount+12}}" align="center">{{$reportModel->period->clinic->name}}</td>
+        <td colspan="{{$clinicCount+13}}" align="center">{{$reportModel->clinic->name}}</td>
     </tr>
     <tr>
-        <td colspan="{{$clinicCount+12}}" align="center">{{$reportModel->period->clinic->estate->company->name ?? ""}}</td>
+        <td colspan="{{$clinicCount+13}}" align="center">{{$reportModel->clinic->estate->company->name ?? ""}}</td>
     </tr>
     <tr>
-        <td colspan="{{$clinicCount+12}}" align="center">PERIODE : {{$reportModel->period->start_date}} - {{$reportModel->period->end_date}}</td>
+        <td colspan="{{$clinicCount+13}}" align="center">PERIODE : {{$reportModel->start_date}} - {{$reportModel->end_date}}</td>
     </tr>
 </table>
 <table>
@@ -19,11 +19,12 @@
             <th rowspan="3" valign="middle" align="center">SAT</th>
             <th rowspan="3" valign="middle" align="center">STOCK AWAL</th>
             <th colspan="2" valign="middle" align="center">IN</th>
-            <th colspan="2" valign="middle" align="center">{{$reportModel->period->clinic->code}}</th>
+            <th colspan="2" valign="middle" align="center">{{$reportModel->clinic->code}}</th>
             @foreach ($clinics as $key => $value)
                 <th @if(count($value) > 1) colspan="{{count($value)}}" @endif valign="middle" align="center">{{$key}}</th>
             @endforeach
             <th rowspan="3" valign="middle" align="center">TOTAL OUT</th>
+            <th rowspan="3" valign="middle" align="center">{{__("Adjustment")}}</th>
             <th rowspan="3" valign="middle" align="center">STOCK AKHIR</th>
             <th rowspan="3" valign="middle" align="center">HARGA</th>
         </tr>
@@ -84,7 +85,8 @@
                     @endforeach
                 @endforeach
                 <td>{{$totalTransferOut}}</td>
-                <td>{{($begin[$medicine->code] ?? 0) + ($in[$medicine->code] ?? 0) + ($transferIn[$medicine->code] ?? 0) - ($out[$medicine->code] ?? 0) - $totalTransferOut}}</td>
+                <td>{{$adj[$medicine->code] ?? 0}}</td>
+                <td>{{($begin[$medicine->code] ?? 0) + ($in[$medicine->code] ?? 0) + ($transferIn[$medicine->code] ?? 0) - ($out[$medicine->code] ?? 0) - $totalTransferOut + ($adj[$medicine->code] ?? 0)}}</td>
                 <td></td>
             </tr>
         @endforeach
@@ -125,7 +127,7 @@
         <td>{{$totalOut}}</td>
     </tr>
     <tr>
-        <td colspan="2"><b>JUMLAH OUT {{$reportModel->period->clinic->code}}</b></td>
+        <td colspan="2"><b>JUMLAH OUT {{$reportModel->clinic->code}}</b></td>
         <td>{{$totalOut}}</td>
     </tr>
     @foreach ($clinics as $key => $value)
@@ -149,12 +151,12 @@
 </table>
 <table>
     <tr>
-        <td colspan="{{$clinicCount+12}}" align="right">{{$reportModel->period->clinic->location ?? ""}}, {{Carbon\Carbon::now()->isoFormat('DD MMM YYYY')}}</td>
+        <td colspan="{{$clinicCount+13}}" align="right">{{$reportModel->clinic->location ?? ""}}, {{Carbon\Carbon::now()->isoFormat('DD MMM YYYY')}}</td>
     </tr>
     <tr>
         <td colspan="3" align="center">Diketahui,</td>
         @php
-            $col = ($clinicCount+12-14-6)/2;
+            $col = ($clinicCount+13-14-6)/2;
             $totalCol = ($clinicCount+12-14);
         @endphp
         @for ($i = 0; $i < $col; $i++)

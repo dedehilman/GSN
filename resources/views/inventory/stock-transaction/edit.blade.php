@@ -97,6 +97,7 @@
                                                         <span class='btn btn-primary btn-sm' id="btn-add-detail" style="cursor: pointer"><i class='fas fa-plus-circle'></i></span>
                                                     </th>
                                                     <th>{{ __('Product') }}</th>
+                                                    <th>{{ __('Stock Qty') }}</th>
                                                     <th>{{ __('Qty') }}</th>
                                                     <th>{{ __('Remark') }}</th>
                                                 </tr>
@@ -113,9 +114,12 @@
                                                                 <input type="text" name="medicine_name[]" id="medicine_name{{$index}}" class="form-control " value="{{$detail->medicine->name}}" readonly>
                                                                 <input type="hidden" name="medicine_id[]" id="medicine_id{{$index}}" value="{{$detail->medicine->id}}">
                                                                 <div class="input-group-append">
-                                                                    <span class="input-group-text show-modal-select medicine" id="medicine{{$index}}" data-title="{{__('Product List')}}" data-url="{{route('medicine.select')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
+                                                                    <span class="input-group-text show-modal-select medicine" id="medicine{{$index}}" data-title="{{__('Product List')}}" data-url="{{route('medicine.select-stock')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
                                                                 </div>
                                                             </div>
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" class="form-control " name="stock_qty[]" readonly value="{{$detail->stock_qty ?? 0}}" id="stock_qty{{$index}}">
                                                         </td>
                                                         <td>
                                                             <input type="number" class="form-control " name="qty[]" id="qty{{$index}}" value="{{$detail->qty}}">
@@ -153,9 +157,12 @@
                         <input type="text" name="medicine_name[]" class="form-control " readonly>
                         <input type="hidden" name="medicine_id[]">
                         <div class="input-group-append">
-                            <span class="input-group-text show-modal-select medicine" data-title="{{__('Product List')}}" data-url="{{route('medicine.select')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
+                            <span class="input-group-text show-modal-select medicine" data-title="{{__('Product List')}}" data-url="{{route('medicine.select-stock')}}" data-handler="onSelectedMedicine"><i class="fas fa-search"></i></span>
                         </div>
                     </div>
+                </td>
+                <td>
+                    <input type="number" class="form-control " name="stock_qty[]" readonly>
                 </td>
                 <td>
                     <input type="number" class="form-control " name="qty[]">
@@ -181,6 +188,7 @@
         function onSelectedMedicine(data) {
             $('#medicine_id'+seqId).val(data[0].id);
             $('#medicine_name'+seqId).val(data[0].name);
+            $('#stock_qty'+seqId).val(data[0].stock);
         }
         function onSelectedReference(data) {
             $('#reference_id').val(data[0].id);
@@ -198,6 +206,7 @@
                 textInput.eq(0).attr('id', 'transaction_detail_id' + i);
                 textInput.eq(1).attr('id', 'medicine_name' + i);
                 textInput.eq(2).attr('id', 'medicine_id' + i);
+                textInput.eq(3).attr('id', 'stock_qty' + i);
                 textInput.val('');
 
                 clonedRow.find('.medicine').attr('id', 'medicine' + i);
@@ -230,6 +239,26 @@
         {
             var tableId = $(element).closest('table').attr("id");
             $(element).closest('tr').remove();
+        }
+
+        function setSelectedIds(element) {
+            if($(element).attr('data-handler') == 'onSelectedMedicine') {
+                dataUrl = $(element).attr('data-url');
+                if(dataUrl.indexOf("?") >= 0) {
+                    dataUrl = dataUrl.substring(0, dataUrl.indexOf("?"));
+                }
+                $(element).attr('data-url', dataUrl+"?clinic_id="+$("#clinic_id").val());
+            } else if($(element).attr('data-handler') == 'onSelectedReference') {
+                dataUrl = $(element).attr('data-url');
+                if(dataUrl.indexOf("?") >= 0) {
+                    dataUrl = dataUrl.substring(0, dataUrl.indexOf("?"));
+                }
+                var clinicId = $("#clinic_id").val();
+                if(clinicId) {
+                    clinicId = "&new_clinic_id=" + clinicId;
+                }
+                $(element).attr('data-url', dataUrl+"?transaction_type=Transfer Out" + clinicId);
+            }
         }
     </script>
 @endsection

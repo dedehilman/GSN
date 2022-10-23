@@ -185,6 +185,7 @@
     </script>
     @yield("scriptPresciption")
     @yield("scriptAction")
+    @yield("scriptHistory")
     @yield("scriptOther")
 @endsection
 

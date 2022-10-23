@@ -50,8 +50,16 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">{{__("Period")}}</label>
-                        <div class="col-md-5 col-form-label">{{$data->period->name}}</div>
+                        <label class="col-md-3 col-form-label">{{__("Clinic")}}</label>
+                        <div class="col-md-5 col-form-label">{{$data->clinic->name ?? ""}}</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Start Date")}}</label>
+                        <div class="col-md-5 col-form-label">{{$data->start_date}}</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("End Date")}}</label>
+                        <div class="col-md-5 col-form-label">{{$data->end_date}}</div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{__("Report Format")}}</label>

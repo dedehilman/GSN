@@ -18,14 +18,11 @@ class StockReport extends Model
         'finished_at', 
         'status', 
         'num_of_downloaded',
-        'period_id', 
         'clinic_id',
+        'start_date', 
+        'end_date', 
         'report_format',
     ];
-
-    public function period() {
-        return $this->belongsTo(Period::class);
-    }
 
     public function clinic() {
         return $this->belongsTo(Clinic::class);
@@ -33,6 +30,6 @@ class StockReport extends Model
 
     public function scopeWithAll($query) 
     {
-        return $query->with(['period','clinic']);
+        return $query->with(['clinic']);
     }
 }

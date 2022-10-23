@@ -182,6 +182,13 @@ Route::post('/master/medical-staff/datatable/select', [App\Http\Controllers\Mast
 Route::get('/master/medical-staff/select', [App\Http\Controllers\Master\MedicalStaffController::class, 'select'])->name('medical-staff.select');
 Route::resource('master/medical-staff', App\Http\Controllers\Master\MedicalStaffController::class);
 
+Route::get('/inventory/stock-opname/uploader', [App\Http\Controllers\Inventory\StockOpnameUploaderController::class , 'uploader'])->name('stock-opname.uploader');
+Route::get('/inventory/stock-opname/uploader/index', [App\Http\Controllers\Inventory\StockOpnameUploaderController::class , 'index'])->name('stock-opname.uploader.index');
+Route::post('/inventory/stock-opname/uploader/datatable', [App\Http\Controllers\Inventory\StockOpnameUploaderController::class , 'datatable'])->name('stock-opname.uploader.datatable');
+Route::post('/inventory/stock-opname/uploader/upload', [App\Http\Controllers\Inventory\StockOpnameUploaderController::class , 'uploadProcess'])->name('stock-opname.uploader.upload');
+Route::post('/inventory/stock-opname/uploader/validate', [App\Http\Controllers\Inventory\StockOpnameUploaderController::class , 'validateProcess'])->name('stock-opname.uploader.validate');
+Route::post('/inventory/stock-opname/uploader/commit', [App\Http\Controllers\Inventory\StockOpnameUploaderController::class , 'commitProcess'])->name('stock-opname.uploader.commit');
+Route::get('/inventory/stock-opname/uploader/{id}', [App\Http\Controllers\Inventory\StockOpnameUploaderController::class , 'show'])->name('stock-opname.uploader.show');
 Route::post('/inventory/stock-opname/datatable', [App\Http\Controllers\Inventory\StockOpnameController::class, 'datatable'])->name('stock-opname.datatable');
 Route::resource('inventory/stock-opname', App\Http\Controllers\Inventory\StockOpnameController::class);
 

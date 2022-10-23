@@ -19,14 +19,36 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label required">{{__("Period")}}</label>
+                            <label class="col-md-3 col-form-label required">{{__("Clinic")}}</label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <input type="text" name="period_name" id="period_name" class="form-control required" readonly>
-                                    <input type="hidden" name="period_id" id="period_id">
+                                    <input type="text" name="clinic_name" id="clinic_name" class="form-control required" readonly>
+                                    <input type="hidden" name="clinic_id" id="clinic_id">
                                     <div class="input-group-append">
-                                        <span class="input-group-text show-modal-select" data-title="{{__('Period List')}}" data-url="{{route('period.select')}}" data-handler="onSelectedPeriod"><i class="fas fa-search"></i></span>
+                                        <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label required">{{__("Start Date")}}</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                    </div>
+                                    <input type="text" name="start_date" class="form-control date required">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label required">{{__("End Date")}}</label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                    </div>
+                                    <input type="text" name="end_date" class="form-control date required">
                                 </div>
                             </div>
                         </div>
@@ -53,9 +75,9 @@
 
 @section('script')
     <script>
-        function onSelectedPeriod(data) {
-            $('#period_id').val(data[0].id);
-            $('#period_name').val(data[0].name);
+        function onSelectedClinic(data) {
+            $('#clinic_id').val(data[0].id);
+            $('#clinic_name').val(data[0].name);
         }
     </script>
 @endsection

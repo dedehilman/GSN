@@ -75,7 +75,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="input-group">
-                                                                <input type="text" name="symptom_name[]" class="form-control" value="{{$symptom->name}}" id="symptom_name{{$idx}}" readonly>
+                                                                <input type="text" name="symptom_name[]" class="form-control" value="{{$symptom->code." - ".$symptom->name}}" id="symptom_name{{$idx}}" readonly>
                                                                 <input type="hidden" name="symptoms[]" value="{{$symptom->id}}" id="symptom_id{{$idx}}">
                                                                 <div class="input-group-append">
                                                                     <span class="input-group-text show-modal-select" data-title="{{__('Symptom List')}}" data-url="{{route('symptom.select')}}" data-handler="onSelectedSymptom" data-id="clinic"><i class="fas fa-search"></i></span>
@@ -150,7 +150,7 @@
 
         function onSelectedSymptom(data) {
             $('#symptom_id'+seqId).val(data[0].id);
-            $('#symptom_name'+seqId).val(data[0].name);
+            $('#symptom_name'+seqId).val(data[0].code + " - " + data[0].name);
         }
 
         function onSelected(data) {

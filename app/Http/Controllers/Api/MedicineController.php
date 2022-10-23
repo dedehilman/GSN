@@ -108,6 +108,42 @@ class MedicineController extends ApiController
                     
                     
                     $dt->setAttribute("stock", $begin+$in+$transferIn-$transferOut-$out+$adj);
+                } else {
+                    $in = StockTransaction::join('stock_transaction_details', 'stock_transaction_details.stock_transaction_id', '=', 'stock_transactions.id')
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
+                            ->where('transaction_type', 'In')
+                            ->where('medicine_id', $dt->id)
+                            ->sum('qty');
+                    $transferIn = StockTransaction::join('stock_transaction_details', 'stock_transaction_details.stock_transaction_id', '=', 'stock_transactions.id')
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
+                            ->where('transaction_type', 'Transfer In')
+                            ->where('medicine_id', $dt->id)
+                            ->sum('qty');
+
+                    $transferOut = StockTransaction::join('stock_transaction_details', 'stock_transaction_details.stock_transaction_id', '=', 'stock_transactions.id')
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
+                            ->where('transaction_type', 'Transfer Out')
+                            ->where('medicine_id', $dt->id)
+                            ->sum('qty');
+
+                    $adj = StockTransaction::join('stock_transaction_details', 'stock_transaction_details.stock_transaction_id', '=', 'stock_transactions.id')
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
+                            ->where('transaction_type', 'Adjusment')
+                            ->where('medicine_id', $dt->id)
+                            ->sum('qty');
+
+                    $out = Pharmacy::join('pharmacy_details', 'pharmacy_details.pharmacy_id', '=', 'pharmacies.id')
+                            ->where('clinic_id', $request->clinic_id ?? null)
+                            ->whereDate('transaction_date','<=',Carbon::now()->isoFormat('YYYY-MM-DD'))
+                            ->where('medicine_id', $dt->id)
+                            ->sum('actual_qty');
+                    
+                    
+                    $dt->setAttribute("stock", $in+$transferIn-$transferOut-$out+$adj);
                 }
             }
             

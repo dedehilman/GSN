@@ -44,7 +44,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                         </div>
-                                                        <input type="text" name="transaction_date.gte" class="form-control date">
+                                                        <input type="text" name="transaction_date.gte" class="form-control date" value="{{\Carbon\Carbon::now()->isoFormat('YYYY-MM-DD')}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -52,7 +52,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                         </div>
-                                                        <input type="text" name="transaction_date.lte" class="form-control date">
+                                                        <input type="text" name="transaction_date.lte" class="form-control date" value="{{\Carbon\Carbon::now()->isoFormat('YYYY-MM-DD')}}">
                                                     </div>
                                                 </div>
                                             </div>

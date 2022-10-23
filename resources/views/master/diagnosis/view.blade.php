@@ -49,7 +49,7 @@
                                         <tbody>
                                             @foreach($data->symptoms as $idx => $symptom)
                                                 <tr>
-                                                    <td>{{$symptom->name}}</td>
+                                                    <td>{{$symptom->code." - ".$symptom->name}}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStockTransactionDetailsTable extends Migration
+class CreateStockOpnameUploadersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,24 @@ class CreateStockTransactionDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('stock_transaction_details', function (Blueprint $table) {
+        Schema::create('stock_opname_uploaders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('stock_transaction_id');
-            $table->unsignedBigInteger('medicine_id');
-            $table->decimal('qty', 5, 2);
-            $table->decimal('stock_qty', 5, 2);
-            $table->string('remark')->nullable();
+            $table->string('upl_no');
+            $table->integer('upl_line_no');
+            $table->string('upl_remark')->nullable();
+            $table->enum('upl_status', [0,1,2,3,4])->default(0);
+            
+            $table->string('period')->nullable();
+            $table->string('medicine')->nullable();
+            $table->string('clinic')->nullable();
+            $table->string('qty')->nullable();
+
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
 
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('stock_transaction_id')->references('id')->on('stock_transactions')->onDelete('cascade');
-            $table->foreign('medicine_id')->references('id')->on('medicines')->onDelete('cascade');
         });
     }
 
@@ -38,6 +41,6 @@ class CreateStockTransactionDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stock_transaction_details');
+        Schema::dropIfExists('stock_opname_uploaders');
     }
 }

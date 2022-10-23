@@ -133,7 +133,7 @@
 
         function onSelectedSymptom(data) {
             $('#symptom_id'+seqId).val(data[0].id);
-            $('#symptom_name'+seqId).val(data[0].name);
+            $('#symptom_name'+seqId).val(data[0].code + " - " + data[0].name);
         }
 
         function onSelected(data) {

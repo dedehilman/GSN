@@ -10,7 +10,7 @@ class StockTransactionDetail extends Model
 {
     use HasFactory, BlameableTrait;
 
-    protected $fillable = ['transaction_id', 'medicine_id', 'qty', 'remark'];
+    protected $fillable = ['transaction_id', 'medicine_id', 'qty', 'stock_qty', 'remark'];
 
     public function medicine() {
         return $this->belongsTo(Medicine::class);

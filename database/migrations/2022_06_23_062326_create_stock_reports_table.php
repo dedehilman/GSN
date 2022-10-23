@@ -22,14 +22,16 @@ class CreateStockReportsTable extends Migration
             $table->datetime('runned_at')->nullable();
             $table->datetime('finished_at')->nullable();
             $table->enum('status', [0,1,2,3])->default(0);
-            $table->unsignedBigInteger('period_id');
+            $table->unsignedBigInteger('clinic_id');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
 
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('period_id')->references('id')->on('periods')->onDelete('cascade');
+            $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('cascade');
         });
     }
 

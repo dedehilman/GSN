@@ -144,3 +144,6 @@
         </div>
     </div>
 @endsection
+@section('script')
+    @yield("scriptHistory")
+@endsection

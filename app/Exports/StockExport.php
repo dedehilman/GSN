@@ -37,24 +37,65 @@ class StockExport implements ShouldAutoSize, FromView
         $adj = array();
         $outDate = array();
 
-        $prevPeriod = Period::where('start_date','<',$this->reportModel->period->start_date)->where('clinic_id', $this->reportModel->period->clinic_id)->orderBy('start_date','desc')->first();
         $medicines = Medicine::all();
-        $stockOpnames = StockOpname::where('period_id', $prevPeriod->id)->where('clinic_id', $this->reportModel->period->clinic_id)->get();
-        $stockTransactions = StockTransaction::where('clinic_id', $this->reportModel->period->clinic_id)
+        $prevPeriod = Period::where('end_date','<',$this->reportModel->start_date)->where('clinic_id', $this->reportModel->clinic_id)->orderBy('start_date','desc')->first();
+        if($prevPeriod) {
+            $stockOpnames = StockOpname::where('period_id', $prevPeriod->id)->where('clinic_id', $this->reportModel->clinic_id)->get();
+            $stockTransactionsPrev = StockTransaction::where('clinic_id', $this->reportModel->clinic_id)
+                                ->whereDate('transaction_date','>',$prevPeriod->end_date)
+                                ->whereDate('transaction_date','<',$this->reportModel->start_date)->get();
+    
+            $pharmaciesPrev = Pharmacy::where('clinic_id', $this->reportModel->clinic_id)
                             ->whereDate('transaction_date','>',$prevPeriod->end_date)
-                            ->whereDate('transaction_date','<=',$this->reportModel->period->end_date)->get();
+                            ->whereDate('transaction_date','<',$this->reportModel->start_date)->get();    
 
-        $pharmacies = Pharmacy::where('clinic_id', $this->reportModel->period->clinic_id)
-                    ->whereDate('transaction_date','>',$prevPeriod->end_date)
-                    ->whereDate('transaction_date','<=',$this->reportModel->period->end_date)->get();
-
-        foreach ($stockOpnames as $stockOpname) {
-            if(!array_key_exists($stockOpname->medicine->code, $begin)) {
-                $begin[$stockOpname->medicine->code] = 0;
-            }
-
-            $begin[$stockOpname->medicine->code] = $begin[$stockOpname->medicine->code] + $stockOpname->qty;
+            foreach ($stockOpnames as $stockOpname) {
+                if(!array_key_exists($stockOpname->medicine->code, $begin)) {
+                    $begin[$stockOpname->medicine->code] = 0;
+                }
+    
+                $begin[$stockOpname->medicine->code] = $begin[$stockOpname->medicine->code] + $stockOpname->qty;
+            }                    
+        } else {
+            $stockTransactionsPrev = StockTransaction::where('clinic_id', $this->reportModel->clinic_id)
+                                ->whereDate('transaction_date','<',$this->reportModel->start_date)->get();
+    
+            $pharmaciesPrev = Pharmacy::where('clinic_id', $this->reportModel->clinic_id)
+                            ->whereDate('transaction_date','<',$this->reportModel->start_date)->get();    
         }
+
+        foreach ($pharmaciesPrev as $pharmacy) {
+            foreach ($pharmacy->details as $detail) {
+                if(!array_key_exists($detail->medicine->code, $begin)) {
+                    $begin[$detail->medicine->code] = 0;
+                }
+                $begin[$detail->medicine->code] = $begin[$detail->medicine->code] - $detail->actual_qty;
+            }
+        }
+
+        foreach ($stockTransactionsPrev as $stockTransaction) {
+            foreach ($stockTransaction->details as $detail) {
+                if($stockTransaction->transaction_type == "In" || $stockTransaction->transaction_type == "Transfer In" || $stockTransaction->transaction_type == "Adjustment") {
+                    if(!array_key_exists($detail->medicine->code, $begin)) {
+                        $begin[$detail->medicine->code] = 0;
+                    }
+                    $begin[$detail->medicine->code] = $begin[$detail->medicine->code] + $detail->qty;
+                } else if($stockTransaction->transaction_type == "Transfer Out") {
+                    if(!array_key_exists($detail->medicine->code, $begin)) {
+                        $begin[$detail->medicine->code] = 0;
+                    }
+                    $begin[$detail->medicine->code] = $begin[$detail->medicine->code] - $detail->qty;
+                }
+            }
+        }
+
+        $stockTransactions = StockTransaction::where('clinic_id', $this->reportModel->clinic_id)
+                            ->whereDate('transaction_date','>=',$this->reportModel->start_date)
+                            ->whereDate('transaction_date','<=',$this->reportModel->end_date)->get();
+
+        $pharmacies = Pharmacy::where('clinic_id', $this->reportModel->clinic_id)
+                    ->whereDate('transaction_date','>=',$this->reportModel->start_date)
+                    ->whereDate('transaction_date','<=',$this->reportModel->end_date)->get();
 
         foreach ($pharmacies as $pharmacy) {
             $date = Carbon::parse($pharmacy->transaction_date)->isoFormat("D");
@@ -104,7 +145,7 @@ class StockExport implements ShouldAutoSize, FromView
 
         if($this->reportModel->report_format == "Induk") {
             $clinics = array();
-            $clinicDb = Clinic::where('id','<>',$this->reportModel->period->clinic_id)->orderBy('code', 'asc')->get();
+            $clinicDb = Clinic::where('id','<>',$this->reportModel->clinic_id)->orderBy('code', 'asc')->get();
             foreach ($clinicDb as $clinic) {
                 if (!array_key_exists($clinic->estate->company->code, $clinics))
                 {

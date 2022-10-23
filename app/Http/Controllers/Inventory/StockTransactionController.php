@@ -64,6 +64,7 @@ class StockTransactionController extends AppCrudController
                     $detail->stock_transaction_id = $data->id;
                     $detail->medicine_id = $request->medicine_id[$i];
                     $detail->qty = $request->qty[$i];
+                    $detail->stock_qty = $request->stock_qty[$i] ?? 0;
                     $detail->remark = $request->detail_remark[$i];
                     $detail->save();
                 }    
@@ -134,6 +135,7 @@ class StockTransactionController extends AppCrudController
                     $detail->stock_transaction_id = $data->id;
                     $detail->medicine_id = $request->medicine_id[$i];
                     $detail->qty = $request->qty[$i];
+                    $detail->stock_qty = $request->stock_qty[$i] ?? 0;
                     $detail->remark = $request->detail_remark[$i];
                     $detail->save();
                 }    

@@ -8,20 +8,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Imports\Uploader;
 use Excel;
-use App\Traits\RuleQueryBuilderTrait;
 use Carbon\Carbon;
 
-abstract class AppUploaderController extends Controller
+abstract class AppUploaderController extends AppCrudController
 {
-    use RuleQueryBuilderTrait;
-    protected $select;
     protected $uploader;
-    protected $index;
-    protected $view;
-    protected $model;
-    protected $column = array();
+    protected $redirect;
 
-    public function setDefaultMiddleware($permission) {
+    public function setDefaultUploaderMiddleware($permission) {
         $this->middleware('auth');
         $this->middleware('permission:'.$permission.'-upload', ['only' => ['index','show','uploader', 'uploadProcess', 'validateProcess', 'commitProcess']]);
     }
@@ -30,27 +24,8 @@ abstract class AppUploaderController extends Controller
         $this->uploader = $uploader;
     }
 
-    public function setIndex($index) {
-        $this->index = $index;
-    }
-
-    public function setView($view) {
-        $this->view = $view;
-    }
-
-    public function setModel($model) {
-        $this->model = $model;
-    }
-
-    public function setColumn($column) {
-        $this->column = $column;
-        array_splice($this->column, 0, 0, ''); 
-        array_splice($this->column, 1, 0, ''); 
-        array_splice($this->column, 2, 0, ''); 
-    }
-
-    public function getColumn() {
-        return $this->column;
+    public function setRedirect($redirect) {
+        $this->redirect = $redirect;
     }
 
     public function getTableName() {
@@ -132,7 +107,7 @@ abstract class AppUploaderController extends Controller
             return redirect()->back()->with(['info' => $errMsg]);
         }
         
-        return redirect('grievance/uploader/submission/index?uplNo='.$uplNo);
+        return redirect($this->redirect.'?uplNo='.$uplNo);
 	}
 
     public function validateProcess(Request $request) 
@@ -204,71 +179,6 @@ abstract class AppUploaderController extends Controller
             'message' => ''
         ]);
 	}
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Request $request)
-    {
-        $parameterName = $request->route()->parameterNames[count($request->route()->parameterNames)-1];
-        $id = $request->route()->parameters[$parameterName];
-        $data = $this->model::find($id);
-        if(!$data) {
-            return redirect()->back()->with(['info' => Lang::get("Data not found")]);
-        }
-
-        return view($this->view, compact('data'));
-    }
-
-    public function datatable(Request $request)
-    {
-        try
-        {
-            $start = $request->input('start');
-            $length = $request->input('length');
-            $draw = $request->input('draw');
-            $order = $this->column[$request->input('order.0.column')];
-            $dir = $request->input('order.0.dir');
-            $search = $request->input('search.value');
-            
-            if(method_exists($this->model, 'scopeWithAll')) {
-                $query = $this->model::withAll();
-            } else {
-                $query = DB::table($this->getTableName());
-            }
-            if($request->parentId) {
-                $query = $query->where(rtrim($this->getParentTableName(), "s")."_id", $request->parentId);
-            }
-            $query = $this->queryBuilder([$this->getTableName()], $query);
-            $totalData = $query->count();
-            $query = $this->filterDatatable($request, $query);
-            $totalFiltered = $query->count();
-
-            $data = $query
-                    ->offset($start)
-                    ->limit($length)
-                    ->orderBy($order, $dir)
-                    ->get();
-            
-            return response()->json([
-                "draw" => intval($request->input('draw')),  
-                "recordsTotal" => intval($totalData),  
-                "recordsFiltered" => intval($totalFiltered), 
-                "data" => $data
-            ]);
-        } 
-        catch (\Throwable $th)
-        {
-            return response()->json([
-                'status' => '500',
-                'data' => '',
-                'message' => $th->getMessage()
-            ]);
-        }
-    }
 
     abstract protected function loadRecord($row);
     abstract protected function validateRecord($row);

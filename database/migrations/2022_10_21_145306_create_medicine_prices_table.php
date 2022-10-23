@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStockTransactionDetailsTable extends Migration
+class CreateMedicinePricesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,17 @@ class CreateStockTransactionDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('stock_transaction_details', function (Blueprint $table) {
+        Schema::create('medicine_prices', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('stock_transaction_id');
             $table->unsignedBigInteger('medicine_id');
-            $table->decimal('qty', 5, 2);
-            $table->decimal('stock_qty', 5, 2);
-            $table->string('remark')->nullable();
+            $table->date('effective_date');
+            $table->decimal('price', 5, 2);
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
 
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('stock_transaction_id')->references('id')->on('stock_transactions')->onDelete('cascade');
-            $table->foreign('medicine_id')->references('id')->on('medicines')->onDelete('cascade');
         });
     }
 
@@ -38,6 +34,6 @@ class CreateStockTransactionDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stock_transaction_details');
+        Schema::dropIfExists('medicine_prices');
     }
 }

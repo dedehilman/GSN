@@ -1,6 +1,9 @@
 <div class="row">
     <div class="col-md-12">
         <form id="formSelectSearch">
+            @foreach ($parameters as $key => $value)
+                <input type="hidden" name="{{$key}}" value="{{$value}}">                
+            @endforeach
         </form>
         <table id="datatable-select" class="table table-bordered">
             <thead>
