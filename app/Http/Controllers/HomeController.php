@@ -75,6 +75,7 @@ class HomeController extends Controller
                 )
                 ->whereDate('transaction_date', '>=', $dateFrom)
                 ->whereDate('transaction_date', '<=', $dateTo)
+				->whereNotNull('work_accident_category_id')
                 ->groupBy('work_accident_category_id');
         $dataFromDb = $this->queryBuilder(['work_accidents'], $dataFromDb)->get();
 
@@ -101,6 +102,7 @@ class HomeController extends Controller
                 )
                 ->whereDate('transaction_date', '>=', $dateFrom)
                 ->whereDate('transaction_date', '<=', $dateTo)
+				->whereNotNull('family_planning_category_id')
                 ->groupBy('family_planning_category_id');
         $dataFromDb = $this->queryBuilder(['family_plannings'], $dataFromDb)->get();
 
@@ -126,6 +128,7 @@ class HomeController extends Controller
                 )
                 ->whereDate('transaction_date', '>=', $dateFrom)
                 ->whereDate('transaction_date', '<=', $dateTo)
+				->whereNotNull('result')
                 ->groupBy('result');
         $dataFromDb = $this->queryBuilder(['plano_tests'], $dataFromDb)->get();
 
