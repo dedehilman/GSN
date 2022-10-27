@@ -63,21 +63,21 @@
         <td>NPK</td>
         <td width="20%">: {{$data->patient->code}}</td>
         <td>Golongan</td>
-        <td width="10%">: </td>
+        <td width="10%">: {{$data->patient->grade->code ?? ""}}</td>
     </tr>
     <tr>
         <td></td>
         <td>Unit Kerja</td>
-        <td width="30%">: {{$data->workUnit->code ?? ""}}</td>
+        <td width="30%">: {{$data->patient->workUnit->code ?? ""}}</td>
         <td>Status</td>
         <td>: </td>
     </tr>
     <tr>
         <td></td>
         <td>Site</td>
-        <td width="30%">: {{$data->afdelink->site->code ?? ""}}</td>
+        <td width="30%">: {{$data->patient->afdelink->site->code ?? ""}}</td>
         <td>TMK</td>
-        <td>: {{$data->join_date}}</td>
+        <td>: {{$data->patient->join_date}}</td>
     </tr>
 </table>
 <br/>
