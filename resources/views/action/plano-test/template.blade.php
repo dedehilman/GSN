@@ -1,7 +1,7 @@
 @if ($data->image)
-    <img src="{{ asset($data->image) }}" width="60" height="60" style="position: absolute; left: 0px; left: 0px;">
+    <img src="{{ asset($data->image) }}" height="60" style="position: absolute; left: 0px; left: 0px;">
 @else
-    <img src="{{ asset('public/img/logo.png') }}" width="60" height="60" style="position: absolute; left: 0px; left: 0px;">
+    <img src="{{ asset('public/img/logo_clinic.jpeg') }}" height="60" style="position: absolute; left: 0px; left: 0px;">
 @endif
 <table width="100%">
     <tr>
@@ -43,7 +43,7 @@
             {{$data->clinic->location}}, {{\Carbon\Carbon::parse($data->transaction_date)->isoFormat("DD MMMM YYYY")}}<br/>
             <br/>
             @if ($data->medicalStaff->image)
-            <img src="{{ asset($data->medicalStaff->image) }}" width="60" height="60">                
+            <img src="{{ asset($data->medicalStaff->image) }}" height="60">                
             @endif
             <br/>
             <br/>
