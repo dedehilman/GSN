@@ -1,7 +1,7 @@
 @if ($clinic->image)
-    <img src="{{ asset($clinic->image) }}" width="50" height="50" style="position: absolute; left: 0px; left: 0px;">
+    <img src="{{ asset($clinic->image) }}" height="60" style="position: absolute; left: 0px; left: 0px;">
 @else
-    <img src="{{ asset('public/img/logo.png') }}" width="50" height="50" style="position: absolute; left: 0px; left: 0px;">
+    <img src="{{ asset('public/img/logo_clinic_2.jpg') }}" height="60" style="position: absolute; left: 0px; left: 0px;">
 @endif
 <table width="400px">
     <tr>
