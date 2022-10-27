@@ -77,11 +77,13 @@
                 $("#action_remedicate_date").val("");
                 $(".reference").addClass("d-none");
                 $(".remedicate").addClass("d-none");
+                $(".reference-letter").addClass("d-none");
 
                 if($(this).val() == 'Remedicate') {
                     $(".remedicate").removeClass("d-none");
                 } else if($(this).val() == 'Refer') {
                     $(".reference").removeClass("d-none");
+                    $(".reference-letter").removeClass("d-none");
                 }
             });
         });
