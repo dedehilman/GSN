@@ -73,6 +73,8 @@ Route::resource('system/route/{parentId}/notification', App\Http\Controllers\Sys
 Route::post('/system/route/{parentId}/notification/datatable', [App\Http\Controllers\System\RouteNotificationController::class, 'datatable'])->name('route.notification.datatable');
 Route::post('/system/mail-history/datatable', [App\Http\Controllers\System\MailHistoryController::class, 'datatable'])->name('mail-history.datatable');
 Route::resource('system/mail-history', App\Http\Controllers\System\MailHistoryController::class);
+Route::post('/system/media/datatable', [App\Http\Controllers\System\MediaController::class, 'datatable'])->name('media.datatable');
+Route::resource('system/media', App\Http\Controllers\System\MediaController::class);
 
 // Master
 Route::post('/master/company-group/datatable', [App\Http\Controllers\Master\CompanyGroupController::class, 'datatable'])->name('company-group.datatable');
