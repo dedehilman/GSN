@@ -63,12 +63,12 @@
         <td>NPK</td>
         <td width="20%">: {{$data->patient->code}}</td>
         <td>Golongan</td>
-        <td width="10%">: {{$data->patient->grade->code ?? ""}}</td>
+        <td width="10%">: {{$data->patient->grade->name ?? ""}}</td>
     </tr>
     <tr>
         <td></td>
         <td>Unit Kerja</td>
-        <td width="30%">: {{$data->patient->workUnit->code ?? ""}}</td>
+        <td width="30%">: {{$data->patient->workUnit->name ?? ""}}</td>
         <td>Status</td>
         <td>: </td>
     </tr>
