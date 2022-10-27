@@ -29,13 +29,13 @@ class SickLetterController extends ApiController
     public function store(Request $request)
     {
         try {
-            $transactionNo = SickLetter::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->orderBy('transaction_no', 'desc')->first();
+            $transactionNo = SickLetter::whereDate('transaction_date', $request->transaction_date)->orderBy('transaction_no', 'desc')->first();
 			$count = 0;
 			try {
 				$count = (int) Str::substr($transactionNo->transaction_no, -5);				
 			} catch (\Throwable $th) {
 			}
-            $request['transaction_no'] = 'SKS-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+            $request['transaction_no'] = 'SKS-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);
             if($validateOnStore) {
@@ -114,13 +114,13 @@ class SickLetterController extends ApiController
     public function generate(Request $request)
     {
         try {
-            $transactionNo = SickLetter::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->orderBy('transaction_no', 'desc')->first();
+            $transactionNo = SickLetter::whereDate('transaction_date', $request->transaction_date)->orderBy('transaction_no', 'desc')->first();
 			$count = 0;
 			try {
 				$count = (int) Str::substr($transactionNo->transaction_no, -5);				
 			} catch (\Throwable $th) {
 			}
-            $request['transaction_no'] = 'SKS-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+            $request['transaction_no'] = 'SKS-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);
             if($validateOnStore) {
