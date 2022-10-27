@@ -68,16 +68,16 @@
     <tr>
         <td></td>
         <td>Unit Kerja</td>
-        <td width="30%">:</td>
+        <td width="30%">: {{$data->workUnit->code ?? ""}}</td>
         <td>Status</td>
         <td>: </td>
     </tr>
     <tr>
         <td></td>
         <td>Site</td>
-        <td width="30%">:</td>
+        <td width="30%">: {{$data->afdelink->site->code ?? ""}}</td>
         <td>TMK</td>
-        <td>: </td>
+        <td>: {{$data->join_date}}</td>
     </tr>
 </table>
 <br/>
