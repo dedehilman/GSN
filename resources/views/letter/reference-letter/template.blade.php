@@ -75,7 +75,7 @@
     <tr>
         <td></td>
         <td>Site</td>
-        <td width="30%">: {{$data->patient->afdelink->site->code ?? ""}}</td>
+        <td width="30%">: {{$data->patient->afdelink->estate->name ?? ""}}</td>
         <td>TMK</td>
         <td>: {{$data->patient->join_date}}</td>
     </tr>
