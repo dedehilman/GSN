@@ -42,7 +42,9 @@
         <td width="30%" align="center">
             {{$data->clinic->location}}, {{\Carbon\Carbon::parse($data->transaction_date)->isoFormat("DD MMMM YYYY")}}<br/>
             <br/>
-            <img src="{{ asset($data->medicalStaff->image) }}" width="60" height="60">
+            @if ($data->medicalStaff->image)
+            <img src="{{ asset($data->medicalStaff->image) }}" width="60" height="60">                
+            @endif
             <br/>
             <br/>
             {{$data->medicalStaff->name}}
