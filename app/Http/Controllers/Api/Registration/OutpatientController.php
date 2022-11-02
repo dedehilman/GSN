@@ -22,13 +22,13 @@ class OutpatientController extends ApiController
     public function store(Request $request)
     {
         try {
-            $transactionNo = Outpatient::whereDate('transaction_date', $request->transation_date)->orderBy('transaction_no', 'desc')->first();
+            $transactionNo = Outpatient::whereDate('transaction_date', $request->transaction_date)->orderBy('transaction_no', 'desc')->first();
 			$count = 0;
 			try {
 				$count = (int) Str::substr($transactionNo->transaction_no, -5);				
 			} catch (\Throwable $th) {
 			}
-            $request['transaction_no'] = 'RJL-'.Carbon::parse($request->transation_date)->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+            $request['transaction_no'] = 'RJL-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);
             if($validateOnStore) {
