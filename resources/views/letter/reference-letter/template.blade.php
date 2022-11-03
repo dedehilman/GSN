@@ -1,3 +1,8 @@
+@php
+    $diagnoses = \App\Models\DiagnosisResult::where('model_type', $data->model_type)
+            ->where('model_id', $data->model_id)
+            ->get();
+@endphp
 @if ($data->image)
     <img src="{{ asset($data->image) }}" height="60" style="position: absolute; left: 0px; left: 0px;">
 @else
@@ -88,27 +93,26 @@
     </tr>
     <tr>
         <td width="5%">1</td>
-        <td>Keluhan Utama :</td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>Riwayat Penyakit Sekarang :</td>
+        <td>Keluhan Utama : @foreach ($diagnoses as $index => $diagnosa) @foreach ($diagnosa->symptoms as $index2 => $symptom){{($index == 0 && $index2 == 0 ? "" : ", ").$symptom->name}}@endforeach @endforeach</td>
     </tr>
     <tr>
         <td>2</td>
         <td>Pemeriksaan Fifik :</td>
     </tr>
     <tr>
-        <td></td>
-        <td>- Vital Sign</td>
+        <td colspan="2">{!!nl2br($data->physical_check)!!}</td>
     </tr>
     <tr>
         <td>3</td>
-        <td>Diagnosa Kerja :</td>
+        <td>Diagnosa Kerja : @foreach ($diagnoses as $index => $diagnosa){{($index == 0 ? "" : ", ").$diagnosa->diagnosis->name}}@endforeach
+        </td>
     </tr>
     <tr>
         <td>4</td>
         <td>Terapi Sementara :</td>
+    </tr>
+    <tr>
+        <td colspan="2">{!!nl2br($data->therapy)!!}</td>
     </tr>
 </table>
 <p>Atas kerjasamanya di ucapkan terimakasih</p>

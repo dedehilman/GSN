@@ -118,6 +118,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{__("Physical Check")}}</label>
+                                    <div class="col-md-8">
+                                        <textarea name="physical_check" rows="4" class="form-control">{{$data->physical_check}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{__("Therapy")}}</label>
+                                    <div class="col-md-8">
+                                        <textarea name="therapy" rows="4" class="form-control">{{$data->therapy}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label class="col-md-4 col-form-label">{{__("Remark")}}</label>
                                     <div class="col-md-8">
                                         <textarea name="remark" rows="4" class="form-control">{{$data->remark}}</textarea>

@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal-form" aria-hidden="true" >
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
             <form id="modalForm" action="{{route('reference-letter.generate.store')}}">
                 <input type="hidden" name="model_id" value="{{$data->id}}">
@@ -15,7 +15,7 @@
                     <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="overflow-y: auto; max-height: calc(100vh - 210px);">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group row">
@@ -66,8 +66,8 @@
                                 <div class="col-md-8">
                                     <select name="reference_type" class="form-control custom-select required">
                                         <option value=""></option>
-                                        <option value="Internal" @if(($action->reference_type ?? '') == 'Internal') selected @endif>{{__("Internal")}}</option>
-                                        <option value="External" @if(($action->reference_type ?? '') == 'External') selected @endif>{{__("External")}}</option>
+                                        <option value="Internal" @if(($reference_type ?? '') == 'Internal') selected @endif>{{__("Internal")}}</option>
+                                        <option value="External" @if(($reference_type ?? '') == 'External') selected @endif>{{__("External")}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -75,12 +75,24 @@
                                 <label class="col-md-4 col-form-label">{{__("Reference")}}</label>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="text" id="reference_name" class="form-control required" value="{{($action->reference_type ?? '') == 'Internal' ? ($action->referenceClinic->name ?? '') : ($action->reference->name ?? '')}}" readonly>
-                                        <input type="hidden" @if(($action->reference_type ?? '') =='Internal') name="reference_clinic_id" @else name="reference_id" @endif id="reference_id" value="{{($data->reference_type ?? '') == 'Internal' ? ($data->referenceClinic->id ?? '') : ($data->reference->id ?? '')}}">
+                                        <input type="text" id="reference_name" class="form-control required" value="{{$reference_name}}" readonly>
+                                        <input type="hidden" @if(($action->reference_type ?? '') =='Internal') name="reference_clinic_id" @else name="reference_id" @endif id="reference_id" value="{{$reference_id}}">
                                         <div class="input-group-append">
                                             <span class="input-group-text show-modal-select reference-modal-select" data-title="{{__('Reference List')}}" data-url="{{($data->reference_type ?? '') == 'Internal' ? route('clinic.select', 'queryBuilder=0') : route('reference.select')}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{__("Physical Check")}}</label>
+                                <div class="col-md-8">
+                                    <textarea name="physical_check" rows="4" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{__("Therapy")}}</label>
+                                <div class="col-md-8">
+                                    <textarea name="therapy" rows="4" class="form-control"></textarea>
                                 </div>
                             </div>
                             <div class="form-group row">

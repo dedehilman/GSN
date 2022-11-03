@@ -62,6 +62,14 @@
                                 <div class="col-md-8 col-form-label">{{$data->reference_type == 'Internal' ? $data->referenceClinic->name : $data->reference->name}}</div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{__("Physical Check")}}</label>
+                                <div class="col-md-8 col-form-label">{!!nl2br($data->physical_check)!!}</div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{__("Therapy")}}</label>
+                                <div class="col-md-8 col-form-label">{!!nl2br($data->therapy)!!}</div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-md-4 col-form-label">{{__("Remark")}}</label>
                                 <div class="col-md-8 col-form-label">{!!nl2br($data->remark)!!}</div>
                             </div>

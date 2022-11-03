@@ -180,13 +180,11 @@ class ReferenceLetterController extends AppCrudController
 
     public function generate(Request $request) {
         $data = $request->model_type::find($request->model_id);
-        $action = Action::where('model_type', $request->model_type)
-                    ->where('model_id', $request->model_id)
-                    ->first();
-
         return view("letter.reference-letter.generate", [
             "data" => $data,
-            "action" => $action,
+            "reference_type" =>$request->reference_type,
+            "reference_id" =>$request->reference_id,
+            "reference_name" =>$request->reference_name,
         ]);
     }
 
