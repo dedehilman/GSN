@@ -38,6 +38,10 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{__("Transaction No Ref")}}</label>
+                                <div class="col-md-8 col-form-label">{{$data->referenceTransaction()->transaction_no ?? ""}}</div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-md-4 col-form-label">{{__("Transaction No")}}</label>
                                 <div class="col-md-8 col-form-label">{{$data->transaction_no}}</div>
                             </div>

@@ -257,6 +257,20 @@ class PharmacyController extends AppCrudController
     {
         try
         {
+            $start = $request->input('start');
+            $length = $request->input('length');
+            $draw = $request->input('draw');
+            $order = "id";
+            if($request->input('order.0.column') < count($this->columnSelect)) {
+                $order = $this->columnSelect[$request->input('order.0.column')];
+            } else if($request->input('columns.'.$request->input('order.0.column').'.name')) {
+                $order = $request->input('columns.'.$request->input('order.0.column').'.name');
+            }
+            $dir = 'asc';
+            if($request->input('order.0.dir')) {
+                $dir = $request->input('order.0.dir');
+            }
+
             $ids = Pharmacy::where('model_type', 'App\Models\FamilyPlanning')->pluck('model_id')->toArray();
             $q1 = DB::table('family_plannings')
                     ->join('prescriptions', function ($join) {
@@ -264,10 +278,12 @@ class PharmacyController extends AppCrudController
                         $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\FamilyPlanning"'));
                     })
                     ->join('clinics', 'clinics.id', '=', 'family_plannings.clinic_id')
-                    ->select('family_plannings.id','family_plannings.transaction_no','family_plannings.transaction_date','clinics.name AS clinic_name','prescriptions.model_type')
+                    ->select('family_plannings.id','family_plannings.transaction_no','family_plannings.transaction_date','clinics.name AS clinic_name','prescriptions.model_type','clinics.id AS clinic_id')
                     ->whereNotIn('family_plannings.id', $ids)
                     ->distinct();
-            $q1 = $this->queryBuilder(['family_plannings'], $q1);
+            if(($request->parameters['queryBuilder'] ?? null) == null || $request->parameters['queryBuilder'] == '1') {
+                $q1 = $this->queryBuilder(['family_plannings'], $q1);
+            }
 
             $ids = Pharmacy::where('model_type', 'App\Models\Outpatient')->pluck('model_id')->toArray();
             $q2 = DB::table('outpatients')
@@ -276,10 +292,12 @@ class PharmacyController extends AppCrudController
                         $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\Outpatient"'));
                     })
                     ->join('clinics', 'clinics.id', '=', 'outpatients.clinic_id')
-                    ->select('outpatients.id','outpatients.transaction_no','outpatients.transaction_date','clinics.name AS clinic_name','prescriptions.model_type')
+                    ->select('outpatients.id','outpatients.transaction_no','outpatients.transaction_date','clinics.name AS clinic_name','prescriptions.model_type','clinics.id AS clinic_id')
                     ->whereNotIn('outpatients.id', $ids)
                     ->distinct();
-            $q2 = $this->queryBuilder(['outpatients'], $q2);
+            if(($request->parameters['queryBuilder'] ?? null) == null || $request->parameters['queryBuilder'] == '1') {
+                $q2 = $this->queryBuilder(['outpatients'], $q2);
+            }
 
             $ids = Pharmacy::where('model_type', 'App\Models\PlanoTest')->pluck('model_id')->toArray();
             $q3 = DB::table('plano_tests')
@@ -288,10 +306,12 @@ class PharmacyController extends AppCrudController
                         $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\PlanoTest"'));
                     })
                     ->join('clinics', 'clinics.id', '=', 'plano_tests.clinic_id')
-                    ->select('plano_tests.id','plano_tests.transaction_no','plano_tests.transaction_date','clinics.name AS clinic_name','prescriptions.model_type')
+                    ->select('plano_tests.id','plano_tests.transaction_no','plano_tests.transaction_date','clinics.name AS clinic_name','prescriptions.model_type','clinics.id AS clinic_id')
                     ->whereNotIn('plano_tests.id', $ids)
                     ->distinct();
-            $q3 = $this->queryBuilder(['plano_tests'], $q3);
+            if(($request->parameters['queryBuilder'] ?? null) == null || $request->parameters['queryBuilder'] == '1') {
+                $q3 = $this->queryBuilder(['plano_tests'], $q3);
+            }
 
             $ids = Pharmacy::where('model_type', 'App\Models\WorkAccident')->pluck('model_id')->toArray();
             $q4 = DB::table('work_accidents')
@@ -300,20 +320,38 @@ class PharmacyController extends AppCrudController
                         $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\WorkAccident"'));
                     })
                     ->join('clinics', 'clinics.id', '=', 'work_accidents.clinic_id')
-                    ->select('work_accidents.id','work_accidents.transaction_no','work_accidents.transaction_date','clinics.name AS clinic_name','prescriptions.model_type')
+                    ->select('work_accidents.id','work_accidents.transaction_no','work_accidents.transaction_date','clinics.name AS clinic_name','prescriptions.model_type','clinics.id AS clinic_id')
                     ->whereNotIn('work_accidents.id', $ids)
                     ->distinct();
-            $q4 = $this->queryBuilder(['work_accidents'], $q4);
+            if(($request->parameters['queryBuilder'] ?? null) == null || $request->parameters['queryBuilder'] == '1') {
+                $q4 = $this->queryBuilder(['work_accidents'], $q4);
+            }
 
-            $data = $q1
-                    ->union($q2)
-                    ->union($q3)
-                    ->union($q4)
+            $query = $q1
+            ->union($q2)
+            ->union($q3)
+            ->union($q4);
+            $querySql = $query->toSql();
+            $query = DB::table(DB::raw("($querySql) as a"))->mergeBindings($query);
+
+            $this->setExtraParameter($request);
+            $query = $this->filterExtraParameter($query);
+            $totalData = $query->count();
+            $query = $this->filterDatatable($request, $query);
+            $totalFiltered = $query->count();
+
+            if ($length == -1) {
+                $data = $query
+                    ->orderBy($order, $dir)
                     ->get();
-
-            $totalData = count($data);
-            $totalFiltered = $totalData;
-
+            } else {
+                $data = $query
+                    ->offset($start)
+                    ->limit($length)
+                    ->orderBy($order, $dir)
+                    ->get();
+            }
+            
             return response()->json([
                 "draw" => intval($request->input('draw')),  
                 "recordsTotal" => intval($totalData),  

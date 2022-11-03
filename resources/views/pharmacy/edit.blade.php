@@ -17,40 +17,61 @@
                             </button>
                         </div>
                     </div>
-                    <div class="card-body">     
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label required">{{__("Transaction No")}}</label>
-                            <div class="col-md-4">
-                                <input type="text" name="transaction_no" class="form-control required" readonly value="{{$data->transaction_no}}">
-                            </div>
-                            <label class="col-md-2 col-form-label required">{{__("Clinic")}}</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <input type="text" name="clinic_name" id="clinic_name" class="form-control required" value="{{$data->clinic->name}}" readonly>
-                                    <input type="hidden" name="clinic_id" id="clinic_id" value="{{$data->clinic->id}}">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
+                    <div class="card-body">    
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label required">{{__("Transaction No")}}</label>
+                                    <div class="col-md-8">
+                                        <input type="text" name="transaction_no" class="form-control required" readonly value="{{$data->transaction_no}}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label required">{{__("Transaction Date")}}</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                            </div>
+                                            <input type="text" name="transaction_date" class="form-control required date" value="{{$data->transaction_date}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{__("Remark")}}</label>
+                                    <div class="col-md-8">
+                                        <textarea name="remark" class="form-control" rows="4">{{$data->remark}}</textarea>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label required">{{__("Transaction Date")}}</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{__("Transaction No Ref")}}</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input type="text" name="reference_transaction_no" id="reference_transaction_no" class="form-control" readonly value="{{$data->referenceTransaction()->transaction_no ?? ""}}">
+                                            <input type="hidden" name="model_type" id="model_type" value="{{$data->model_type}}">
+                                            <input type="hidden" name="model_id" id="model_id" value="{{$data->model_id}}">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text show-modal-select" data-title="{{__('Transaction List')}}" data-url="{{route('transaction.select')}}" data-handler="onSelectedReferenceTransaction"><i class="fas fa-search"></i></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <input type="text" name="transaction_date" class="form-control required date" value="{{$data->transaction_date}}">
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label required">{{__("Clinic")}}</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input type="text" name="clinic_name" id="clinic_name" class="form-control required" value="{{$data->clinic->name}}" readonly>
+                                            <input type="hidden" name="clinic_id" id="clinic_id" value="{{$data->clinic->id}}">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label">{{__("Remark")}}</label>
-                            <div class="col-md-4">
-                                <textarea name="remark" class="form-control" rows="4">{{$data->remark}}</textarea>
-                            </div>
-                        </div>
+                        </div> 
                         <div class="row">
                             <div class="col-md-12">
                                 <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
@@ -221,6 +242,11 @@
                 }
                 $(element).attr('data-url', dataUrl+"?clinic_id="+$("#clinic_id").val());
             }
+        }
+        function onSelectedReferenceTransaction(data) {
+            $('#model_type').val(data[0].model_type);
+            $('#model_id').val(data[0].id);
+            $('#reference_transaction_no').val(data[0].transaction_no);
         }
     </script>
 @endsection

@@ -21,6 +21,11 @@ class Pharmacy extends Model
         return $this->hasMany(PharmacyDetail::class);
     }
 
+    public function referenceTransaction()
+    {
+        return $this->model_type::find($this->model_id);
+    }
+
     public function scopeWithAll($query) 
     {
         return $query->with(['clinic', 'details', 'details.medicine', 'details.medicineRule']);

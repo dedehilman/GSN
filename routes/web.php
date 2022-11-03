@@ -305,3 +305,6 @@ Route::post('/master/grade/datatable', [App\Http\Controllers\Master\GradeControl
 Route::post('/master/grade/datatable/select', [App\Http\Controllers\Master\GradeController::class, 'datatableSelect'])->name('grade.datatable.select');
 Route::get('/master/grade/select', [App\Http\Controllers\Master\GradeController::class, 'select'])->name('grade.select');
 Route::resource('master/grade', App\Http\Controllers\Master\GradeController::class);
+
+Route::get('/transaction/select', [App\Http\Controllers\TransactionController::class, 'select'])->name('transaction.select');
+Route::post('/transaction/datatable/select', [App\Http\Controllers\TransactionController::class, 'datatableSelect'])->name('transaction.datatable.select');

@@ -36,6 +36,11 @@ class ReferenceLetter extends Model
         return $this->belongsTo(EmployeeRelationship::class, 'patient_relationship_id');
     }
 
+    public function referenceTransaction()
+    {
+        return $this->model_type::find($this->model_id);
+    }
+
     public function scopeWithAll($query) 
     {
         return $query->with(['medicalStaff','clinic', 'reference', 'patient', 'referenceClinic','patientRelationship']);

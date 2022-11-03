@@ -14,21 +14,33 @@
                         </button>
                     </div>
                 </div>
-                <div class="card-body">       
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label">{{__("Transaction No")}}</label>
-                        <div class="col-md-4 col-form-label">{{$data->transaction_no}}</div>
-                        <label class="col-md-2 col-form-label">{{__("Clinic")}}</label>
-                        <div class="col-md-4 col-form-label">{{$data->clinic->name}}</div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label">{{__("Transaction Date")}}</label>
-                        <div class="col-md-4 col-form-label">{{$data->transaction_date}}</div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label">{{__("Remark")}}</label>
-                        <div class="col-md-4 col-form-label">{!!nl2br($data->remark ?? '')!!}</div>
-                    </div>
+                <div class="card-body">  
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{__("Transaction No")}}</label>
+                                <div class="col-md-8 col-form-label">{{$data->transaction_no}}</div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{__("Transaction Date")}}</label>
+                                <div class="col-md-8 col-form-label">{{$data->transaction_date}}</div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{__("Remark")}}</label>
+                                <div class="col-md-8 col-form-label">{!!nl2br($data->remark ?? '')!!}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{__("Transaction No Ref")}}</label>
+                                <div class="col-md-8 col-form-label">{{$data->referenceTransaction()->transaction_no ?? ""}}</div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label">{{__("Clinic")}}</label>
+                                <div class="col-md-8 col-form-label">{{$data->clinic->name}}</div>
+                            </div>
+                        </div>
+                    </div>     
                     <div class="row">
                         <div class="col-md-12">
                             <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">

@@ -227,7 +227,6 @@
             });
 
             $('#datatable-unprocessed').DataTable({
-                serverSide: false,
                 order: [[1, "asc"]],
                 ajax:
                 {
@@ -257,7 +256,7 @@
                     },
                     {
                         data: 'transaction_date',
-                        name: 'transaction_no',
+                        name: 'transaction_date',
                         defaultContent: '',
                     },
                     {

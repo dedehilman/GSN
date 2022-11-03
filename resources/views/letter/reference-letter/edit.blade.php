@@ -55,6 +55,19 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{__("Transaction No Ref")}}</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input type="text" name="reference_transaction_no" id="reference_transaction_no" class="form-control" readonly value="{{$data->referenceTransaction()->transaction_no ?? ""}}">
+                                            <input type="hidden" name="model_type" id="model_type" value="{{$data->model_type}}">
+                                            <input type="hidden" name="model_id" id="model_id" value="{{$data->model_id}}">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text show-modal-select" data-title="{{__('Transaction List')}}" data-url="{{route('transaction.select')}}" data-handler="onSelectedReferenceTransaction"><i class="fas fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label class="col-md-4 col-form-label required">{{__("Transaction No")}}</label>
                                     <div class="col-md-8">
                                         <input type="text" name="transaction_no" class="form-control required" readonly value="{{$data->transaction_no}}">
@@ -204,6 +217,11 @@
         function onSelectedPatientRelationship(data) {
             $('#patient_relationship_id').val(data[0].id);
             $('#patient_relationship_name').val(data[0].name);
+        }
+        function onSelectedReferenceTransaction(data) {
+            $('#model_type').val(data[0].model_type);
+            $('#model_id').val(data[0].id);
+            $('#reference_transaction_no').val(data[0].transaction_no);
         }
     </script>
 @endsection

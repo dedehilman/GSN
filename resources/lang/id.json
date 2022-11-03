@@ -560,5 +560,7 @@
     "Grade": "Golongan",
     "Work Unit": "Unit Kerja",
     "Therapy": "Terapi",
-    "Physical Check": "Pemeriksaan Fisik"
+    "Physical Check": "Pemeriksaan Fisik",
+    "Transaction List": "Daftar Transaksi",
+    "Transaction No Ref": "No Transaksi Referensi"
 }

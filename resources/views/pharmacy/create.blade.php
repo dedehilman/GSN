@@ -5,8 +5,6 @@
         <div class="col-md-12">
             <form action="{{route('pharmacy.store')}}" method="POST">
                 @csrf
-                <input type="hidden" name="model_id" value="{{request()->get('model_id') ?? ""}}">
-                <input type="hidden" name="model_type" value="{{request()->get('model_type') ?? ""}}">
 
                 <div class="card">
                     <div class="card-header">
@@ -19,50 +17,60 @@
                             </button>
                         </div>
                     </div>
-                    <div class="card-body">     
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label required">{{__("Transaction No")}}</label>
-                            <div class="col-md-4">
-                                <input type="text" name="transaction_no" class="form-control required" readonly value="{{__('Auto Generate')}}">
-                            </div>
-                            <label class="col-md-2 col-form-label required">{{__("Clinic")}}</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <input type="text" name="clinic_name" id="clinic_name" class="form-control required" readonly value="{{$dataRef->clinic->name ?? ""}}">
-                                    <input type="hidden" name="clinic_id" id="clinic_id" value="{{$dataRef->clinic->id ?? ""}}">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
+                    <div class="card-body"> 
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label required">{{__("Transaction No")}}</label>
+                                    <div class="col-md-8">
+                                        <input type="text" name="transaction_no" class="form-control required" readonly value="{{__('Auto Generate')}}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label required">{{__("Transaction Date")}}</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                            </div>
+                                            <input type="text" name="transaction_date" class="form-control required date" value="{{\Carbon\Carbon::now()->isoFormat('YYYY-MM-DD')}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{__("Remark")}}</label>
+                                    <div class="col-md-8">
+                                        <textarea name="remark" class="form-control" rows="4"></textarea>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label required">{{__("Transaction Date")}}</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                    </div>
-                                    <input type="text" name="transaction_date" class="form-control required date" value="{{\Carbon\Carbon::now()->isoFormat('YYYY-MM-DD')}}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label">{{__("Remark")}}</label>
-                            <div class="col-md-4">
-                                <textarea name="remark" class="form-control" rows="4"></textarea>
-                            </div>
-                            <label class="col-md-2 col-form-label required new-clinic d-none">{{__("New Clinic")}}</label>
-                            <div class="col-md-4 new-clinic d-none">
-                                <div class="input-group">
-                                    <input type="text" name="new_clinic_name" id="new_clinic_name" class="form-control required" readonly>
-                                    <input type="hidden" name="new_clinic_id" id="new_clinic_id">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select', 'queryBuilder=0')}}" data-handler="onSelectedNewClinic"><i class="fas fa-search"></i></span>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">{{__("Transaction No Ref")}}</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input type="text" name="reference_transaction_no" id="reference_transaction_no" class="form-control" readonly value="{{$dataRef->transaction_no ?? ""}}">
+                                            <input type="hidden" name="model_type" id="model_type" value="{{$dataRef ? get_class($dataRef) : ""}}">
+                                            <input type="hidden" name="model_id" id="model_id" value="{{$dataRef->id ?? ""}}">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text show-modal-select" data-title="{{__('Transaction List')}}" data-url="{{route('transaction.select')}}" data-handler="onSelectedReferenceTransaction"><i class="fas fa-search"></i></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label required">{{__("Clinic")}}</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group">
+                                            <input type="text" name="clinic_name" id="clinic_name" class="form-control required" readonly value="{{$dataRef->clinic->name ?? ""}}">
+                                            <input type="hidden" name="clinic_id" id="clinic_id" value="{{$dataRef->clinic->id ?? ""}}">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinic"><i class="fas fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -234,6 +242,11 @@
                 }
                 $(element).attr('data-url', dataUrl+"?clinic_id="+$("#clinic_id").val());
             }
+        }
+        function onSelectedReferenceTransaction(data) {
+            $('#model_type').val(data[0].model_type);
+            $('#model_id').val(data[0].id);
+            $('#reference_transaction_no').val(data[0].transaction_no);
         }
     </script>
 @endsection

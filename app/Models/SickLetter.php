@@ -51,4 +51,9 @@ class SickLetter extends Model
         $this->diagnoses()->detach();   
         $this->diagnoses()->attach($diagnoses);
     }
+
+    public function referenceTransaction()
+    {
+        return $this->model_type::find($this->model_id);
+    }
 }
