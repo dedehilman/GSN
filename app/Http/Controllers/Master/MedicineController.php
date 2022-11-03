@@ -10,6 +10,9 @@ use Carbon\Carbon;
 use App\Models\StockOpname;
 use App\Models\StockTransaction;
 use App\Models\Pharmacy;
+use Illuminate\Support\Facades\DB;
+use Lang;
+use App\Models\MedicinePrice;
 
 class MedicineController extends AppCrudController
 {
@@ -31,9 +34,20 @@ class MedicineController extends AppCrudController
             'unit_id' => 'required',
         ]);
 
-        if($validator->fails()){
-            return $validator->errors()->all();
+        if($request->medicine_price_id)
+        {
+            for($i=0; $i<count($request->medicine_price_id); $i++)
+            {
+                if(!$request->effective_date[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Effective Date")]));
+                }
+                if(!$request->price[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Price")]));
+                }
+            }    
         }
+
+        return $validator->errors()->all();
     }
 
     public function validateOnUpdate(Request $request, int $id)
@@ -45,9 +59,133 @@ class MedicineController extends AppCrudController
             'unit_id' => 'required',
         ]);
 
-        if($validator->fails()){
-            return $validator->errors()->all();
+        if($request->medicine_price_id)
+        {
+            for($i=0; $i<count($request->medicine_price_id); $i++)
+            {
+                if(!$request->effective_date[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Effective Date")]));
+                }
+                if(!$request->price[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Price")]));
+                }
+            }    
         }
+
+        return $validator->errors()->all();
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            $validateOnStore = $this->validateOnStore($request);
+            if($validateOnStore) {
+                return response()->json([
+                    'status' => '400',
+                    'data' => '',
+                    'message'=> $validateOnStore
+                ]);
+            }
+
+            DB::beginTransaction();
+            $data = $this->model::create($request->all());
+            if($request->medicine_price_id)
+            {
+                $ids = array_filter($request->medicine_price_id); 
+                MedicinePrice::where('medicine_id', $data->id)->whereNotIn('id', $ids)->delete();
+
+                for($i=0; $i<count($request->medicine_price_id); $i++)
+                {
+                    $detail = MedicinePrice::where('medicine_id', $data->id)->where('id', $request->medicine_price_id[$i])->first();
+                    if(!$detail)
+                    {
+                        $detail = new MedicinePrice();
+                    }
+
+                    $detail->medicine_id = $data->id;
+                    $detail->effective_date = $request->effective_date[$i];
+                    $detail->price = $request->price[$i];
+                    $detail->save();
+                }    
+            } else {
+                MedicinePrice::where('medicine_id', $data->id)->delete();
+            }
+            DB::commit();
+            return response()->json([
+                'status' => '200',
+                'data' => '',
+                'message'=> Lang::get("Data has been stored")
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json([
+                'status' => '500',
+                'data' => '',
+                'message'=> $th->getMessage()
+            ]);
+        }        
+    }
+
+    public function update(Request $request, $id)
+    {
+        $parameterName = $request->route()->parameterNames[count($request->route()->parameterNames)-1];
+        $id = $request->route()->parameters[$parameterName];
+        try {
+            $data = $this->model::find($id);
+            if(!$data) {
+                return response()->json([
+                    'status' => '400',
+                    'data' => '',
+                    'message'=> Lang::get("Data not found")
+                ]);
+            }
+
+            $validateOnUpdate = $this->validateOnUpdate($request, $id);
+            if($validateOnUpdate) {
+                return response()->json([
+                    'status' => '400',
+                    'data' => '',
+                    'message'=> $validateOnUpdate
+                ]);
+            }
+
+            DB::beginTransaction();
+            $data->fill($request->all())->save();
+            if($request->medicine_price_id)
+            {
+                $ids = array_filter($request->medicine_price_id); 
+                MedicinePrice::where('medicine_id', $data->id)->whereNotIn('id', $ids)->delete();
+
+                for($i=0; $i<count($request->medicine_price_id); $i++)
+                {
+                    $detail = MedicinePrice::where('medicine_id', $data->id)->where('id', $request->medicine_price_id[$i])->first();
+                    if(!$detail)
+                    {
+                        $detail = new MedicinePrice();
+                    }
+
+                    $detail->medicine_id = $data->id;
+                    $detail->effective_date = $request->effective_date[$i];
+                    $detail->price = $request->price[$i];
+                    $detail->save();
+                }    
+            } else {
+                MedicinePrice::where('medicine_id', $data->id)->delete();
+            }
+            DB::commit();
+            return response()->json([
+                'status' => '200',
+                'data' => '',
+                'message'=> Lang::get("Data has been updated")
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json([
+                'status' => '500',
+                'data' => '',
+                'message'=> $th->getMessage()
+            ]);
+        }     
     }
 
     public function selectStock(Request $request)

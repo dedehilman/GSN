@@ -87,7 +87,7 @@
                 <td>{{$totalTransferOut}}</td>
                 <td>{{$adj[$medicine->code] ?? 0}}</td>
                 <td>{{($begin[$medicine->code] ?? 0) + ($in[$medicine->code] ?? 0) + ($transferIn[$medicine->code] ?? 0) - ($out[$medicine->code] ?? 0) - $totalTransferOut + ($adj[$medicine->code] ?? 0)}}</td>
-                <td></td>
+                <td>{{$medicine->price($reportModel->end_date)}}</td>
             </tr>
         @endforeach
     </tbody>

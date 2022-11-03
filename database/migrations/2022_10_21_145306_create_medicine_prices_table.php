@@ -17,7 +17,7 @@ class CreateMedicinePricesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('medicine_id');
             $table->date('effective_date');
-            $table->decimal('price', 5, 2);
+            $table->decimal('price', 15, 2);
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
