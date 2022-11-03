@@ -78,4 +78,6 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.' ], function () {
         Route::post('work-accidents/generate-prescription', [App\Http\Controllers\Api\Action\WorkAccidentController::class, 'generatePrescription']);
         Route::apiResource('work-accidents', App\Http\Controllers\Api\Action\WorkAccidentController::class);
     });
+
+    Route::get('transactions', [App\Http\Controllers\Api\TransactionController::class, 'index']);
 });
