@@ -20,6 +20,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+
 Route::get('/locale/{locale}', [App\Http\Controllers\LocaleController::class, 'index'])->name('locale');
 Route::get('/notification/{id}', [App\Http\Controllers\NotificationController::class, 'index'])->name('notification');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
