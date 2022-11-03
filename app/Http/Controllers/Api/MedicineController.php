@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Models\StockOpname;
 use App\Models\StockTransaction;
 use App\Models\Pharmacy;
+use Illuminate\Support\Str;
 
 class MedicineController extends ApiController
 {
@@ -182,7 +183,7 @@ class MedicineController extends ApiController
         }
 
         foreach ($request->all() as $key => $value) {
-            if($key == "sort" || $key == "page" || $key == "size" || $key == "search" || $key == "column" || $key == "query_builder" || $key == "clinic_id")
+            if($key == "sort" || $key == "page" || $key == "size" || $key == "search" || $key == "column" || $key == "query_builder"  || $key == "is_deleted" || $key == "is_sync" || $key == "clinic_id")
                 continue;
 
             if($value != null) {            
