@@ -74,6 +74,9 @@
                                     <a class="nav-link active" data-toggle="pill" href="#tab1" role="tab" aria-selected="true">{{ __("General") }}</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" data-toggle="pill" href="#tab8" role="tab" aria-selected="true">{{ __("Diagnosis") }}</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" data-toggle="pill" href="#tab3" role="tab" aria-selected="true">{{ __("Prescription") }}</a>
                                 </li>
                                 <li class="nav-item">
@@ -103,6 +106,9 @@
                                         <label class="col-md-2 col-form-label">{{__("Remark")}}</label>
                                         <div class="col-md-4 col-form-label">{!!nl2br($data->remark)!!}</div>
                                     </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab8" role="tabpanel">
+                                    @include('action.diagnosis-view')
                                 </div>
                                 <div class="tab-pane fade" id="tab3" role="tabpanel">
                                     @include('action.prescription-view')

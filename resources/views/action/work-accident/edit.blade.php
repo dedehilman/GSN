@@ -81,6 +81,9 @@
                                         <a class="nav-link active" data-toggle="pill" href="#tab1" role="tab" aria-selected="true">{{ __("General") }}</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a class="nav-link" data-toggle="pill" href="#tab8" role="tab" aria-selected="true">{{ __("Diagnosis") }}</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link" data-toggle="pill" href="#tab3" role="tab" aria-selected="true">{{ __("Prescription") }}</a>
                                     </li>
                                     <li class="nav-item">
@@ -140,6 +143,9 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="tab-pane fade" id="tab8" role="tabpanel">
+                                        @include('action.diagnosis-edit')
+                                    </div>
                                     <div class="tab-pane fade" id="tab3" role="tabpanel">
                                         @include('action.prescription-edit')
                                     </div>
@@ -195,6 +201,7 @@
             $('#work_accident_category_name').val(data[0].name);
         }
     </script>
+    @yield("scriptDiagnosis")
     @yield("scriptPresciption")
     @yield("scriptAction")
     @yield("scriptHistory")
