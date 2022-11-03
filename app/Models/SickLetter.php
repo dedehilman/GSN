@@ -54,6 +54,9 @@ class SickLetter extends Model
 
     public function referenceTransaction()
     {
-        return $this->model_type::find($this->model_id);
+        if($this->model_type)
+            return $this->model_type::find($this->model_id);
+        
+        return null;
     }
 }
