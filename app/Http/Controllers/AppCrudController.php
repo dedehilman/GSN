@@ -359,6 +359,7 @@ class AppCrudController extends Controller
                     ->get();
             }
             
+            $this->addExtraAttribute($data);
             return response()->json([
                 "draw" => intval($request->input('draw')),  
                 "recordsTotal" => intval($totalData),  
@@ -711,4 +712,6 @@ class AppCrudController extends Controller
         }
         return $query;
     }
+
+    public function addExtraAttribute($data) {}
 }

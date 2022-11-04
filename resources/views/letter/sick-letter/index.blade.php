@@ -91,6 +91,17 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <label class="col-md-2 col-form-label">{{__("Transaction No Ref")}}</label>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <input type="text" id="model_transaction_no" class="form-control" readonly>
+                                                <input type="hidden" name="model_type" id="model_type">
+                                                <input type="hidden" name="model_id" id="model_id">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text show-modal-select" data-title="{{__('Transaction List')}}" data-url="{{route('transaction.select')}}" data-handler="onSelectedReferenceTransaction"><i class="fas fa-search"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12 text-right">
@@ -123,6 +134,7 @@
                                 <th>{{ __("Patient") }}</th>
                                 <th>{{ __("Clinic") }}</th>
                                 <th>{{ __("Medical Staff") }}</th>
+                                <th>{{ __("Transaction No Ref") }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -204,23 +216,28 @@
                         data: 'medical_staff.name',
                         name: 'medical_staff_id',
                         defaultContent: '',
+                    },
+                    {
+                        data: 'referenceTransaction.transaction_no',
+                        sortable: false,
+                        defaultContent: '',
                     }
                 ],
                 buttons: [
                     {
                         extend: 'excel',
                         title: '{{__("Sick Letter")}}',
-                        exportOptions: { columns: [3,4,5,6,7] }
+                        exportOptions: { columns: [3,4,5,6,7,8] }
                     },
                     {
                         extend: 'csv',
                         title: '{{__("Sick Letter")}}',
-                        exportOptions: { columns: [3,4,5,6,7] }
+                        exportOptions: { columns: [3,4,5,6,7,8] }
                     },
                     {
                         extend: 'pdf',
                         title: '{{__("Sick Letter")}}',
-                        exportOptions: { columns: [3,4,5,6,7] }
+                        exportOptions: { columns: [3,4,5,6,7,8] }
                     }
                 ],
             });
@@ -237,6 +254,11 @@
         function onSelectedPatient(data) {
             $('#patient_id').val(data[0].id);
             $('#patient_name').val(data[0].name);
+        }
+        function onSelectedReferenceTransaction(data) {
+            $('#model_type').val(data[0].model_type);
+            $('#model_id').val(data[0].id);
+            $('#model_transaction_no').val(data[0].transaction_no);
         }
     </script>
 @endsection

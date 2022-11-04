@@ -246,5 +246,11 @@ class SickLetterController extends AppCrudController
             ]);
         }
     }
+    
+    public function addExtraAttribute($data) {
+        foreach ($data as $dt) {
+            $dt->setAttribute("referenceTransaction", $dt->referenceTransaction());
+        }
+    }
 }
 
