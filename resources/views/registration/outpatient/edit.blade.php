@@ -75,13 +75,13 @@
                                     <label class="col-md-4 col-form-label required">{{__("Reference Type")}}</label>
                                     <div class="col-md-8">
                                         <select name="reference_type" class="form-control custom-select required">
-                                            <option value="Non Reference" @if($data->reference_type == 'Non Reference') selected @endif>{{__("Non Reference")}}</option>
+                                            <option value="NonReference" @if($data->reference_type == 'NonReference') selected @endif>{{__("NonReference")}}</option>
                                             <option value="Internal" @if($data->reference_type == 'Internal') selected @endif>{{__("Internal")}}</option>
                                             <option value="External" @if($data->reference_type == 'External') selected @endif>{{__("External")}}</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group row referenceRow {{$data->reference_type == 'Non Reference' ? 'd-none' : ''}}">
+                                <div class="form-group row referenceRow {{$data->reference_type == 'NonReference' ? 'd-none' : ''}}">
                                     <label class="col-md-4 col-form-label required">{{__("Reference")}}</label>
                                     <div class="col-md-8">
                                         <div class="input-group">

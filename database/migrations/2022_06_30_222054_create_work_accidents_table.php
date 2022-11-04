@@ -17,7 +17,7 @@ class CreateWorkAccidentsTable extends Migration
             $table->id();
             $table->string('transaction_no')->unique();
             $table->date('transaction_date');
-            $table->enum('reference_type', ['Non Reference', 'Internal', 'External'])->default('Internal');
+            $table->enum('reference_type', ['NonReference', 'Internal', 'External'])->default('Internal');
             $table->unsignedBigInteger('reference_clinic_id')->nullable();
             $table->unsignedBigInteger('reference_id')->nullable();
             $table->unsignedBigInteger('clinic_id');

@@ -95,7 +95,7 @@
                                         <div class="col-md-4">
                                             <select name="reference_type" class="form-control custom-select">
                                                 <option value=""></option>
-                                                <option value="Non Reference">{{__("Non Reference")}}</option>
+                                                <option value="NonReference">{{__("NonReference")}}</option>
                                                 <option value="Internal">{{__("Internal")}}</option>
                                                 <option value="External">{{__("External")}}</option>
                                             </select>
@@ -238,7 +238,7 @@
                                 return "{{__('External')}} - " + row.reference.name;
                             }
 
-                            return "{{__('Non Reference')}}";
+                            return "{{__('NonReference')}}";
                         }
                     }
                 ],

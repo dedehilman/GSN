@@ -75,7 +75,7 @@
                                     <label class="col-md-4 col-form-label required">{{__("Reference Type")}}</label>
                                     <div class="col-md-8">
                                         <select name="reference_type" class="form-control custom-select required">
-                                            <option value="Non Reference">{{__("Non Reference")}}</option>
+                                            <option value="NonReference">{{__("NonReference")}}</option>
                                             <option value="Internal">{{__("Internal")}}</option>
                                             <option value="External">{{__("External")}}</option>
                                         </select>
