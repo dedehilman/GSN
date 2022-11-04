@@ -75,13 +75,13 @@
                                     <label class="col-md-4 col-form-label required">{{__("Reference Type")}}</label>
                                     <div class="col-md-8">
                                         <select name="reference_type" class="form-control custom-select required">
-                                            <option value=""></option>
+                                            <option value="Non Reference">{{__("Non Reference")}}</option>
                                             <option value="Internal">{{__("Internal")}}</option>
                                             <option value="External">{{__("External")}}</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row referenceRow d-none">
                                     <label class="col-md-4 col-form-label required">{{__("Reference")}}</label>
                                     <div class="col-md-8">
                                         <div class="input-group">
@@ -140,9 +140,13 @@
                 if($(this).val() == 'Internal') {
                     $(".reference-modal-select").attr("data-url", "{{route('clinic.select', 'queryBuilder=0')}}");
                     $("#reference_id").attr("name", "reference_clinic_id");
-                } else {
+                    $(".referenceRow").removeClass("d-none");
+                } else if($(this).val() == 'External') {
                     $(".reference-modal-select").attr("data-url", "{{route('reference.select')}}");
                     $("#reference_id").attr("name", "reference_id");
+                    $(".referenceRow").removeClass("d-none");
+                } else {
+                    $(".referenceRow").addClass("d-none");
                 }
             });
 

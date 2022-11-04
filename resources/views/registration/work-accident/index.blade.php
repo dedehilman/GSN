@@ -95,12 +95,13 @@
                                         <div class="col-md-4">
                                             <select name="reference_type" class="form-control custom-select">
                                                 <option value=""></option>
+                                                <option value="Non Reference">{{__("Non Reference")}}</option>
                                                 <option value="Internal">{{__("Internal")}}</option>
                                                 <option value="External">{{__("External")}}</option>
                                             </select>
                                         </div>                                        
                                     </div>
-                                    <div class="form-group row">
+                                    <div class="form-group row referenceRow d-none">
                                         <label class="col-md-2 col-form-label">{{__("Reference")}}</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
@@ -232,10 +233,12 @@
                         render: function(data, type, row)
                         {
                             if(row.reference_type == 'Internal') {
-                                return row.reference_type + " - " + row.reference_clinic.name;
+                                return  "{{__('Internal')}} - " + row.reference_clinic.name;
+                            } else if(row.reference_type == 'External') {
+                                return "{{__('External')}} - " + row.reference.name;
                             }
 
-                            return row.reference_type + " - " + row.reference.name;
+                            return "{{__('Non Reference')}}";
                         }
                     }
                 ],
@@ -265,9 +268,13 @@
                 if($(this).val() == 'Internal') {
                     $(".reference-modal-select").attr("data-url", "{{route('clinic.select', 'queryBuilder=0')}}");
                     $("#reference_id").attr("name", "reference_clinic_id");
-                } else {
+                    $(".referenceRow").removeClass("d-none");
+                } else if($(this).val() == 'External') {
                     $(".reference-modal-select").attr("data-url", "{{route('reference.select')}}");
                     $("#reference_id").attr("name", "reference_id");
+                    $(".referenceRow").removeClass("d-none");
+                } else {
+                    $(".referenceRow").addClass("d-none");
                 }
             });
         });

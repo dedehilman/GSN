@@ -55,11 +55,11 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-4 col-form-label">{{__("Reference Type")}}</label>
-                                <div class="col-md-8 col-form-label">{{$data->reference_type}}</div>
+                                <div class="col-md-8 col-form-label">{{__($data->reference_type)}}</div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row {{$data->reference_type == 'Non Reference' ? 'd-none' : ''}}">
                                 <label class="col-md-4 col-form-label">{{__("Reference")}}</label>
-                                <div class="col-md-8 col-form-label">{{$data->reference_type == 'Internal' ? $data->referenceClinic->name : $data->reference->name}}</div>
+                                <div class="col-md-8 col-form-label">{{$data->reference_type == 'Internal' ? $data->referenceClinic->name : ($data->reference_type == 'External' ? $data->reference->name : '')}}</div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-4 col-form-label">{{__("Remark")}}</label>

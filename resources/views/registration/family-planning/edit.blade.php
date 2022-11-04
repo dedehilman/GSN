@@ -75,20 +75,20 @@
                                     <label class="col-md-4 col-form-label required">{{__("Reference Type")}}</label>
                                     <div class="col-md-8">
                                         <select name="reference_type" class="form-control custom-select required">
-                                            <option value=""></option>
+                                            <option value="Non Reference" @if($data->reference_type == 'Non Reference') selected @endif>{{__("Non Reference")}}</option>
                                             <option value="Internal" @if($data->reference_type == 'Internal') selected @endif>{{__("Internal")}}</option>
                                             <option value="External" @if($data->reference_type == 'External') selected @endif>{{__("External")}}</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row referenceRow {{$data->reference_type == 'Non Reference' ? 'd-none' : ''}}">
                                     <label class="col-md-4 col-form-label required">{{__("Reference")}}</label>
                                     <div class="col-md-8">
                                         <div class="input-group">
-                                            <input type="text" id="reference_name" class="form-control required" value="{{$data->reference_type == 'Internal' ? $data->referenceClinic->name : $data->reference->name}}" readonly>
-                                            <input type="hidden" @if($data->reference_type=='Internal') name="reference_clinic_id" @else name="reference_id" @endif id="reference_id" value="{{$data->reference_type == 'Internal' ? $data->referenceClinic->id : $data->reference->id}}">
+                                            <input type="text" id="reference_name" class="form-control required" value="{{$data->reference_type == 'Internal' ? $data->referenceClinic->name : ($data->reference_type == 'External' ? $data->reference->name : '')}}" readonly>
+                                            <input type="hidden" @if($data->reference_type=='Internal') name="reference_clinic_id" @else name="reference_id" @endif id="reference_id" value="{{$data->reference_type == 'Internal' ? $data->referenceClinic->id :  ($data->reference_type == 'External' ? $data->reference->id : '')}}">
                                             <div class="input-group-append">
-                                                <span class="input-group-text show-modal-select reference-modal-select" data-title="{{__('Reference List')}}" data-url="{{$data->reference_type == 'Internal' ? route('clinic.select', 'queryBuilder=0') : route('reference.select')}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>
+                                                <span class="input-group-text show-modal-select reference-modal-select" data-title="{{__('Reference List')}}" data-url="{{$data->reference_type == 'Internal' ? route('clinic.select', 'queryBuilder=0') :  $data->reference_type == 'External' ? route('reference.select') : ''}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>
                                             </div>
                                         </div>
                                     </div>
@@ -149,9 +149,13 @@
                 if($(this).val() == 'Internal') {
                     $(".reference-modal-select").attr("data-url", "{{route('clinic.select', 'queryBuilder=0')}}");
                     $("#reference_id").attr("name", "reference_clinic_id");
-                } else {
+                    $(".referenceRow").removeClass("d-none");
+                } else if($(this).val() == 'External') {
                     $(".reference-modal-select").attr("data-url", "{{route('reference.select')}}");
                     $("#reference_id").attr("name", "reference_id");
+                    $(".referenceRow").removeClass("d-none");
+                } else {
+                    $(".referenceRow").addClass("d-none");
                 }
             });
 

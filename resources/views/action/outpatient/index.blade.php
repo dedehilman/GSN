@@ -90,19 +90,20 @@
                                         </div>
                                         <label class="col-md-2 col-form-label">{{__("Reference Type")}}</label>
                                         <div class="col-md-4">
-                                            <select name="reference_type" class="form-control custom-select">
+                                            <select name="outpatients.reference_type" class="form-control custom-select">
                                                 <option value=""></option>
+                                                <option value="Non Reference">{{__("Non Reference")}}</option>
                                                 <option value="Internal">{{__("Internal")}}</option>
                                                 <option value="External">{{__("External")}}</option>
                                             </select>
                                         </div>                                        
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Reference")}}</label>
-                                        <div class="col-md-4">
+                                        <label class="col-md-2 col-form-label referenceRow d-none">{{__("Reference")}}</label>
+                                        <div class="col-md-4 referenceRow d-none">
                                             <div class="input-group">
                                                 <input type="text" id="reference_name" class="form-control" readonly>
-                                                <input type="hidden" name="reference_id" id="reference_id">
+                                                <input type="hidden" name="outpatients.reference_id" id="reference_id">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text show-modal-select reference-modal-select" data-title="{{__('Reference List')}}" data-url="{{route('reference.select')}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>
                                                 </div>
@@ -237,10 +238,12 @@
                         render: function(data, type, row)
                         {
                             if(row.reference_type == 'Internal') {
-                                return row.reference_type + " - " + row.reference_clinic.name;
+                                return  "{{__('Internal')}} - " + row.reference_clinic.name;
+                            } else if(row.reference_type == 'External') {
+                                return "{{__('External')}} - " + row.reference.name;
                             }
 
-                            return row.reference_type + " - " + row.reference.name;
+                            return "{{__('Non Reference')}}";
                         }
                     },
                     {
@@ -275,16 +278,20 @@
                 ],
             });
 
-            $("select[name='reference_type']").on('change', function(){
+            $("select[name='outpatients.reference_type']").on('change', function(){
                 $("#reference_id").val("");
                 $("#reference_name").val("");
                 
                 if($(this).val() == 'Internal') {
                     $(".reference-modal-select").attr("data-url", "{{route('clinic.select', 'queryBuilder=0')}}");
-                    $("#reference_id").attr("name", "reference_clinic_id");
-                } else {
+                    $("#reference_id").attr("name", "outpatients.reference_clinic_id");
+                    $(".referenceRow").removeClass("d-none");
+                } else if($(this).val() == 'External') {
                     $(".reference-modal-select").attr("data-url", "{{route('reference.select')}}");
-                    $("#reference_id").attr("name", "reference_id");
+                    $("#reference_id").attr("name", "outpatients.reference_id");
+                    $(".referenceRow").removeClass("d-none");
+                } else {
+                    $(".referenceRow").addClass("d-none");
                 }
             });
         });

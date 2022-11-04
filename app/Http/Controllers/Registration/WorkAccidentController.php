@@ -70,7 +70,7 @@ class WorkAccidentController extends AppCrudController
             $validator->addRules([
                 'reference_clinic_id'=> 'required'
             ]);
-        } else {
+        } else if($request->reference_type == 'External') {
             $validator->addRules([
                 'reference_id'=> 'required',
             ]);
@@ -102,7 +102,7 @@ class WorkAccidentController extends AppCrudController
             $validator->addRules([
                 'reference_clinic_id'=> 'required'
             ]);
-        } else {
+        } else if($request->reference_type == 'External') {
             $validator->addRules([
                 'reference_id'=> 'required',
             ]);
