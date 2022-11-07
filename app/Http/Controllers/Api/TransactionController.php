@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Api\ApiController;
+use App\Models\Clinic;
 
 class TransactionController extends ApiController
 {
@@ -66,6 +67,10 @@ class TransactionController extends ApiController
                     ->offset($page * $size)
                     ->limit($size)
                     ->get();
+            }
+
+            foreach ($data as $dt) {
+                $dt->clinic = Clinic::find($dt->clinic_id);
             }
             
             return response()->json([

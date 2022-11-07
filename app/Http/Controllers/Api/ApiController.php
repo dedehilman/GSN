@@ -82,6 +82,7 @@ class ApiController extends Controller
                     ->get();
             }
             
+            $this->addExtraAttribute($data);
             return response()->json([
                 "status" => '200',
                 "message" => '',
@@ -437,5 +438,8 @@ class ApiController extends Controller
 
     public function getFilePath() {
         return $this->filePath;
+    }
+
+    public function addExtraAttribute($data) {
     }
 }

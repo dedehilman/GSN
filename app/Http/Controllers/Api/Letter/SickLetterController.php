@@ -199,4 +199,10 @@ class SickLetterController extends ApiController
             ]);
         }   
     }
+
+    public function addExtraAttribute($data) {
+        foreach ($data as $dt) {
+            $dt->setAttribute("transaction", $dt->referenceTransaction());
+        }
+    }
 }
