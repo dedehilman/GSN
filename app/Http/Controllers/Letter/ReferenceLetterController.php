@@ -65,7 +65,8 @@ class ReferenceLetterController extends AppCrudController
     public function validateOnStore(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'transaction_no' => 'required|max:255|unique:reference_letters',
+            // 'transaction_no' => 'required|max:255|unique:reference_letters',
+			'transaction_no' => 'required|max:255',
             'transaction_date' => 'required',
             'clinic_id' => 'required',
             'patient_id' => 'required',
@@ -98,7 +99,8 @@ class ReferenceLetterController extends AppCrudController
     public function validateOnUpdate(Request $request, int $id)
     {
         $validator = Validator::make($request->all(), [
-            'transaction_no' => 'required|max:255|unique:reference_letters,transaction_no,'.$id,
+            // 'transaction_no' => 'required|max:255|unique:reference_letters,transaction_no,'.$id,
+			'transaction_no' => 'required|max:255',
             'transaction_date' => 'required',
             'clinic_id' => 'required',
             'patient_id' => 'required',
