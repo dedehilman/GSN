@@ -145,8 +145,8 @@
                     $('#loader').modal('show');
                 },
                 success: function (data) {
+                    $("#modal-form").modal('hide');
                     if(data.status == '200') {
-                        $("#modal-form").modal('hide');
                         onGeneratedSickLetter(data);
                     } else {
                         showNotification(data.status, data.message);

@@ -76,9 +76,9 @@
                                 <div class="col-md-8">
                                     <div class="input-group">
                                         <input type="text" id="reference_name" class="form-control required" value="{{$reference_name}}" readonly>
-                                        <input type="hidden" @if(($action->reference_type ?? '') =='Internal') name="reference_clinic_id" @else name="reference_id" @endif id="reference_id" value="{{$reference_id}}">
+                                        <input type="hidden" @if(($reference_type ?? '') =='Internal') name="reference_clinic_id" @else name="reference_id" @endif id="reference_id" value="{{$reference_id}}">
                                         <div class="input-group-append">
-                                            <span class="input-group-text show-modal-select reference-modal-select" data-title="{{__('Reference List')}}" data-url="{{($data->reference_type ?? '') == 'Internal' ? route('clinic.select', 'queryBuilder=0') : route('reference.select')}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>
+                                            <span class="input-group-text show-modal-select reference-modal-select" data-title="{{__('Reference List')}}" data-url="{{($reference_type ?? '') == 'Internal' ? route('clinic.select', 'queryBuilder=0') : route('reference.select')}}" data-handler="onSelectedReference"><i class="fas fa-search"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -141,8 +141,8 @@
                     $('#loader').modal('show');
                 },
                 success: function (data) {
+                    $("#modal-form").modal('hide');
                     if(data.status == '200') {
-                        $("#modal-form").modal('hide');
                         onGeneratedReferenceLetter(data);
                     } else {
                         showNotification(data.status, data.message);
