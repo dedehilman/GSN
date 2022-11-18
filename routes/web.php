@@ -77,7 +77,8 @@ Route::post('/system/mail-history/datatable', [App\Http\Controllers\System\MailH
 Route::resource('system/mail-history', App\Http\Controllers\System\MailHistoryController::class);
 Route::post('/system/media/datatable', [App\Http\Controllers\System\MediaController::class, 'datatable'])->name('media.datatable');
 Route::resource('system/media', App\Http\Controllers\System\MediaController::class);
-
+Route::post('/system/activity-log/datatable', [App\Http\Controllers\System\ActivityLogController::class, 'datatable'])->name('activity-log.datatable');
+Route::resource('system/activity-log', App\Http\Controllers\System\ActivityLogController::class);
 // Master
 Route::post('/master/company-group/datatable', [App\Http\Controllers\Master\CompanyGroupController::class, 'datatable'])->name('company-group.datatable');
 Route::post('/master/company-group/datatable/select', [App\Http\Controllers\Master\CompanyGroupController::class, 'datatableSelect'])->name('company-group.datatable.select');
