@@ -39,6 +39,7 @@ class PharmacyController extends ApiController
             }
 
             DB::beginTransaction();
+            $request["status"] = "Publish";
             $data = $this->model::create($request->all());
             if($request->details) {
                 $ids = array();
@@ -122,6 +123,7 @@ class PharmacyController extends ApiController
             }
 
             DB::beginTransaction();
+            $request["status"] = "Publish";
             $data->fill($request->all())->save();
             if($request->details) {
                 $ids = array();
