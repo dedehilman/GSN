@@ -75,7 +75,7 @@
         <td>Unit Kerja</td>
         <td width="30%">: {{$data->patient->workUnit->name ?? ""}}</td>
         <td>Status</td>
-        <td>: </td>
+        <td>: @if($data->for_relationship == 0) YBS @else {{$data->patientRelationship->relationship->name ?? ""}} @endif</td>
     </tr>
     <tr>
         <td></td>
