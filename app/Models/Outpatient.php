@@ -38,6 +38,14 @@ class Outpatient extends Model implements HasMedia
         return $this->belongsTo(EmployeeRelationship::class, 'patient_relationship_id');
     }
 
+    public function action() {
+        return Action::where('model_type', "App\Models\Outpatient")->where("model_id", $this->id)->first();
+    }
+
+    public function pharmacy() {
+        return Pharmacy::where('model_type', "App\Models\Outpatient")->where("model_id", $this->id)->first();
+    }
+
     public function scopeWithAll($query) 
     {
         return $query->with(['medicalStaff','clinic', 'reference', 'patient', 'referenceClinic','patientRelationship']);

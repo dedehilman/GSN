@@ -199,6 +199,8 @@
                         visible: @can('registration-outpatient-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
+                            if(row.status == "Publish")
+                                return "";
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
                         }
                     },

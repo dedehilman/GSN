@@ -242,21 +242,26 @@ Route::post('letter/reference-letter/generate', [App\Http\Controllers\Letter\Ref
 Route::resource('letter/reference-letter', App\Http\Controllers\Letter\ReferenceLetterController::class);
 
 Route::group(['prefix' => 'registration', 'as' => 'registration.'], function () {
+    Route::get('plano-test/draft/{id}', [App\Http\Controllers\Registration\PlanoTestController::class, 'setToDraft'])->name('plano-test.draft');
     Route::post('plano-test/datatable', [App\Http\Controllers\Registration\PlanoTestController::class, 'datatable'])->name('plano-test.datatable');
     Route::get('plano-test/download/{id}', [App\Http\Controllers\Registration\PlanoTestController::class, 'download'])->name('plano-test.download');
     Route::resource('plano-test', App\Http\Controllers\Registration\PlanoTestController::class);
+    Route::get('work-accident/draft/{id}', [App\Http\Controllers\Registration\WorkAccidentController::class, 'setToDraft'])->name('work-accident.draft');
     Route::post('work-accident/datatable', [App\Http\Controllers\Registration\WorkAccidentController::class, 'datatable'])->name('work-accident.datatable');
     Route::get('work-accident/download/{id}', [App\Http\Controllers\Registration\WorkAccidentController::class, 'download'])->name('work-accident.download');
     Route::resource('work-accident', App\Http\Controllers\Registration\WorkAccidentController::class);
+    Route::get('family-planning/draft/{id}', [App\Http\Controllers\Registration\FamilyPlanningController::class, 'setToDraft'])->name('family-planning.draft');
     Route::post('family-planning/datatable', [App\Http\Controllers\Registration\FamilyPlanningController::class, 'datatable'])->name('family-planning.datatable');
     Route::get('family-planning/download/{id}', [App\Http\Controllers\Registration\FamilyPlanningController::class, 'download'])->name('family-planning.download');
     Route::resource('family-planning', App\Http\Controllers\Registration\FamilyPlanningController::class);
+    Route::get('outpatient/draft/{id}', [App\Http\Controllers\Registration\OutpatientController::class, 'setToDraft'])->name('outpatient.draft');
     Route::post('outpatient/datatable', [App\Http\Controllers\Registration\OutpatientController::class, 'datatable'])->name('outpatient.datatable');
     Route::get('outpatient/download/{id}', [App\Http\Controllers\Registration\OutpatientController::class, 'download'])->name('outpatient.download');
     Route::resource('outpatient', App\Http\Controllers\Registration\OutpatientController::class);
 });
 
 Route::group(['prefix' => 'action', 'as' => 'action.'], function () {
+    Route::get('plano-test/draft/{id}', [App\Http\Controllers\Action\PlanoTestController::class, 'setToDraft'])->name('plano-test.draft');
     Route::post('plano-test/datatable', [App\Http\Controllers\Action\PlanoTestController::class, 'datatable'])->name('plano-test.datatable');
     Route::post('plano-test/media', [App\Http\Controllers\Action\PlanoTestController::class, 'storeMedia'])->name('plano-test.store-media');
     Route::get('plano-test/download/{id}', [App\Http\Controllers\Action\PlanoTestController::class, 'download'])->name('plano-test.download');
@@ -264,16 +269,19 @@ Route::group(['prefix' => 'action', 'as' => 'action.'], function () {
     Route::post('plano-test/generate-prescription', [App\Http\Controllers\Action\PlanoTestController::class, 'generatePrescription'])->name('plano-test.generate-prescription');
     Route::resource('plano-test', App\Http\Controllers\Action\PlanoTestController::class);
     
+    Route::get('work-accident/draft/{id}', [App\Http\Controllers\Action\WorkAccidentController::class, 'setToDraft'])->name('work-accident.draft');
     Route::post('work-accident/datatable', [App\Http\Controllers\Action\WorkAccidentController::class, 'datatable'])->name('work-accident.datatable');
     Route::post('work-accident/media', [App\Http\Controllers\Action\WorkAccidentController::class, 'storeMedia'])->name('work-accident.store-media');
     Route::post('work-accident/generate-prescription', [App\Http\Controllers\Action\WorkAccidentController::class, 'generatePrescription'])->name('work-accident.generate-prescription');
     Route::resource('work-accident', App\Http\Controllers\Action\WorkAccidentController::class);
     
+    Route::get('family-planning/draft/{id}', [App\Http\Controllers\Action\FamilyPlanningController::class, 'setToDraft'])->name('family-planning.draft');
     Route::post('family-planning/datatable', [App\Http\Controllers\Action\FamilyPlanningController::class, 'datatable'])->name('family-planning.datatable');
     Route::post('family-planning/media', [App\Http\Controllers\Action\FamilyPlanningController::class, 'storeMedia'])->name('family-planning.store-media');
     Route::post('family-planning/generate-prescription', [App\Http\Controllers\Action\FamilyPlanningController::class, 'generatePrescription'])->name('family-planning.generate-prescription');
     Route::resource('family-planning', App\Http\Controllers\Action\FamilyPlanningController::class);
     
+    Route::get('outpatient/draft/{id}', [App\Http\Controllers\Action\OutpatientController::class, 'setToDraft'])->name('outpatient.draft');
     Route::post('outpatient/datatable', [App\Http\Controllers\Action\OutpatientController::class, 'datatable'])->name('outpatient.datatable');
     Route::post('outpatient/media', [App\Http\Controllers\Action\OutpatientController::class, 'storeMedia'])->name('outpatient.store-media');
     Route::post('outpatient/generate-prescription', [App\Http\Controllers\Action\OutpatientController::class, 'generatePrescription'])->name('outpatient.generate-prescription');
@@ -293,6 +301,7 @@ Route::post('/master/work-accident-category/datatable/select', [App\Http\Control
 Route::get('/master/work-accident-category/select', [App\Http\Controllers\Master\WorkAccidentCategoryController::class, 'select'])->name('work-accident-category.select');
 Route::resource('master/work-accident-category', App\Http\Controllers\Master\WorkAccidentCategoryController::class);
 
+Route::get('pharmacy/draft/{id}', [App\Http\Controllers\Pharmacy\PharmacyController::class, 'setToDraft'])->name('pharmacy.draft');
 Route::post('pharmacy/datatable', [App\Http\Controllers\Pharmacy\PharmacyController::class, 'datatable'])->name('pharmacy.datatable');
 Route::post('pharmacy/datatable-unprocessed', [App\Http\Controllers\Pharmacy\PharmacyController::class, 'datatableUnprocessed'])->name('pharmacy.datatable-unprocessed');
 Route::resource('pharmacy', App\Http\Controllers\Pharmacy\PharmacyController::class);

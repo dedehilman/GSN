@@ -79,6 +79,9 @@
                 </div>
                 <div class="card-footer text-right">
                     <a href="{{route('pharmacy.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                    @if (hasPermission("pharmacy-draft") && $data->status == "Publish")
+                    <a href="{{route('pharmacy.draft', $data->id)}}" class="btn btn-primary"><i class="fas fa fa-edit"></i> {{__("Set To Draft")}}</a>                                                
+                    @endif
                 </div>
             </div>
         </div>

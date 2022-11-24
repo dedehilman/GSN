@@ -79,6 +79,9 @@
                         </div>
                     </div>
                     <a href="{{route('registration.family-planning.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                    @if (hasPermission("registration-family-planning-draft") && $data->status == "Publish" && ($data->action()->status ?? "") == "Draft")
+                    <a href="{{route('registration.family-planning.draft', $data->id)}}" class="btn btn-primary"><i class="fas fa fa-edit"></i> {{__("Set To Draft")}}</a>                                                
+                    @endif
                 </div>
             </div>
         </div>

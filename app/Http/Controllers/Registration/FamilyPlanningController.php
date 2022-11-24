@@ -140,5 +140,33 @@ class FamilyPlanningController extends AppCrudController
 
         return $pdf->download($data->transaction_no.'.pdf');
     }
+
+    public function edit(Request $request)
+    {
+        $parameterName = $request->route()->parameterNames[count($request->route()->parameterNames)-1];
+        $id = $request->route()->parameters[$parameterName];
+        $data = $this->model::find($id);
+        if(!$data) {
+            return redirect()->back()->with(['info' => Lang::get("Data not found")]);
+        }
+
+        if($data->status == "Publish") {
+            if(Str::contains($request->path(), '/edit')) {
+                return redirect(route('registration.family-planning.show', $data->id));
+            }
+        }
+        return view($this->edit, compact('data'));
+    }
+
+    public function setToDraft($id) {
+        $data = $this->model::find($id);
+        if(!$data) {
+            return redirect()->back()->with(['info' => Lang::get("Data not found")]);
+        }
+
+        $data->status = "Draft";
+        $data->save();
+        return redirect()->back()->with(['success' => Lang::get("Data has been set to Draft")]);
+    }
 }
 

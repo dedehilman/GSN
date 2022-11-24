@@ -12,9 +12,11 @@ use App\Models\Outpatient;
 use App\Models\FamilyPlanning;
 use App\Models\WorkAccident;
 use App\Models\PlanoTest;
+use App\Models\Action;
 use Illuminate\Support\Facades\DB;
 use Lang;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class PharmacyController extends AppCrudController
 {
@@ -64,6 +66,23 @@ class PharmacyController extends AppCrudController
         ]);
     }
 
+    public function edit(Request $request)
+    {
+        $parameterName = $request->route()->parameterNames[count($request->route()->parameterNames)-1];
+        $id = $request->route()->parameters[$parameterName];
+        $data = $this->model::find($id);
+        if(!$data) {
+            return redirect()->back()->with(['info' => Lang::get("Data not found")]);
+        }
+
+        if($data->status == "Publish") {
+            if(Str::contains($request->path(), '/edit')) {
+                return redirect(route('pharmacy.show', $data->id));
+            }
+        }
+        return view($this->edit, compact('data'));
+    }
+
     public function store(Request $request)
     {
         try {
@@ -87,6 +106,7 @@ class PharmacyController extends AppCrudController
             $data->transaction_date = $request->transaction_date;
             $data->remark = $request->remark;
             $data->clinic_id = $request->clinic_id;
+            $data->status = "Publish";
             $data->save();
 
             if($request->pharmacy_detail_id)
@@ -112,6 +132,20 @@ class PharmacyController extends AppCrudController
                 }    
             } else {
                 PharmacyDetail::where('pharmacy_id', $data->id)->delete();
+            }
+
+            if($data->model_type) {
+                $action = Action::where("model_type", $data->model_type)->where('model_id', $data->model_id)->first();
+                if($action) {
+                    $action->status = "Publish";
+                    $action->save();    
+                }
+
+                $registration = $data->model_type::find($data->model_id);
+                if($registration) {
+                    $registration->status = "Publish";
+                    $registration->save();    
+                }
             }
             
             DB::commit();
@@ -156,6 +190,7 @@ class PharmacyController extends AppCrudController
             $data->transaction_date = $request->transaction_date;
             $data->remark = $request->remark;
             $data->clinic_id = $request->clinic_id;
+            $data->status = "Publish";
             $data->save();
 
             if($request->pharmacy_detail_id)
@@ -181,6 +216,20 @@ class PharmacyController extends AppCrudController
                 }    
             } else {
                 PharmacyDetail::where('pharmacy_id', $data->id)->delete();
+            }
+
+            if($data->model_type) {
+                $action = Action::where("model_type", $data->model_type)->where('model_id', $data->model_id)->first();
+                if($action) {
+                    $action->status = "Publish";
+                    $action->save();    
+                }
+
+                $registration = $data->model_type::find($data->model_id);
+                if($registration) {
+                    $registration->status = "Publish";
+                    $registration->save();    
+                }
             }
 
             DB::commit();
@@ -373,5 +422,16 @@ class PharmacyController extends AppCrudController
         foreach ($data as $dt) {
             $dt->setAttribute("referenceTransaction", $dt->referenceTransaction());
         }
+    }
+
+    public function setToDraft($id) {
+        $data = $this->model::find($id);
+        if(!$data) {
+            return redirect()->back()->with(['info' => Lang::get("Data not found")]);
+        }
+
+        $data->status = "Draft";
+        $data->save();
+        return redirect()->back()->with(['success' => Lang::get("Data has been set to Draft")]);
     }
 }

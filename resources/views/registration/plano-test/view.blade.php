@@ -79,6 +79,9 @@
                         </div>
                     </div>
                     <a href="{{route('registration.plano-test.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                    @if (hasPermission("registration-plano-test-draft") && $data->status == "Publish" && ($data->action()->status ?? "") == "Draft")
+                    <a href="{{route('registration.plano-test.draft', $data->id)}}" class="btn btn-primary"><i class="fas fa fa-edit"></i> {{__("Set To Draft")}}</a>                                                
+                    @endif
                 </div>
             </div>
         </div>

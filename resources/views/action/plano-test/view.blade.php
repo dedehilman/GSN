@@ -145,6 +145,9 @@
                         </div>
                     </div>
                     <a href="{{route('action.plano-test.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                    @if (hasPermission("action-plano-test-draft") && ($data->action()->status ?? "") == "Publish" && (!$data->pharmacy() || $data->pharmacy()->status == "Draft"))
+                    <a href="{{route('action.plano-test.draft', $data->id)}}" class="btn btn-primary"><i class="fas fa fa-edit"></i> {{__("Set To Draft")}}</a>                                                
+                    @endif
                 </div>
             </div>
         </div>

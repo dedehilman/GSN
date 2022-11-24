@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use App\Models\StockOpname;
 use App\Models\StockTransaction;
 use App\Models\Pharmacy;
+use Illuminate\Support\Str;
 
 class ActionController extends AppCrudController
 {
@@ -225,6 +226,7 @@ class ActionController extends AppCrudController
                     ->get();
             }
 
+            $this->addExtraAttribute($data);
             return response()->json([
                 "draw" => intval($request->input('draw')),  
                 "recordsTotal" => intval($totalData),  
@@ -392,6 +394,24 @@ class ActionController extends AppCrudController
                 'data' => '',
             ]);
         }
+    }
+
+    public function addExtraAttribute($data) {
+        foreach ($data as $dt) {
+            $dt->setAttribute("action", Action::where('model_type', get_class($dt))->where('model_id', $dt->id)->first());
+        }
+    }
+
+    public function setToDraft($id) {
+        $data = $this->model::find($id);
+        if(!$data || !$data->action()) {
+            return redirect()->back()->with(['info' => Lang::get("Data not found")]);
+        }
+
+        $action = $data->action();
+        $action->status = "Draft";
+        $action->save();
+        return redirect()->back()->with(['success' => Lang::get("Data has been set to Draft")]);
     }
 }
 

@@ -204,6 +204,8 @@
                         visible: @can('action-family-planning-edit') true @else false @endcan,
                         render: function(data, type, row)
                         {
+                            if(row.action && row.action.status == "Publish")
+                                return "";
                             return "<div class='text-primary'><i class='fas fa-edit'></i></div>";
                         }
                     },

@@ -42,6 +42,14 @@ class FamilyPlanning extends Model implements HasMedia
         return $this->belongsTo(FamilyPlanningCategory::class);
     }
 
+    public function action() {
+        return Action::where('model_type', "App\Models\FamilyPlanning")->where("model_id", $this->id)->first();
+    }
+
+    public function pharmacy() {
+        return Pharmacy::where('model_type', "App\Models\FamilyPlanning")->where("model_id", $this->id)->first();
+    }
+
     public function scopeWithAll($query) 
     {
         return $query->with(['medicalStaff','clinic', 'reference', 'patient', 'referenceClinic','patientRelationship', 'familyPlanningCategory']);

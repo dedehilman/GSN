@@ -135,6 +135,9 @@
                 </div>
                 <div class="card-footer text-right">
                     <a href="{{route('action.work-accident.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
+                    @if (hasPermission("action-work-accident-draft") && ($data->action()->status ?? "") == "Publish" && (!$data->pharmacy() || $data->pharmacy()->status == "Draft"))
+                    <a href="{{route('action.work-accident.draft', $data->id)}}" class="btn btn-primary"><i class="fas fa fa-edit"></i> {{__("Set To Draft")}}</a>                                                
+                    @endif
                 </div>
             </div>
         </div>

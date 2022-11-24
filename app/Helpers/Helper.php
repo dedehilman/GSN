@@ -296,3 +296,12 @@ function getAge($birthDate) {
 
     return null;
 }
+
+function hasPermission($permission) {
+    $user = getCurrentUser();
+    if($user) {
+        return $user->can($permission);
+    }
+
+    return false;
+}
