@@ -195,8 +195,26 @@ class HomeController extends Controller
             'data'=> $data,
         ];
 
-        $patientCount = DB::table('employees');
-        $patientCount = $this->queryBuilder(['employees'], $patientCount)->count();
+        $patient = DB::table('employees');
+        $patient = $this->queryBuilder(['employees'], $patient);
+        $patientCount = $patient->count();
+        $activePatientCount = DB::select("
+                            SELECT COUNT(DISTINCT patient_id) AS count FROM
+                            (
+                                SELECT patient_id FROM family_plannings
+                                UNION ALL
+                                SELECT patient_id FROM outpatients
+                                UNION ALL
+                                SELECT patient_id FROM plano_tests
+                                UNION ALL
+                                SELECT patient_id FROM work_accidents
+                                UNION ALL
+                                SELECT patient_id FROM sick_letters
+                                UNION ALL
+                                SELECT patient_id FROM reference_letters
+                            ) a
+                            WHERE a.patient_id IN (".implode(",", $patient->pluck("id")->toArray()).")");
+
         $medicalStaffCount = DB::table('medical_staff');
         $medicalStaffCount = $this->queryBuilder(['medical_staff'], $medicalStaffCount)->count();
         $q1 = \App\Models\Prescription::select("prescriptions.medicine_id", DB::raw("count(*) as total"))
@@ -253,6 +271,7 @@ class HomeController extends Controller
             "patientCount"=>$patientCount,
             "medicalStaffCount"=>$medicalStaffCount,
             "topMedicines"=>$topMedicines,
+            "activePatientCount"=>$activePatientCount[0]->count ?? 0,
         ]);
     }
 }

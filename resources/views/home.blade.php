@@ -18,7 +18,7 @@
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-user"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">{{__("Patient")}}</span>
-                    <span class="info-box-number">{{$patientCount ?? 0}}</span>
+                    <span class="info-box-number">{{$activePatientCount ?? 0}} {{__("of")}} {{$patientCount ?? 0}}</span>
                 </div>
             </div>
         </div>
