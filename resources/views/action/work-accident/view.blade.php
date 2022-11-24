@@ -96,15 +96,23 @@
                                 <div class="tab-pane fade show active" id="tab1" role="tabpanel">
                                     <div class="form-group row mt-2">
                                         <label class="col-md-2 col-form-label">{{__("Work Accident Category")}}</label>
-                                        <div class="col-md-4 col-form-label">{{$data->familyPlanningCategory->name ?? ''}}</div>
+                                        <div class="col-md-4 col-form-label">{{$data->workAccidentCategory->name ?? ''}}</div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Installation Date")}}</label>
-                                        <div class="col-md-4 col-form-label">{{$data->installation_date}}</div>
+                                        <label class="col-md-2 col-form-label">{{__("Accident Date")}}</label>
+                                        <div class="col-md-4 col-form-label">{{$data->accident_date}}</div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">{{__("Remark")}}</label>
-                                        <div class="col-md-4 col-form-label">{!!nl2br($data->remark)!!}</div>
+                                        <label class="col-md-2 col-form-label">{{__("Accident Location")}}</label>
+                                        <div class="col-md-4 col-form-label">{{$data->accident_location}}</div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label">{{__("Short Description")}}</label>
+                                        <div class="col-md-4 col-form-label">{!!nl2br($data->short_description)!!}</div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label">{{__("Description")}}</label>
+                                        <div class="col-md-4 col-form-label">{!!nl2br($data->description)!!}</div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="tab8" role="tabpanel">
