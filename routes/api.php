@@ -39,6 +39,7 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.' ], function () {
     Route::apiResource('medicines', App\Http\Controllers\Api\MedicineController::class);
     Route::apiResource('medicine-rules', App\Http\Controllers\Api\MedicineRuleController::class);
     Route::apiResource('histories', App\Http\Controllers\Api\HistoryController::class);
+    Route::get('pharmacies/draft/{id}', [App\Http\Controllers\Api\PharmacyController::class, 'setToDraft']);
     Route::get('pharmacies/unprocessed', [App\Http\Controllers\Api\PharmacyController::class, 'unprocessed']);
     Route::apiResource('pharmacies', App\Http\Controllers\Api\PharmacyController::class);
     Route::apiResource('prescriptions', App\Http\Controllers\Api\PrescriptionController::class);
@@ -57,23 +58,31 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.' ], function () {
     });
 
     Route::group(['prefix' => 'registration/', 'as' => 'registration.' ], function () {
+        Route::get('plano-tests/draft/{id}', [App\Http\Controllers\Api\Registration\PlanoTestController::class, 'setToDraft']);
         Route::apiResource('plano-tests', App\Http\Controllers\Api\Registration\PlanoTestController::class);
+        Route::get('family-plannings/draft/{id}', [App\Http\Controllers\Api\Registration\FamilyPlanningController::class, 'setToDraft']);
         Route::apiResource('family-plannings', App\Http\Controllers\Api\Registration\FamilyPlanningController::class);
+        Route::get('outpatients/draft/{id}', [App\Http\Controllers\Api\Registration\OutpatientController::class, 'setToDraft']);
         Route::apiResource('outpatients', App\Http\Controllers\Api\Registration\OutpatientController::class);
+        Route::get('work-accidents/draft/{id}', [App\Http\Controllers\Api\Registration\WorkAccidentController::class, 'setToDraft']);
         Route::apiResource('work-accidents', App\Http\Controllers\Api\Registration\WorkAccidentController::class);
     });
 
     Route::group(['prefix' => 'action/', 'as' => 'action.' ], function () {
+        Route::get('plano-tests/draft/{id}', [App\Http\Controllers\Api\Action\PlanoTestController::class, 'setToDraft']);
         Route::get('plano-tests/send-to-email', [App\Http\Controllers\Api\Action\PlanoTestController::class, 'sendToEmail']);
         Route::post('plano-tests/media', [App\Http\Controllers\Api\Action\PlanoTestController::class, 'storeMedia']);
         Route::post('plano-tests/generate-prescription', [App\Http\Controllers\Api\Action\PlanoTestController::class, 'generatePrescription']);
         Route::apiResource('plano-tests', App\Http\Controllers\Api\Action\PlanoTestController::class);
+        Route::get('family-plannings/draft/{id}', [App\Http\Controllers\Api\Action\FamilyPlanningController::class, 'setToDraft']);
         Route::post('family-plannings/media', [App\Http\Controllers\Api\Action\FamilyPlanningController::class, 'storeMedia']);
         Route::post('family-plannings/generate-prescription', [App\Http\Controllers\Api\Action\FamilyPlanningController::class, 'generatePrescription']);
         Route::apiResource('family-plannings', App\Http\Controllers\Api\Action\FamilyPlanningController::class);
+        Route::get('outpatients/draft/{id}', [App\Http\Controllers\Api\Action\OutpatientController::class, 'setToDraft']);
         Route::post('outpatients/media', [App\Http\Controllers\Api\Action\OutpatientController::class, 'storeMedia']);
         Route::post('outpatients/generate-prescription', [App\Http\Controllers\Api\Action\OutpatientController::class, 'generatePrescription']);
         Route::apiResource('outpatients', App\Http\Controllers\Api\Action\OutpatientController::class);
+        Route::get('work-accidents/draft/{id}', [App\Http\Controllers\Api\Action\WorkAccidentController::class, 'setToDraft']);
         Route::post('work-accidents/media', [App\Http\Controllers\Api\Action\WorkAccidentController::class, 'storeMedia']);
         Route::post('work-accidents/generate-prescription', [App\Http\Controllers\Api\Action\WorkAccidentController::class, 'generatePrescription']);
         Route::apiResource('work-accidents', App\Http\Controllers\Api\Action\WorkAccidentController::class);

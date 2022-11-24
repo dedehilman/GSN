@@ -66,8 +66,6 @@ class ActionController extends ApiController
                     ->get();
             }
             
-
-            
             foreach ($data as $dt) {
                 $action = Action::where('model_id', $dt->id)->with('reference', 'referenceClinic')
                             ->where('model_type', DB::Raw("'".$this->getClassName()."'"))
@@ -100,6 +98,7 @@ class ActionController extends ApiController
                 $dt->setAttribute("medias", $medias);
                 $dt->setAttribute("reference_letter", $referenceLetter);
                 $dt->setAttribute("sick_letter", $sickLetter);
+                $dt->setAttribute("pharmacy", $dt->pharmacy());
             }
             return response()->json([
                 "status" => '200',
@@ -471,6 +470,34 @@ class ActionController extends ApiController
             return response()->json([
                 'status' => '200',
                 'message'=> Lang::get("Data has been deleted"),
+                'data' => $data,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => '500',
+                'message'=> $th->getMessage(),
+                'data' => '',
+            ]);
+        }
+    }
+
+    public function setToDraft($id) {
+        try {
+            $data = $this->model::find($id);
+            if(!$data || !$data->action()) {
+                return response()->json([
+                    'status' => '400',
+                    'message'=> Lang::get("Data not found"),
+                    'data' => '',
+                ]);
+            }
+
+            $action = $data->action();
+            $action->status = "Draft";
+            $action->save();
+            return response()->json([
+                'status' => '200',
+                'message'=> Lang::get("Data has been set to Draft"),
                 'data' => $data,
             ]);
         } catch (\Throwable $th) {

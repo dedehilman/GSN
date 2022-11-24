@@ -10,7 +10,7 @@ class Action extends Model
 {
     use HasFactory, BlameableTrait;
 
-    protected $fillable = ['action', 'remark', 'reference_type', 'reference_id', 'reference_clinic_id','remedicate_date'];
+    protected $fillable = ['action', 'remark', 'reference_type', 'reference_id', 'reference_clinic_id','remedicate_date','status'];
 
     public function reference() {
         return $this->belongsTo(Reference::class);

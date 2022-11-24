@@ -10,7 +10,7 @@ class Pharmacy extends Model
 {
     use HasFactory, BlameableTrait;
 
-    protected $fillable = ['transaction_no', 'transaction_date', 'remark', 'clinic_id', 'model_id', 'model_type'];
+    protected $fillable = ['transaction_no', 'transaction_date', 'remark', 'clinic_id', 'model_id', 'model_type','status'];
 
     public function clinic() {
         return $this->belongsTo(Clinic::class);

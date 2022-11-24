@@ -53,4 +53,37 @@ class FamilyPlanningController extends ApiController
             ]);
         }        
     }
+
+    public function addExtraAttribute($data) {
+        foreach ($data as $dt) {
+            $dt->setAttribute("action", $dt->action());
+        }
+    }
+
+    public function setToDraft($id) {
+        try {
+            $data = $this->model::find($id);
+            if(!$data) {
+                return response()->json([
+                    'status' => '400',
+                    'message'=> Lang::get("Data not found"),
+                    'data' => '',
+                ]);
+            }
+
+            $data->status = "Draft";
+            $data->save();
+            return response()->json([
+                'status' => '200',
+                'message'=> Lang::get("Data has been set to Draft"),
+                'data' => $data,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => '500',
+                'message'=> $th->getMessage(),
+                'data' => '',
+            ]);
+        }
+    }
 }
