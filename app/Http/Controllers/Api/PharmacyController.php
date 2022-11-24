@@ -11,6 +11,7 @@ use App\Models\Clinic;
 use Lang;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\Action;
 
 class PharmacyController extends ApiController
 {
@@ -67,6 +68,20 @@ class PharmacyController extends ApiController
                 }
             } else {
                 PharmacyDetail::where('pharmacy_id')->delete();
+            }
+
+            if($data->model_type) {
+                $action = Action::where("model_type", $data->model_type)->where('model_id', $data->model_id)->first();
+                if($action) {
+                    $action->status = "Publish";
+                    $action->save();    
+                }
+
+                $registration = $data->model_type::find($data->model_id);
+                if($registration) {
+                    $registration->status = "Publish";
+                    $registration->save();    
+                }
             }
 
             DB::commit();
@@ -137,6 +152,20 @@ class PharmacyController extends ApiController
                 }
             } else {
                 PharmacyDetail::where('pharmacy_id')->delete();
+            }
+
+            if($data->model_type) {
+                $action = Action::where("model_type", $data->model_type)->where('model_id', $data->model_id)->first();
+                if($action) {
+                    $action->status = "Publish";
+                    $action->save();    
+                }
+
+                $registration = $data->model_type::find($data->model_id);
+                if($registration) {
+                    $registration->status = "Publish";
+                    $registration->save();    
+                }
             }
 
             DB::commit();
