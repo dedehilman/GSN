@@ -261,6 +261,31 @@ class HomeController extends Controller
                         ->orderBy('total', 'desc')
                         ->get();
         
+        // Outpatients
+        $dataFromDb = DB::table('outpatients')
+                    ->select('outpatients.clinic_id',DB::raw("COUNT(1) as count"))
+                    ->join('actions', function ($join) {
+                        $join->on('actions.model_id', '=', 'outpatients.id');
+                        $join->on('actions.model_type', '=', DB::Raw('"App\\\\Models\\\\Outpatient"'));
+                    })
+                    ->whereDate('transaction_date', '>=', $dateFrom)
+                    ->whereDate('transaction_date', '<=', $dateTo)
+                    ->groupBy('outpatients.clinic_id')
+                    ->get();
+
+        $data = array();
+        for ($i=0; $i < count($label); $i++) { 
+            array_push($data, 0);
+        }
+        foreach($dataFromDb as $db)
+        {
+            $data[array_search($db->clinic_id, $ids)] = $db->count;
+        }
+        $outpatientBasedOnClinic = [
+            'label'=> $label,
+            'data'=> $data,
+        ];
+
         return view('home', [
             "topDiseases"=>$topDiseases,
             "kkBasedOnCategory"=>$kkBasedOnCategory,
@@ -272,6 +297,7 @@ class HomeController extends Controller
             "medicalStaffCount"=>$medicalStaffCount,
             "topMedicines"=>$topMedicines,
             "activePatientCount"=>$activePatientCount[0]->count ?? 0,
+            "outpatientBasedOnClinic"=>$outpatientBasedOnClinic,
         ]);
     }
 }

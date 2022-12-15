@@ -113,6 +113,18 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group row mt-2">
+                                            <label class="col-md-2 col-form-label required">{{__("Exposure")}}</label>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <input type="text" id="exposure_name" class="form-control required" value="{{$data->exposure->name ?? ''}}" readonly>
+                                                    <input type="hidden" name="exposure_id" id="exposure_id" value="{{$data->exposure->id ?? ''}}">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text show-modal-select" data-title="{{__('Exposure List')}}" data-url="{{route('exposure.select')}}" data-handler="onSelectedExposure"><i class="fas fa-search"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="form-group row">
                                             <label class="col-md-2 col-form-label required">{{__("Accident Date")}}</label>
                                             <div class="col-md-4">
@@ -199,6 +211,11 @@
         function onSelectedWorkAccidentCategory(data) {
             $('#work_accident_category_id').val(data[0].id);
             $('#work_accident_category_name').val(data[0].name);
+        }
+
+        function onSelectedExposure(data) {
+            $('#exposure_id').val(data[0].id);
+            $('#exposure_name').val(data[0].name);
         }
     </script>
     @yield("scriptDiagnosis")

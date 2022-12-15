@@ -98,6 +98,10 @@
                                         <label class="col-md-2 col-form-label">{{__("Work Accident Category")}}</label>
                                         <div class="col-md-4 col-form-label">{{$data->workAccidentCategory->name ?? ''}}</div>
                                     </div>
+                                    <div class="form-group row mt-2">
+                                        <label class="col-md-2 col-form-label">{{__("Exposure")}}</label>
+                                        <div class="col-md-4 col-form-label">{{$data->exposure->name ?? ''}}</div>
+                                    </div>
                                     <div class="form-group row">
                                         <label class="col-md-2 col-form-label">{{__("Accident Date")}}</label>
                                         <div class="col-md-4 col-form-label">{{$data->accident_date}}</div>

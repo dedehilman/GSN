@@ -26,6 +26,7 @@ class CreateWorkAccidentsTable extends Migration
             $table->tinyInteger('for_relationship')->default(0);
             $table->unsignedBigInteger('patient_relationship_id')->nullable();
             $table->unsignedBigInteger('work_accident_category_id')->nullable();
+            $table->unsignedBigInteger('exposure_id')->nullable();
             $table->datetime('accident_date')->nullable();
             $table->string('accident_location')->nullable();
             $table->string('short_description')->nullable();
@@ -43,6 +44,7 @@ class CreateWorkAccidentsTable extends Migration
             $table->foreign('work_accident_category_id')->references('id')->on('work_accident_categories')->onDelete('cascade');
             $table->foreign('reference_clinic_id')->references('id')->on('clinics')->onDelete('cascade');
             $table->foreign('reference_id')->references('id')->on('references')->onDelete('cascade');
+            $table->foreign('exposure_id')->references('id')->on('exposures')->onDelete('cascade');
         });
     }
 

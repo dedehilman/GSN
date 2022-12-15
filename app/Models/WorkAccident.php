@@ -12,7 +12,7 @@ class WorkAccident extends Model implements HasMedia
 {
     use HasFactory, BlameableTrait, InteractsWithMedia;
 
-    protected $fillable = ['transaction_no', 'transaction_date', 'remark', 'clinic_id', 'medical_staff_id', 'patient_id', 'reference_type', 'reference_id', 'reference_clinic_id','for_relationship', 'patient_relationship_id', 'work_accident_category_id', 'accident_date', 'accident_location', 'short_description', 'description','status'];
+    protected $fillable = ['transaction_no', 'transaction_date', 'remark', 'clinic_id', 'medical_staff_id', 'patient_id', 'reference_type', 'reference_id', 'reference_clinic_id','for_relationship', 'patient_relationship_id', 'work_accident_category_id', 'accident_date', 'accident_location', 'short_description', 'description','status', 'exposure_id'];
 
     public function clinic() {
         return $this->belongsTo(Clinic::class);
@@ -42,6 +42,10 @@ class WorkAccident extends Model implements HasMedia
         return $this->belongsTo(WorkAccidentCategory::class);
     }
 
+    public function exposure() {
+        return $this->belongsTo(Exposure::class);
+    }
+
     public function action() {
         return Action::where('model_type', "App\Models\WorkAccident")->where("model_id", $this->id)->first();
     }
@@ -52,6 +56,6 @@ class WorkAccident extends Model implements HasMedia
 
     public function scopeWithAll($query) 
     {
-        return $query->with(['medicalStaff','clinic', 'reference', 'patient', 'referenceClinic','patientRelationship', 'workAccidentCategory']);
+        return $query->with(['medicalStaff','clinic', 'reference', 'patient', 'referenceClinic','patientRelationship', 'workAccidentCategory', 'exposure']);
     }
 }

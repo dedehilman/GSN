@@ -247,6 +247,26 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{{__('Outpatient by Clinic')}}</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="chart7"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     {{-- <div class="row">
         <div class="col-md-6">
@@ -401,6 +421,22 @@
                     }
                 ]
             };
+            var data7 = {
+                labels: @json($outpatientBasedOnClinic["label"]),
+                datasets: [
+                    {
+                        label: "",
+                        backgroundColor     : 'rgba(60,141,188,0.9)',
+                        borderColor         : 'rgba(60,141,188,0.8)',
+                        pointRadius          : false,
+                        pointColor          : '#3b8bba',
+                        pointStrokeColor    : 'rgba(60,141,188,1)',
+                        pointHighlightFill  : '#fff',
+                        pointHighlightStroke: 'rgba(60,141,188,1)',
+                        data: @json($outpatientBasedOnClinic["data"]),
+                    }
+                ]
+            };
 
             var option = {
                 legend: {
@@ -448,6 +484,11 @@
                 type: 'bar',
                 options: option,
                 data: data6,
+            });
+            var chart7 = new Chart('chart7', {
+                type: 'bar',
+                options: option,
+                data: data7,
             });
 
             // setTimeout(function(){

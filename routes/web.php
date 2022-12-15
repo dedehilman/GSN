@@ -318,3 +318,8 @@ Route::resource('master/grade', App\Http\Controllers\Master\GradeController::cla
 
 Route::get('/transaction/select', [App\Http\Controllers\TransactionController::class, 'select'])->name('transaction.select');
 Route::post('/transaction/datatable/select', [App\Http\Controllers\TransactionController::class, 'datatableSelect'])->name('transaction.datatable.select');
+
+Route::post('/master/exposure/datatable', [App\Http\Controllers\Master\ExposureController::class, 'datatable'])->name('exposure.datatable');
+Route::post('/master/exposure/datatable/select', [App\Http\Controllers\Master\ExposureController::class, 'datatableSelect'])->name('exposure.datatable.select');
+Route::get('/master/exposure/select', [App\Http\Controllers\Master\ExposureController::class, 'select'])->name('exposure.select');
+Route::resource('master/exposure', App\Http\Controllers\Master\ExposureController::class);

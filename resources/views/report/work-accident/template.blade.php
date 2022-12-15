@@ -1,12 +1,12 @@
 <table>
     <tr>
-        <td colspan="9" align="center">DATA KECELAKAAN KERJA</td>
+        <td colspan="11" align="center">DATA KECELAKAAN KERJA</td>
     </tr>
     <tr>
-        <td colspan="9" align="center">{{$reportModel->clinic->name}}</td>
+        <td colspan="11" align="center">{{$reportModel->clinic->name}}</td>
     </tr>
     <tr>
-        <td colspan="9" align="center">PERIODE : {{$reportModel->start_date}} - {{$reportModel->end_date}}</td>
+        <td colspan="11" align="center">PERIODE : {{$reportModel->start_date}} - {{$reportModel->end_date}}</td>
     </tr>
 </table>
 <table>
@@ -19,7 +19,8 @@
             <th>{{__("Sex")}}</th>
             <th>{{__("NPK")}}</th>
             <th>{{__("Unit Kerja")}}</th>
-            <th>{{__("Jenis Kecelekaan")}}</th>
+            <th>{{__("Kategori Kecelekaan")}}</th>
+            <th>{{__("Jenis Paparan")}}</th>
             <th>{{__("Luka / Cidera")}}</th>
             <th>{{__("SKS")}}</th>
         </tr>
@@ -35,6 +36,7 @@
                 <td>{{$data->patient->code}}</td>
                 <td>{{$data->patient->workUnit->name ?? ""}}</td>
                 <td>{{$data->workAccidentCategory->name ?? ""}}</td>
+                <td>{{$data->exposure->name ?? ""}}</td>
                 <td>{{$data->short_description ?? ""}}</td>
                 <td>
                     @php

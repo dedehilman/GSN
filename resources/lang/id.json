@@ -564,5 +564,8 @@
     "Transaction List": "Daftar Transaksi",
     "Transaction No Ref": "No Transaksi Referensi",
     "NonReference": "Non Rujukan",
-    "of": "dari"
+    "of": "dari",
+    "Outpatient by Clinic": "Rawat Jalan berdasarkan Klinik",
+    "Exposure": "Paparan",
+    "Exposure List": "Daftar Paparan"
 }

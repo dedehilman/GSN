@@ -1,9 +1,9 @@
 <table>
     <tr>
-        <td colspan="6" align="center">LAPORAN SKS KARYAWAN KLINIK {{$reportModel->clinic->name}}</td>
+        <td colspan="7" align="center">LAPORAN SKS KARYAWAN KLINIK {{$reportModel->clinic->name}}</td>
     </tr>
     <tr>
-        <td colspan="6" align="center">PERIODE : {{$reportModel->start_date}} - {{$reportModel->end_date}}</td>
+        <td colspan="7" align="center">PERIODE : {{$reportModel->start_date}} - {{$reportModel->end_date}}</td>
     </tr>
 </table>
 <table border="1px">
@@ -14,6 +14,7 @@
             <th>{{__("Nama Karyawan")}}</th>
             <th>{{__("Unit Kerja")}}</th>
             <th>{{__("Alamat")}}</th>
+            <th>{{__("Diagnosis")}}</th>
             <th>{{__("Jumlah SKS (Hari)")}}</th>
         </tr>
     </thead>
@@ -31,11 +32,12 @@
                 <td>{{$data->patient->name}}</td>
                 <td>{{$data->patient->workUnit->name ?? ""}}</td>
                 <td>{{$data->patient->address}}</td>
+                <td>{{implode(",", $data->diagnoses->pluck('name')->toArray() ?? [])}}</td>
                 <td>{{$data->num_of_days}}</td>
             </tr>
         @endforeach
         <tr>
-            <td colspan="5" align="center">{{__("Total")}}</td>
+            <td colspan="6" align="center">{{__("Total")}}</td>
             <td>{{$total}}</td>
         </tr>
     </tbody>

@@ -23,7 +23,7 @@
     <tbody>
         @foreach ($datas as $index => $data)
             <tr>
-                <td>{{$data->afdelink->name ?? ""}}</td>
+                <td>{{$data->patient->afdelink->name ?? ""}}</td>
                 <td>{{$index+1}}</td>
                 <td>{{$data->patient->name}}</td>
                 <td>{{$data->patient->address}}</td>

@@ -89,4 +89,5 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.' ], function () {
     });
 
     Route::get('transactions', [App\Http\Controllers\Api\TransactionController::class, 'index']);
+    Route::apiResource('exposures', App\Http\Controllers\Api\ExposureController::class);
 });
