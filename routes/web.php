@@ -226,6 +226,10 @@ Route::group(['prefix' => 'report', 'as' => 'report.'], function () {
     Route::post('outpatient/datatable', [App\Http\Controllers\Report\OutpatientReportController::class, 'datatable'])->name('outpatient.datatable');
     Route::get('outpatient/download/{id}', [App\Http\Controllers\Report\OutpatientReportController::class, 'download'])->name('outpatient.download');
     Route::resource('outpatient', App\Http\Controllers\Report\OutpatientReportController::class);
+
+    Route::post('treatment-history/datatable', [App\Http\Controllers\Report\TreatmentHistoryReportController::class, 'datatable'])->name('treatment-history.datatable');
+    Route::get('treatment-history/download/{id}', [App\Http\Controllers\Report\TreatmentHistoryReportController::class, 'download'])->name('treatment-history.download');
+    Route::resource('treatment-history', App\Http\Controllers\Report\TreatmentHistoryReportController::class);
 });
 
 Route::post('/letter/sick-letter/datatable', [App\Http\Controllers\Letter\SickLetterController::class, 'datatable'])->name('sick-letter.datatable');

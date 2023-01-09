@@ -34,6 +34,66 @@
                         <div class="col-md-12">
                             <div class="tab-content" style="padding-top: 10px">
                                 <div class="tab-pane fade show active" id="tab1" role="tabpanel">
+                                    <div class="row mb-2">
+                                        <div class="col-12 d-flex justify-content-between">
+                                            <div>
+                                            </div>
+                                            <div class="btn-group nav view">
+                                                <a data-toggle="collapse" href="#collapseOneCustom" class="btn btn-default btn-sm" style="padding-top: 8px"><i class="fas fa-filter"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div id="collapseOneCustom" class="panel-collapse collapse in" style="padding:10px 0px 0px 0px;">
+                                                <form id="formSearchCustom">
+                                                    <div class="form-group row">
+                                                        <label class="col-md-2 col-form-label">{{__("Transaction No")}}</label>
+                                                        <div class="col-md-4">
+                                                            <input type="text" name="transaction_no" class="form-control">
+                                                        </div>
+                                                        <label class="col-md-2 col-form-label">{{__("Transaction Date")}}</label>
+                                                        <div class="col-md-4">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                                        </div>
+                                                                        <input type="text" name="transaction_date.gte" class="form-control date" value="{{\Carbon\Carbon::now()->isoFormat('YYYY-MM-DD')}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                                        </div>
+                                                                        <input type="text" name="transaction_date.lte" class="form-control date" value="{{\Carbon\Carbon::now()->isoFormat('YYYY-MM-DD')}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-2 col-form-label">{{__("Clinic")}}</label>
+                                                        <div class="col-md-4">
+                                                            <div class="input-group">
+                                                                <input type="text" id="clinic_name_custom" class="form-control" readonly>
+                                                                <input type="hidden" name="clinic_id" id="clinic_id_custom">
+                                                                <div class="input-group-append">
+                                                                    <span class="input-group-text show-modal-select" data-title="{{__('Clinic List')}}" data-url="{{route('clinic.select')}}" data-handler="onSelectedClinicCustom"><i class="fas fa-search"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-12 text-right">
+                                                            <button type="button" class="btn btn-sm btn-default" id="btn-clearCustom" style="width: 100px;"><i class="fas fa-trash"></i> {{__('Clear')}}</button>
+                                                            <button type="button" class="btn btn-sm btn-primary" id="btn-searchCustom" style="width: 100px;"><i class="fas fa-search"></i> {{__('Search')}}</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <table id="datatable-unprocessed" class="table table-bordered">
                                         <thead>
                                             <tr>
@@ -75,7 +135,7 @@
                                                                         <div class="input-group-prepend">
                                                                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                                         </div>
-                                                                        <input type="text" name="transaction_date.gte" class="form-control date">
+                                                                        <input type="text" name="transaction_date.gte" class="form-control date" value="{{\Carbon\Carbon::now()->isoFormat('YYYY-MM-DD')}}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
@@ -83,7 +143,7 @@
                                                                         <div class="input-group-prepend">
                                                                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                                                         </div>
-                                                                        <input type="text" name="transaction_date.lte" class="form-control date">
+                                                                        <input type="text" name="transaction_date.lte" class="form-control date" value="{{\Carbon\Carbon::now()->isoFormat('YYYY-MM-DD')}}">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -252,6 +312,7 @@
                     url: "{{route('pharmacy.datatable-unprocessed')}}",
                     type: 'POST',
                     data: function(data){
+                        getDatatableParameterCustom(data);
                     },
                     error: function (xhr, error, thrown) {
                         
@@ -311,6 +372,16 @@
                     window.location.href = url.replace(window.location.search, "").replace("/index", "") + "/create?model_id=" + modelId + "&model_type=" + modelType;
                 }
             });
+
+            $("#btn-clearCustom").on("click", function(){
+                $(this).closest('form').find("input[type='text'],input[type='hidden'],textarea").val("");
+                $(this).closest('form').find("input[type='checkbox'],input[type='radio']").prop('checked', false);
+                $(this).closest('form').find("select").val("").removeAttr('selected');
+            });
+
+            $("#btn-searchCustom").on("click", function(){
+                $('#datatable-unprocessed').DataTable().ajax.reload();
+            });
         });
 
         function onSelectedClinic(data) {
@@ -321,6 +392,70 @@
             $('#model_type').val(data[0].model_type);
             $('#model_id').val(data[0].id);
             $('#model_transaction_no').val(data[0].transaction_no);
+        }
+
+        function onSelectedClinicCustom(data) {
+            $('#clinic_id_custom').val(data[0].id);
+            $('#clinic_name_custom').val(data[0].name);
+        }
+
+        function getDatatableParameterCustom(data) {
+            var obj = {};
+            var objExtra = {};
+            $('#formSearchCustom input:not([type="checkbox"]):not([type="radio"])').each(function(){
+                if($(this).attr('name')) {
+                    if($(this).attr('parameter-type') == 'extra') {
+                        objExtra[$(this).attr('name')] = $(this).val()
+                    } else {
+                        obj[$(this).attr('name')] = $(this).val()
+                    }
+                }
+            })
+            $('#formSearchCustom input[type="checkbox"]').each(function(){
+                if($(this).attr('name') && $(this).prop("checked") == true){
+                    if($('input[type="checkbox"][name="'+$(this).attr('name')+'"]').length > 1) {
+                        var arr = [];
+                        if($(this).attr('name') in obj) {
+                            arr = obj[$(this).attr('name')];
+                        }
+            
+                        arr.push($(this).val());
+            
+                        if($(this).attr('parameter-type') == 'extra') {
+                            objExtra[$(this).attr('name')] = arr;
+                        } else {
+                            obj[$(this).attr('name')] = arr;
+                        }    
+                    } else {
+                        if($(this).attr('parameter-type') == 'extra') {
+                            objExtra[$(this).attr('name')] = $(this).val()
+                        } else {
+                            obj[$(this).attr('name')] = $(this).val()
+                        }
+                    }
+                }
+            })
+            $('#formSearchCustom input[type="radio"]').each(function(){
+                if($(this).attr('name') && $(this).prop("checked") == true){
+                    if($(this).attr('parameter-type') == 'extra') {
+                        objExtra[$(this).attr('name')] = $(this).val();
+                    } else {
+                        obj[$(this).attr('name')] = $(this).val();
+                    }
+                }
+            })
+            $('#formSearchCustom select').each(function(){
+                if($(this).attr('name')){
+                    if($(this).attr('parameter-type') == 'extra') {
+                        objExtra[$(this).attr('name')] = $(this).val()
+                    } else {
+                        obj[$(this).attr('name')] = $(this).val()
+                    }
+                }
+            })
+
+            data.parameters = obj;
+            data.extraParameters = objExtra;
         }
     </script>
 @endsection
