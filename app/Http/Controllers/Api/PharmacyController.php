@@ -203,6 +203,7 @@ class PharmacyController extends ApiController
                     ->whereNotIn('family_plannings.id', $ids)
                     ->distinct();
             $q1 = $this->queryBuilder(['family_plannings'], $q1);
+            $q1 = $this->filterBuilder($request, $q1);
 
             $ids = Pharmacy::where('model_type', 'App\Models\Outpatient')->pluck('model_id')->toArray();
             $q2 = DB::table('outpatients')
@@ -214,6 +215,7 @@ class PharmacyController extends ApiController
                     ->whereNotIn('outpatients.id', $ids)
                     ->distinct();
             $q2 = $this->queryBuilder(['outpatients'], $q2);
+            $q2 = $this->filterBuilder($request, $q2);
 
             $ids = Pharmacy::where('model_type', 'App\Models\PlanoTest')->pluck('model_id')->toArray();
             $q3 = DB::table('plano_tests')
@@ -225,6 +227,7 @@ class PharmacyController extends ApiController
                     ->whereNotIn('plano_tests.id', $ids)
                     ->distinct();
             $q3 = $this->queryBuilder(['plano_tests'], $q3);
+            $q3 = $this->filterBuilder($request, $q3);
 
             $ids = Pharmacy::where('model_type', 'App\Models\WorkAccident')->pluck('model_id')->toArray();
             $q4 = DB::table('work_accidents')
@@ -236,6 +239,7 @@ class PharmacyController extends ApiController
                     ->whereNotIn('work_accidents.id', $ids)
                     ->distinct();
             $q4 = $this->queryBuilder(['work_accidents'], $q4);
+            $q4 = $this->filterBuilder($request, $q4);
 
             $query = $q1
                     ->union($q2)

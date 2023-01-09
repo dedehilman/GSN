@@ -333,6 +333,7 @@ class PharmacyController extends AppCrudController
             if(($request->parameters['queryBuilder'] ?? null) == null || $request->parameters['queryBuilder'] == '1') {
                 $q1 = $this->queryBuilder(['family_plannings'], $q1);
             }
+            $q1 = $this->filterDatatable($request, $q1);
 
             $ids = Pharmacy::where('model_type', 'App\Models\Outpatient')->pluck('model_id')->toArray();
             $q2 = DB::table('outpatients')
@@ -347,6 +348,7 @@ class PharmacyController extends AppCrudController
             if(($request->parameters['queryBuilder'] ?? null) == null || $request->parameters['queryBuilder'] == '1') {
                 $q2 = $this->queryBuilder(['outpatients'], $q2);
             }
+            $q2 = $this->filterDatatable($request, $q2);
 
             $ids = Pharmacy::where('model_type', 'App\Models\PlanoTest')->pluck('model_id')->toArray();
             $q3 = DB::table('plano_tests')
@@ -361,6 +363,7 @@ class PharmacyController extends AppCrudController
             if(($request->parameters['queryBuilder'] ?? null) == null || $request->parameters['queryBuilder'] == '1') {
                 $q3 = $this->queryBuilder(['plano_tests'], $q3);
             }
+            $q3 = $this->filterDatatable($request, $q3);
 
             $ids = Pharmacy::where('model_type', 'App\Models\WorkAccident')->pluck('model_id')->toArray();
             $q4 = DB::table('work_accidents')
@@ -375,6 +378,7 @@ class PharmacyController extends AppCrudController
             if(($request->parameters['queryBuilder'] ?? null) == null || $request->parameters['queryBuilder'] == '1') {
                 $q4 = $this->queryBuilder(['work_accidents'], $q4);
             }
+            $q4 = $this->filterDatatable($request, $q4);
 
             $query = $q1
             ->union($q2)
@@ -386,7 +390,6 @@ class PharmacyController extends AppCrudController
             $this->setExtraParameter($request);
             $query = $this->filterExtraParameter($query);
             $totalData = $query->count();
-            $query = $this->filterDatatable($request, $query);
             $totalFiltered = $query->count();
 
             if ($length == -1) {
