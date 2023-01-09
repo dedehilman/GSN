@@ -26,7 +26,7 @@ class StockTransaction extends Model
 
     public function scopeWithAll($query) 
     {
-        return $query->with(['newClinic','clinic','reference']);
+        return $query->with(['newClinic','clinic','reference','details','details.medicine']);
     }
 
     public function details()

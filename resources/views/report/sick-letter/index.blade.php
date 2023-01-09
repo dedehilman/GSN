@@ -73,6 +73,7 @@
                                 <th>{{ __("Runned At") }}</th>
                                 <th>{{ __("Finished At") }}</th>
                                 <th>{{ __("Num Of Downloaded") }}</th>
+                                <th>{{ __("Clinic") }}</th>
                                 <th>{{ __("Remark") }}</th>
                                 <th>{{ __("Status") }}</th>
                             </tr>
@@ -150,6 +151,10 @@
                         defaultContent: '',
                     },
                     {
+                        data: 'clinic.code',
+                        defaultContent: '',
+                    },
+                    {
                         data: 'remark',
                         defaultContent: '',
                     },
@@ -176,17 +181,17 @@
                     {
                         extend: 'excel',
                         title: '{{__("Sick Letter")}}',
-                        exportOptions: { columns: [3, 4, 5, 6, 7, 8] }
+                        exportOptions: { columns: [3, 4, 5, 6, 7, 8,9] }
                     },
                     {
                         extend: 'csv',
                         title: '{{__("Sick Letter")}}',
-                        exportOptions: { columns: [3, 4, 5, 6, 7, 8] }
+                        exportOptions: { columns: [3, 4, 5, 6, 7, 8,9] }
                     },
                     {
                         extend: 'pdf',
                         title: '{{__("Sick Letter")}}',
-                        exportOptions: { columns: [3, 4, 5, 6, 7, 8] }
+                        exportOptions: { columns: [3, 4, 5, 6, 7, 8,9] }
                     }
                 ],
             });

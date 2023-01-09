@@ -11,6 +11,7 @@
                     <th>@if(($select ?? 'single') == 'multiple')<input type='checkbox' name="select-all"/>@endif</th>
                     <th>{{ __("Transaction No") }}</th>
                     <th>{{ __("Transcation Date") }}</th>
+                    <th>{{ __("Clinic") }}</th>
                     <th>{{ __("Transaction Type") }}</th>
                 </tr>
             </thead>
@@ -52,6 +53,14 @@
                     data: 'transaction_date',
                     name: 'transaction_no',
                     defaultContent: '',
+                }, {
+                    data: 'clinic.code',
+                    name: 'clinic_id',
+                    defaultContent: '',
+                    render: function(data, type, row)
+                    {
+                        return data + "<i class='ml-2 mr-2 fas fa-arrow-right'></i>" + row.new_clinic.code;
+                    }
                 }, {
                     data: 'transaction_type',
                     name: 'transaction_type',

@@ -193,6 +193,28 @@
         function onSelectedReference(data) {
             $('#reference_id').val(data[0].id);
             $('#reference_name').val(data[0].transaction_no);
+
+            $('#table-transaction-detail tbody').empty();
+            data[0].details.forEach(detail => {
+                var clonedRow = $('#table-transaction-detail-tmp tbody tr:last').clone();
+                $('#table-transaction-detail tbody').append(clonedRow);
+                var textInput = clonedRow.find('input');
+                
+                var i = 0;
+                for(var i=1; $('#transaction_detail_id'+i).length;i++){}
+
+                textInput.eq(0).attr('id', 'transaction_detail_id' + i);
+                textInput.eq(1).attr('id', 'medicine_name' + i);
+                textInput.eq(2).attr('id', 'medicine_id' + i);
+                textInput.eq(3).attr('id', 'stock_qty' + i);
+                textInput.val('');
+                textInput.eq(1).val(detail.medicine.name);
+                textInput.eq(2).val(detail.medicine_id);
+                textInput.eq(3).val("0");
+                textInput.eq(4).val(detail.qty);
+
+                clonedRow.find('.medicine').attr('id', 'medicine' + i);
+            });
         }
         $(function(){
             $('#btn-add-detail').on('click', function(){
