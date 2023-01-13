@@ -32,7 +32,7 @@
                         <div class="col-md-4 col-form-label">{!!nl2br($data->remark ?? '')!!}</div>
                         @if ($data->transaction_type == 'Transfer Out')
                             <label class="col-md-2 col-form-label">{{__("New Clinic")}}</label>
-                            <div class="col-md-4 col-form-label">{{$data->clinic->name ?? ''}}</div>    
+                            <div class="col-md-4 col-form-label">{{$data->newClinic->name ?? ''}}</div>    
                         @elseif ($data->transaction_type == 'Transfer In')
                             <label class="col-md-2 col-form-label">{{__("Reference")}}</label>
                             <div class="col-md-4 col-form-label">{{$data->reference->transaction_no ?? ''}}</div>    
