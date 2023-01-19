@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTreatmentHistoriesTable extends Migration
+class CreateTreatmentHistoryReportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTreatmentHistoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('treatment_histories', function (Blueprint $table) {
+        Schema::create('treatment_history_reports', function (Blueprint $table) {
             $table->id();
             $table->string('code')->nullable();
             $table->string('file_path')->nullable();
@@ -40,6 +40,6 @@ class CreateTreatmentHistoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('treatment_histories');
+        Schema::dropIfExists('treatment_history_reports');
     }
 }

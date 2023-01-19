@@ -13,7 +13,7 @@ class TreatmentHistoryReportController extends AppReportController
     {
         $this->setDefaultMiddleware('treatment-history');
         $this->setDefaultView('report.treatment-history');
-        $this->setModel('App\Models\TreatmentHistory');
+        $this->setModel('App\Models\TreatmentHistoryReport');
     }
 
     protected function submitJob($data)

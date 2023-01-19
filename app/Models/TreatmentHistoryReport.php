@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\BlameableTrait;
 
-class TreatmentHistory extends Model
+class TreatmentHistoryReport extends Model
 {
     use HasFactory, BlameableTrait;
 
