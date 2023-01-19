@@ -31,6 +31,13 @@ class FamilyPlanningExport implements ShouldAutoSize, FromView
         }
 
         $datas = $datas->get();
+        foreach ($datas as $data) {
+            $prescriptions = \App\Models\Prescription::where('model_type', get_class($data))
+            ->where('model_id', $data->id)
+            ->get();
+
+            $data->setAttribute("prescriptions", $prescriptions);
+        }
         return view('report.family-planning.template', [
             "reportModel"=> $this->reportModel,
             "datas"=> $datas,
