@@ -41,28 +41,15 @@ class OutpatientExport implements ShouldAutoSize, FromView
             ->where('model_id', $data->id)
             ->get();
 
-
-            $details = array();
-            foreach ($diagnoses as $diagnosis) {
-                $detail = array();
-                $detail['diagnosis'] = $diagnosis->diagnosis->name;
-                $detail['gol_diagnosis'] = $diagnosis->diagnosis->disease->diseaseGroup->name ?? "";
-                array_push($details, $detail);
+            foreach ($prescriptions as $prescription) {
+                $price = $prescription->medicine->price($data->transaction_date);
+                $total = $prescription->qty * $price;
+                $prescription->setAttribute("price", $price);
+                $prescription->setAttribute("total", $total);
             }
 
-            foreach ($prescriptions as $index => $prescription) {
-                if(count($details) >= $index + 1) {
-                    $details[$index]['terapi'] = $prescription->medicine->name;
-                    $details[$index]['qty'] = $prescription->qty;
-                } else {
-                    $detail = array();
-                    $detail['terapi'] = $prescription->medicine->name;
-                    $detail['qty'] = $prescription->qty;
-                    array_push($details, $detail);
-                }
-            }
-
-            $data->setAttribute("details", $details);
+            $data->setAttribute("diagnoses", $diagnoses);
+            $data->setAttribute("prescriptions", $prescriptions);
         }
 
         

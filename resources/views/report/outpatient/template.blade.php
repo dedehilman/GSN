@@ -35,51 +35,59 @@
     <tbody>
         @foreach ($datas as $index => $data)
             <tr>
-                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->transaction_date}}</td>
-                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$index+1}}</td>
-                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->patient->name}}</td>
-                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->for_relationship == 0 ? $data->patient->name : $data->patientRelationship->name}}</td>
-                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{getAge($data->for_relationship == 0 ? $data->patient->birth_date : $data->patientRelationship->birth_date)}}</td>
-                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{__($data->for_relationship == 0 ? $data->patient->gender : $data->patientRelationship->gender)}}</td>
-                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->patient->address}}</td>
-                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->patient->workUnit->name ?? ""}}</td>
-                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->patient->code}}</td>
-                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->for_relationship == 0 ? "Karyawan" : "Tanggungan"}}</td>
-                @if (count($data->details) > 0)
-                    @foreach ($data->details as $index => $detail)
-                        @if ($index == 0)
-                                <td>{{$detail['diagnosis'] ?? ""}}</td>
-                                <td>{{$detail['terapi'] ?? ""}}</td>
-                                <td>{{$detail['qty'] ?? ""}}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>{{$detail['gol_diagnosis'] ?? ""}}</td>
-                                <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->patient->grade->name ?? ""}}</td>
-                            </tr>
-                        @else
-                            <tr>
-                                <td>{{$detail['diagnosis'] ?? ""}}</td>
-                                <td>{{$detail['terapi'] ?? ""}}</td>
-                                <td>{{$detail['qty'] ?? ""}}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>{{$detail['gol_diagnosis'] ?? ""}}</td>
-                            </tr>
-                        @endif
-                    @endforeach
-                @else
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td @if(count($data->details) > 0) rowspan="{{count($data->details)}}" @endif valign="top">{{$data->patient->grade->name ?? ""}}</td>
-                </tr>
-                @endif
+                <td valign="top">{{$data->transaction_date}}</td>
+                <td valign="top">{{$index+1}}</td>
+                <td valign="top">{{$data->patient->name}}</td>
+                <td valign="top">{{$data->for_relationship == 0 ? $data->patient->name : $data->patientRelationship->name}}</td>
+                <td valign="top">{{getAge($data->for_relationship == 0 ? $data->patient->birth_date : $data->patientRelationship->birth_date)}}</td>
+                <td valign="top">{{__($data->for_relationship == 0 ? $data->patient->gender : $data->patientRelationship->gender)}}</td>
+                <td valign="top">{{$data->patient->address}}</td>
+                <td valign="top">{{$data->patient->workUnit->name ?? ""}}</td>
+                <td valign="top">{{$data->patient->code}}</td>
+                <td valign="top">{{$data->for_relationship == 0 ? "Karyawan" : "Tanggungan"}}</td>
+                <td valign="top">
+                    @php
+                        $diagnones = "";
+                        $golDiagnones = "";
+                        foreach ($data->diagnoses ?? [] as $diagnosa) {
+                            if($diagnones != "") {
+                                $diagnones .= "<br/>";
+                                $golDiagnones .= "<br/>";
+                            }
+                            $diagnones .= $diagnosa->diagnosis->name;
+                            $golDiagnones .= $diagnosa->diagnosis->disease->diseaseGroup->name;
+                        }
+                    @endphp
+                    {!!$diagnones!!}
+                </td>
+                <td valign="top">
+                    @php
+                        $prescription = "";
+                        $qty = "";
+                        $price = "";
+                        $total = "";
+                        foreach ($data->prescriptions ?? [] as $pre) {
+                            if($prescription != "") {
+                                $prescription .= "<br/>";
+                                $qty .= "<br/>";
+                                $price .= "<br/>";
+                                $total .= "<br/>";
+                            }
+                            $prescription .= $pre->medicine->name." ".$pre->medicineRule->name;
+                            $qty .= $pre->qty;
+                            $price .= $pre->price;
+                            $total .= $pre->total;
+                        }
+                    @endphp
+                    {!!$prescription!!}
+                </td>
+                <td valign="top">{!!$qty!!}</td>
+                <td valign="top">{!!$price!!}</td>
+                <td valign="top">{!!$total!!}</td>
+                <td valign="top"></td>
+                <td valign="top">{!!$golDiagnones!!}</td>
+                <td valign="top">{{$data->patient->grade->name ?? ""}}</td>
+            </tr>
         @endforeach
     </tbody>
 </table>
