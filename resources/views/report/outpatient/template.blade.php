@@ -66,6 +66,7 @@
                         $qty = "";
                         $price = "";
                         $total = "";
+                        $cost = 0;
                         foreach ($data->prescriptions ?? [] as $pre) {
                             if($prescription != "") {
                                 $prescription .= "<br/>";
@@ -74,17 +75,18 @@
                                 $total .= "<br/>";
                             }
                             $prescription .= $pre->medicine->name." ".$pre->medicineRule->name;
-                            $qty .= $pre->qty;
-                            $price .= $pre->price;
-                            $total .= $pre->total;
+                            $qty .= number_format($pre->qty, 2);
+                            $price .= number_format($pre->price, 2);
+                            $total .= number_format($pre->total, 2);
+                            $cost += $pre->total;
                         }
                     @endphp
                     {!!$prescription!!}
                 </td>
-                <td valign="top">{!!$qty!!}</td>
-                <td valign="top">{!!$price!!}</td>
-                <td valign="top">{!!$total!!}</td>
-                <td valign="top"></td>
+                <td valign="top" align="right">{!!$qty!!}</td>
+                <td valign="top" align="right">{!!$price!!}</td>
+                <td valign="top" align="right">{!!$total!!}</td>
+                <td valign="top" align="right">{{number_format($cost, 2)}}</td>
                 <td valign="top">{!!$golDiagnones!!}</td>
                 <td valign="top">{{$data->patient->grade->name ?? ""}}</td>
             </tr>
