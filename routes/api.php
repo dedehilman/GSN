@@ -36,6 +36,7 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.' ], function () {
     Route::apiResource('diagnoses', App\Http\Controllers\Api\DiagnosisController::class);
     Route::apiResource('family-planning-categories', App\Http\Controllers\Api\FamilyPlanningCategoryController::class);
     Route::apiResource('work-accident-categories', App\Http\Controllers\Api\WorkAccidentCategoryController::class);
+    Route::get('medicines/stock', [App\Http\Controllers\Api\MedicineController::class, 'stock']);
     Route::apiResource('medicines', App\Http\Controllers\Api\MedicineController::class);
     Route::apiResource('medicine-rules', App\Http\Controllers\Api\MedicineRuleController::class);
     Route::apiResource('histories', App\Http\Controllers\Api\HistoryController::class);

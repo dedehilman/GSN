@@ -11,6 +11,7 @@ use App\Models\StockOpname;
 use App\Models\StockTransaction;
 use App\Models\Pharmacy;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class MedicineController extends ApiController
 {
@@ -159,6 +160,80 @@ class MedicineController extends ApiController
                     "total_filtered" => intval($totalFiltered),
                     "data" => $data    
                 )
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => '500',
+                'message'=> $th->getMessage(),
+                'data' => '',
+            ]);
+        }
+    }
+
+    public function stock(Request $request)
+    {
+        try {
+            $clinicSql = \App\Models\Clinic::select("id");
+            $clinicSql = $this->queryBuilder(['clinics'], $clinicSql);
+            $clinicIds = $clinicSql->pluck("id")->toArray();
+            $rawSql = "";
+            foreach ($clinicIds ?? [] as $clinicId) {
+                $prevPeriod = StockOpname::join('periods', 'periods.id', '=', 'stock_opnames.period_id')
+                            ->where('stock_opnames.clinic_id', $clinicId)
+                            ->where('start_date','<', Carbon::now()->isoFormat('YYYY-MM-DD'))
+                            ->select('periods.*')
+                            ->orderBy('start_date','desc')
+                            ->first();
+
+                if($rawSql) {
+                    $rawSql .= " UNION ALL ";
+                }
+                if($prevPeriod) {
+                    $rawSql .= "SELECT clinic_id, medicine_id, beginQty+inQty+trfInQty-trfOutQty-outQty+adjQty AS qty
+                                FROM
+                                (
+                                    SELECT clinic_id, medicine_id, SUM(qty) AS beginQty, 0 AS inQty, 0 AS trfInQty, 0 AS trfOutQty, 0 AS outQty, 0 AS adjQty  FROM stock_opnames WHERE clinic_id = ".$clinicId."  GROUP BY clinic_id, medicine_id
+                                    UNION ALL
+                                    SELECT clinic_id, medicine_id, 0 AS beginQty, SUM(qty) AS inQty, 0 AS trfInQty, 0 AS trfOutQty, 0 AS outQty, 0 AS adjQty  FROM stock_transactions a JOIN stock_transaction_details b ON a.id = b.stock_transaction_id WHERE a.transaction_type = 'In' AND clinic_id = ".$clinicId." AND transaction_date > '".$prevPeriod->end_date."' AND transaction_date <= NOW() GROUP BY clinic_id, medicine_id
+                                    UNION ALL
+                                    SELECT clinic_id, medicine_id, 0 AS beginQty, 0 AS inQty, SUM(qty) AS trfInQty, 0 AS trfOutQty, 0 AS outQty, 0 AS adjQty  FROM stock_transactions a JOIN stock_transaction_details b ON a.id = b.stock_transaction_id WHERE a.transaction_type = 'Transfer In' AND clinic_id = ".$clinicId." AND transaction_date > '".$prevPeriod->end_date."' AND transaction_date <= NOW() GROUP BY clinic_id, medicine_id
+                                    UNION ALL
+                                    SELECT clinic_id, medicine_id, 0 AS beginQty, 0 AS inQty, 0 AS trfInQty, SUM(qty) AS trfOutQty, 0 AS outQty, 0 AS adjQty  FROM stock_transactions a JOIN stock_transaction_details b ON a.id = b.stock_transaction_id WHERE a.transaction_type = 'Transfer Out' AND clinic_id = ".$clinicId." AND transaction_date > '".$prevPeriod->end_date."' AND transaction_date <= NOW() GROUP BY clinic_id, medicine_id
+                                    UNION ALL
+                                    SELECT clinic_id, medicine_id, 0 AS beginQty, 0 AS inQty, 0 AS trfInQty, 0 AS trfOutQty, 0 AS outQty, SUM(qty) AS adjQty  FROM stock_transactions a JOIN stock_transaction_details b ON a.id = b.stock_transaction_id WHERE a.transaction_type = 'Adjusment' AND clinic_id = ".$clinicId." AND transaction_date > '".$prevPeriod->end_date."' AND transaction_date <= NOW() GROUP BY clinic_id, medicine_id
+                                    UNION ALL
+                                    SELECT clinic_id, medicine_id, 0 AS beginQty, 0 AS inQty, 0 AS trfInQty, 0 AS trfOutQty, SUM(qty) AS outQty, 0 AS adjQty  FROM pharmacies a JOIN pharmacy_details b ON a.id = b.pharmacy_id WHERE clinic_id = ".$clinicId." AND transaction_date > '".$prevPeriod->end_date."' AND transaction_date <= NOW() GROUP BY clinic_id, medicine_id
+                                ) AS stock
+                                HAVING qty != 0";
+                } else {
+                    $rawSql .= "SELECT clinic_id, medicine_id, beginQty+inQty+trfInQty-trfOutQty-outQty+adjQty AS qty
+                                FROM
+                                (
+                                    SELECT clinic_id, medicine_id, SUM(qty) AS beginQty, 0 AS inQty, 0 AS trfInQty, 0 AS trfOutQty, 0 AS outQty, 0 AS adjQty  FROM stock_opnames WHERE clinic_id = ".$clinicId."  GROUP BY clinic_id, medicine_id
+                                    UNION ALL
+                                    SELECT clinic_id, medicine_id, 0 AS beginQty, SUM(qty) AS inQty, 0 AS trfInQty, 0 AS trfOutQty, 0 AS outQty, 0 AS adjQty  FROM stock_transactions a JOIN stock_transaction_details b ON a.id = b.stock_transaction_id WHERE a.transaction_type = 'In' AND clinic_id = ".$clinicId." AND transaction_date <= NOW() GROUP BY clinic_id, medicine_id
+                                    UNION ALL
+                                    SELECT clinic_id, medicine_id, 0 AS beginQty, 0 AS inQty, SUM(qty) AS trfInQty, 0 AS trfOutQty, 0 AS outQty, 0 AS adjQty  FROM stock_transactions a JOIN stock_transaction_details b ON a.id = b.stock_transaction_id WHERE a.transaction_type = 'Transfer In' AND clinic_id = ".$clinicId." AND transaction_date <= NOW() GROUP BY clinic_id, medicine_id
+                                    UNION ALL
+                                    SELECT clinic_id, medicine_id, 0 AS beginQty, 0 AS inQty, 0 AS trfInQty, SUM(qty) AS trfOutQty, 0 AS outQty, 0 AS adjQty  FROM stock_transactions a JOIN stock_transaction_details b ON a.id = b.stock_transaction_id WHERE a.transaction_type = 'Transfer Out' AND clinic_id = ".$clinicId." AND transaction_date <= NOW() GROUP BY clinic_id, medicine_id
+                                    UNION ALL
+                                    SELECT clinic_id, medicine_id, 0 AS beginQty, 0 AS inQty, 0 AS trfInQty, 0 AS trfOutQty, 0 AS outQty, SUM(qty) AS adjQty  FROM stock_transactions a JOIN stock_transaction_details b ON a.id = b.stock_transaction_id WHERE a.transaction_type = 'Adjusment' AND clinic_id = ".$clinicId." AND transaction_date <= NOW() GROUP BY clinic_id, medicine_id
+                                    UNION ALL
+                                    SELECT clinic_id, medicine_id, 0 AS beginQty, 0 AS inQty, 0 AS trfInQty, 0 AS trfOutQty, SUM(qty) AS outQty, 0 AS adjQty  FROM pharmacies a JOIN pharmacy_details b ON a.id = b.pharmacy_id WHERE clinic_id = ".$clinicId." AND transaction_date <= NOW() GROUP BY clinic_id, medicine_id
+                                ) AS stock
+                                HAVING qty != 0";
+                }
+                
+            }
+
+            $data = [];
+            if($rawSql) {
+                $data = DB::select($rawSql);
+            }
+            return response()->json([
+                "status" => '200',
+                "message" => '',
+                "data" => $data,
             ]);
         } catch (\Throwable $th) {
             return response()->json([
