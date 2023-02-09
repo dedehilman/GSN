@@ -198,22 +198,24 @@ class HomeController extends Controller
         $patient = DB::table('employees');
         $patient = $this->queryBuilder(['employees'], $patient);
         $patientCount = $patient->count();
-        $activePatientCount = DB::select("
-                            SELECT COUNT(DISTINCT patient_id) AS count FROM
-                            (
-                                SELECT patient_id FROM family_plannings
-                                UNION ALL
-                                SELECT patient_id FROM outpatients
-                                UNION ALL
-                                SELECT patient_id FROM plano_tests
-                                UNION ALL
-                                SELECT patient_id FROM work_accidents
-                                UNION ALL
-                                SELECT patient_id FROM sick_letters
-                                UNION ALL
-                                SELECT patient_id FROM reference_letters
-                            ) a
-                            WHERE a.patient_id IN (".implode(",", $patient->pluck("id")->toArray()).")");
+        $activePatientCountRj = \App\Models\Outpatient::whereIn('patient_id', $patient->pluck("id")->toArray())
+                                ->whereDate('transaction_date', '>=', $dateFrom)
+                                ->whereDate('transaction_date', '<=', $dateTo)
+                                ->count();
+        $activePatientCountKk = \App\Models\WorkAccident::whereIn('patient_id', $patient->pluck("id")->toArray())
+                                ->whereDate('transaction_date', '>=', $dateFrom)
+                                ->whereDate('transaction_date', '<=', $dateTo)
+                                ->count();
+        $activePatientCountPp = \App\Models\PlanoTest::whereIn('patient_id', $patient->pluck("id")->toArray())
+                                ->whereDate('transaction_date', '>=', $dateFrom)
+                                ->whereDate('transaction_date', '<=', $dateTo)
+                                ->count();
+        $activePatientCountKb = \App\Models\FamilyPlanning::whereIn('patient_id', $patient->pluck("id")->toArray())
+                                ->whereDate('transaction_date', '>=', $dateFrom)
+                                ->whereDate('transaction_date', '<=', $dateTo)
+                                ->count();
+
+        $activePatientCount = $activePatientCountRj + $activePatientCountKk + $activePatientCountPp + $activePatientCountKb;
 
         $medicalStaffCount = DB::table('medical_staff');
         $medicalStaffCount = $this->queryBuilder(['medical_staff'], $medicalStaffCount)->count();
@@ -296,7 +298,7 @@ class HomeController extends Controller
             "patientCount"=>$patientCount,
             "medicalStaffCount"=>$medicalStaffCount,
             "topMedicines"=>$topMedicines,
-            "activePatientCount"=>$activePatientCount[0]->count ?? 0,
+            "activePatientCount"=>$activePatientCount,
             "outpatientBasedOnClinic"=>$outpatientBasedOnClinic,
         ]);
     }
