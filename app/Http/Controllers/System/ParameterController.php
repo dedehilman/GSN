@@ -5,6 +5,8 @@ namespace App\Http\Controllers\System;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppCrudController;
 use Illuminate\Support\Facades\Validator;
+use Lang;
+use Illuminate\Support\Facades\Crypt;
 
 class ParameterController extends AppCrudController
 {
@@ -38,5 +40,36 @@ class ParameterController extends AppCrudController
         if($validator->fails()){
             return $validator->errors()->all();
         }
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            $validateOnStore = $this->validateOnStore($request);
+            if($validateOnStore) {
+                return response()->json([
+                    'status' => '400',
+                    'data' => '',
+                    'message'=> $validateOnStore
+                ]);
+            }
+            
+            if(($request->encrypted ?? 0) == 1) {
+                $request['value'] = Crypt::encryptString($request->value);
+            }
+
+            $this->model::create($request->all());
+            return response()->json([
+                'status' => '200',
+                'data' => '',
+                'message'=> Lang::get("Data has been stored")
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => '500',
+                'data' => '',
+                'message'=> $th->getMessage()
+            ]);
+        }        
     }
 }

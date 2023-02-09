@@ -10,5 +10,5 @@ class Parameter extends Model
 {
     use HasFactory, BlameableTrait;
 
-    protected $fillable = ['key', 'value', 'description'];
+    protected $fillable = ['key', 'value', 'description', 'encrypted'];
 }

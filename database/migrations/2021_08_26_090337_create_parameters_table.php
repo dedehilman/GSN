@@ -18,6 +18,7 @@ class CreateParametersTable extends Migration
             $table->string('key')->unique();
             $table->text('value');
             $table->text('description')->nullable();
+            $table->tinyInteger('encrypted')->default(0);
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

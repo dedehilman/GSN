@@ -20,6 +20,16 @@
                         <div class="col-md-9 col-form-label">{{$data->key}}</div>
                     </div>
                     <div class="form-group row">
+                        <label class="col-md-3 col-form-label">{{__("Encrypted")}}</label>
+                        <div class="col-md-9 col-form-label">
+                            @if ($data->encrypted == 1)
+                                <span class="badge badge-primary">{{ __('Yes') }}</span>
+                            @else
+                                <span class="badge badge-danger">{{ __('No') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{__("Value")}}</label>
                         <div class="col-md-9 col-form-label">{{$data->value}}</div>
                     </div>

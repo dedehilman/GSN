@@ -25,6 +25,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-3 col-form-label">{{__("Encrypted")}}</label>
+                            <div class="col-md-9 pt-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="encrypted" id="encrypted" value="1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-3 col-form-label required">{{__("Value")}}</label>
                             <div class="col-md-9">
                                 <textarea name="value" class="form-control required" rows="5"></textarea>
@@ -45,4 +53,19 @@
             </form>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        $(function(){
+            $("#encrypted").on('click', function(){
+                if($(this).is(':checked')) {
+                    var val = $("textarea[name='value']").val();
+                    $("textarea[name='value']").replaceWith('<input type="password" name="value" class="form-control required" value="'+val+'">');
+                } else {
+                    var val = $("input[name='value']").val();
+                    $("input[name='value']").replaceWith('<textarea name="value" class="form-control required" rows="5">'+val+'</textarea>');
+                }
+            });
+        })
+    </script>
 @endsection

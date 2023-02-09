@@ -222,7 +222,14 @@ function getEnvironmentValue($key)
 function getParameter($key) {
     $parameter = Parameter::where('key', $key)->first();
     if($parameter) {
-        return $parameter->value;
+        $value = $parameter->value;
+        if($parameter->encrypted == 1) {
+            try {
+                $value = Crypt::decryptString($parameter->value);
+            } catch (\Throwable $th) {
+            }    
+        }
+        return $value;
     }
 
     return null;
