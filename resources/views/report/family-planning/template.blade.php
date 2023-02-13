@@ -1,9 +1,9 @@
 <table>
     <tr>
-        <td colspan="10" align="center">DATA AKSEPTOR KB KLINIK {{$reportModel->clinic->name}}</td>
+        <td colspan="13" align="center">DATA AKSEPTOR KB KLINIK {{$reportModel->clinic->name}}</td>
     </tr>
     <tr>
-        <td colspan="10" align="center">PERIODE : {{$reportModel->start_date}} - {{$reportModel->end_date}}</td>
+        <td colspan="13" align="center">PERIODE : {{$reportModel->start_date}} - {{$reportModel->end_date}}</td>
     </tr>
 </table>
 <table>
@@ -19,6 +19,9 @@
             <th>{{__("Kontrasepsi")}}</th>
             <th>{{__("Terapi")}}</th>
             <th>{{__("Qty")}}</th>
+            <th>{{__("Harga")}}</th>
+            <th>{{__("Jumlah")}}</th>
+            <th>{{__("Total Biaya")}}</th>
         </tr>
     </thead>
     <tbody>
@@ -36,18 +39,29 @@
                     @php
                         $prescription = "";
                         $qty = "";
+                        $price = "";
+                        $total = "";
+                        $cost = 0;
                         foreach ($data->prescriptions ?? [] as $pre) {
                             if($prescription != "") {
                                 $prescription .= "<br/>";
                                 $qty .= "<br/>";
+                                $price .= "<br/>";
+                                $total .= "<br/>";
                             }
                             $prescription .= $pre->medicine->name." ".$pre->medicineRule->name;
                             $qty .= $pre->qty;
+                            $price .= number_format($pre->price, 2);
+                            $total .= number_format($pre->total, 2);
+                            $cost += $pre->total;
                         }
                     @endphp
                     {!!$prescription!!}
                 </td>
                 <td valign="top">{!!$qty!!}</td>
+                <td valign="top" align="right">{!!$price!!}</td>
+                <td valign="top" align="right">{!!$total!!}</td>
+                <td valign="top" align="right">{{number_format($cost, 2)}}</td>
             </tr>
         @endforeach
     </tbody>

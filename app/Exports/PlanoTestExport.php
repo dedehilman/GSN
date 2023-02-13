@@ -36,6 +36,13 @@ class PlanoTestExport implements ShouldAutoSize, FromView
             ->where('model_id', $data->id)
             ->get();
 
+            foreach ($prescriptions as $prescription) {
+                $price = $prescription->medicine->price($data->transaction_date);
+                $total = $prescription->qty * $price;
+                $prescription->setAttribute("price", $price);
+                $prescription->setAttribute("total", $total);
+            }
+
             $data->setAttribute("prescriptions", $prescriptions);
         }
         return view('report.plano-test.template', [
