@@ -200,6 +200,7 @@ Route::resource('inventory/stock-opname', App\Http\Controllers\Inventory\StockOp
 Route::post('/inventory/stock-transaction/datatable', [App\Http\Controllers\Inventory\StockTransactionController::class, 'datatable'])->name('stock-transaction.datatable');
 Route::post('/inventory/stock-transaction/datatable/select', [App\Http\Controllers\Inventory\StockTransactionController::class, 'datatableSelect'])->name('stock-transaction.datatable.select');
 Route::get('/inventory/stock-transaction/select', [App\Http\Controllers\Inventory\StockTransactionController::class, 'select'])->name('stock-transaction.select');
+Route::get('/inventory/stock-transaction/download/{id}', [App\Http\Controllers\Inventory\StockTransactionController::class, 'download'])->name('stock-transaction.download');
 Route::resource('inventory/stock-transaction', App\Http\Controllers\Inventory\StockTransactionController::class);
 
 Route::group(['prefix' => 'report', 'as' => 'report.'], function () {

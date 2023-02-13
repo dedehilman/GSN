@@ -10,6 +10,7 @@ use App\Models\StockTransactionDetail;
 use Illuminate\Support\Facades\DB;
 use Lang;
 use Carbon\Carbon;
+use PDF;
 
 class StockTransactionController extends AppCrudController
 {
@@ -227,5 +228,16 @@ class StockTransactionController extends AppCrudController
         }
 
         return $validator->errors()->all();
+    }
+
+    public function download($id)
+    {
+        $data = $this->model::find($id);
+        if(!$data) {
+            return redirect()->back()->with(['info' => Lang::get("Data not found")]);
+        }
+
+        $pdf = PDF::loadview('inventory.stock-transaction.template', ['data'=>$data]);
+    	return $pdf->download($data->transaction_no.'.pdf');
     }
 }
