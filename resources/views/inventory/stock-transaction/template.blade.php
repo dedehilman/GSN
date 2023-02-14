@@ -3,6 +3,12 @@
 @else
     <img src="{{ asset('public/img/logo_clinic.jpeg') }}" height="60" style="position: absolute; left: 0px; left: 0px;">
 @endif
+<style>
+    #tableDetail, #tableDetail th, #tableDetail td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
 <table width="100%">
     <tr>
         <td align="center">
@@ -27,20 +33,19 @@
         <td>: {{$data->clinic->name}}</td>
     </tr>
     <tr>
-        <td>{{__("Remark")}}</td>
-        <td>: {!!nl2br($data->remark ?? '')!!}</td>
+        <td valign="top">{{__("Remark")}}</td>
+        <td valign="top">: {!!nl2br($data->remark ?? '')!!}</td>
         @if ($data->transaction_type == 'Transfer Out')
-            <td>{{__("New Clinic")}}</td>
-            <td>: {{$data->newClinic->name ?? ''}}</td>
+            <td valign="top">{{__("New Clinic")}}</td>
+            <td valign="top">: {{$data->newClinic->name ?? ''}}</td>
         @elseif ($data->transaction_type == 'Transfer In')
-            <td>{{__("Reference")}}</td>
-            <td>: {{$data->reference->transaction_no ?? ''}}</td>
+            <td valign="top">{{__("Reference")}}</td>
+            <td valign="top">: {{$data->reference->transaction_no ?? ''}}</td>
         @endif
     </tr>
 </table>
 <br>
-<br>
-<table width="100%" border="1px">
+<table id="tableDetail" width="100%" cellpadding="3px">
     <thead>
         <tr>
             <th width="5%">{{ __('Number') }}</th>
@@ -50,4 +55,15 @@
             <th width="25%">{{ __('Remark') }}</th>
         </tr>
     </thead>
+    <tbody>
+        @foreach ($data->details ?? [] as $index => $detail)
+            <tr>
+                <td align="right">{{$index+1}}</td>
+                <td>{{$detail->medicine->name}}</td>
+                <td align="right">{{$detail->stock_qty}}</td>
+                <td align="right">{{$detail->qty}}</td>
+                <td>{{$detail->remark}}</td>
+            </tr>
+        @endforeach
+    </tbody>
 </table>

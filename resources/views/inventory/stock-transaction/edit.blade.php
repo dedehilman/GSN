@@ -137,6 +137,7 @@
                         </div>
                     </div>
                     <div class="card-footer text-right">
+                        <a href="{{route('stock-transaction.download', $data->id)}}" class="btn btn-default"><i class="fas fa fa-print"></i> {{__("Download")}}</a>
                         <a href="{{route('stock-transaction.index')}}" class="btn btn-default"><i class="fas fa fa-undo"></i> {{__("Back")}}</a>
                         <button type="button" class="btn btn-primary" id="btn-update"><i class="fas fa fa-save"></i> {{__("Update")}}</button>
                     </div>
