@@ -231,6 +231,10 @@ Route::group(['prefix' => 'report', 'as' => 'report.'], function () {
     Route::post('treatment-history/datatable', [App\Http\Controllers\Report\TreatmentHistoryReportController::class, 'datatable'])->name('treatment-history.datatable');
     Route::get('treatment-history/download/{id}', [App\Http\Controllers\Report\TreatmentHistoryReportController::class, 'download'])->name('treatment-history.download');
     Route::resource('treatment-history', App\Http\Controllers\Report\TreatmentHistoryReportController::class);
+
+    Route::post('stock-transaction/datatable', [App\Http\Controllers\Report\StockTransactionReportController::class, 'datatable'])->name('stock-transaction.datatable');
+    Route::get('stock-transaction/download/{id}', [App\Http\Controllers\Report\StockTransactionReportController::class, 'download'])->name('stock-transaction.download');
+    Route::resource('stock-transaction', App\Http\Controllers\Report\StockTransactionReportController::class);
 });
 
 Route::post('/letter/sick-letter/datatable', [App\Http\Controllers\Letter\SickLetterController::class, 'datatable'])->name('sick-letter.datatable');

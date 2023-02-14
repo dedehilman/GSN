@@ -40,7 +40,7 @@
             <td valign="top">: {{$data->newClinic->name ?? ''}}</td>
         @elseif ($data->transaction_type == 'Transfer In')
             <td valign="top">{{__("Reference")}}</td>
-            <td valign="top">: {{$data->reference->transaction_no ?? ''}}</td>
+            <td valign="top">: {{$data->reference->transaction_no ?? ''}}  ({{$data->reference->clinic->name ?? ''}})</td>
         @endif
     </tr>
 </table>
