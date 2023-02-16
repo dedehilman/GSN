@@ -1,0 +1,5 @@
+- ## Getting Started
+    - [Sekilas Menu di SIDIK](/sidik/{{route}}/{{version}}/menu-overview)
+    - [Cara Login ke SIDIK](/sidik/{{route}}/{{version}}/how-to-login)
+    - [Lupa Kata Sandi](/sidik/{{route}}/{{version}}/forgot-password)
+    - 
