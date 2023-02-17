@@ -65,7 +65,8 @@
                         </div>
                     </form>
                     <p class="mt-3 mb-1">
-                        <a href="{{ route('password.request') }}">{{__('I forgot my password')}}</a>
+                        <a href="{{ route('password.request') }}">{{__('I forgot my password')}}</a><br/>
+                        <a href="{{ url('/docs') }}">{{__('Documentation')}}</a>
                     </p>
                 </div>
             </div>
