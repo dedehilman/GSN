@@ -3,6 +3,17 @@
 @endphp
 
 # Cara Login ke SIDIK
+<small><i class="far fa-calendar mr-2"></i>17 Feb 2023 <i class="far fa-user mr-2 ml-2"></i>Admin <i class="fas fa-print mr-2 ml-2"></i><a href="" onclick="print()">Print</a></small>
+<script>
+    function print() {
+        var divContents = document.getElementsByClassName("documentation")[0].innerHTML;
+        var a = window.open('', '', 'height=500, width=500');
+        a.document.write(divContents);
+        a.document.close();
+        a.print();
+    }
+</script>
+
 ---
 - [Cara Login ke SIDIK](#)
 - [Baca Juga](#baca-juga)
