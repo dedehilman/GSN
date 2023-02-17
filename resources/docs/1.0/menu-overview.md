@@ -1,3 +1,7 @@
+@php
+    $baseUrl = url('/');
+@endphp
+
 # Sekilas Menu di SIDIK
 <small><i class="far fa-calendar mr-2"></i>17 Feb 2023 <i class="far fa-user mr-2 ml-2"></i>Admin <i class="fas fa-print mr-2 ml-2"></i><a href="" onclick="print()">Print</a></small>
 <script>
@@ -11,7 +15,6 @@
 </script>
 
 ---
-- [Sekilas Menu di SIDIK](#)
 - [Baca Juga](#baca-juga)
 
 Menu yang terdapat pada SIDIK

@@ -15,7 +15,6 @@
 </script>
 
 ---
-- [Lupa Kata Sandi](#)
 - [Baca Juga](#baca-juga)
 
 Pada bagian ini Anda akan mempelajari bagaimana cara login ke aplikasi SIDIK jika Anda lupa kata sandi/ password.  

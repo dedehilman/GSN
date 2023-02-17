@@ -15,7 +15,6 @@
 </script>
 
 ---
-- [Cara Login ke SIDIK](#)
 - [Baca Juga](#baca-juga)
 
 Pada Bagian ini Anda akan mempelajari cara melakukan login ke dalam aplikasi SIDIK versi website.
