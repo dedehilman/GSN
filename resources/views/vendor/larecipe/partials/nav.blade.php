@@ -8,7 +8,7 @@
     <nav class="flex items-center justify-between text-black bg-navbar shadow-xs h-16">
         <div class="flex items-center flex-no-shrink">
             <a href="{{ url('/') }}" class="flex items-center flex-no-shrink text-black mx-4">
-                @include("larecipe::partials.logo")
+                <img src="{{getParameter('APP_LOGO')}}" alt="" class="" style="height: 50px;">
 
                 <p class="inline-block font-semibold mx-1 text-grey-dark">
                     {{getParameter('APP_NAME') ?? config('app.name')}}
