@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use App\Models\PlanoTest;
+use Illuminate\Support\Facades\DB;
 
 class PlanoTestExport implements ShouldAutoSize, FromView
 {
@@ -22,7 +23,11 @@ class PlanoTestExport implements ShouldAutoSize, FromView
 
     public function view(): View
     {
-        $datas = PlanoTest::where('clinic_id', $this->reportModel->clinic_id);
+        $datas = PlanoTest::where('clinic_id', $this->reportModel->clinic_id)
+                ->join('actions', function ($join) {
+                    $join->on('actions.model_id', '=', 'plano_tests.id');
+                    $join->on('actions.model_type', '=', DB::Raw('"App\\\\Models\\\\PlanoTest"'));
+                });
         if($this->reportModel->start_date) {
             $datas->whereDate('transaction_date', '>=', $this->reportModel->start_date);
         }

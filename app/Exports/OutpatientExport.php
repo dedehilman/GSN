@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use App\Models\Outpatient;
+use Illuminate\Support\Facades\DB;
 
 class OutpatientExport implements ShouldAutoSize, FromView
 {
@@ -22,7 +23,11 @@ class OutpatientExport implements ShouldAutoSize, FromView
 
     public function view(): View
     {
-        $datas = Outpatient::where('clinic_id', $this->reportModel->clinic_id);
+        $datas = Outpatient::where('clinic_id', $this->reportModel->clinic_id)
+                ->join('actions', function ($join) {
+                    $join->on('actions.model_id', '=', 'outpatients.id');
+                    $join->on('actions.model_type', '=', DB::Raw('"App\\\\Models\\\\Outpatient"'));
+                });
         if($this->reportModel->start_date) {
             $datas->whereDate('transaction_date', '>=', $this->reportModel->start_date);
         }
