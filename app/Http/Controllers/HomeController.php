@@ -37,14 +37,14 @@ class HomeController extends Controller
             $dateTo = $request->dateTo;
         }
 
-        $topDiseaseDatas = \App\Models\DiagnosisResult::select("diseases.code", DB::raw("count(*) as total"))
+        $topDiseaseDatas = \App\Models\DiagnosisResult::select("diseases.code", "diseases.name", DB::raw("count(*) as total"))
                         ->join('diagnoses', 'diagnoses.id', '=', 'diagnosis_results.diagnosis_id')
                         ->join('diseases', 'diseases.id', '=', 'diagnoses.disease_id')
                         ->join('outpatients', 'outpatients.id', '=', 'diagnosis_results.model_id')
                         ->join('clinics', 'outpatients.clinic_id', '=', 'clinics.id')
                         ->whereDate('transaction_date', '>=', $dateFrom)
                         ->whereDate('transaction_date', '<=', $dateTo)
-                        ->groupBy('diseases.code')
+                        ->groupBy('diseases.code','diseases.name')
                         ->orderBy('total', 'DESC')
                         ->limit(10)
                         ->whereNotNull('diagnoses.disease_id');
@@ -53,7 +53,7 @@ class HomeController extends Controller
         $data = array();
 
         foreach ($topDiseaseDatas as $topDiseaseData) {
-            array_push($label, $topDiseaseData->code);
+            array_push($label, $topDiseaseData->name);
             array_push($data, $topDiseaseData->total);
         }
 
