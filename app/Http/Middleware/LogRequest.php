@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Arr;
 
 class LogRequest
 {    
@@ -28,9 +29,10 @@ class LogRequest
         $method = $request->getMethod();
         $ip = $request->getClientIp();
 
+        $responseContent = json_encode(Arr::except($response->original, 'data'));
         $log = "{$ip}: {$method}@{$url} - {$duration}ms \n".
         "Request : ".json_encode($request->all())."\n".
-        "Response : {$response->getContent()} \n";
+        "Response : {$responseContent} \n";
 
         Log::info($log);
     }
