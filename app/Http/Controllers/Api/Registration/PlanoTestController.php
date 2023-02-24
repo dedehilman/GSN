@@ -22,7 +22,7 @@ class PlanoTestController extends ApiController
     public function store(Request $request)
     {
         try {
-            $transactionNo = PlanoTest::whereDate('transaction_date', $request->transaction_date)->orderBy('transaction_no', 'desc')->first();
+            $transactionNo = PlanoTest::where('transaction_no', 'LIKE', 'PPT-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-%')->orderBy('transaction_no', 'desc')->first();
 			$count = 0;
 			try {
 				$count = (int) Str::substr($transactionNo->transaction_no, -5);				

@@ -24,7 +24,7 @@ class OutpatientController extends AppCrudController
     public function store(Request $request)
     {
         try {
-			$transactionNo = Outpatient::whereDate('transaction_date', $request->transaction_date)->orderBy('transaction_no', 'desc')->first();
+			$transactionNo = Outpatient::where('transaction_no', 'LIKE', 'RJL-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-%')->orderBy('transaction_no', 'desc')->first();
 			$count = 0;
 			try {
 				$count = (int) Str::substr($transactionNo->transaction_no, -5);				

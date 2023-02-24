@@ -22,7 +22,7 @@ class FamilyPlanningController extends ApiController
     public function store(Request $request)
     {
         try {
-            $transactionNo = FamilyPlanning::whereDate('transaction_date', $request->transaction_date)->orderBy('transaction_no', 'desc')->first();
+            $transactionNo = FamilyPlanning::where('transaction_no', 'LIKE', 'KB-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-%')->orderBy('transaction_no', 'desc')->first();
 			$count = 0;
 			try {
 				$count = (int) Str::substr($transactionNo->transaction_date, -5);				

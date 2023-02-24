@@ -31,7 +31,7 @@ class ReferenceLetterController extends AppCrudController
     public function store(Request $request)
     {
         try {
-			$transactionNo = ReferenceLetter::whereDate('transaction_date', $request->transaction_date)->orderBy('transaction_no', 'desc')->first();
+			$transactionNo = ReferenceLetter::where('transaction_no', 'LIKE', 'SR-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-%')->orderBy('transaction_no', 'desc')->first();
 			$count = 0;
 			try {
 				$count = (int) Str::substr($transactionNo->transaction_no, -5);				
@@ -192,7 +192,7 @@ class ReferenceLetterController extends AppCrudController
 
     public function generateStore(Request $request) {
         try {
-            $transactionNo = ReferenceLetter::whereDate('transaction_date', $request->transaction_date)->orderBy('transaction_no', 'desc')->first();
+            $transactionNo = ReferenceLetter::where('transaction_no', 'LIKE', 'SR-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-%')->orderBy('transaction_no', 'desc')->first();
 			$count = 0;
 			try {
 				$count = (int) Str::substr($transactionNo->transaction_no, -5);				

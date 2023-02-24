@@ -29,7 +29,7 @@ class SickLetterController extends ApiController
     public function store(Request $request)
     {
         try {
-            $transactionNo = SickLetter::whereDate('transaction_date', $request->transaction_date)->orderBy('transaction_no', 'desc')->first();
+            $transactionNo = SickLetter::where('transaction_no', 'LIKE', 'SKS-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-%')->orderBy('transaction_no', 'desc')->first();
 			$count = 0;
 			try {
 				$count = (int) Str::substr($transactionNo->transaction_no, -5);				
@@ -114,7 +114,7 @@ class SickLetterController extends ApiController
     public function generate(Request $request)
     {
         try {
-            $transactionNo = SickLetter::whereDate('transaction_date', $request->transaction_date)->orderBy('transaction_no', 'desc')->first();
+            $transactionNo = SickLetter::where('transaction_no', 'LIKE', 'SKS-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-%')->orderBy('transaction_no', 'desc')->first();
 			$count = 0;
 			try {
 				$count = (int) Str::substr($transactionNo->transaction_no, -5);				
