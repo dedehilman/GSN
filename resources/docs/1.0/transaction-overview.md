@@ -15,7 +15,7 @@
 </script>
 
 ---
-- [Alur Proses](#baca-juga)
+- [Alur Proses](#alur-porses)
 - [Baca Juga](#baca-juga)
 
 Tranksaksi merupakan menu yang digunakan sehari-hari untuk menginput data yang terjadi pada klinik. Pada menu ini terdapat beberapa sub-menu, diantaranya:
