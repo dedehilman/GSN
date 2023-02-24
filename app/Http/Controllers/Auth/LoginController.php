@@ -84,7 +84,7 @@ class LoginController extends Controller
 
                 try {
                     $connection->connect();
-                    $username = $request->username;
+                    $username = 'HCO\\'.$request->username;
                     //$username = $request->username;
                     $password = $request->password;
                     if ($connection->auth()->attempt($username, $password, $stayBound = true))

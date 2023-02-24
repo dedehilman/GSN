@@ -22,7 +22,12 @@ class WorkAccidentController extends ActionController
     public function store(Request $request)
     {
         try {
-            $count = WorkAccident::whereDate('transaction_date', Carbon::now()->isoFormat('YYYY-MM-DD'))->count();
+            $transactionNo = WorkAccident::where('transaction_no', 'LIKE', 'KK-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-%')->orderBy('transaction_no', 'desc')->first();
+			$count = 0;
+			try {
+				$count = (int) Str::substr($transactionNo->transaction_no, -5);				
+			} catch (\Throwable $th) {
+			}
             $request['transaction_no'] = 'KK-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);

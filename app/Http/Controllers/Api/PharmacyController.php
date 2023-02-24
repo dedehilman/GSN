@@ -26,7 +26,12 @@ class PharmacyController extends ApiController
     public function store(Request $request)
     {
         try {
-            $count = Pharmacy::whereDate('transaction_date', $request->transaction_date)->count();
+            $transactionNo = Pharmacy::where('transaction_no', 'LIKE', 'PH-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-%')->orderBy('transaction_no', 'desc')->first();
+			$count = 0;
+			try {
+				$count = (int) Str::substr($transactionNo->transaction_no, -5);				
+			} catch (\Throwable $th) {
+			}
             $request['transaction_no'] = 'PH-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);
