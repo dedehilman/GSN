@@ -15,6 +15,7 @@
 </script>
 
 ---
+- [Video](#video)
 - [Baca Juga](#baca-juga)
 
 Pada Bagian ini Anda akan mempelajari cara melakukan login ke dalam aplikasi SIDIK versi website.
@@ -34,6 +35,11 @@ Berikut langkah-langkahnya.
 4. Maka Anda sudah berhasil masuk.
 
     ![image]({{$baseUrl}}/public/img/docs/how-to-login-2.png)
+
+<a name="video">
+
+## [Video](#)
+<iframe src="https://drive.google.com/file/d/1JkQ_-_isiMATIWWxokvhQCIaIA8pbnVZ/preview" width="200" height="150" allow="autoplay"></iframe>
 
 <a name="baca-juga">
 

@@ -18,6 +18,7 @@
 - [Cara Membuat Surat Baru](#create-letter)
 - [Cara Merubah Data Surat](#edit-letter)
 - [Cara Menghapus Data Surat](#delete-letter)
+- [Video](#video)
 - [Baca Juga](#baca-juga)
 
 Pada menu surat pengguna dapat mengenerate surat sakit & surat rujukan.
@@ -74,6 +75,12 @@ Untuk menghapus data surat yang sudah ada, berikut langkah-langkahnya:
 4. Tekan `Ya` untuk menghapus data, atau tekan `Batal` untuk membatalkan proses.
 
     > {danger.fa-warning} Jika tidak terdapat ikon ![image]({{$baseUrl}}/public/img/docs/delete.png) pastikan Anda mempunyai permisi untuk menghapus data surat.
+
+<a name="video">
+
+## [Video](#)
+<iframe src="https://drive.google.com/file/d/1CLDq_0-mFSSWw_usRiVQMx4wxOUKxWPJ/preview" width="200" height="150" allow="autoplay"></iframe>
+<iframe src="https://drive.google.com/file/d/1audQmKq2P7ZqX4zFLw6mXNgAc7XJR2az/preview" width="200" height="150" allow="autoplay"></iframe>
 
 <a name="baca-juga">
 

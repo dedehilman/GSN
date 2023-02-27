@@ -19,6 +19,7 @@
 - [Cara Merubah Data Pendaftaran](#edit-registration)
 - [Cara Menghapus Data Pendaftaran](#delete-registration)
 - [Cara Meng-Unlock Data Pendaftaran](#unlock-registration)
+- [Video](#video)
 - [Baca Juga](#baca-juga)
 
 Menu ini digunakan untuk melakukan pendaftaran semua transaksi (Rawat Jalan, KK, KB, PP) yang nantinya akan ditindak lanjuti oleh tenaga medis terkait.
@@ -93,6 +94,14 @@ Untuk meng-unlock data pendaftaran, berikut langkah-langkahnya:
 5. Setelah di unlock, Anda dapat merubah data pendaftaran.
 
     > {danger.fa-warning} Jika tidak terdapat tombol ![image]({{$baseUrl}}/public/img/docs/draft.png) pastikan Anda mempunyai permisi untuk meng-unlock data pendaftaran. Unlock data aksi / tindak lanjut terlebih dahulu.
+
+<a name="video">
+
+## [Video](#)
+<iframe src="https://drive.google.com/file/d/10rF_H5W4Jw9fotjSZ8dSDVmhSC2gLXfm/preview" width="200" height="150" allow="autoplay"></iframe>
+<iframe src="https://drive.google.com/file/d/1BQLNVRoEVffVVbn9GRoetx41s4YokTSA/preview" width="200" height="150" allow="autoplay"></iframe>
+<iframe src="https://drive.google.com/file/d/12pVeFYx8S16ZBZzqSdqwwlkDdF4UEEz_/preview" width="200" height="150" allow="autoplay"></iframe>
+<iframe src="https://drive.google.com/file/d/1aXPcE0oA2Ef-AQkdsmY4Dm5KRMsxsYv_/preview" width="200" height="150" allow="autoplay"></iframe>
 
 <a name="baca-juga">
 

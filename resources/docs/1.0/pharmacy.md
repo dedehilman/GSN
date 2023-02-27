@@ -19,6 +19,7 @@
 - [Cara Merubah Data Farmasi](#edit-pharmacy)
 - [Cara Menghapus Data Farmasi](#delete-pharmacy)
 - [Cara Meng-Unlock Data Farmasi](#unlock-pharmacy)
+- [Video](#video)
 - [Baca Juga](#baca-juga)
 
 Pada menu farmasi pengguna dapat mengenerate farmasi sakit & farmasi rujukan.
@@ -108,6 +109,11 @@ Untuk meng-unlock data farmasi, berikut langkah-langkahnya:
 6. Setelah di unlock, Anda dapat merubah data farmasi.
 
     > {danger.fa-warning} Jika tidak terdapat tombol ![image]({{$baseUrl}}/public/img/docs/draft.png) pastikan Anda mempunyai permisi untuk meng-unlock data farmasi.
+
+<a name="video">
+
+## [Video](#)
+<iframe src="https://drive.google.com/file/d/10KWYGwCkoIU8mV5FeW_AZu-I886XiVB2/preview" width="200" height="150" allow="autoplay"></iframe>
 
 <a name="baca-juga">
 

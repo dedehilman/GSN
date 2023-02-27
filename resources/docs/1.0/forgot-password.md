@@ -15,6 +15,7 @@
 </script>
 
 ---
+- [Video](#video)
 - [Baca Juga](#baca-juga)
 
 Pada bagian ini Anda akan mempelajari bagaimana cara login ke aplikasi SIDIK jika Anda lupa kata sandi/ password.  
@@ -46,6 +47,11 @@ Berikut langkah-langkahnya.
     ![image]({{$baseUrl}}/public/img/docs/forgot-password-4.png)
 
 9. Silahkan login kembali ke akun Anda menggunakan Password baru tersebut.
+
+<a name="video">
+
+## [Video](#)
+<iframe src="https://drive.google.com/file/d/1JcPFqwg_qunZ1_4doDjo6b4RtG2C0gkM/preview" width="200" height="150" allow="autoplay"></iframe>
 
 <a name="baca-juga">
 

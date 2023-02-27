@@ -24,6 +24,7 @@
 - [Cara Merubah Data Tindak Lanjut](#edit-action)
 - [Cara Menghapus Data Tindak Lanjut](#delete-action)
 - [Cara Meng-Unlock Data Tindak Lanjut](#unlock-action)
+- [Video](#video)
 - [Baca Juga](#baca-juga)
 
 Menu ini digunakan oleh dokter / tenaga medis untuk menindak lanjuti pasien yang telah mendaftar.
@@ -184,6 +185,14 @@ Untuk meng-unlock data aksi / tindak lanjut, berikut langkah-langkahnya:
 5. Setelah di unlock, Anda dapat merubah data aksi / tindak lanjut.
 
     > {danger.fa-warning} Jika tidak terdapat tombol ![image]({{$baseUrl}}/public/img/docs/draft.png) pastikan Anda mempunyai permisi untuk meng-unlock data aksi / tindak lanjut. Jika terdapat data referensi ke farmasi, maka yang harus di unlock adalah data farmasinya terlebih dahulu.
+
+<a name="video">
+
+## [Video](#)
+<iframe src="https://drive.google.com/file/d/1wSTxHMPMyX-b8kKUQonBJ3Ld_Sci2-9t/preview" width="200" height="150" allow="autoplay"></iframe>
+<iframe src="https://drive.google.com/file/d/1psziE2GZFXMPzctmN2YcVVA-PQkxUpUd/preview" width="200" height="150" allow="autoplay"></iframe>
+<iframe src="https://drive.google.com/file/d/14wDXx_4KWcmfsELsWL6JWmUS0uZ0pxcj/preview" width="200" height="150" allow="autoplay"></iframe>
+<iframe src="https://drive.google.com/file/d/1LSXy6nLrNu9T8Xj5mFzu_PooQXTcLcAU/preview" width="200" height="150" allow="autoplay"></iframe>
 
 <a name="baca-juga">
 
