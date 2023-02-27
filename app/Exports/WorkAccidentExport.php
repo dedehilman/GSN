@@ -27,7 +27,8 @@ class WorkAccidentExport implements ShouldAutoSize, FromView
                 ->join('actions', function ($join) {
                     $join->on('actions.model_id', '=', 'work_accidents.id');
                     $join->on('actions.model_type', '=', DB::Raw('"App\\\\Models\\\\WorkAccident"'));
-                });
+                })
+                ->select('work_accidents.*');
         if($this->reportModel->start_date) {
             $datas->whereDate('transaction_date', '>=', $this->reportModel->start_date);
         }

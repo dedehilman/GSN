@@ -27,7 +27,8 @@ class OutpatientExport implements ShouldAutoSize, FromView
                 ->join('actions', function ($join) {
                     $join->on('actions.model_id', '=', 'outpatients.id');
                     $join->on('actions.model_type', '=', DB::Raw('"App\\\\Models\\\\Outpatient"'));
-                });
+                })
+                ->select('outpatients.*');
         if($this->reportModel->start_date) {
             $datas->whereDate('transaction_date', '>=', $this->reportModel->start_date);
         }

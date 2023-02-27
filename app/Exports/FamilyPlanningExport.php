@@ -27,7 +27,8 @@ class FamilyPlanningExport implements ShouldAutoSize, FromView
                 ->join('actions', function ($join) {
                     $join->on('actions.model_id', '=', 'family_plannings.id');
                     $join->on('actions.model_type', '=', DB::Raw('"App\\\\Models\\\\FamilyPlanning"'));
-                });
+                })
+                ->select('family_plannings.*');
         if($this->reportModel->start_date) {
             $datas->whereDate('transaction_date', '>=', $this->reportModel->start_date);
         }

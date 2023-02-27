@@ -27,7 +27,8 @@ class PlanoTestExport implements ShouldAutoSize, FromView
                 ->join('actions', function ($join) {
                     $join->on('actions.model_id', '=', 'plano_tests.id');
                     $join->on('actions.model_type', '=', DB::Raw('"App\\\\Models\\\\PlanoTest"'));
-                });
+                })
+                ->select('plano_tests.*');
         if($this->reportModel->start_date) {
             $datas->whereDate('transaction_date', '>=', $this->reportModel->start_date);
         }
