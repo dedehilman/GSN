@@ -12,6 +12,7 @@ use Lang;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Action;
+use Illuminate\Support\Str;
 
 class PharmacyController extends ApiController
 {
@@ -327,5 +328,59 @@ class PharmacyController extends ApiController
                 'data' => '',
             ]);
         }
+    }
+
+    public function validateOnStore(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'transaction_date' => 'required',
+            'transaction_no' => 'required',
+            'clinic_id' => 'required',
+        ]);
+
+        if($request->pharmacy_detail_id)
+        {
+            for($i=0; $i<count($request->pharmacy_detail_id); $i++)
+            {
+                if(!$request->medicine_id[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Product")]));
+                }
+                if(!$request->medicine_rule_id[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Medicine Rule")]));
+                }
+                if(!$request->actual_qty[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Actual Qty")]));
+                }
+            }    
+        }
+
+        return $validator->errors()->all();
+    }
+
+    public function validateOnUpdate(Request $request, int $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'transaction_date' => 'required',
+            'transaction_no' => 'required',
+            'clinic_id' => 'required',
+        ]);
+
+        if($request->pharmacy_detail_id)
+        {
+            for($i=0; $i<count($request->pharmacy_detail_id); $i++)
+            {
+                if(!$request->medicine_id[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Product")]));
+                }
+                if(!$request->medicine_rule_id[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Medicine Rule")]));
+                }
+                if(!$request->actual_qty[$i]) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.required', ['attribute' => "[".($i+1)."] ".Lang::get("Actual Qty")]));
+                }
+            }    
+        }
+
+        return $validator->errors()->all();
     }
 }

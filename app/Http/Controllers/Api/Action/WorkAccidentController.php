@@ -9,6 +9,7 @@ use App\Models\WorkAccident;
 use Carbon\Carbon;
 use Lang;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class WorkAccidentController extends ActionController
 {

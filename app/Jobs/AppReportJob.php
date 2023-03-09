@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Carbon\Carbon;
 use Excel;
 use App;
+use Illuminate\Support\Facades\Log;
 
 class AppReportJob implements ShouldQueue
 {
@@ -60,6 +61,7 @@ class AppReportJob implements ShouldQueue
         } catch (\Throwable $th) {
             $this->reportModel->status = '3';
             $this->reportModel->message = $th->getMessage();
+            Log::error($th);
         } finally {
             $this->reportModel->finished_at = Carbon::now()->format('Y-m-d H:i:s');
             $this->reportModel->save();

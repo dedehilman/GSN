@@ -86,4 +86,70 @@ class FamilyPlanningController extends ApiController
             ]);
         }
     }
+
+    public function validateOnStore(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            // 'transaction_no' => 'required|max:255|unique:family_plannings',
+			'transaction_no' => 'required|max:255',
+            'transaction_date' => 'required',
+            'clinic_id' => 'required',
+            'patient_id' => 'required',
+            'medical_staff_id' => 'required',
+            'reference_type' => 'required',
+        ]);
+
+        if($request->reference_type == 'Internal') {
+            $validator->addRules([
+                'reference_clinic_id'=> 'required'
+            ]);
+        } else if($request->reference_type == 'External') {
+            $validator->addRules([
+                'reference_id'=> 'required',
+            ]);
+        }
+
+        if($request->for_relationship == 1) {
+            $validator->addRules([
+                'patient_relationship_id'=> 'required'
+            ]);
+        }
+
+        if($validator->fails()){
+            return $validator->errors()->all();
+        }
+    }
+
+    public function validateOnUpdate(Request $request, int $id)
+    {
+        $validator = Validator::make($request->all(), [
+            // 'transaction_no' => 'required|max:255|unique:family_plannings,transaction_no,'.$id,
+			'transaction_no' => 'required|max:255',
+            'transaction_date' => 'required',
+            'clinic_id' => 'required',
+            'patient_id' => 'required',
+            'medical_staff_id' => 'required',
+            'reference_type' => 'required',
+        ]);
+
+        if($request->reference_type == 'Internal') {
+            $validator->addRules([
+                'reference_clinic_id'=> 'required'
+            ]);
+        } else if($request->reference_type == 'External') {
+            $validator->addRules([
+                'reference_id'=> 'required',
+            ]);
+        }
+
+        if($request->for_relationship == 1) {
+            $validator->addRules([
+                'patient_relationship_id'=> 'required'
+            ]);
+        }
+
+        if($validator->fails()){
+            return $validator->errors()->all();
+        }
+    }
 }

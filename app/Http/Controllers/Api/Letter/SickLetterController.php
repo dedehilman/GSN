@@ -205,4 +205,52 @@ class SickLetterController extends ApiController
             $dt->setAttribute("transaction", $dt->referenceTransaction());
         }
     }
+
+    public function validateOnStore(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            // 'transaction_no' => 'required|max:255|unique:sick_letters',
+			'transaction_no' => 'required|max:255',
+            'transaction_date' => 'required',
+            'clinic_id' => 'required',
+            'patient_id' => 'required',
+            'medical_staff_id' => 'required',
+            'num_of_days' => 'required',
+            'remark'=> 'max:255'
+        ]);
+
+        if($request->for_relationship == 1) {
+            $validator->addRules([
+                'patient_relationship_id'=> 'required'
+            ]);
+        }
+
+        if($validator->fails()){
+            return $validator->errors()->all();
+        }
+    }
+
+    public function validateOnUpdate(Request $request, int $id)
+    {
+        $validator = Validator::make($request->all(), [
+            // 'transaction_no' => 'required|max:255|unique:sick_letters,transaction_no,'.$id,
+			'transaction_no' => 'required|max:255',
+            'transaction_date' => 'required',
+            'clinic_id' => 'required',
+            'patient_id' => 'required',
+            'medical_staff_id' => 'required',
+            'num_of_days' => 'required',
+            'remark'=> 'max:255'
+        ]);
+
+        if($request->for_relationship == 1) {
+            $validator->addRules([
+                'patient_relationship_id'=> 'required'
+            ]);
+        }
+
+        if($validator->fails()){
+            return $validator->errors()->all();
+        }
+    }
 }

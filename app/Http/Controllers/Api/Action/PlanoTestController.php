@@ -13,6 +13,7 @@ use App\Mail\AppMail;
 use Storage;
 use App\Traits\MailServerTrait;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PlanoTestController extends ActionController
 {

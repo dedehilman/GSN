@@ -9,6 +9,7 @@ use App\Models\Outpatient;
 use Carbon\Carbon;
 use Lang;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class OutpatientController extends ActionController
 {
