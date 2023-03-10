@@ -34,7 +34,7 @@ class PlanoTestController extends ActionController
 				$count = (int) Str::substr($transactionNo->transaction_no, -5);				
 			} catch (\Throwable $th) {
 			}
-            $request['transaction_no'] = 'PPT-'.Carbon::now()->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
+            $request['transaction_no'] = 'PPT-'.Carbon::parse($request->transaction_date)->isoFormat('YYYYMMDD').'-'.str_pad(($count +1), 5, '0', STR_PAD_LEFT);
 
             $validateOnStore = $this->validateOnStore($request);
             if($validateOnStore) {
