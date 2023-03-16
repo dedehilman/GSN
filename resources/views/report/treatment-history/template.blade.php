@@ -79,7 +79,7 @@
                             if($prescription != "") {
                                 $prescription .= "<br/>";
                             }
-                            $prescription .= $pre->medicine->name." ".$pre->medicineRule->name;
+                            $prescription .= $pre->medicine->name;
                         }
                     @endphp
                     {!!$prescription!!}

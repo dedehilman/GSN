@@ -49,7 +49,7 @@
                                 $price .= "<br/>";
                                 $total .= "<br/>";
                             }
-                            $prescription .= $pre->medicine->name." ".$pre->medicineRule->name;
+                            $prescription .= $pre->medicine->name;
                             $qty .= $pre->qty;
                             $price .= number_format($pre->price, 2);
                             $total .= number_format($pre->total, 2);
