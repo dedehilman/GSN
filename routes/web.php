@@ -101,6 +101,15 @@ Route::post('/master/attribute/datatable', [App\Http\Controllers\Master\Attribut
 Route::post('/master/attribute/datatable/select', [App\Http\Controllers\Master\AttributeController::class, 'datatableSelect'])->name('attribute.datatable.select');
 Route::get('/master/attribute/select', [App\Http\Controllers\Master\AttributeController::class, 'select'])->name('attribute.select');
 Route::resource('master/attribute', App\Http\Controllers\Master\AttributeController::class);
+
+Route::get('/master/employee/uploader', [App\Http\Controllers\Master\EmployeeUploaderController::class , 'uploader'])->name('employee.uploader');
+Route::get('/master/employee/uploader/index', [App\Http\Controllers\Master\EmployeeUploaderController::class , 'index'])->name('employee.uploader.index');
+Route::post('/master/employee/uploader/datatable', [App\Http\Controllers\Master\EmployeeUploaderController::class , 'datatable'])->name('employee.uploader.datatable');
+Route::post('/master/employee/uploader/upload', [App\Http\Controllers\Master\EmployeeUploaderController::class , 'uploadProcess'])->name('employee.uploader.upload');
+Route::post('/master/employee/uploader/validate', [App\Http\Controllers\Master\EmployeeUploaderController::class , 'validateProcess'])->name('employee.uploader.validate');
+Route::post('/master/employee/uploader/commit', [App\Http\Controllers\Master\EmployeeUploaderController::class , 'commitProcess'])->name('employee.uploader.commit');
+Route::get('/master/employee/uploader/{id}', [App\Http\Controllers\Master\EmployeeUploaderController::class , 'show'])->name('employee.uploader.show');
+
 Route::post('/master/employee/datatable', [App\Http\Controllers\Master\EmployeeController::class, 'datatable'])->name('employee.datatable');
 Route::post('/master/employee/datatable/select', [App\Http\Controllers\Master\EmployeeController::class, 'datatableSelect'])->name('employee.datatable.select');
 Route::get('/master/employee/select', [App\Http\Controllers\Master\EmployeeController::class, 'select'])->name('employee.select');
@@ -296,6 +305,15 @@ Route::group(['prefix' => 'action', 'as' => 'action.'], function () {
     Route::post('outpatient/generate-prescription', [App\Http\Controllers\Action\OutpatientController::class, 'generatePrescription'])->name('outpatient.generate-prescription');
     Route::resource('outpatient', App\Http\Controllers\Action\OutpatientController::class);
 });
+
+
+Route::get('/master/employee-relationship/uploader', [App\Http\Controllers\Master\EmployeeRelationshipUploaderController::class , 'uploader'])->name('employee-relationship.uploader');
+Route::get('/master/employee-relationship/uploader/index', [App\Http\Controllers\Master\EmployeeRelationshipUploaderController::class , 'index'])->name('employee-relationship.uploader.index');
+Route::post('/master/employee-relationship/uploader/datatable', [App\Http\Controllers\Master\EmployeeRelationshipUploaderController::class , 'datatable'])->name('employee-relationship.uploader.datatable');
+Route::post('/master/employee-relationship/uploader/upload', [App\Http\Controllers\Master\EmployeeRelationshipUploaderController::class , 'uploadProcess'])->name('employee-relationship.uploader.upload');
+Route::post('/master/employee-relationship/uploader/validate', [App\Http\Controllers\Master\EmployeeRelationshipUploaderController::class , 'validateProcess'])->name('employee-relationship.uploader.validate');
+Route::post('/master/employee-relationship/uploader/commit', [App\Http\Controllers\Master\EmployeeRelationshipUploaderController::class , 'commitProcess'])->name('employee-relationship.uploader.commit');
+Route::get('/master/employee-relationship/uploader/{id}', [App\Http\Controllers\Master\EmployeeRelationshipUploaderController::class , 'show'])->name('employee-relationship.uploader.show');
 
 Route::post('/master/employee-relationship/datatable/select', [App\Http\Controllers\Master\EmployeeRelationshipController::class, 'datatableSelect'])->name('employee-relationship.datatable.select');
 Route::get('/master/employee-relationship/select', [App\Http\Controllers\Master\EmployeeRelationshipController::class, 'select'])->name('employee-relationship.select');
