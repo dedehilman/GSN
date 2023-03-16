@@ -83,6 +83,16 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <label class="col-md-2 col-form-label">{{__("Patient")}}</label>
+                                                        <div class="col-md-4">
+                                                            <div class="input-group">
+                                                                <input type="text" id="patient_name_custom" class="form-control" readonly>
+                                                                <input type="hidden" name="patient_id" id="patient_id_custom">
+                                                                <div class="input-group-append">
+                                                                    <span class="input-group-text show-modal-select" data-title="{{__('Patient List')}}" data-url="{{route('employee.select')}}" data-handler="onSelectedPatientCustom"><i class="fas fa-search"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-sm-12 text-right">
@@ -100,6 +110,7 @@
                                                 <th><input type='checkbox' name="select-all"/></th>
                                                 <th>{{ __("Transaction No") }}</th>
                                                 <th>{{ __("Transaction Date") }}</th>
+                                                <th>{{ __("Patient") }}</th>
                                                 <th>{{ __("Clinic") }}</th>
                                             </tr>
                                         </thead>
@@ -200,6 +211,7 @@
                                                 <th></th>
                                                 <th>{{ __("Transaction No") }}</th>
                                                 <th>{{ __("Transaction Date") }}</th>
+                                                <th>{{ __("Patient") }}</th>
                                                 <th>{{ __("Clinic") }}</th>
                                                 <th>{{ __("Transaction No Ref") }}</th>
                                             </tr>
@@ -276,6 +288,11 @@
                         defaultContent: '',
                     },
                     {
+                        data: 'referenceTransaction.patient.name',
+                        sortable: false,
+                        defaultContent: '',
+                    },
+                    {
                         data: 'clinic.name',
                         name: 'clinic_id',
                         defaultContent: '',
@@ -290,17 +307,17 @@
                     {
                         extend: 'excel',
                         title: '{{__("Pharmacy")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        exportOptions: { columns: [3,4,5,6,7] }
                     },
                     {
                         extend: 'csv',
                         title: '{{__("Pharmacy")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        exportOptions: { columns: [3,4,5,6,7] }
                     },
                     {
                         extend: 'pdf',
                         title: '{{__("Pharmacy")}}',
-                        exportOptions: { columns: [3,4,5,6] }
+                        exportOptions: { columns: [3,4,5,6,7] }
                     }
                 ],
             });
@@ -337,6 +354,11 @@
                     {
                         data: 'transaction_date',
                         name: 'transaction_date',
+                        defaultContent: '',
+                    },
+                    {
+                        data: 'patient_name',
+                        name: 'patient_name',
                         defaultContent: '',
                     },
                     {
@@ -397,6 +419,11 @@
         function onSelectedClinicCustom(data) {
             $('#clinic_id_custom').val(data[0].id);
             $('#clinic_name_custom').val(data[0].name);
+        }
+
+        function onSelectedPatientCustom(data) {
+            $('#patient_id_custom').val(data[0].id);
+            $('#patient_name_custom').val(data[0].name);
         }
 
         function getDatatableParameterCustom(data) {

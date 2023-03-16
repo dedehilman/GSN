@@ -24,7 +24,7 @@ class Pharmacy extends Model
     public function referenceTransaction()
     {
         if($this->model_type)
-            return $this->model_type::find($this->model_id);
+            return $this->model_type::with("patient")->find($this->model_id);
         
         return null;
     }

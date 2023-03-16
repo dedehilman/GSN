@@ -332,7 +332,8 @@ class PharmacyController extends AppCrudController
                         $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\FamilyPlanning"'));
                     })
                     ->join('clinics', 'clinics.id', '=', 'family_plannings.clinic_id')
-                    ->select('family_plannings.id','family_plannings.transaction_no','family_plannings.transaction_date','clinics.name AS clinic_name','prescriptions.model_type','clinics.id AS clinic_id')
+                    ->join('employees', 'employees.id', '=', 'family_plannings.patient_id')
+                    ->select('family_plannings.id','family_plannings.transaction_no','family_plannings.transaction_date','clinics.name AS clinic_name','prescriptions.model_type','clinics.id AS clinic_id','employees.name AS patient_name','employees.id AS patient_id')
                     ->whereNotIn('family_plannings.id', $ids)
                     ->distinct();
             if(($request->parameters['queryBuilder'] ?? null) == null || $request->parameters['queryBuilder'] == '1') {
@@ -347,7 +348,8 @@ class PharmacyController extends AppCrudController
                         $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\Outpatient"'));
                     })
                     ->join('clinics', 'clinics.id', '=', 'outpatients.clinic_id')
-                    ->select('outpatients.id','outpatients.transaction_no','outpatients.transaction_date','clinics.name AS clinic_name','prescriptions.model_type','clinics.id AS clinic_id')
+                    ->join('employees', 'employees.id', '=', 'outpatients.patient_id')
+                    ->select('outpatients.id','outpatients.transaction_no','outpatients.transaction_date','clinics.name AS clinic_name','prescriptions.model_type','clinics.id AS clinic_id','employees.name AS patient_name','employees.id AS patient_id')
                     ->whereNotIn('outpatients.id', $ids)
                     ->distinct();
             if(($request->parameters['queryBuilder'] ?? null) == null || $request->parameters['queryBuilder'] == '1') {
@@ -362,7 +364,8 @@ class PharmacyController extends AppCrudController
                         $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\PlanoTest"'));
                     })
                     ->join('clinics', 'clinics.id', '=', 'plano_tests.clinic_id')
-                    ->select('plano_tests.id','plano_tests.transaction_no','plano_tests.transaction_date','clinics.name AS clinic_name','prescriptions.model_type','clinics.id AS clinic_id')
+                    ->join('employees', 'employees.id', '=', 'plano_tests.patient_id')
+                    ->select('plano_tests.id','plano_tests.transaction_no','plano_tests.transaction_date','clinics.name AS clinic_name','prescriptions.model_type','clinics.id AS clinic_id','employees.name AS patient_name','employees.id AS patient_id')
                     ->whereNotIn('plano_tests.id', $ids)
                     ->distinct();
             if(($request->parameters['queryBuilder'] ?? null) == null || $request->parameters['queryBuilder'] == '1') {
@@ -377,7 +380,8 @@ class PharmacyController extends AppCrudController
                         $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\WorkAccident"'));
                     })
                     ->join('clinics', 'clinics.id', '=', 'work_accidents.clinic_id')
-                    ->select('work_accidents.id','work_accidents.transaction_no','work_accidents.transaction_date','clinics.name AS clinic_name','prescriptions.model_type','clinics.id AS clinic_id')
+                    ->join('employees', 'employees.id', '=', 'work_accidents.patient_id')
+                    ->select('work_accidents.id','work_accidents.transaction_no','work_accidents.transaction_date','clinics.name AS clinic_name','prescriptions.model_type','clinics.id AS clinic_id','employees.name AS patient_name','employees.id AS patient_id')
                     ->whereNotIn('work_accidents.id', $ids)
                     ->distinct();
             if(($request->parameters['queryBuilder'] ?? null) == null || $request->parameters['queryBuilder'] == '1') {
