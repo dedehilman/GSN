@@ -298,7 +298,8 @@ function getUplNo()
 function getAge($birthDate) {
     if($birthDate) {
         $age = Carbon::parse($birthDate)->diff(Carbon::now())->y;
-        return $age;
+        $m = Carbon::parse($birthDate)->diff(Carbon::now())->m;
+        return $age.".".$m;
     }
 
     return null;
