@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Action;
 use Illuminate\Support\Str;
+use App\Models\Employee;
 
 class PharmacyController extends ApiController
 {
@@ -205,7 +206,7 @@ class PharmacyController extends ApiController
                         $join->on('prescriptions.model_id', '=', 'family_plannings.id');
                         $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\FamilyPlanning"'));
                     })
-                    ->select('family_plannings.id','family_plannings.transaction_no','family_plannings.transaction_date','clinic_id','prescriptions.model_type')
+                    ->select('family_plannings.id','family_plannings.transaction_no','family_plannings.transaction_date','clinic_id','prescriptions.model_type','patient_id')
                     ->whereNotIn('family_plannings.id', $ids)
                     ->distinct();
             $q1 = $this->queryBuilder(['family_plannings'], $q1);
@@ -217,7 +218,7 @@ class PharmacyController extends ApiController
                         $join->on('prescriptions.model_id', '=', 'outpatients.id');
                         $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\Outpatient"'));
                     })
-                    ->select('outpatients.id','outpatients.transaction_no','outpatients.transaction_date','clinic_id','prescriptions.model_type')
+                    ->select('outpatients.id','outpatients.transaction_no','outpatients.transaction_date','clinic_id','prescriptions.model_type','patient_id')
                     ->whereNotIn('outpatients.id', $ids)
                     ->distinct();
             $q2 = $this->queryBuilder(['outpatients'], $q2);
@@ -229,7 +230,7 @@ class PharmacyController extends ApiController
                         $join->on('prescriptions.model_id', '=', 'plano_tests.id');
                         $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\PlanoTest"'));
                     })
-                    ->select('plano_tests.id','plano_tests.transaction_no','plano_tests.transaction_date','clinic_id','prescriptions.model_type')
+                    ->select('plano_tests.id','plano_tests.transaction_no','plano_tests.transaction_date','clinic_id','prescriptions.model_type','patient_id')
                     ->whereNotIn('plano_tests.id', $ids)
                     ->distinct();
             $q3 = $this->queryBuilder(['plano_tests'], $q3);
@@ -241,7 +242,7 @@ class PharmacyController extends ApiController
                         $join->on('prescriptions.model_id', '=', 'work_accidents.id');
                         $join->on('prescriptions.model_type', '=', DB::Raw('"App\\\\Models\\\\WorkAccident"'));
                     })
-                    ->select('work_accidents.id','work_accidents.transaction_no','work_accidents.transaction_date','clinic_id','prescriptions.model_type')
+                    ->select('work_accidents.id','work_accidents.transaction_no','work_accidents.transaction_date','clinic_id','prescriptions.model_type','patient_id')
                     ->whereNotIn('work_accidents.id', $ids)
                     ->distinct();
             $q4 = $this->queryBuilder(['work_accidents'], $q4);
@@ -272,6 +273,7 @@ class PharmacyController extends ApiController
 
             foreach ($data as $dt) {
                 $dt->clinic = Clinic::find($dt->clinic_id);
+                $dt->patient = Employee::find($dt->patient_id);
             }
 
             return response()->json([
