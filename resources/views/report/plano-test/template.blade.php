@@ -26,39 +26,61 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($datas as $index => $data)
-            <tr>
-                <td valign="top">{{$data->patient->afdelink->name ?? ""}}</td>
-                <td valign="top">{{$index+1}}</td>
-                <td valign="top">{{$data->patient->name}}</td>
-                <td valign="top">{{$data->patient->address}}</td>
-                <td valign="top">{{__($data->result)}}</td>
-                <td valign="top"></td>
-                <td valign="top">
-                    @php
-                        $prescription = "";
-                        $qty = "";
-                        $price = "";
-                        $total = "";
-                        $cost = 0;
-                        foreach ($data->prescriptions ?? [] as $pre) {
-                            if($prescription != "") {
-                                $prescription .= "<br/>";
-                                $qty .= "<br/>";
-                            }
-                            $prescription .= $pre->medicine->name;
-                            $qty .= $pre->qty;
-                            $price .= number_format($pre->price, 2);
-                            $total .= number_format($pre->total, 2);
-                            $cost += $pre->total;
+        @php
+            $dataArr = [];
+            foreach ($datas as $index => $data) {
+                $dataArrTmp = [];
+                $dataTmp[0] = $data->patient->afdelink->name ?? "";
+                $dataTmp[1] = $index+1;
+                $dataTmp[2] = $data->patient->name;
+                $dataTmp[3] = $data->patient->address;
+                $dataTmp[4] = $data->result;
+                $dataTmp[5] = "";
+                $dataTmp[6] = "";
+                $dataTmp[7] = "";
+                $dataTmp[8] = "";
+                $dataTmp[9] = "";
+                $dataTmp[10] = "";
+                array_push($dataArrTmp, $dataTmp);
+
+                $cost = 0;
+                foreach ($data->prescriptions ?? [] as $index => $pre) {
+                    if(count($dataArrTmp) <= $index) {
+                        $dataTmpBlank = [];
+                        for ($i=0; $i < 11; $i++) { 
+                            $dataTmpBlank[$i] = "";
                         }
-                    @endphp
-                    {!!$prescription!!}
-                </td>
-                <td valign="top">{!!$qty!!}</td>
-                <td valign="top" align="right">{!!$price!!}</td>
-                <td valign="top" align="right">{!!$total!!}</td>
-                <td valign="top" align="right">{{number_format($cost, 2)}}</td>
+                        array_push($dataArrTmp, $dataTmpBlank);
+                    }
+
+                    $dataArrTmp[$index][6] = $pre->medicine->name;
+                    $dataArrTmp[$index][7] = $pre->qty;
+                    $dataArrTmp[$index][8] = $pre->price;
+                    $dataArrTmp[$index][9] = $pre->total;
+                    $cost += $pre->total;
+                    if($index + 1 == count($data->prescriptions)) {
+                        $dataArrTmp[0][10] = $cost;
+                    }
+                }
+
+                foreach ($dataArrTmp as $index => $data) {
+                    array_push($dataArr, $data);    
+                }
+            }
+        @endphp
+        @foreach ($dataArr as $index => $data)
+            <tr>
+                <td valign="top">{{$data[0]}}</td>
+                <td valign="top">{{$data[1]}}</td>
+                <td valign="top">{{$data[2]}}</td>
+                <td valign="top">{{$data[3]}}</td>
+                <td valign="top">{{__($data[4])}}</td>
+                <td valign="top">{{$data[5]}}</td>
+                <td valign="top">{{$data[6]}}</td>
+                <td valign="top" align="right">{{$data[7]}}</td>
+                <td valign="top" align="right">{{$data[8]}}</td>
+                <td valign="top" align="right">{{$data[9]}}</td>
+                <td valign="top" align="right">{{$data[10]}}</td>
             </tr>
         @endforeach
     </tbody>

@@ -25,43 +25,65 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($datas as $index => $data)
-            <tr>
-                <td valign="top">{{$index+1}}</td>
-                <td valign="top">{{$data->transaction_date}}</td>
-                <td valign="top">{{$data->patient->name}}</td>
-                <td valign="top">{{$data->for_relationship == 0 ? $data->patient->name : $data->patientRelationship->name}}</td>
-                <td valign="top">{{getAge($data->for_relationship == 0 ? $data->patient->birth_date : $data->patientRelationship->birth_date)}}</td>
-                <td valign="top">{{$data->patient->address}}</td>
-                <td valign="top">{{$data->patient->code}}</td>
-                <td valign="top">{{$data->familyPlanningCategory->name ?? ""}}</td>
-                <td valign="top">
-                    @php
-                        $prescription = "";
-                        $qty = "";
-                        $price = "";
-                        $total = "";
-                        $cost = 0;
-                        foreach ($data->prescriptions ?? [] as $pre) {
-                            if($prescription != "") {
-                                $prescription .= "<br/>";
-                                $qty .= "<br/>";
-                                $price .= "<br/>";
-                                $total .= "<br/>";
-                            }
-                            $prescription .= $pre->medicine->name;
-                            $qty .= $pre->qty;
-                            $price .= number_format($pre->price, 2);
-                            $total .= number_format($pre->total, 2);
-                            $cost += $pre->total;
+        @php
+            $dataArr = [];
+            foreach ($datas as $index => $data) {
+                $dataArrTmp = [];
+                $dataTmp[0] = $index+1;
+                $dataTmp[1] = $data->transaction_date;
+                $dataTmp[2] = $data->patient->name;
+                $dataTmp[3] = $data->for_relationship == 0 ? $data->patient->name : $data->patientRelationship->name;
+                $dataTmp[4] = getAge($data->for_relationship == 0 ? $data->patient->birth_date : $data->patientRelationship->birth_date);
+                $dataTmp[5] = $data->patient->address;
+                $dataTmp[6] = $data->patient->code;
+                $dataTmp[7] = $data->familyPlanningCategory->name ?? "";
+                $dataTmp[8] = "";
+                $dataTmp[9] = "";
+                $dataTmp[10] = "";
+                $dataTmp[11] = "";
+                $dataTmp[12] = "";
+                array_push($dataArrTmp, $dataTmp);
+
+                $cost = 0;
+                foreach ($data->prescriptions ?? [] as $index => $pre) {
+                    if(count($dataArrTmp) <= $index) {
+                        $dataTmpBlank = [];
+                        for ($i=0; $i < 13; $i++) { 
+                            $dataTmpBlank[$i] = "";
                         }
-                    @endphp
-                    {!!$prescription!!}
-                </td>
-                <td valign="top">{!!$qty!!}</td>
-                <td valign="top" align="right">{!!$price!!}</td>
-                <td valign="top" align="right">{!!$total!!}</td>
-                <td valign="top" align="right">{{number_format($cost, 2)}}</td>
+                        array_push($dataArrTmp, $dataTmpBlank);
+                    }
+
+                    $dataArrTmp[$index][8] = $pre->medicine->name;
+                    $dataArrTmp[$index][9] = $pre->qty;
+                    $dataArrTmp[$index][10] = $pre->price;
+                    $dataArrTmp[$index][11] = $pre->total;
+                    $cost += $pre->total;
+                    if($index + 1 == count($data->prescriptions)) {
+                        $dataArrTmp[0][12] = $cost;
+                    }
+                }
+
+                foreach ($dataArrTmp as $index => $data) {
+                    array_push($dataArr, $data);    
+                }
+            }
+        @endphp
+        @foreach ($dataArr as $index => $data)
+            <tr>
+                <td valign="top">{{$data[0]}}</td>
+                <td valign="top">{{$data[1]}}</td>
+                <td valign="top">{{$data[2]}}</td>
+                <td valign="top">{{$data[3]}}</td>
+                <td valign="top">{{$data[4]}}</td>
+                <td valign="top">{{$data[5]}}</td>
+                <td valign="top">{{$data[6]}}</td>
+                <td valign="top">{{$data[7]}}</td>
+                <td valign="top">{{$data[8]}}</td>
+                <td valign="top" align="right">{{$data[9]}}</td>
+                <td valign="top" align="right">{{$data[10]}}</td>
+                <td valign="top" align="right">{{$data[11]}}</td>
+                <td valign="top" align="right">{{$data[12]}}</td>
             </tr>
         @endforeach
     </tbody>
