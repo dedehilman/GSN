@@ -32,8 +32,8 @@
                 $dataTmp[0] = $index+1;
                 $dataTmp[1] = $data->transaction_date;
                 $dataTmp[2] = $data->patient->name;
-                $dataTmp[3] = $data->for_relationship == 0 ? $data->patient->name : $data->patientRelationship->name;
-                $dataTmp[4] = getAge($data->for_relationship == 0 ? $data->patient->birth_date : $data->patientRelationship->birth_date);
+                $dataTmp[3] = ($data->for_relationship == 0 || !$data->patientRelationship) ? $data->patient->name : $data->patientRelationship->name;
+                $dataTmp[4] = getAge(($data->for_relationship == 0 || !$data->patientRelationship) ? $data->patient->birth_date : $data->patientRelationship->birth_date);
                 $dataTmp[5] = $data->patient->address;
                 $dataTmp[6] = $data->patient->code;
                 $dataTmp[7] = $data->familyPlanningCategory->name ?? "";
