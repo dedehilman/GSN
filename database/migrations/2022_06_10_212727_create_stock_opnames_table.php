@@ -18,7 +18,7 @@ class CreateStockOpnamesTable extends Migration
             $table->unsignedBigInteger('period_id');
             $table->unsignedBigInteger('medicine_id');
             $table->unsignedBigInteger('clinic_id');
-            $table->decimal('qty', 5, 2);
+            $table->decimal('qty', 10, 2);
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

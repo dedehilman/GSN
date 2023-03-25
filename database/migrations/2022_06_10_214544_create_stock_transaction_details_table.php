@@ -17,8 +17,8 @@ class CreateStockTransactionDetailsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('stock_transaction_id');
             $table->unsignedBigInteger('medicine_id');
-            $table->decimal('qty', 5, 2);
-            $table->decimal('stock_qty', 5, 2);
+            $table->decimal('qty', 10, 2);
+            $table->decimal('stock_qty', 10, 2);
             $table->string('remark')->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();

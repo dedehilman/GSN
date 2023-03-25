@@ -19,8 +19,8 @@ class CreatePrescriptionsTable extends Migration
             $table->string('model_type')->nullable();
             $table->unsignedBigInteger('medicine_id');
             $table->unsignedBigInteger('medicine_rule_id');
-            $table->decimal('stock', 5, 2);
-            $table->decimal('qty', 5, 2);
+            $table->decimal('stock', 10, 2);
+            $table->decimal('qty', 10, 2);
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
