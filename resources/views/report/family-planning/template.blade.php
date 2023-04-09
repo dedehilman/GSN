@@ -49,7 +49,7 @@
                 foreach ($data->prescriptions ?? [] as $index => $pre) {
                     if(count($dataArrTmp) <= $index) {
                         $dataTmpBlank = [];
-                        for ($i=0; $i < 13; $i++) { 
+                        for ($i=0; $i < 14; $i++) { 
                             $dataTmpBlank[$i] = "";
                         }
                         array_push($dataArrTmp, $dataTmpBlank);

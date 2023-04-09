@@ -61,7 +61,7 @@
                 foreach ($data->diagnoses ?? [] as $index => $diagnosa) {
                     if(count($dataArrTmp) <= $index) {
                         $dataTmpBlank = [];
-                        for ($i=0; $i < 18; $i++) { 
+                        for ($i=0; $i < 19; $i++) { 
                             $dataTmpBlank[$i] = "";
                         }
                         array_push($dataArrTmp, $dataTmpBlank);
@@ -78,7 +78,7 @@
                 foreach ($data->prescriptions ?? [] as $index => $pre) {
                     if(count($dataArrTmp) <= $index) {
                         $dataTmpBlank = [];
-                        for ($i=0; $i < 18; $i++) { 
+                        for ($i=0; $i < 19; $i++) { 
                             $dataTmpBlank[$i] = "";
                         }
                         array_push($dataArrTmp, $dataTmpBlank);
@@ -116,7 +116,7 @@
                     <td valign="top" rowspan="{{$data[18]}}">{{$data[8]}}</td>
                     <td valign="top" rowspan="{{$data[18]}}">{{$data[9]}}</td>
                 @endif
-                <td valign="top" rowspan="{{$data[19]}}">{{$data[10]}}{{$data[19]}}</td>
+                <td valign="top">{{$data[10]}}</td>
                 <td valign="top">{{$data[11]}}</td>
                 <td valign="top" align="right">{{$data[12]}}</td>
                 <td valign="top" align="right">{{$data[13]}}</td>
