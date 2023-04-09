@@ -42,6 +42,7 @@
                 $dataTmp[10] = "";
                 $dataTmp[11] = "";
                 $dataTmp[12] = "";
+                $dataTmp[13] = 1;
                 array_push($dataArrTmp, $dataTmp);
 
                 $cost = 0;
@@ -62,6 +63,7 @@
                     if($index + 1 == count($data->prescriptions)) {
                         $dataArrTmp[0][12] = $cost;
                     }
+                    $dataArrTmp[0][13] = $index+1;
                 }
 
                 foreach ($dataArrTmp as $index => $data) {
@@ -71,14 +73,16 @@
         @endphp
         @foreach ($dataArr as $index => $data)
             <tr>
-                <td valign="top">{{$data[0]}}</td>
-                <td valign="top">{{$data[1]}}</td>
-                <td valign="top">{{$data[2]}}</td>
-                <td valign="top">{{$data[3]}}</td>
-                <td valign="top">{{$data[4]}}</td>
-                <td valign="top">{{$data[5]}}</td>
-                <td valign="top">{{$data[6]}}</td>
-                <td valign="top">{{$data[7]}}</td>
+                @if ($data[0] != "")
+                    <td valign="top" rowspan="{{$data[13]}}">{{$data[0]}}</td>
+                    <td valign="top" rowspan="{{$data[13]}}">{{$data[1]}}</td>
+                    <td valign="top" rowspan="{{$data[13]}}">{{$data[2]}}</td>
+                    <td valign="top" rowspan="{{$data[13]}}">{{$data[3]}}</td>
+                    <td valign="top" rowspan="{{$data[13]}}">{{$data[4]}}</td>
+                    <td valign="top" rowspan="{{$data[13]}}">{{$data[5]}}</td>
+                    <td valign="top" rowspan="{{$data[13]}}">{{$data[6]}}</td>
+                    <td valign="top" rowspan="{{$data[13]}}">{{$data[7]}}</td>
+                @endif
                 <td valign="top">{{$data[8]}}</td>
                 <td valign="top" align="right">{{$data[9]}}</td>
                 <td valign="top" align="right">{{$data[10]}}</td>

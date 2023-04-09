@@ -56,6 +56,7 @@
                 $dataTmp[14] = "";
                 $dataTmp[15] = "";
                 $dataTmp[16] = "";
+                $dataTmp[17] = 1;
                 array_push($dataArrTmp, $dataTmp);
 
                 foreach ($data->diagnoses ?? [] as $index => $diagnosa) {
@@ -68,6 +69,9 @@
                     }
 
                     $dataArrTmp[$index][11] = $diagnosa->diagnosis->name;
+                    if($dataArrTmp[0][17] < $index+1) {
+                        $dataArrTmp[0][17] = $index+1;
+                    }
                 }
 
                 $cost = 0;
@@ -88,6 +92,9 @@
                     if($index + 1 == count($data->prescriptions)) {
                         $dataArrTmp[0][16] = $cost;
                     }
+                    if($dataArrTmp[0][17] < $index+1) {
+                        $dataArrTmp[0][17] = $index+1;
+                    }
                 }
 
                 foreach ($dataArrTmp as $index => $data) {
@@ -97,17 +104,19 @@
         @endphp
         @foreach ($dataArr as $index => $data)
             <tr>
-                <td valign="top">{{$data[0]}}</td>
-                <td valign="top">{{$data[1]}}</td>
-                <td valign="top">{{$data[2]}}</td>
-                <td valign="top">{{$data[3]}}</td>
-                <td valign="top">{{__($data[4])}}</td>
-                <td valign="top">{{$data[5]}}</td>
-                <td valign="top">{{$data[6]}}</td>
-                <td valign="top">{{$data[7]}}</td>
-                <td valign="top">{{$data[8]}}</td>
-                <td valign="top">{{$data[9]}}</td>
-                <td valign="top">{{$data[10]}}</td>
+                @if ($data[0] != "")
+                    <td valign="top" rowspan="{{$data[17]}}">{{$data[0]}}</td>
+                    <td valign="top" rowspan="{{$data[17]}}">{{$data[1]}}</td>
+                    <td valign="top" rowspan="{{$data[17]}}">{{$data[2]}}</td>
+                    <td valign="top" rowspan="{{$data[17]}}">{{$data[3]}}</td>
+                    <td valign="top" rowspan="{{$data[17]}}">{{__($data[4])}}</td>
+                    <td valign="top" rowspan="{{$data[17]}}">{{$data[5]}}</td>
+                    <td valign="top" rowspan="{{$data[17]}}">{{$data[6]}}</td>
+                    <td valign="top" rowspan="{{$data[17]}}">{{$data[7]}}</td>
+                    <td valign="top" rowspan="{{$data[17]}}">{{$data[8]}}</td>
+                    <td valign="top" rowspan="{{$data[17]}}">{{$data[9]}}</td>
+                    <td valign="top" rowspan="{{$data[17]}}">{{$data[10]}}</td>
+                @endif
                 <td valign="top">{{$data[11]}}</td>
                 <td valign="top">{{$data[12]}}</td>
                 <td valign="top" align="right">{{$data[13]}}</td>
