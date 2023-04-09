@@ -13,6 +13,7 @@ use App\Models\EmployeeRelationshipUploader;
 use App\Models\EmployeeRelationship;
 use App\Models\Employee;
 use App\Models\Relationship;
+use DateTime;
 
 class EmployeeRelationshipUploaderController extends AppUploaderController
 {
@@ -61,6 +62,11 @@ class EmployeeRelationshipUploaderController extends AppUploaderController
         }
         if(!$row->birth_date) {
             array_push($errMsg, Lang::get('validation.required', ["attribute"=>Lang::get("Birth Date")]));
+        } else {
+            $dateFormat = DateTime::createFromFormat('Y-m-d', $row->birth_date);
+            if(!$dateFormat) {
+                array_push($errMsg, Lang::get('validation.invalid', ["attribute"=>Lang::get("Birth Date")]));
+            }
         }
         if($row->gender && $row->gender != 'Male' && $row->gender != 'Female') {
             array_push($errMsg, Lang::get('validation.invalid', ["attribute"=>Lang::get("Gender")]));

@@ -14,6 +14,7 @@ use App\Models\Employee;
 use App\Models\Afdelink;
 use App\Models\WorkUnit;
 use App\Models\Grade;
+use DateTime;
 
 class EmployeeUploaderController extends AppUploaderController
 {
@@ -62,6 +63,11 @@ class EmployeeUploaderController extends AppUploaderController
         }
         if(!$row->birth_date) {
             array_push($errMsg, Lang::get('validation.required', ["attribute"=>Lang::get("Birth Date")]));
+        } else {
+            $dateFormat = DateTime::createFromFormat('Y-m-d', $row->birth_date);
+            if(!$dateFormat) {
+                array_push($errMsg, Lang::get('validation.invalid', ["attribute"=>Lang::get("Birth Date")]));
+            }
         }
         if($row->gender && $row->gender != 'Male' && $row->gender != 'Female') {
             array_push($errMsg, Lang::get('validation.invalid', ["attribute"=>Lang::get("Gender")]));
@@ -76,6 +82,12 @@ class EmployeeUploaderController extends AppUploaderController
         }
         if($row->grade && !Grade::where('code', $row->grade)->first()) {
             array_push($errMsg, Lang::get('validation.invalid', ["attribute"=>Lang::get("Grade")]));
+        }
+        if(!$row->join_date) {
+            $dateFormat = DateTime::createFromFormat('Y-m-d', $row->join_date);
+            if(!$dateFormat) {
+                array_push($errMsg, Lang::get('validation.invalid', ["attribute"=>Lang::get("Join Date")]));
+            }
         }
         return $errMsg;
     }
