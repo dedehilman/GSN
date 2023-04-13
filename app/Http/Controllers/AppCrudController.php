@@ -531,6 +531,12 @@ class AppCrudController extends Controller
                         $query->where(Str::replace('.neq', '', $key),'<>',$value);
                     }
                 }
+                else if(Str::endsWith($key, '.nin')) {
+                    $query->whereNotIn(Str::replace('.nin', '', $key), explode(",", $value));
+                }
+                else if(Str::endsWith($key, '.in')) {
+                    $query->whereNotIn(Str::replace('.in', '', $key), explode(",", $value));
+                }
                 else if(Str::startsWith($value, '%') || Str::endsWith($value, '%')) {
                     $query->where($key,'LIKE',"$value");
                 } else {

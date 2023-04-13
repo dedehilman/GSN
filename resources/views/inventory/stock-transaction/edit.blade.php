@@ -280,7 +280,7 @@
                 if(clinicId) {
                     clinicId = "&new_clinic_id=" + clinicId;
                 }
-                $(element).attr('data-url', dataUrl+"?queryBuilder=0&transaction_type=Transfer Out" + clinicId);
+                $(element).attr('data-url', dataUrl+"?queryBuilder=0&transaction_type=Transfer Out" + clinicId + "&all_transfer_out=0");
             }
         }
     </script>

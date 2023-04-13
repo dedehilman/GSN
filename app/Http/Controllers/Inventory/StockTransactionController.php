@@ -183,6 +183,12 @@ class StockTransactionController extends AppCrudController
             $validator->addRules([
                 'reference_id'=> 'required'
             ]);
+
+            if($request->reference_id) {
+                if(StockTransaction::where("transaction_type", "Transfer In")->where("reference_id", $request->reference_id)->count() > 0 ) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.invalid', ['attribute' => Lang::get("Reference")]));
+                }
+            }
         }
 
         if($request->transaction_detail_id)
@@ -218,6 +224,12 @@ class StockTransactionController extends AppCrudController
             $validator->addRules([
                 'reference_id'=> 'required'
             ]);
+
+            if($request->reference_id) {
+                if(StockTransaction::where("transaction_type", "Transfer In")->where("reference_id", $request->reference_id)->where("id", '<>', $id)->count() > 0 ) {
+                    $validator->getMessageBag()->add('action', Lang::get('validation.invalid', ['attribute' => Lang::get("Reference")]));
+                }
+            }
         }
 
         if($request->transaction_detail_id)
@@ -245,5 +257,21 @@ class StockTransactionController extends AppCrudController
 
         $pdf = PDF::loadview('inventory.stock-transaction.template', ['data'=>$data]);
     	return $pdf->download($data->transaction_no.'.pdf');
+    }
+
+    public function filterDatatableSelect(Request $request, $query)
+    {
+        if(($request->parameters["all_transfer_out"] ?? "") == "0"  && ($request->parameters["transaction_type"] ?? "") == "Transfer Out") {
+            $parameters = [];
+            foreach($request->parameters ?? [] as $key => $value) {
+                if($key == "all_transfer_out") continue;
+
+                $parameters[$key] = $value;
+            }
+            $parameters["id.nin"] = implode(",", StockTransaction::where("transaction_type", "Transfer In")->whereNotNull("reference_id")->pluck('reference_id')->toArray());
+            $request['parameters'] = $parameters;
+        }
+
+        return $this->filterDatatable($request, $query);
     }
 }
