@@ -32,6 +32,7 @@
 <table>
     <thead>
         <tr>
+            <th>{{__("Nama Pasien")}}</th>
             <th>{{__("Tgl Berobat")}}</th>
             <th>{{__("Keluhan")}}</th>
             <th>{{__("Pemeriksaan")}}</th>
@@ -46,13 +47,14 @@
             $dataArr = [];
             foreach ($datas as $index => $data) {
                 $dataArrTmp = [];
-                $dataTmp[0] = $data->transaction_date;
-                $dataTmp[1] = "";
-                $dataTmp[2] = $data->action->remark ?? "";
-                $dataTmp[3] = "";
+                $dataTmp[0] = $data->patientRelation->name ?? $reportModel->patient->name;
+                $dataTmp[1] = $data->transaction_date;
+                $dataTmp[2] = "";
+                $dataTmp[3] = $data->action->remark ?? "";
                 $dataTmp[4] = "";
-                $dataTmp[5] = Lang::get($data->reference_type)." ".($data->reference_type == "Internal" ? $data->reference_clinic : ($data->reference_type == "External" ? $data->reference : ""));
-                $dataTmp[6] = $data->service;
+                $dataTmp[5] = "";
+                $dataTmp[6] = Lang::get($data->reference_type)." ".($data->reference_type == "Internal" ? $data->reference_clinic : ($data->reference_type == "External" ? $data->reference : ""));
+                $dataTmp[7] = $data->service;
                 array_push($dataArrTmp, $dataTmp);
 
                 $prevCount = 0;
@@ -60,37 +62,37 @@
                     foreach ($diagnosa->symptoms ?? [] as $index2 => $sy) {
                         if(count($dataArrTmp) <= ($prevCount + $index2)) {
                             $dataTmpBlank = [];
-                            for ($i=0; $i < 7; $i++) { 
+                            for ($i=0; $i < 8; $i++) { 
                                 $dataTmpBlank[$i] = "";
                             }
                             array_push($dataArrTmp, $dataTmpBlank);
                         }
 
-                        $dataArrTmp[$prevCount + $index2][1] = $sy->name;
+                        $dataArrTmp[$prevCount + $index2][2] = $sy->name;
                     }
 
                     if(count($dataArrTmp) <= $index) {
                         $dataTmpBlank = [];
-                        for ($i=0; $i < 7; $i++) { 
+                        for ($i=0; $i < 8; $i++) { 
                             $dataTmpBlank[$i] = "";
                         }
                         array_push($dataArrTmp, $dataTmpBlank);
                     }
 
-                    $dataArrTmp[$prevCount][3] = $diagnosa->diagnosis->name;
+                    $dataArrTmp[$prevCount][4] = $diagnosa->diagnosis->name;
                     $prevCount += count($diagnosa->symptoms ?? []);
                 }
 
                 foreach ($data->prescriptions ?? [] as $index => $pre) {
                     if(count($dataArrTmp) <= $index) {
                         $dataTmpBlank = [];
-                        for ($i=0; $i < 7; $i++) { 
+                        for ($i=0; $i < 8; $i++) { 
                             $dataTmpBlank[$i] = "";
                         }
                         array_push($dataArrTmp, $dataTmpBlank);
                     }
 
-                    $dataArrTmp[$index][4] = $pre->medicine->name;
+                    $dataArrTmp[$index][5] = $pre->medicine->name;
                 }
 
                 foreach ($dataArrTmp as $index => $data) {
@@ -107,6 +109,7 @@
                 <td valign="top">{{$data[4]}}</td>
                 <td valign="top">{{$data[5]}}</td>
                 <td valign="top">{{$data[6]}}</td>
+                <td valign="top">{{$data[7]}}</td>
             </tr>
         @endforeach
     </tbody>

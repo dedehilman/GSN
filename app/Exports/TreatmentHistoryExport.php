@@ -33,7 +33,7 @@ class TreatmentHistoryExport implements ShouldAutoSize, FromView
                 })
                 ->leftJoin('clinics', 'clinics.id', '=', 'plano_tests.reference_clinic_id')
                 ->leftJoin('references', 'references.id', '=', 'plano_tests.reference_id')
-                ->select('plano_tests.id', 'transaction_date', 'plano_tests.reference_type', 'clinics.code AS reference_clinic', 'references.name AS reference', DB::Raw('"PP Test" AS service'));
+                ->select('plano_tests.id', 'transaction_date', 'plano_tests.reference_type', 'clinics.code AS reference_clinic', 'references.name AS reference', DB::Raw('"PP Test" AS service'), 'plano_tests.for_relationship', 'plano_tests.patient_relationship_id');
         $query2 = FamilyPlanning::where('patient_id', $this->reportModel->patient_id)
                 ->join('actions', function ($join) {
                     $join->on('actions.model_id', '=', 'family_plannings.id');
@@ -41,7 +41,7 @@ class TreatmentHistoryExport implements ShouldAutoSize, FromView
                 })
                 ->leftJoin('clinics', 'clinics.id', '=', 'family_plannings.reference_clinic_id')
                 ->leftJoin('references', 'references.id', '=', 'family_plannings.reference_id')
-                ->select('family_plannings.id', 'transaction_date', 'family_plannings.reference_type', 'clinics.code AS reference_clinic', 'references.name AS reference', DB::Raw('"KB" AS service'));
+                ->select('family_plannings.id', 'transaction_date', 'family_plannings.reference_type', 'clinics.code AS reference_clinic', 'references.name AS reference', DB::Raw('"KB" AS service'), 'family_plannings.for_relationship', 'family_plannings.patient_relationship_id');
         $query3 = WorkAccident::where('patient_id', $this->reportModel->patient_id)
                 ->join('actions', function ($join) {
                     $join->on('actions.model_id', '=', 'work_accidents.id');
@@ -49,7 +49,7 @@ class TreatmentHistoryExport implements ShouldAutoSize, FromView
                 })
                 ->leftJoin('clinics', 'clinics.id', '=', 'work_accidents.reference_clinic_id')
                 ->leftJoin('references', 'references.id', '=', 'work_accidents.reference_id')
-                ->select('work_accidents.id', 'transaction_date', 'work_accidents.reference_type', 'clinics.code AS reference_clinic', 'references.name AS reference', DB::Raw('"KK" AS service'));
+                ->select('work_accidents.id', 'transaction_date', 'work_accidents.reference_type', 'clinics.code AS reference_clinic', 'references.name AS reference', DB::Raw('"KK" AS service'), 'work_accidents.for_relationship', 'work_accidents.patient_relationship_id');
         $query4 = Outpatient::where('patient_id', $this->reportModel->patient_id)
                 ->join('actions', function ($join) {
                     $join->on('actions.model_id', '=', 'outpatients.id');
@@ -57,7 +57,7 @@ class TreatmentHistoryExport implements ShouldAutoSize, FromView
                 })
                 ->leftJoin('clinics', 'clinics.id', '=', 'outpatients.reference_clinic_id')
                 ->leftJoin('references', 'references.id', '=', 'outpatients.reference_id')
-                ->select('outpatients.id', 'transaction_date', 'outpatients.reference_type', 'clinics.code AS reference_clinic', 'references.name AS reference', DB::Raw('"Rawat Jalan" AS service'));
+                ->select('outpatients.id', 'transaction_date', 'outpatients.reference_type', 'clinics.code AS reference_clinic', 'references.name AS reference', DB::Raw('"Rawat Jalan" AS service'), 'outpatients.for_relationship', 'outpatients.patient_relationship_id');
 
         $datas = $query1
                 ->unionAll($query2)
@@ -89,6 +89,12 @@ class TreatmentHistoryExport implements ShouldAutoSize, FromView
             $data->setAttribute("diagnoses", $diagnoses);
             $data->setAttribute("action", $action);
             $data->setAttribute("prescriptions", $prescriptions);
+
+            $patientRelation = null;
+            if($data->patient_relationship_id) {
+                $patientRelation = \App\Models\EmployeeRelationship::find($data->patient_relationship_id);
+            }
+            $data->setAttribute("patientRelation", $patientRelation);
         }
 
         return view('report.treatment-history.template', [
