@@ -83,7 +83,7 @@ class EmployeeUploaderController extends AppUploaderController
         if($row->grade && !Grade::where('code', $row->grade)->first()) {
             array_push($errMsg, Lang::get('validation.invalid', ["attribute"=>Lang::get("Grade")]));
         }
-        if(!$row->join_date) {
+        if($row->join_date) { 
             $dateFormat = DateTime::createFromFormat('Y-m-d', $row->join_date);
             if(!$dateFormat) {
                 array_push($errMsg, Lang::get('validation.invalid', ["attribute"=>Lang::get("Join Date")]));
