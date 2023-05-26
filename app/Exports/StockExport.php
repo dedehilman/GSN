@@ -37,7 +37,7 @@ class StockExport implements ShouldAutoSize, FromView
         $adj = array();
         $outDate = array();
 
-        $medicines = Medicine::all();
+        $medicines = Medicine::orderBy("name", "ASC")->get();
         $prevPeriod = Period::where('end_date','<',$this->reportModel->start_date)->where('clinic_id', $this->reportModel->clinic_id)->orderBy('start_date','desc')->first();
         if($prevPeriod) {
             $stockOpnames = StockOpname::where('period_id', $prevPeriod->id)->where('clinic_id', $this->reportModel->clinic_id)->get();
