@@ -17,9 +17,9 @@ class CreateDiagnosisSymptomResultsTable extends Migration
             $table->unsignedBigInteger('diagnosis_id');
             $table->unsignedBigInteger('symptom_id');
             
-            $table->foreign('diagnosis_result_id')->references('id')->on('diagnosis_results')->onDelete('cascade');
+            $table->foreign('diagnosis_id')->references('id')->on('diagnoses')->onDelete('cascade');
             $table->foreign('symptom_id')->references('id')->on('symptoms')->onDelete('cascade');
-            $table->primary(['diagnosis_result_id', 'symptom_id'], 'diagnosis_symptoms_result_id_primary'); 
+            $table->primary(['diagnosis_id', 'symptom_id'], 'diagnosis_symptoms_result_id_primary'); 
         });
     }
 
