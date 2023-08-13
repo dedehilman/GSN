@@ -350,3 +350,31 @@ Route::post('/master/exposure/datatable', [App\Http\Controllers\Master\ExposureC
 Route::post('/master/exposure/datatable/select', [App\Http\Controllers\Master\ExposureController::class, 'datatableSelect'])->name('exposure.datatable.select');
 Route::get('/master/exposure/select', [App\Http\Controllers\Master\ExposureController::class, 'select'])->name('exposure.select');
 Route::resource('master/exposure', App\Http\Controllers\Master\ExposureController::class);
+
+
+Route::post('/master/product_type/datatable', [App\Http\Controllers\ProductTypeController::class, 'datatable'])->name('type.datatable');
+Route::post('/master/product_type/datatable/select', [App\Http\Controllers\ProductTypeController::class, 'datatableSelect'])->name('product_type.datatable.select');
+Route::get('/master/product_type/select', [App\Http\Controllers\ProductTypeController::class, 'select'])->name('product_type.select');
+Route::resource('master/product_type', App\Http\Controllers\ProductTypeController::class);
+
+
+Route::post('/master/product/datatable', [App\Http\Controllers\ProductController::class, 'datatable'])->name('product.datatable');
+Route::post('/master/product/datatable/select', [App\Http\Controllers\ProductController::class, 'datatableSelect'])->name('product.datatable.select');
+Route::get('/master/product/select', [App\Http\Controllers\ProductController::class, 'select'])->name('product.select');
+Route::resource('master/product', App\Http\Controllers\ProductController::class);
+
+Route::post('/master/client/datatable', [App\Http\Controllers\ClientController::class, 'datatable'])->name('client.datatable');
+Route::post('/master/client/datatable/select', [App\Http\Controllers\ClientController::class, 'datatableSelect'])->name('client.datatable.select');
+Route::get('/master/client/select', [App\Http\Controllers\ClientController::class, 'select'])->name('client.select');
+Route::resource('master/client', App\Http\Controllers\ClientController::class);
+
+Route::post('/master/project/datatable', [App\Http\Controllers\ProjectController::class, 'datatable'])->name('project.datatable');
+Route::post('/master/project/datatable/select', [App\Http\Controllers\ProjectController::class, 'datatableSelect'])->name('project.datatable.select');
+Route::get('/master/project/select', [App\Http\Controllers\ProjectController::class, 'select'])->name('project.select');
+Route::resource('master/project', App\Http\Controllers\ProjectController::class);
+
+
+Route::post('/master/serial_number/datatable', [App\Http\Controllers\SerialNumberController::class, 'datatable'])->name('serial_number.datatable');
+Route::post('/master/serial_number/datatable/select', [App\Http\Controllers\SerialNumberController::class, 'datatableSelect'])->name('serial_number.datatable.select');
+Route::get('/master/serial_number/select', [App\Http\Controllers\SerialNumberController::class, 'select'])->name('serial_number.select');
+Route::resource('master/serial_number', App\Http\Controllers\SerialNumberController::class);

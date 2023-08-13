@@ -152,6 +152,7 @@
             @csrf
         </form>
 
+        <!-- select option data relations modal -->
         <div class="modal fade" id="modal-select" aria-hidden="true" >
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">

@@ -11,6 +11,7 @@ $(function() {
         }
     });
 
+    //select option data relations modal
     $(document).on('click', '.show-modal-select', function(){
         setSelectedIds($(this));
         onSelectHandler = $(this).attr('data-handler');
